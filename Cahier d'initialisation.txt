@@ -1,0 +1,34 @@
+﻿Cahier d’initialisation
+
+-Quête: Tuer le boss de la map et libérer la princesse de ses souffrance.
+
+-Touches: 
+
+-4 touches de direction (ZQSD)
+-1 touche utiliser/attaquer item1 / valider / intéragire (ENTER)
+-1 touche utiliser/attaquer item2 (SHIFT)
+-2 touches pour changer d’item(A E)
+-1 touche menu (ECHAP)
+
+Les touches seront théoriquement configurable
+
+-Quelques items :
+
+	-Armes lourdes (non-cumulable: utilisable seulement sur les 2 slots d’items, ces armes impliquent qu’on ne peut les utiliser en même temps que d’autres, elles sont donc plus puissantes).
+
+	-Epées (cumulable): Agile mais moins puissante.
+
+	-Arc (non-cumulable) : Arme à distance degats moyens mais aucune attaque corps à corps + temps de réencochement de la flèche (ralentit vos déplacement).
+
+	-Bouclier (cumulable): Défense uniquement permet de se défendre des projectiles. Lorsque cet item est utilisé vous ne pouvez plus vous déplacer.
+
+-Quelques ennemis :
+
+	-Squelettes : Peureux, attaque à distance, se repositionnent.
+	
+	-Zombie : Lents, boost en fonction des PV.
+
+	-Fantôme : Uniquement attaquable au corps à corps, peut traverser certaines structures.
+
+	
+
