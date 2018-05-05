@@ -6,18 +6,13 @@ import game.controleur.item.Item;
 import game.controleur.utils.Coordoner;
 import game.controleur.utils.Orientation.Direction;
 
-public class Player {
+public class Player extends EntityLiving{
 	
 	private ArrayList<Item> inventory;
 	
-	private Coordoner position;//La position du joueur
-	
-	private Direction direction;//La direction auquel il regarde
-	
-	public Player(ArrayList<Item> inventory, Coordoner position) {
+	public Player(ArrayList<Item> inventory, Coordoner position, Direction direction) {
+		super(position,direction);
 		this.inventory=inventory;
-		this.position=position;
-		this.direction=Direction.SOUTH;
 	}
 	
 	public int getInventorySize() {
@@ -30,22 +25,6 @@ public class Player {
 	
 	public void addInventoryItem(Item item) {
 		this.inventory.add(item);
-	}
-	
-	public Coordoner getCoordoner() {
-		return this.position;
-	}
-	
-	public void setCoordoner(Coordoner position) {
-		this.position=position;
-	}
-	
-	public Direction getDirection() {
-		return this.direction;
-	}
-	
-	public void setDirection(Direction direction) {
-		this.direction=direction;
 	}
 	
 }
