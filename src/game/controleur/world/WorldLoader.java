@@ -13,7 +13,7 @@ public class WorldLoader {
 	
 	public static World currentMap;
 	
-	public static void loadWorld(File file) {
+	public static void loadWorld(String file) {
 		try {
 		
 			String name="";
@@ -22,7 +22,7 @@ public class WorldLoader {
 			ArrayList<TileEntity> tileEntity= new ArrayList<TileEntity>();
 		
 			
-			BufferedReader br = new BufferedReader(new FileReader(file));
+			BufferedReader br = new BufferedReader(new FileReader(new File("ressources/map/"+file+".map")));
 			String ligne;
 			int ligneNum=1;
 			while ((ligne = br.readLine()) != null) {
