@@ -17,10 +17,10 @@ public class Main extends Application {
 		try {
 		System.out.println("Loading game");
 		FXMLLoader loader = new FXMLLoader();
-		URL url = new File("src/game/vue/menu.fxml").toURI().toURL();
+		URL url = new File("src/game/vue/game.fxml").toURI().toURL();
 		loader.setLocation(url);
 		Parent root = FXMLLoader.load(url);
-     	Scene scene = new Scene(root,600,450);
+     	Scene scene = new Scene(root,512,512);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		} catch (Exception e) {

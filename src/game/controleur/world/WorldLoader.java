@@ -6,10 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import game.controleur.tile.Tile;
 import game.controleur.tile.TileEntity;
-import game.controleur.tile.TileSolid;
-import game.controleur.tile.TileTerrain;
-import game.controleur.tile.TileTop;
 
 public class WorldLoader {
 	
@@ -20,9 +18,9 @@ public class WorldLoader {
 		
 			String name="";
 			int width = 0,height=0;
-			TileTerrain[] tileBackground = null;
-			TileSolid[] tile = null;
-			TileTop[] tileTop = null;
+			Tile[] tileGround = null;
+			Tile[] tileSolid = null;
+			Tile[] tileTop = null;
 			ArrayList<TileEntity> tileEntity= new ArrayList<TileEntity>();
 		
 			
@@ -41,64 +39,14 @@ public class WorldLoader {
 				case 3:
 					height=Integer.parseInt(ligne);
 					break;
-				case 4://Background/Soil
-					tileBackground=new TileTerrain[width*height];
-					int charAt=0;
-					int tileAt=0;
-					String tileId="";
-					while(charAt<ligne.length()) {
-						if(ligne.charAt(charAt)==',') {
-							tileBackground[tileAt]=new TileTerrain(Integer.parseInt(tileId));
-							tileAt++;
-							tileId="";
-						}else {
-							tileId+=""+ligne.charAt(charAt);
-						}
-						
-						charAt++;
-					}
-					if(tileId!=null)
-						tileBackground[tileAt]=new TileTerrain(Integer.parseInt(tileId));
+				case 4:
+					tileGround=(Tile[]) loadTile(ligne, width, height);
 					break;
-					
-				case 5://Solid
-					tile=new TileSolid[width*height];
-					charAt=0;
-					tileAt=0;
-					tileId="";
-					while(charAt<ligne.length()) {
-						if(ligne.charAt(charAt)==',') {
-							tile[tileAt]=new TileSolid(Integer.parseInt(tileId));
-							tileAt++;
-							tileId="";
-						}else {
-							tileId+=""+ligne.charAt(charAt);
-						}
-						
-						charAt++;
-					}
-					if(tileId!=null)
-						tile[tileAt]=new TileSolid(Integer.parseInt(tileId));
+				case 5:
+					tileSolid=(Tile[]) loadTile(ligne, width, height);
 					break;
-					
-				case 6://Top
-					tileTop=new TileTop[width*height];
-					charAt=0;
-					tileAt=0;
-					tileId="";
-					while(charAt<ligne.length()) {
-						if(ligne.charAt(charAt)==',') {
-							tileTop[tileAt]=new TileTop(Integer.parseInt(tileId));
-							tileAt++;
-							tileId="";
-						}else {
-							tileId+=""+ligne.charAt(charAt);
-						}
-						
-						charAt++;
-					}
-					if(tileId!=null)
-						tileTop[tileAt]=new TileTop(Integer.parseInt(tileId));
+				case 6:
+					tileTop=(Tile[]) loadTile(ligne, width, height);
 					break;
 				}
 				
@@ -106,12 +54,30 @@ public class WorldLoader {
 			}
 			br.close();
 		
-			currentMap=new World(name, width, height, tileBackground, tile, tileTop, tileEntity);
+			currentMap=new World(name, width, height, tileGround, tileSolid, tileTop, tileEntity);
 			
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	private static Tile[] loadTile(String ligne, int width, int height) {
+		Tile[] tile =new Tile[width*height];
+		int charAt=0;
+		int tileAt=0;
+		String tileId="";
+		while(charAt<ligne.length()) {
+			if(ligne.charAt(charAt)==',') {
+				tile[tileAt]=new Tile((Integer.parseInt(tileId)<=0?1:Integer.parseInt(tileId)));
+				tileAt++;
+				tileId="";
+			}else {tileId+=""+ligne.charAt(charAt);}
+			charAt++;
+		}
+		if(tileId!=null)
+			tile[tileAt]=new Tile((Integer.parseInt(tileId)<=0?1:Integer.parseInt(tileId)));
+		return tile;
 	}
 	
 }

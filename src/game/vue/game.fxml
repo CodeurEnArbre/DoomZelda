@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controleur.MenuControleur">
    <children>
-      <Button layoutX="233.0" layoutY="112.0" mnemonicParsing="false" onAction="#play" prefHeight="25.0" prefWidth="150.0" text="Play" />
-	  <Canvas fx:id="canvas" height="400.0" visible="false" width="600.0" />
+      <TilePane fx:id="TilePaneGround" layoutX="-6.0" layoutY="-8.0" prefHeight="418.0" prefWidth="616.0" />
+      <TilePane fx:id="TilePaneSolid" layoutX="-6.0" layoutY="-8.0" prefHeight="418.0" prefWidth="616.0" />
+      <TilePane fx:id="TilePaneTop" layoutX="-6.0" layoutY="-8.0" prefHeight="418.0" prefWidth="616.0" />
    </children>
 </Pane>
