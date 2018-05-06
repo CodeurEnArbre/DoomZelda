@@ -9,8 +9,6 @@ import javax.imageio.ImageIO;
 
 public class TileTexture {
 	
-	
-	
 	public static Texture getTileTexture(int id) {
 		BufferedImage tileMap;
 		Texture tileTexture=null;

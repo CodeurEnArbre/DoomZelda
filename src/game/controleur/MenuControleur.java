@@ -1,7 +1,12 @@
 package game.controleur;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javax.imageio.ImageIO;
 
 import game.controleur.world.WorldLoader;
 import game.modele.TileTexture;
@@ -12,7 +17,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.shape.Rectangle;
 
 public class MenuControleur implements Initializable{
 	
@@ -28,7 +32,7 @@ public class MenuControleur implements Initializable{
     @FXML
     private TilePane TilePaneTop;
     
-    private Rectangle player;
+    private ImageView player;
 	
 	@FXML
     void option(ActionEvent event) {
@@ -93,9 +97,21 @@ public class MenuControleur implements Initializable{
 		printCalque(TilePaneGround,0);
 		printCalque(TilePaneSolid,1);
 		WorldLoader.loadPlayer();
-		player=new Rectangle();
-		player.setWidth(32);
-		player.setHeight(64);
+		player=new ImageView();
+		//player.setWidth(32);
+		//player.setHeight(64);
+		//player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player",24,4,0,3).getTexture(), null));
+		try {
+			player.setImage(SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/playerIcon.png").toURI().toURL()), null));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		player.setFitWidth(32);
+		player.setFitHeight(64);
 		player.setX(WorldLoader.player.getCoordoner().getX());
 		player.setX(WorldLoader.player.getCoordoner().getY());
 		EntityPane.getChildren().add(player);
@@ -107,13 +123,12 @@ public class MenuControleur implements Initializable{
 			   @Override
 			   public void run(){ 
 					while (true){
-						try {
-							Thread.sleep(0);
-							player.setY(WorldLoader.player.getCoordoner().getX());
-							player.setX(WorldLoader.player.getCoordoner().getY());
-						} catch (InterruptedException e) {e.printStackTrace();}				
+
+							player.setY(WorldLoader.player.getCoordoner().getX()*32-64);
+							player.setX(WorldLoader.player.getCoordoner().getY()*32-16);
+				
 						
-						if(!javafx.isAlive()){//Auto kill si la fenetre de javafx est fermer
+						if(!javafx.isAlive()){
 							System.exit(0);
 						}}}}.start();
 		

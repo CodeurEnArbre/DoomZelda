@@ -19,4 +19,5 @@ public class EntityLiving extends Entity{
 	public void setDirection(Direction direction) {
 		this.direction=direction;
 	}
+	
 }

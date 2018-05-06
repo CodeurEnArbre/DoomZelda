@@ -18,7 +18,7 @@ public class WorldLoader {
 	public static Player player;
 	
 	public static void loadPlayer() {
-		player = new Player(null,new Coordoner(3*32,3*32),Direction.NORTH);
+		player = new Player(null,new Coordoner(3,3),Direction.NORTH);
 	}
 	
 	public static void loadWorld(String file) {

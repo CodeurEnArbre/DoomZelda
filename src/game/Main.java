@@ -44,18 +44,18 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 		if(WorldLoader.player!=null) {
 			
 			if(event.getText().charAt(0)== 'z') {
-				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX()-2.5,WorldLoader.player.getCoordoner().getY()));
+				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX()-0.08,WorldLoader.player.getCoordoner().getY()));
 				WorldLoader.player.setDirection(Direction.NORTH);
 			}else if(event.getText().charAt(0)=='s'){
-				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX()+2.5,WorldLoader.player.getCoordoner().getY()));
+				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX()+0.08,WorldLoader.player.getCoordoner().getY()));
 				WorldLoader.player.setDirection(Direction.SOUTH);
 			}
 			
 			if(event.getText().charAt(0)== 'q') {
-				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY()-2.5));
+				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY()-0.08));
 				WorldLoader.player.setDirection(Direction.EAST);
 			}else if(event.getText().charAt(0)== 'd') {
-				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY()+2.5));
+				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY()+0.08));
 				WorldLoader.player.setDirection(Direction.WEST);
 			}
 			
