@@ -7,6 +7,7 @@
    <children>
       <TilePane fx:id="TilePaneGround" layoutX="-6.0" layoutY="-8.0" prefHeight="418.0" prefWidth="616.0" />
       <TilePane fx:id="TilePaneSolid" layoutX="-6.0" layoutY="-8.0" prefHeight="418.0" prefWidth="616.0" />
+      <Pane fx:id="EntityPane" layoutX="-8.0" layoutY="-11.0" prefHeight="418.0" prefWidth="616.0" />
       <TilePane fx:id="TilePaneTop" layoutX="-6.0" layoutY="-8.0" prefHeight="418.0" prefWidth="616.0" />
    </children>
 </Pane>

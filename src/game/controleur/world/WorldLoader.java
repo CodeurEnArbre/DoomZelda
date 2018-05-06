@@ -6,12 +6,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import game.controleur.entity.Player;
 import game.controleur.tile.Tile;
 import game.controleur.tile.TileEntity;
+import game.controleur.utils.Coordoner;
+import game.controleur.utils.Orientation.Direction;
 
 public class WorldLoader {
 	
 	public static World currentMap;
+	public static Player player;
+	
+	public static void loadPlayer() {
+		player = new Player(null,new Coordoner(3*32,3*32),Direction.NORTH);
+	}
 	
 	public static void loadWorld(String file) {
 		try {

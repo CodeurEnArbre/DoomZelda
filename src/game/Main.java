@@ -3,25 +3,30 @@ package game;
 import java.io.File;
 import java.net.URL;
 
+import game.controleur.utils.Coordoner;
+import game.controleur.utils.Orientation.Direction;
+import game.controleur.world.WorldLoader;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Main extends Application implements EventHandler<KeyEvent>{
 
 
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage)  {	
 		try {
 		System.out.println("Loading game");
 		FXMLLoader loader = new FXMLLoader();
 		URL url = new File("src/game/vue/game.fxml").toURI().toURL();
 		loader.setLocation(url);
-		Parent root = FXMLLoader.load(url);
-     	Scene scene = new Scene(root,512,512);
+     	Scene scene = new Scene(FXMLLoader.load(url),480,320);
+     	scene.setOnKeyPressed(this);
 		primaryStage.setScene(scene);
+		primaryStage.setTitle("Doom Zelda");
 		primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -32,5 +37,31 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	@Override
+	public void handle(KeyEvent event) {
+		if(WorldLoader.player!=null) {
+			
+			if(event.getText().charAt(0)== 'z') {
+				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX()-2.5,WorldLoader.player.getCoordoner().getY()));
+				WorldLoader.player.setDirection(Direction.NORTH);
+			}else if(event.getText().charAt(0)=='s'){
+				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX()+2.5,WorldLoader.player.getCoordoner().getY()));
+				WorldLoader.player.setDirection(Direction.SOUTH);
+			}
+			
+			if(event.getText().charAt(0)== 'q') {
+				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY()-2.5));
+				WorldLoader.player.setDirection(Direction.EAST);
+			}else if(event.getText().charAt(0)== 'd') {
+				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY()+2.5));
+				WorldLoader.player.setDirection(Direction.WEST);
+			}
+			
+			System.out.println(WorldLoader.player.getCoordoner().getX()+" "+WorldLoader.player.getCoordoner().getY());
+		}
+			
+		
 	}
 }

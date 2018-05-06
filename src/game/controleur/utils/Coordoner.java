@@ -1,22 +1,22 @@
 package game.controleur.utils;
 
 public class Coordoner {
-	private long x,y;
+	private double x,y;
 	
-	public Coordoner(int x, int y) {
+	public Coordoner(double x, double y) {
 		this.x=x;
 		this.y=y;
 	}
 	
-	public long getX() {
+	public double getX() {
 		return this.x;
 	}
 	
-	public long getY() {
+	public double getY() {
 		return this.y;
 	}
 	
-	public void setCoordoner(int x, int y) {
+	public void setCoordoner(double x, double y) {
 		this.x=x;
 		this.y=y;
 	}
