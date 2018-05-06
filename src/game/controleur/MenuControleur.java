@@ -124,7 +124,7 @@ public class MenuControleur implements Initializable{
 			   public void run(){ 
 					while (true){
 
-							player.setY(WorldLoader.player.getCoordoner().getX()*32-64);
+							player.setY(WorldLoader.player.getCoordoner().getX()*32-32);
 							player.setX(WorldLoader.player.getCoordoner().getY()*32-16);
 				
 						
