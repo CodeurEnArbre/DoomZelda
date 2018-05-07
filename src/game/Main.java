@@ -4,7 +4,7 @@ import java.io.File;
 import java.net.URL;
 
 import game.modele.utils.Coordonnees;
-import game.modele.utils.Orientation.Direction;
+import game.modele.utils.Direction;
 import game.modele.world.WorldLoader;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -46,18 +46,17 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 			
 			if(event.getCode()== KeyCode.Z) {
 				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY() - 0.4));
-				WorldLoader.player.setDirection(Direction.NORTH);
+				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.North);
 			}else if(event.getCode()== KeyCode.S){
 				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY() + 0.4));
-				WorldLoader.player.setDirection(Direction.SOUTH);
-			}
+				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.South);}
 			
 			if(event.getCode()== KeyCode.Q) {
 				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX() - 0.4,WorldLoader.player.getCoordoner().getY()));
-				WorldLoader.player.setDirection(Direction.EAST);
+				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.East);
 			}else if(event.getCode()== KeyCode.D) {
 				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX() + 0.4,WorldLoader.player.getCoordoner().getY()));
-				WorldLoader.player.setDirection(Direction.WEST);
+				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.West);
 			}
 		}
 	}

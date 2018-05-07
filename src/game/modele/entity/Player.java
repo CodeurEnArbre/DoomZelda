@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import game.modele.item.Item;
 import game.modele.utils.Coordonnees;
-import game.modele.utils.Orientation.Direction;
+import game.modele.utils.Direction;
 
 public class Player extends EntityLiving{
 	

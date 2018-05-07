@@ -11,7 +11,7 @@ import game.modele.entity.Player;
 import game.modele.tile.Tile;
 import game.modele.tile.TileEntity;
 import game.modele.utils.Coordonnees;
-import game.modele.utils.Orientation.Direction;
+import game.modele.utils.Direction;
 
 public class WorldLoader {
 
@@ -19,7 +19,7 @@ public class WorldLoader {
 	public static Player player;
 
 	public static void loadPlayer() {
-		player = new Player(null,new Coordonnees(3,3),Direction.NORTH);
+		player = new Player(null,new Coordonnees(3,3),new Direction(Direction.North));
 	}
 
 	public static void loadWorld(String file) {

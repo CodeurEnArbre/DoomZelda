@@ -1,18 +1,19 @@
 package game.modele.entity;
 
 import game.modele.utils.Coordonnees;
-import game.modele.utils.Orientation.Direction;
+import game.modele.utils.Direction;
 
 public class EntityLiving extends Entity{
 	
-	private Direction direction;//La direction auquel regarde l'entitee
+	protected Direction direction;
+	//La direction du regard
 	
 	public EntityLiving(Coordonnees position, Direction direction) {
 		super(position);
 		this.direction=direction;
 	}
 	
-	public Direction getDirection() {
+	public Direction getOrientation() {
 		return this.direction;
 	}
 	

@@ -2,14 +2,18 @@ package game.controler;
 
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.Observable;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import game.modele.utils.Orientation.Direction;
+import game.modele.utils.Direction;
 import game.modele.world.WorldLoader;
 import game.vue.EntityLivingTexture;
 import game.vue.TileTexture;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -108,37 +112,26 @@ public class MenuControler implements Initializable{
 
 		player.xProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(32).subtract(16));
 		player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
-		
-		
-		new Thread("Graphique Updateur"){
+		WorldLoader.player.getOrientation().getDirectionProperty().addListener(new ChangeListener<Number>() {
+
 			@Override
-			public void run(){
-				int direction=2;
-				while (true){
-					//TODO A changer (binder)
-					if(WorldLoader.player.getDirection() == Direction.NORTH && direction != 0) {
-						player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 0).getTexture(), null));
-						direction=0;
-					}
-					if(WorldLoader.player.getDirection() == Direction.WEST && direction != 1) {
-						player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 1).getTexture(), null));
-						direction=1;
-					}
-					if(WorldLoader.player.getDirection() == Direction.SOUTH && direction != 2) {
-						player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 2).getTexture(), null));
-						direction=2;
-					}
-					if(WorldLoader.player.getDirection() == Direction.EAST && direction != 3) {
-						player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 3).getTexture(), null));
-						direction=3;
-					}
-					
-		
-
-					if(!javafx.isAlive()){
-						System.exit(0);
-					}}}}.start();
-
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				switch(observable.getValue().intValue()) {
+				case Direction.North:
+					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 0).getTexture(), null));
+					break;
+				case Direction.West:
+					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 1).getTexture(), null));
+					break;
+				case Direction.South:
+					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 2).getTexture(), null));
+					break;
+				case Direction.East:
+					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 3).getTexture(), null));
+					break;
+				}
+			}
+		}); 
 	}
 
 }
