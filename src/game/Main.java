@@ -24,10 +24,11 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 		FXMLLoader loader = new FXMLLoader();
 		URL url = new File("src/game/vue/game.fxml").toURI().toURL();
 		loader.setLocation(url);
-     	Scene scene = new Scene(FXMLLoader.load(url),480,320);
+     	Scene scene = new Scene(FXMLLoader.load(url),864,640);
      	scene.setOnKeyPressed(this);//KEY
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Doom Zelda");
+		primaryStage.setResizable(false);
 		primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
