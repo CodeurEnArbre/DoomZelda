@@ -1,17 +1,11 @@
 package game.controler;
 
-import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.Observable;
 import java.util.ResourceBundle;
-import java.util.function.Function;
-import java.util.function.Predicate;
-
 import game.modele.utils.Direction;
 import game.modele.world.WorldLoader;
 import game.vue.EntityLivingTexture;
 import game.vue.TileTexture;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;

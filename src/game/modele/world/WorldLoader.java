@@ -19,7 +19,7 @@ public class WorldLoader {
 	public static Player player;
 
 	public static void loadPlayer() {
-		player = new Player(null,new Coordonnees(3,3),new Direction(Direction.North));
+		player = new Player(null,new Coordonnees(7,7),new Direction(Direction.North));
 	}
 
 	public static void loadWorld(String file) {
