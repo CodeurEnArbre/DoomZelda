@@ -8,13 +8,13 @@ import game.modele.tile.TileEntity;
 public class World {
 	
 	private String zoneName;
-	private Tile tileGround[];
-	private Tile tiles[];
-	private Tile tilesTop[];
+	private Tile tileGround[][];
+	private Tile tiles[][];
+	private Tile tilesTop[][];
 	private ArrayList<TileEntity> tileEntity;
 	private int width,height;
 	
-	public World(String zoneName, int width, int height, Tile ground[], Tile tiles[], Tile tilesTop[], ArrayList<TileEntity> tileEntity) {
+	public World(String zoneName, int width, int height, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<TileEntity> tileEntity) {
 		this.zoneName=zoneName;
 		this.width=width;
 		this.height=height;
@@ -38,21 +38,21 @@ public class World {
 	
 	public Tile getTileTerrain(int x, int y) {
 		if(x+y*this.width+1<this.width*this.height) {
-			return tileGround[x+y*this.width+1];
+			return tileGround[x][y];
 		}else
 			return null;
 	}
 	
 	public Tile getTile(int x, int y) {
 		if(x+y*this.width+1<this.width*this.height) {
-			return tiles[x+y*this.width+1];
+			return tiles[x][y];
 		}else
 			return null;
 	}
 	
 	public Tile getTileTop(int x, int y) {
 		if(x+y*this.width+1<this.width*this.height) {
-			return tilesTop[x+y*this.width+1];
+			return tilesTop[x][y];
 		}else
 			return null;
 	}

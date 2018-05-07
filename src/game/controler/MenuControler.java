@@ -99,9 +99,8 @@ public class MenuControler implements Initializable{
 		printCalque(TilePaneSolid,1);
 		WorldLoader.loadPlayer();
 		player=new ImageView();
-		//player.setWidth(32);
-		//player.setHeight(64);
-		//player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player",24,4,0,3).getTexture(), null));
+
+
 		try {
 			player.setImage(SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/playerIcon.png").toURI().toURL()), null));
 		} catch (MalformedURLException e) {
@@ -124,7 +123,8 @@ public class MenuControler implements Initializable{
 			@Override
 			public void run(){ 
 				while (true){
-
+					
+					
 					player.setY(WorldLoader.player.getCoordoner().getX()*32-32);
 					player.setX(WorldLoader.player.getCoordoner().getY()*32-16);
 

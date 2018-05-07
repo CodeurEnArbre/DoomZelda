@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import game.modele.entity.Player;
 import game.modele.tile.Tile;
@@ -13,79 +14,45 @@ import game.modele.utils.Coordonnees;
 import game.modele.utils.Orientation.Direction;
 
 public class WorldLoader {
-	
+
 	public static World currentMap;
 	public static Player player;
-	
+
 	public static void loadPlayer() {
 		player = new Player(null,new Coordonnees(3,3),Direction.NORTH);
 	}
-	
+
 	public static void loadWorld(String file) {
 		try {
-		
-			String name="";
-			int width = 0,height=0;
-			Tile[] tileGround = null;
-			Tile[] tileSolid = null;
-			Tile[] tileTop = null;
 			ArrayList<TileEntity> tileEntity= new ArrayList<TileEntity>();
-		
-			
+
+			Tile[][] tileSolid = null;
+			Tile[][] tileTop = null;
+
 			BufferedReader br = new BufferedReader(new FileReader(new File("ressources/map/"+file+".map")));
-			String ligne;
-			int ligneNum=1;
-			while ((ligne = br.readLine()) != null) {
-				
-				switch(ligneNum){
-				case 1:
-					name=ligne;
-					break;
-				case 2:
-					width=Integer.parseInt(ligne);
-					break;
-				case 3:
-					height=Integer.parseInt(ligne);
-					break;
-				case 4:
-					tileGround=(Tile[]) loadTile(ligne, width, height);
-					break;
-				case 5:
-					tileSolid=(Tile[]) loadTile(ligne, width, height);
-					break;
-				case 6:
-					tileTop=(Tile[]) loadTile(ligne, width, height);
-					break;
-				}
-				
-				ligneNum++;
+
+			String name = br.readLine();
+			int width = Integer.parseInt(br.readLine());
+			int height = Integer.parseInt(br.readLine());
+
+			Tile[][] tileGround = new Tile[width][height];
+			Pattern pat = Pattern.compile(",");
+			for(int i = 0; i < height;i++) {
+				String[] tabGround = pat.split(new StringBuilder(br.readLine()));
+				for(int x = 0; x < tabGround.length ; x++)
+					tileGround[i][x] = new Tile(Integer.parseInt(tabGround[x]));
 			}
+
+			String[] tabSolid = pat.split(new StringBuilder(br.readLine()));
+
+			String[] tabTop = pat.split(new StringBuilder(br.readLine()));
+
 			br.close();
-		
+
 			currentMap=new World(name, width, height, tileGround, tileSolid, tileTop, tileEntity);
-			
+
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
-	
-	private static Tile[] loadTile(String ligne, int width, int height) {
-		Tile[] tile =new Tile[width*height];
-		int charAt=0;
-		int tileAt=0;
-		String tileId="";
-		while(charAt<ligne.length()) {
-			if(ligne.charAt(charAt)==',') {
-				tile[tileAt]=new Tile((Integer.parseInt(tileId)<=0?1:Integer.parseInt(tileId)));
-				tileAt++;
-				tileId="";
-			}else {tileId+=""+ligne.charAt(charAt);}
-			charAt++;
-		}
-		if(tileId!=null)
-			tile[tileAt]=new Tile((Integer.parseInt(tileId)<=0?1:Integer.parseInt(tileId)));
-		return tile;
-	}
-	
 }
