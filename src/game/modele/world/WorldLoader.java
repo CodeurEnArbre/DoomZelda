@@ -25,27 +25,17 @@ public class WorldLoader {
 	public static void loadWorld(String file) {
 		try {
 			ArrayList<TileEntity> tileEntity= new ArrayList<TileEntity>();
-
-			Tile[][] tileSolid = null;
-			Tile[][] tileTop = null;
-
 			BufferedReader br = new BufferedReader(new FileReader(new File("ressources/map/"+file+".map")));
 
 			String name = br.readLine();
 			int width = Integer.parseInt(br.readLine());
 			int height = Integer.parseInt(br.readLine());
 
-			Tile[][] tileGround = new Tile[width][height];
-			Pattern pat = Pattern.compile(",");
-			for(int i = 0; i < height;i++) {
-				String[] tabGround = pat.split(new StringBuilder(br.readLine()));
-				for(int x = 0; x < tabGround.length ; x++)
-					tileGround[i][x] = new Tile(Integer.parseInt(tabGround[x]));
-			}
+			Tile[][] tileGround = makeTileGrid(width, height, br);
 
-			String[] tabSolid = pat.split(new StringBuilder(br.readLine()));
+			Tile[][] tileSolid =  makeTileGrid(width, height, br);
 
-			String[] tabTop = pat.split(new StringBuilder(br.readLine()));
+			Tile[][] tileTop=  makeTileGrid(width, height, br);
 
 			br.close();
 
@@ -55,4 +45,21 @@ public class WorldLoader {
 			e.printStackTrace();
 		}
 	}
+	private static Tile[][] makeTileGrid(int width,int height,BufferedReader br){
+		try {
+			Tile[][] tile = new Tile[width][height];
+			Pattern pat = Pattern.compile(",");
+			for(int i = 0; i < height;i++) {
+				String[] tabGround = pat.split(new StringBuilder(br.readLine()));
+				for(int x = 0; x < tabGround.length ; x++)
+					tile[i][x] = new Tile(Integer.parseInt(tabGround[x]));
+			}
+			return tile;
+		}catch(IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
 }

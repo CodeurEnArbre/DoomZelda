@@ -37,24 +37,15 @@ public class World {
 	}
 	
 	public Tile getTileTerrain(int x, int y) {
-		if(x+y*this.width+1<this.width*this.height) {
 			return tileGround[x][y];
-		}else
-			return null;
 	}
 	
 	public Tile getTile(int x, int y) {
-		if(x+y*this.width+1<this.width*this.height) {
 			return tiles[x][y];
-		}else
-			return null;
 	}
 	
 	public Tile getTileTop(int x, int y) {
-		if(x+y*this.width+1<this.width*this.height) {
 			return tilesTop[x][y];
-		}else
-			return null;
 	}
 	
 	public ArrayList<TileEntity> getTileEntity(){

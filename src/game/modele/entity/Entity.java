@@ -16,7 +16,7 @@ public class Entity {
 	}
 
 	public void setCoordoner(Coordonnees coordonnees) {
-		int tileId = WorldLoader.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).getId() ;
+		int tileId = WorldLoader.currentMap.getTile((int)coordonnees.getX(), (int)coordonnees.getY()).getId() ;
 		System.out.println("id:"+tileId);
 		if(tileId <= 1 && coordonnees.getX() >= 0 && coordonnees.getY() >= 0)
 			this.coordonnes=coordonnees;

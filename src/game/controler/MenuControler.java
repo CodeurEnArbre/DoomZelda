@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import javax.imageio.ImageIO;
 
@@ -50,36 +52,56 @@ public class MenuControler implements Initializable{
 
 	}
 
-	private void printCalque(TilePane pane,int calque) {
+	private void printCalqueTile(TilePane pane) {
 
-		for(int y=0;y<=WorldLoader.currentMap.getHeight();y++) {
+		for(int y=0;y<WorldLoader.currentMap.getHeight();y++) {
 			for(int x=0;x<WorldLoader.currentMap.getWidth();x++) {
 
 				ImageView texture = new ImageView();
-				switch (calque){
-				case 0:
-					if(WorldLoader.currentMap.getTileTerrain(x, y)!=null) {
-						texture.setImage(SwingFXUtils.toFXImage(TileTexture.getTileTexture(WorldLoader.currentMap.getTileTerrain(x, y).getId()-1).getTexture(), null));      						
-						pane.getChildren().add(texture);
-					}
-					break;
-				case 1:
-					if(WorldLoader.currentMap.getTile(x, y)!=null) {
-						texture.setImage(SwingFXUtils.toFXImage(TileTexture.getTileTexture(WorldLoader.currentMap.getTile(x, y).getId()-1).getTexture(), null));      						
-						pane.getChildren().add(texture);
-					}
-					break;
-				case 2:
-					if(WorldLoader.currentMap.getTileTop(x, y)!=null) {
-						texture.setImage(SwingFXUtils.toFXImage(TileTexture.getTileTexture(WorldLoader.currentMap.getTileTop(x, y).getId()-1).getTexture(), null)); 
-						pane.getChildren().add(texture);
-					}
-					break;
+
+				if(WorldLoader.currentMap.getTile(y, x)!=null) {
+					int i = WorldLoader.currentMap.getTile(y, x).getId();
+					i = i == 0 ? 0 : i -1;
+					
+					texture.setImage(SwingFXUtils.toFXImage(TileTexture.getTileTexture(i).getTexture(), null));      						
+					pane.getChildren().add(texture);
 				}
 			}
-
 		}
+	}
 
+	private void printCalqueTerrain(TilePane pane) {
+
+		for(int y=0;y<WorldLoader.currentMap.getHeight();y++) {
+			for(int x=0;x<WorldLoader.currentMap.getWidth();x++) {
+
+				ImageView texture = new ImageView();
+
+				if(WorldLoader.currentMap.getTileTerrain(y, x)!=null) {
+					int i = WorldLoader.currentMap.getTileTerrain(y, x).getId();
+					i = i == 0 ? 0 : i -1;
+					texture.setImage(SwingFXUtils.toFXImage(TileTexture.getTileTexture(i).getTexture(), null));      						
+					pane.getChildren().add(texture);
+				}
+			}
+		}
+	}
+	
+	private void printCalqueTop(TilePane pane) {
+
+		for(int y=0;y<WorldLoader.currentMap.getHeight();y++) {
+			for(int x=0;x<WorldLoader.currentMap.getWidth();x++) {
+
+				ImageView texture = new ImageView();
+
+				if(WorldLoader.currentMap.getTileTop(y, x)!=null) {
+					int i = WorldLoader.currentMap.getTileTop(y,x).getId();
+					i = i == 0 ? 0 : i -1;
+					texture.setImage(SwingFXUtils.toFXImage(TileTexture.getTileTexture(i).getTexture(), null));      						
+					pane.getChildren().add(texture);
+				}
+			}
+		}
 	}
 
 
@@ -95,8 +117,8 @@ public class MenuControler implements Initializable{
 		TilePaneTop.setMinSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
 		TilePaneTop.setMaxSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
 
-		printCalque(TilePaneGround,0);
-		printCalque(TilePaneSolid,1);
+		printCalqueTerrain(TilePaneGround);
+		printCalqueTile(TilePaneSolid);
 		WorldLoader.loadPlayer();
 		player=new ImageView();
 
@@ -115,7 +137,7 @@ public class MenuControler implements Initializable{
 		player.setX(WorldLoader.player.getCoordoner().getX());
 		player.setX(WorldLoader.player.getCoordoner().getY());
 		EntityPane.getChildren().add(player);
-		printCalque(TilePaneTop,2);
+		printCalqueTop(TilePaneTop);
 
 		Thread javafx = Thread.currentThread();
 
