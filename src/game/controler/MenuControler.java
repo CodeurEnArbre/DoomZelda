@@ -101,13 +101,10 @@ public class MenuControler implements Initializable{
 		player.setX(WorldLoader.player.getCoordoner().getX());
 		player.setX(WorldLoader.player.getCoordoner().getY());
 		EntityPane.getChildren().add(player);
-		
-		Thread javafx = Thread.currentThread();
 
 		player.xProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(32).subtract(16));
 		player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
 		WorldLoader.player.getOrientation().getDirectionProperty().addListener(new ChangeListener<Number>() {
-
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				switch(observable.getValue().intValue()) {
@@ -127,5 +124,4 @@ public class MenuControler implements Initializable{
 			}
 		}); 
 	}
-
 }

@@ -44,17 +44,17 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 	public void handle(KeyEvent event) {
 		if(WorldLoader.player!=null) {
 			
-			if(event.getCode()== KeyCode.Z) {
+			if(event.getCode() == KeyCode.Z) {
 				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY() - 0.4));
 				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.North);
-			}else if(event.getCode()== KeyCode.S){
+			}else if(event.getCode() == KeyCode.S){
 				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY() + 0.4));
 				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.South);}
 			
-			if(event.getCode()== KeyCode.Q) {
+			if(event.getCode() == KeyCode.Q) {
 				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX() - 0.4,WorldLoader.player.getCoordoner().getY()));
 				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.East);
-			}else if(event.getCode()== KeyCode.D) {
+			}else if(event.getCode() == KeyCode.D) {
 				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX() + 0.4,WorldLoader.player.getCoordoner().getY()));
 				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.West);
 			}
