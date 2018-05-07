@@ -1,13 +1,13 @@
-package game.controleur.entity;
+package game.modele.entity;
 
-import game.controleur.utils.Coordoner;
-import game.controleur.utils.Orientation.Direction;
+import game.modele.utils.Coordonnees;
+import game.modele.utils.Orientation.Direction;
 
 public class EntityLiving extends Entity{
 	
 	private Direction direction;//La direction auquel regarde l'entitee
 	
-	public EntityLiving(Coordoner position, Direction direction) {
+	public EntityLiving(Coordonnees position, Direction direction) {
 		super(position);
 		this.direction=direction;
 	}

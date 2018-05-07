@@ -1,4 +1,4 @@
-package game.controleur.utils;
+package game.modele.utils;
 
 public class Orientation {
 	public static enum Direction {

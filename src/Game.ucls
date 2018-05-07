@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.0" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <enumeration id="1" language="java" name="game.controleur.utils.Orientation.Direction" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/controleur/utils/Orientation.java" binary="false" corner="BOTTOM_RIGHT">    
+  <enumeration id="1" language="java" name="game.modele.utils.Orientation.Direction" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/modele/utils/Orientation.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="861" y="165"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -10,8 +10,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="2" language="java" name="game.modele.EntityLivingTexture" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/modele/EntityLivingTexture.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="game.vue.EntityLivingTexture" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/vue/EntityLivingTexture.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="457" y="139"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -19,8 +19,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="game.modele.TileTexture" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/modele/TileTexture.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="game.vue.TileTexture" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/vue/TileTexture.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="442" y="5"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -37,8 +37,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="game.controleur.entity.Entity" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/controleur/entity/Entity.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="game.modele.entity.Entity" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/modele/entity/Entity.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1216" y="260"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -46,8 +46,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="game.controleur.tile.Tile" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/controleur/tile/Tile.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="game.modele.tile.Tile" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/modele/tile/Tile.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1576" y="626"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -55,8 +55,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="game.controleur.entity.Player" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/controleur/entity/Player.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="7" language="java" name="game.modele.entity.Player" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/modele/entity/Player.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1192" y="520"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -64,8 +64,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="game.controleur.utils.Orientation" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/controleur/utils/Orientation.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="8" language="java" name="game.modele.utils.Orientation" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/modele/utils/Orientation.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="724" y="18"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -73,8 +73,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="game.controleur.world.World" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/controleur/world/World.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="9" language="java" name="game.modele.world.World" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/modele/world/World.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1566" y="255"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -82,8 +82,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="game.controleur.entity.EntityLiving" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/controleur/entity/EntityLiving.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="10" language="java" name="game.modele.entity.EntityLiving" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/modele/entity/EntityLiving.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1002" y="340"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -91,8 +91,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="game.controleur.utils.Coordoner" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/controleur/utils/Coordoner.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="11" language="java" name="game.modele.utils.Coordonnees" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/modele/utils/Coordonnees.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1224" y="44"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -100,8 +100,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="game.modele.Texture" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/modele/Texture.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="12" language="java" name="game.vue.Texture" project="ZeldaGame" file="/ZeldaGame/src/game/vue/Texture.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="453" y="344"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -109,8 +109,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="game.controleur.tile.TileEntity" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/controleur/tile/TileEntity.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="13" language="java" name="game.modele.tile.TileEntity" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/modele/tile/TileEntity.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1412" y="608"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -118,8 +118,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="game.controleur.MenuControleur" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/controleur/MenuControleur.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="14" language="java" name="game.controler.MenuControleur" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/controler/MenuControleur.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="218" y="205"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -127,8 +127,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="game.controleur.world.WorldLoader" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/controleur/world/WorldLoader.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="15" language="java" name="game.modele.world.WorldLoader" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/modele/world/WorldLoader.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1576" y="17"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -136,8 +136,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="16" language="java" name="game.controleur.item.Item" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/controleur/item/Item.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="16" language="java" name="game.modele.item.Item" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/modele/item/Item.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="972" y="724"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -221,7 +221,7 @@
   </association>  
   <association id="42">    
     <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="43" name="ground"/>      
+      <attribute id="43" name="tileGround"/>      
       <multiplicity id="44" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    

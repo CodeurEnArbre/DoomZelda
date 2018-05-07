@@ -3,9 +3,9 @@ package game;
 import java.io.File;
 import java.net.URL;
 
-import game.controleur.utils.Coordoner;
-import game.controleur.utils.Orientation.Direction;
-import game.controleur.world.WorldLoader;
+import game.modele.utils.Coordonnees;
+import game.modele.utils.Orientation.Direction;
+import game.modele.world.WorldLoader;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -45,18 +45,18 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 		if(WorldLoader.player!=null) {
 			
 			if(event.getCode()== KeyCode.Z) {
-				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX()-0.18,WorldLoader.player.getCoordoner().getY()));
+				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX()-0.18,WorldLoader.player.getCoordoner().getY()));
 				WorldLoader.player.setDirection(Direction.NORTH);
 			}else if(event.getCode()== KeyCode.S){
-				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX()+0.18,WorldLoader.player.getCoordoner().getY()));
+				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX()+0.18,WorldLoader.player.getCoordoner().getY()));
 				WorldLoader.player.setDirection(Direction.SOUTH);
 			}
 			
 			if(event.getCode()== KeyCode.Q) {
-				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY()-0.18));
+				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY()-0.18));
 				WorldLoader.player.setDirection(Direction.EAST);
 			}else if(event.getCode()== KeyCode.D) {
-				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY()+0.18));
+				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY()+0.18));
 				WorldLoader.player.setDirection(Direction.WEST);
 			}
 		}

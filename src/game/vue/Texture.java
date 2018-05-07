@@ -1,4 +1,4 @@
-package game.modele;
+package game.vue;
 
 import java.awt.image.BufferedImage;
 

@@ -1,14 +1,14 @@
-package game.controleur.world;
+package game.modele.world;
 
 import java.util.ArrayList;
 
-import game.controleur.tile.Tile;
-import game.controleur.tile.TileEntity;
+import game.modele.tile.Tile;
+import game.modele.tile.TileEntity;
 
 public class World {
 	
 	private String zoneName;
-	private Tile ground[];
+	private Tile tileGround[];
 	private Tile tiles[];
 	private Tile tilesTop[];
 	private ArrayList<TileEntity> tileEntity;
@@ -18,7 +18,7 @@ public class World {
 		this.zoneName=zoneName;
 		this.width=width;
 		this.height=height;
-		this.ground=ground;
+		this.tileGround=ground;
 		this.tiles=tiles;
 		this.tilesTop=tilesTop;
 		this.tileEntity=tileEntity;
@@ -38,7 +38,7 @@ public class World {
 	
 	public Tile getTileTerrain(int x, int y) {
 		if(x+y*this.width+1<this.width*this.height) {
-			return ground[x+y*this.width+1];
+			return tileGround[x+y*this.width+1];
 		}else
 			return null;
 	}

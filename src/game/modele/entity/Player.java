@@ -1,16 +1,16 @@
-package game.controleur.entity;
+package game.modele.entity;
 
 import java.util.ArrayList;
 
-import game.controleur.item.Item;
-import game.controleur.utils.Coordoner;
-import game.controleur.utils.Orientation.Direction;
+import game.modele.item.Item;
+import game.modele.utils.Coordonnees;
+import game.modele.utils.Orientation.Direction;
 
 public class Player extends EntityLiving{
 	
 	private ArrayList<Item> inventory;
 	
-	public Player(ArrayList<Item> inventory, Coordoner position, Direction direction) {
+	public Player(ArrayList<Item> inventory, Coordonnees position, Direction direction) {
 		super(position,direction);
 		this.inventory=inventory;
 	}

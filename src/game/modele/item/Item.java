@@ -1,4 +1,4 @@
-package game.controleur.item;
+package game.modele.item;
 
 public class Item {
 	

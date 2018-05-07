@@ -1,9 +1,9 @@
-package game.controleur.utils;
+package game.modele.utils;
 
-public class Coordoner {
+public class Coordonnees {
 	private double x,y;
 	
-	public Coordoner(double x, double y) {
+	public Coordonnees(double x, double y) {
 		this.x=x;
 		this.y=y;
 	}
