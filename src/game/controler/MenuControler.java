@@ -18,7 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 
-public class MenuControleur implements Initializable{
+public class MenuControler implements Initializable{
 
 	@FXML
 	private Pane EntityPane;
