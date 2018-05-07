@@ -30,6 +30,7 @@ public class WorldLoader {
 			int width = Integer.parseInt(br.readLine());
 			int height = Integer.parseInt(br.readLine());
 
+			
 			Tile[][] tileGround = makeTileGrid(width, height, br);
 
 			Tile[][] tileSolid =  makeTileGrid(width, height, br);
@@ -46,7 +47,7 @@ public class WorldLoader {
 	}
 	private static Tile[][] makeTileGrid(int width,int height,BufferedReader br){
 		try {
-			Tile[][] tile = new Tile[width][height];
+			Tile[][] tile = new Tile[height][width];
 			Pattern pat = Pattern.compile(",");
 			for(int i = 0; i < height;i++) {
 				String[] tabGround = pat.split(new StringBuilder(br.readLine()));
@@ -58,7 +59,6 @@ public class WorldLoader {
 			e.printStackTrace();
 			return null;
 		}
-
 	}
 
 }

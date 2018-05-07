@@ -79,7 +79,7 @@ public class MenuControler implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		WorldLoader.loadWorld("TinyMap");
+		WorldLoader.loadWorld("Road");
 
 		TilePaneGround.setMinSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
 		TilePaneGround.setMaxSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
