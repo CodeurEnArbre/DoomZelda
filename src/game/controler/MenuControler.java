@@ -1,6 +1,8 @@
 package game.controler;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import game.modele.utils.Direction;
@@ -13,11 +15,15 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class MenuControler implements Initializable{
 
+	
+	Map<Integer,Image> dicoImage;
+	
 	@FXML
 	private Pane EntityPane;
 
@@ -53,30 +59,22 @@ public class MenuControler implements Initializable{
 		for(int y=0;y<WorldLoader.currentMap.getHeight();y++) {
 			for(int x=0;x<WorldLoader.currentMap.getWidth();x++) {
 
-					
-					int i = WorldLoader.currentMap.getTileTerrain(y, x).getId();
-					i = i == 0 ? 0 : i -1;
-					  
-					ImageView tile = new ImageView(SwingFXUtils.toFXImage(TileTexture.getTileTexture(i).getTexture(), null));
+					ImageView tile = new ImageView(dicoImage.get(WorldLoader.currentMap.getTileTerrain(y, x).getId()));	
+					tile.setX(x*32);
+					tile.setY(y*32);
 					paneTerrain.getChildren().add(tile);
+					
+					tile = new ImageView(dicoImage.get(WorldLoader.currentMap.getTile(y, x).getId()));
 					tile.setX(x*32);
 					tile.setY(y*32);
-					
-					i = WorldLoader.currentMap.getTile(y, x).getId();
-					i = i == 0 ? 0 : i -1;
-					
-					tile = new ImageView(SwingFXUtils.toFXImage(TileTexture.getTileTexture(i).getTexture(), null));
 					paneTile.getChildren().add(tile);
+					
+					tile = new ImageView(dicoImage.get(WorldLoader.currentMap.getTileTop(y, x).getId()));
 					tile.setX(x*32);
 					tile.setY(y*32);
-					
-					i = WorldLoader.currentMap.getTileTop(y, x).getId();
-					i = i == 0 ? 0 : i -1;
-					
-					tile = new ImageView(SwingFXUtils.toFXImage(TileTexture.getTileTexture(i).getTexture(), null));
 					paneTop.getChildren().add(tile);
-					tile.setX(x*32);
-					tile.setY(y*32);
+					
+
 			}
 		}
 	}
@@ -84,6 +82,10 @@ public class MenuControler implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		dicoImage = new HashMap<>();
+		LoadDicoMap(dicoImage);
+		
+		
 		WorldLoader.loadWorld("TinyMap");
 
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
@@ -121,5 +123,10 @@ public class MenuControler implements Initializable{
 				}
 			}
 		}); 
+	}
+	private void LoadDicoMap(Map<Integer,Image> dico) {
+		for(int x = 0; x < 256; x++) {
+				dico.put(x + 1,SwingFXUtils.toFXImage(TileTexture.getTileTexture(x).getTexture(), null));
+		}
 	}
 }
