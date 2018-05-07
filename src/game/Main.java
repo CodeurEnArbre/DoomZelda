@@ -59,10 +59,6 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 				WorldLoader.player.setCoordoner(new Coordoner(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY()+0.18));
 				WorldLoader.player.setDirection(Direction.WEST);
 			}
-			
-			System.out.println(WorldLoader.player.getCoordoner().getX()+" "+WorldLoader.player.getCoordoner().getY());
 		}
-			
-		
 	}
 }
