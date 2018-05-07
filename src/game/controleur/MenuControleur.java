@@ -19,81 +19,82 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 
 public class MenuControleur implements Initializable{
-	
+
 	@FXML
 	private Pane EntityPane;
-	
+
 	@FXML
-    private TilePane TilePaneGround;
+	private TilePane TilePaneGround;
 
-    @FXML
-    private TilePane TilePaneSolid;
-
-    @FXML
-    private TilePane TilePaneTop;
-    
-    private ImageView player;
-	
 	@FXML
-    void option(ActionEvent event) {
+	private TilePane TilePaneSolid;
 
-    }
+	@FXML
+	private TilePane TilePaneTop;
 
-    @FXML
-    void play(ActionEvent event) {
-    	
-		
-    }
+	private ImageView player;
 
-    @FXML
-    void quitter(ActionEvent event) {
+	@FXML
+	void option(ActionEvent event) {
 
-    }
-    
-    private void printCalque(TilePane pane,int calque) {
-    	
-    			for(int y=0;y<=WorldLoader.currentMap.getHeight();y++) {
-    				for(int x=0;x<WorldLoader.currentMap.getWidth();x++) {
-    					
-    						ImageView texture = new ImageView();
-    						switch (calque){
-    			    		case 0:
-    			    			if(WorldLoader.currentMap.getTileTerrain(x, y)!=null) {
-    			    				texture.setImage(SwingFXUtils.toFXImage(TileTexture.getTileTexture(WorldLoader.currentMap.getTileTerrain(x, y).getId()-1).getTexture(), null));      						
-    			    				pane.getChildren().add(texture);
-    			    			}
-    			    			break;
-    			    		case 1:
-    			    			if(WorldLoader.currentMap.getTile(x, y)!=null) {
-    			    				texture.setImage(SwingFXUtils.toFXImage(TileTexture.getTileTexture(WorldLoader.currentMap.getTile(x, y).getId()-1).getTexture(), null));      						
-    			    				pane.getChildren().add(texture);
-    			    			}
-    			    			break;
-    			    		case 2:
-    			    			if(WorldLoader.currentMap.getTileTop(x, y)!=null) {
-    			    				texture.setImage(SwingFXUtils.toFXImage(TileTexture.getTileTexture(WorldLoader.currentMap.getTileTop(x, y).getId()-1).getTexture(), null)); 
-    			    				pane.getChildren().add(texture);
-    			    			}
-    			    			break;
-    						}
-    				}
-    			}
+	}
 
-    }
-    
+	@FXML
+	void play(ActionEvent event) {
+
+
+	}
+
+	@FXML
+	void quitter(ActionEvent event) {
+
+	}
+
+	private void printCalque(TilePane pane,int calque) {
+
+		for(int y=0;y<=WorldLoader.currentMap.getHeight();y++) {
+			for(int x=0;x<WorldLoader.currentMap.getWidth();x++) {
+
+				ImageView texture = new ImageView();
+				switch (calque){
+				case 0:
+					if(WorldLoader.currentMap.getTileTerrain(x, y)!=null) {
+						texture.setImage(SwingFXUtils.toFXImage(TileTexture.getTileTexture(WorldLoader.currentMap.getTileTerrain(x, y).getId()-1).getTexture(), null));      						
+						pane.getChildren().add(texture);
+					}
+					break;
+				case 1:
+					if(WorldLoader.currentMap.getTile(x, y)!=null) {
+						texture.setImage(SwingFXUtils.toFXImage(TileTexture.getTileTexture(WorldLoader.currentMap.getTile(x, y).getId()-1).getTexture(), null));      						
+						pane.getChildren().add(texture);
+					}
+					break;
+				case 2:
+					if(WorldLoader.currentMap.getTileTop(x, y)!=null) {
+						texture.setImage(SwingFXUtils.toFXImage(TileTexture.getTileTexture(WorldLoader.currentMap.getTileTop(x, y).getId()-1).getTexture(), null)); 
+						pane.getChildren().add(texture);
+					}
+					break;
+				}
+			}
+
+		}
+
+	}
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		WorldLoader.loadWorld("TinyMap");
-		
+
 		TilePaneGround.setMinSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
 		TilePaneGround.setMaxSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
 		TilePaneSolid.setMinSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
 		TilePaneSolid.setMaxSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
 		TilePaneTop.setMinSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
 		TilePaneTop.setMaxSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
-		
+
 		printCalque(TilePaneGround,0);
 		printCalque(TilePaneSolid,1);
 		WorldLoader.loadPlayer();
@@ -116,22 +117,22 @@ public class MenuControleur implements Initializable{
 		player.setX(WorldLoader.player.getCoordoner().getY());
 		EntityPane.getChildren().add(player);
 		printCalque(TilePaneTop,2);
-		
-		Thread javafx = Thread.currentThread();
-		
-		   new Thread("Graphique Updateur"){
-			   @Override
-			   public void run(){ 
-					while (true){
 
-							player.setY(WorldLoader.player.getCoordoner().getX()*32-32);
-							player.setX(WorldLoader.player.getCoordoner().getY()*32-16);
-				
-						
-						if(!javafx.isAlive()){
-							System.exit(0);
-						}}}}.start();
-		
+		Thread javafx = Thread.currentThread();
+
+		new Thread("Graphique Updateur"){
+			@Override
+			public void run(){ 
+				while (true){
+
+					player.setY(WorldLoader.player.getCoordoner().getX()*32-32);
+					player.setX(WorldLoader.player.getCoordoner().getY()*32-16);
+
+
+					if(!javafx.isAlive()){
+						System.exit(0);
+					}}}}.start();
+
 	}
 
 }
