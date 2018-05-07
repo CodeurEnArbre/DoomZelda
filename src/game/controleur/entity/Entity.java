@@ -14,11 +14,11 @@ public class Entity {
 	public Coordoner getCoordoner() {
 		return this.coordoner;
 	}
-	
+
 	public void setCoordoner(Coordoner coordoner) {
-		int tileId = WorldLoader.currentMap.getTile( (int)coordoner.getY(), (int)coordoner.getX() ).getId() ;
+		int tileId = WorldLoader.currentMap.getTile((int)coordoner.getY(), (int)coordoner.getX()).getId() ;
 		System.out.println("id:"+tileId);
-		if(tileId <= 1 && coordoner.getX()>=0 && coordoner.getY()>=0)
+		if(tileId <= 1 && coordoner.getX() >= 0 && coordoner.getY() >= 0)
 			this.coordoner=coordoner;
 	}
 }
