@@ -1,16 +1,11 @@
 package game.controler;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
 
-import javax.imageio.ImageIO;
-
+import game.modele.utils.Orientation.Direction;
 import game.modele.world.WorldLoader;
+import game.vue.EntityLivingTexture;
 import game.vue.TileTexture;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -123,15 +118,8 @@ public class MenuControler implements Initializable{
 		player=new ImageView();
 
 
-		try {
-			player.setImage(SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/playerIcon.png").toURI().toURL()), null));
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 2).getTexture(), null));
 		player.setFitWidth(32);
 		player.setFitHeight(64);
 		player.setX(WorldLoader.player.getCoordoner().getX());
@@ -143,8 +131,26 @@ public class MenuControler implements Initializable{
 
 		new Thread("Graphique Updateur"){
 			@Override
-			public void run(){ 
+			public void run(){
+				int direction=2;
 				while (true){
+					//TODO A changer (binder)
+					if(WorldLoader.player.getDirection() == Direction.NORTH && direction != 0) {
+						player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 0).getTexture(), null));
+						direction=0;
+					}
+					if(WorldLoader.player.getDirection() == Direction.WEST && direction != 1) {
+						player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 1).getTexture(), null));
+						direction=1;
+					}
+					if(WorldLoader.player.getDirection() == Direction.SOUTH && direction != 2) {
+						player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 2).getTexture(), null));
+						direction=2;
+					}
+					if(WorldLoader.player.getDirection() == Direction.EAST && direction != 3) {
+						player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 3).getTexture(), null));
+						direction=3;
+					}
 					
 					player.setY(WorldLoader.player.getCoordoner().getX()*32-32);
 					player.setX(WorldLoader.player.getCoordoner().getY()*32-16);
