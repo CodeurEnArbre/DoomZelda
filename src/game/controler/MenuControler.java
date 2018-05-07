@@ -84,18 +84,8 @@ public class MenuControler implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-	
-		
-		
 		WorldLoader.loadWorld("TinyMap");
 
-		PaneGround.setMinSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
-		PaneGround.setMaxSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
-		PaneSolid.setMinSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
-		PaneSolid.setMaxSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
-		PaneTop.setMinSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
-		PaneTop.setMaxSize(WorldLoader.currentMap.getWidth()*32, WorldLoader.currentMap.getHeight()*32);
-		
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
 		
 	
