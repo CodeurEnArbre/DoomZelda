@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.world.WorldLoader;
 import game.vue.EntityLivingTexture;
@@ -13,13 +14,16 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
-public class MenuControler implements Initializable{
+public class MenuControler implements Initializable , EventHandler<KeyEvent>{
 
 	
 	Map<Integer,Image> dicoImage;
@@ -53,7 +57,27 @@ public class MenuControler implements Initializable{
 	void quitter(ActionEvent event) {
 		
 	}
-
+	@Override
+	public void handle(KeyEvent event) {
+		if(WorldLoader.player!=null) {
+			
+			if(event.getCode() == KeyCode.Z) {
+				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY() - 0.4));
+				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.North);
+			}else if(event.getCode() == KeyCode.S){
+				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY() + 0.4));
+				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.South);}
+			
+			if(event.getCode() == KeyCode.Q) {
+				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX() - 0.4,WorldLoader.player.getCoordoner().getY()));
+				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.East);
+			}else if(event.getCode() == KeyCode.D) {
+				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX() + 0.4,WorldLoader.player.getCoordoner().getY()));
+				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.West);
+			}
+		}
+	}
+	
 	private void printCalqueTile(Pane paneTerrain,Pane paneTile,Pane paneTop) {
 		
 		for(int y=0;y<WorldLoader.currentMap.getHeight();y++) {
@@ -86,7 +110,7 @@ public class MenuControler implements Initializable{
 		LoadDicoMap(dicoImage);
 		
 		
-		WorldLoader.loadWorld("TinyMap");
+		WorldLoader.loadWorld("Road");
 
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
 		
@@ -102,8 +126,14 @@ public class MenuControler implements Initializable{
 		player.setX(WorldLoader.player.getCoordoner().getY());
 		EntityPane.getChildren().add(player);
 
-		player.xProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(32).subtract(16));
-		player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
+	
+		
+		//player.xProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(32).subtract(16));
+		//player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
+		
+		
+		
+		
 		WorldLoader.player.getOrientation().getDirectionProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
