@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.TilePane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controler.MenuControler">
+<Pane fx:id="paneWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controler.MenuControler">
    <children>
       <Pane fx:id="PaneGround" layoutX="-6.0" layoutY="-8.0" prefHeight="418.0" prefWidth="616.0" />
       <Pane fx:id="PaneSolid" layoutX="-6.0" layoutY="-8.0" prefHeight="418.0" prefWidth="616.0" />

@@ -29,6 +29,9 @@ public class MenuControler implements Initializable , EventHandler<KeyEvent>{
 	Map<Integer,Image> dicoImage;
 	
 	@FXML
+    private Pane paneWindow;
+	
+	@FXML
 	private Pane EntityPane;
 
 	@FXML
