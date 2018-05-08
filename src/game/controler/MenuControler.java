@@ -1,7 +1,6 @@
 package game.controler;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -10,8 +9,6 @@ import game.modele.utils.Direction;
 import game.modele.world.WorldLoader;
 import game.vue.EntityLivingTexture;
 import game.vue.TileTexture;
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
@@ -114,11 +111,14 @@ public class MenuControler implements Initializable{
 		player.setX(WorldLoader.player.getCoordoner().getX());
 		player.setY(WorldLoader.player.getCoordoner().getY());
 		EntityPane.getChildren().add(player);
-
-	
 		
+		paneWindow.layoutXProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(-32).add(432));
+		paneWindow.layoutYProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(-32).add(320));
+	
 		player.xProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(32).subtract(16));
 		player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
+		
+		
 		
 		ImageView imageCoeur1 = new ImageView();
 		
