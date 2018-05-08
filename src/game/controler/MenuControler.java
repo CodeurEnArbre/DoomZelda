@@ -155,9 +155,13 @@ public class MenuControler implements Initializable{
 		WorldLoader.player.getPV().addListener(new ChangeListener<Number>() {
 
 			@Override
-			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-				// TODO Auto-generated method stub
-				
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				if(oldValue.intValue() > newValue.intValue()) {
+					//
+				}else {
+					//
+				}
+				System.out.println(WorldLoader.player.getPV().getValue());
 			}
 			
 		});
