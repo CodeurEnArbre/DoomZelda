@@ -1,6 +1,7 @@
 package game.controler;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -9,6 +10,8 @@ import game.modele.utils.Direction;
 import game.modele.world.WorldLoader;
 import game.vue.EntityLivingTexture;
 import game.vue.TileTexture;
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
@@ -24,6 +27,7 @@ public class MenuControler implements Initializable{
 	
 	Map<Integer,Image> dicoImage;
 	
+	
 	@FXML
     private Pane paneWindow;
 	
@@ -38,8 +42,12 @@ public class MenuControler implements Initializable{
 
 	@FXML
 	private Pane PaneTop;
+	
+	@FXML 
+	private Pane PaneHUD;
 
 	private ImageView player;
+		
 
 	@FXML
 	void option(ActionEvent event) {
@@ -104,7 +112,7 @@ public class MenuControler implements Initializable{
 		player.setFitWidth(32);
 		player.setFitHeight(64);
 		player.setX(WorldLoader.player.getCoordoner().getX());
-		player.setX(WorldLoader.player.getCoordoner().getY());
+		player.setY(WorldLoader.player.getCoordoner().getY());
 		EntityPane.getChildren().add(player);
 
 	
@@ -112,8 +120,14 @@ public class MenuControler implements Initializable{
 		player.xProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(32).subtract(16));
 		player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
 		
+		ImageView imageCoeur1 = new ImageView();
 		
-		
+		imageCoeur1.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("CoeurPlein", 64, 64, 0, 0).getTexture(), null));
+		imageCoeur1.setFitWidth(30);
+		imageCoeur1.setFitHeight(30);
+		imageCoeur1.setX(5);
+		imageCoeur1.setY(5);
+		PaneHUD.getChildren().add(imageCoeur1);
 		
 		WorldLoader.player.getOrientation().getDirectionProperty().addListener(new ChangeListener<Number>() {
 			@Override
@@ -134,10 +148,28 @@ public class MenuControler implements Initializable{
 				}
 			}
 		}); 
+		
+		WorldLoader.player.getPV().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
 	}
 	private void LoadDicoMap(Map<Integer,Image> dico) {
 		for(int x = 0; x < 256; x++) {
 				dico.put(x + 1,SwingFXUtils.toFXImage(TileTexture.getTileTexture(x).getTexture(), null));
 		}
 	}
+	
+	/*private void perdrePV() {
+		WorldLoader.player.perdrePV();
+	}
+	
+	private void gagnerPV() {
+		WorldLoader.player.gagnerPV();
+	}*/
 }

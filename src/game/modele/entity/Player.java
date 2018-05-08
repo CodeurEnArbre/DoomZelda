@@ -26,5 +26,4 @@ public class Player extends EntityLiving{
 	public void addInventoryItem(Item item) {
 		this.inventory.add(item);
 	}
-	
 }
