@@ -1,6 +1,7 @@
 package game.controler;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -8,7 +9,7 @@ import java.util.ResourceBundle;
 import game.modele.utils.Direction;
 import game.modele.world.WorldLoader;
 import game.vue.EntityLivingTexture;
-import game.vue.TileTexture;
+import game.vue.TextureLoader;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
@@ -22,14 +23,19 @@ import javafx.scene.layout.Pane;
 public class MenuControler implements Initializable{
 
 	
-	Map<Integer,Image> dicoImage;
-	
+	Map<Integer,Image> dicoImageTileTextureMap;
+	Map<Integer,Image> dicoImageItemTextureMap;
+	ArrayList<ImageView> coeurs;
 	
 	@FXML
-    private Pane paneWindow;
+    private Pane paneWindow;//Main
 
+	@FXML 
+	private Pane PaneHUD;
+	
     @FXML
     private Pane paneGame;
+    
 	
 	@FXML
 	private Pane EntityPane;
@@ -43,8 +49,6 @@ public class MenuControler implements Initializable{
 	@FXML
 	private Pane PaneTop;
 	
-	@FXML 
-	private Pane PaneHUD;
 
 	private ImageView player;
 		
@@ -71,17 +75,17 @@ public class MenuControler implements Initializable{
 		for(int y=0;y<WorldLoader.currentMap.getHeight();y++) {
 			for(int x=0;x<WorldLoader.currentMap.getWidth();x++) {
 
-					ImageView tile = new ImageView(dicoImage.get(WorldLoader.currentMap.getTileTerrain(y, x).getId()));	
+					ImageView tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTileTerrain(y, x).getId()));	
 					tile.setX(x*32);
 					tile.setY(y*32);
 					paneTerrain.getChildren().add(tile);
 					
-					tile = new ImageView(dicoImage.get(WorldLoader.currentMap.getTile(y, x).getId()));
+					tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTile(y, x).getId()));
 					tile.setX(x*32);
 					tile.setY(y*32);
 					paneTile.getChildren().add(tile);
 					
-					tile = new ImageView(dicoImage.get(WorldLoader.currentMap.getTileTop(y, x).getId()));
+					tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTileTop(y, x).getId()));
 					tile.setX(x*32);
 					tile.setY(y*32);
 					paneTop.getChildren().add(tile);
@@ -95,8 +99,11 @@ public class MenuControler implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		dicoImage = new HashMap<>();
-		LoadDicoMap(dicoImage);
+		dicoImageTileTextureMap = new HashMap<>();
+		dicoImageItemTextureMap = new HashMap<>();
+		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
+		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
+		//TODO LoadDicoMap(dicoImageItemTextureMap,16,16);
 		
 		
 		WorldLoader.loadWorld("TinyMap");
@@ -122,16 +129,17 @@ public class MenuControler implements Initializable{
 		player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
 		
 		
-		
+		/*
 		ImageView imageCoeur1 = new ImageView();
 		
+		
 		imageCoeur1.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("CoeurPlein", 64, 64, 0, 0).getTexture(), null));
-		imageCoeur1.setFitWidth(30);
-		imageCoeur1.setFitHeight(30);
+		imageCoeur1.setFitWidth(32);
+		imageCoeur1.setFitHeight(32);
 		imageCoeur1.setX(5);
 		imageCoeur1.setY(5);
 		PaneHUD.getChildren().add(imageCoeur1);
-		
+		*/
 		WorldLoader.player.getOrientation().getDirectionProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -152,24 +160,41 @@ public class MenuControler implements Initializable{
 			}
 		}); 
 		
-		WorldLoader.player.getPV().addListener(new ChangeListener<Number>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				if(oldValue.intValue() > newValue.intValue()) {
-					//
-				}else {
-					//
-				}
-				System.out.println(WorldLoader.player.getPV().getValue());
-			}
-			
-		});
-	}
-	private void LoadDicoMap(Map<Integer,Image> dico) {
-		for(int x = 0; x < 256; x++) {
-				dico.put(x + 1,SwingFXUtils.toFXImage(TileTexture.getTileTexture(x).getTexture(), null));
+		coeurs = new ArrayList<ImageView>();
+		
+		for(int numCoeur=WorldLoader.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
+			coeurs.add(new ImageView(dicoImageItemTextureMap.get(2)));
 		}
+		
+		updateHearts();
+		
+		for(ImageView coeur:coeurs){
+			PaneHUD.getChildren().add(coeur);	
+			System.out.println("++");
+		}
+		
+	}
+	private void LoadDicoMap(Map<Integer,Image> dico,int imageWidthPixels, int imageHeightPixels, int imageWidth, int imageHeight, String textureMapName) {
+		for(int x = 0; x < imageWidth*imageHeight; x++) {
+				dico.put(x + 1,SwingFXUtils.toFXImage(TextureLoader.getTextureMapImage(textureMapName,imageWidthPixels,imageHeightPixels,imageWidth,imageHeight,x).getTexture(), null));
+		}
+	}
+	
+	private void updateHearts() {
+		int maxPv = WorldLoader.player.getMaxPv().intValue();
+		int pv = WorldLoader.player.getPV().intValue();
+		
+		for(ImageView coeur:coeurs){
+			coeur.setImage(dicoImageItemTextureMap.get(pv>=4?6:1));
+			pv-=4;
+		}
+		
+		int coeurAt=0;
+		for(ImageView coeur:coeurs){
+			coeur.relocate(coeurAt*32+5, 5);
+			coeurAt++;
+		}
+		
 	}
 	
 	/*private void perdrePV() {

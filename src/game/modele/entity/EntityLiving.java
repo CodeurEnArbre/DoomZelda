@@ -8,13 +8,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class EntityLiving extends Entity{
 	
 	protected Direction direction;
-	private IntegerProperty PV = new SimpleIntegerProperty();
+	private IntegerProperty PV;
 	//La direction du regard
 	
 	public EntityLiving(Coordonnees position, Direction direction) {
 		super(position);
 		this.direction=direction;
-		PV.set(3);;
+		PV=new SimpleIntegerProperty(12);
 	}
 	
 	public EntityLiving(Coordonnees position, Direction direction, int pv) {

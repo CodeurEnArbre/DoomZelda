@@ -7,13 +7,13 @@ import java.net.MalformedURLException;
 
 import javax.imageio.ImageIO;
 
-public class TileTexture {
+public class ItemTexture {
 	
-	public static Texture getTileTexture(int id) {
+	public static Texture getItemTexture(int id) {
 		BufferedImage tileMap;
 		Texture tileTexture=null;
 		try {
-			tileMap = ImageIO.read(new File("ressources/textures/textureMap.png").toURI().toURL());
+			tileMap = ImageIO.read(new File("ressources/textures/ItemTextureMap.png").toURI().toURL());
 			
 			tileTexture= new Texture(tileMap, 32, 32, id%16, id/16);
 		} catch (MalformedURLException e) {
@@ -26,4 +26,5 @@ public class TileTexture {
 		
 		return tileTexture;
 	}
+	
 }

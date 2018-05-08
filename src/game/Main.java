@@ -50,8 +50,11 @@ public class Main extends Application implements EventHandler<KeyEvent>{
 				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.North);
 			}else if(event.getCode() == KeyCode.S){
 				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX(),WorldLoader.player.getCoordoner().getY() + 0.4));
-				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.South);}
-			
+				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.South);
+				
+				WorldLoader.player.perdrePV();
+				
+			}
 			if(event.getCode() == KeyCode.Q) {
 				WorldLoader.player.setCoordoner(new Coordonnees(WorldLoader.player.getCoordoner().getX() - 0.4,WorldLoader.player.getCoordoner().getY()));
 				WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.East);
