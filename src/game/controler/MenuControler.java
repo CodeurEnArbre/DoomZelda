@@ -27,6 +27,9 @@ public class MenuControler implements Initializable{
 	
 	@FXML
     private Pane paneWindow;
+
+    @FXML
+    private Pane paneGame;
 	
 	@FXML
 	private Pane EntityPane;
@@ -96,7 +99,7 @@ public class MenuControler implements Initializable{
 		LoadDicoMap(dicoImage);
 		
 		
-		WorldLoader.loadWorld("Road");
+		WorldLoader.loadWorld("TinyMap");
 
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
 		
@@ -112,8 +115,8 @@ public class MenuControler implements Initializable{
 		player.setY(WorldLoader.player.getCoordoner().getY());
 		EntityPane.getChildren().add(player);
 		
-		paneWindow.layoutXProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(-32).add(432));
-		paneWindow.layoutYProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(-32).add(320));
+		paneGame.layoutXProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(-32).add(432));
+		paneGame.layoutYProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(-32).add(320));
 	
 		player.xProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(32).subtract(16));
 		player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
