@@ -173,6 +173,13 @@ public class MenuControler implements Initializable{
 			System.out.println("++");
 		}
 		
+		WorldLoader.player.getPV().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				updateHearts();
+			}
+		});
+		
 	}
 	private void LoadDicoMap(Map<Integer,Image> dico,int imageWidthPixels, int imageHeightPixels, int imageWidth, int imageHeight, String textureMapName) {
 		for(int x = 0; x < imageWidth*imageHeight; x++) {
@@ -183,9 +190,17 @@ public class MenuControler implements Initializable{
 	private void updateHearts() {
 		int maxPv = WorldLoader.player.getMaxPv().intValue();
 		int pv = WorldLoader.player.getPV().intValue();
-		
+		System.out.println(pv);
 		for(ImageView coeur:coeurs){
-			coeur.setImage(dicoImageItemTextureMap.get(pv>=4?6:1));
+			int pvid=0;
+			
+			if(pv>=4)
+				pvid=6;
+			else if(pv<=0)
+				pvid=2;
+			else
+				pvid=pv+2;
+			coeur.setImage(dicoImageItemTextureMap.get(pvid));
 			pv-=4;
 		}
 		

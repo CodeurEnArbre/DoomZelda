@@ -12,12 +12,10 @@ public class Player extends EntityLiving{
 	
 	private ArrayList<Item> inventory;
 	
-	private IntegerProperty maxPv;
 	
 	public Player(ArrayList<Item> inventory, Coordonnees position, Direction direction) {
 		super(position,direction);
 		this.inventory=inventory;
-		maxPv=new SimpleIntegerProperty(12);
 	}
 	
 	public int getInventorySize() {
@@ -31,12 +29,5 @@ public class Player extends EntityLiving{
 	public void addInventoryItem(Item item) {
 		this.inventory.add(item);
 	}
-	
-	public void addHeart() {
-		this.maxPv.add(4);
-	}
-	
-	public IntegerProperty getMaxPv() {
-		return this.maxPv;
-	}
+
 }

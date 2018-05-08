@@ -9,12 +9,14 @@ public class EntityLiving extends Entity{
 	
 	protected Direction direction;
 	private IntegerProperty PV;
+	private IntegerProperty maxPv;
 	//La direction du regard
 	
 	public EntityLiving(Coordonnees position, Direction direction) {
 		super(position);
 		this.direction=direction;
 		PV=new SimpleIntegerProperty(12);
+		maxPv=new SimpleIntegerProperty(12);
 	}
 	
 	public EntityLiving(Coordonnees position, Direction direction, int pv) {
@@ -32,14 +34,25 @@ public class EntityLiving extends Entity{
 	}
 	
 	public void perdrePV() {
-		PV.set(PV.get()-1);
+		if(PV.getValue()>0)
+			PV.set(PV.get()-1);
 	}
 	
 	public void gagnerPV() {
-		PV.set(PV.get()+1);
+		if(PV.getValue()<maxPv.getValue())
+			PV.set(PV.get()+1);
 	}
 	
 	public IntegerProperty getPV() {
 		return PV;
+	}
+	
+	
+	public void addHeart() {
+		this.maxPv.add(4);
+	}
+	
+	public IntegerProperty getMaxPv() {
+		return this.maxPv;
 	}
 }
