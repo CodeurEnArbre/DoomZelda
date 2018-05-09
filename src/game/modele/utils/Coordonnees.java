@@ -18,6 +18,10 @@ public class Coordonnees {
 	public double getX() {
 		return this.x.doubleValue();
 	}
+	public Coordonnees setX(double x) {
+		this.x.set(x);
+		return this;
+	}
 	
 	public DoubleProperty getYpro() {
 		return this.y;
@@ -25,6 +29,11 @@ public class Coordonnees {
 	
 	public double getY() {
 		return this.y.doubleValue();
+	}
+	
+	public Coordonnees setY(double y) {
+		this.y.set(y);
+		return this;
 	}
 	
 	public void setCoordoner(double x, double y) {

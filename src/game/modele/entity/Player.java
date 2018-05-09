@@ -15,6 +15,11 @@ public class Player extends EntityLiving{
 	private ArrayList<Item> inventory;
 	private FloatProperty speed;
 	
+	public boolean moveUP;
+	public boolean moveDown;
+	public boolean moveRight;
+	public boolean moveLeft;
+	
 	public Player(ArrayList<Item> inventory, Coordonnees position, Direction direction) {
 		super(position,direction);
 		this.inventory=inventory;
