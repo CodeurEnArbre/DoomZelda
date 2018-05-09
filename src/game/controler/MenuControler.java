@@ -136,30 +136,30 @@ public class MenuControler implements Initializable{
 				e -> {
 					
 					if(WorldLoader.player.moveDown) {
-						if(!WorldLoader.player.moveLeft && !WorldLoader.player.moveRight)
+						if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight)
 							WorldLoader.player.addY(0.2);
 						else
 							WorldLoader.player.addY(0.14);
 					}
 
 					if(WorldLoader.player.moveUP) {
-						if(!WorldLoader.player.moveLeft && !WorldLoader.player.moveRight)
-							WorldLoader.player.addY(-0.2);
-						else
+						if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight)
 							WorldLoader.player.addY(-0.14);	
+						else
+							WorldLoader.player.addY(-0.2);	
 					}
 					if(WorldLoader.player.moveLeft) {
-						if(!WorldLoader.player.moveUP && !WorldLoader.player.moveDown)
-							WorldLoader.player.addX(-0.2);
-						else
+						if(WorldLoader.player.moveUP ^ WorldLoader.player.moveDown)
 							WorldLoader.player.addX(-0.14);
+						else
+							WorldLoader.player.addX(-0.2);
 					}
 
 					if(WorldLoader.player.moveRight) {
-						if(!WorldLoader.player.moveUP && !WorldLoader.player.moveDown)
-							WorldLoader.player.addX(0.2);
-						else
+						if(WorldLoader.player.moveUP ^ WorldLoader.player.moveDown)
 							WorldLoader.player.addX(0.14);
+						else
+							WorldLoader.player.addX(0.2); 
 					}
 				});
 		GameLoop.getKeyFrames().add(keyf);
