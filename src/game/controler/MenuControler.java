@@ -16,6 +16,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -110,6 +111,9 @@ public class MenuControler implements Initializable{
 
 
 		createGameLoop();
+		addKeyGameLoop(getanimationPlayer());
+
+
 		GameLoop.play();
 	}
 
@@ -165,63 +169,71 @@ public class MenuControler implements Initializable{
 	private void createGameLoop() {
 		GameLoop = new Timeline();
 		GameLoop.setCycleCount(Timeline.INDEFINITE);
-		KeyFrame keyf = new KeyFrame(
-				Duration.seconds(0.017),
-				e -> {
+	}
 
-					if(!WorldLoader.player.moveDown && !WorldLoader.player.moveUP && !WorldLoader.player.moveLeft && !WorldLoader.player.moveRight)
-						WorldLoader.player.resetAnim();
-
-					if(WorldLoader.player.moveDown) {
-						if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight) {
-							WorldLoader.player.addY(0.14);
-							WorldLoader.player.incAnim();
-						}
-						else {
-							WorldLoader.player.addY(0.2);
-							WorldLoader.player.incAnim();
-						}
-					}
-
-					if(WorldLoader.player.moveUP) {
-						if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight)
-						{	
-							WorldLoader.player.addY(-0.14);	
-							WorldLoader.player.incAnim();
-						}else
-						{
-							WorldLoader.player.addY(-0.2);	
-							WorldLoader.player.incAnim();
-						}
-					}
-					if(WorldLoader.player.moveLeft) {
-						if(WorldLoader.player.moveUP ^ WorldLoader.player.moveDown)
-						{
-							WorldLoader.player.addX(-0.14);
-							WorldLoader.player.incAnim();
-						}		else
-						{	WorldLoader.player.addX(-0.2);
-						WorldLoader.player.incAnim();
-						}
-					}
-
-					if(WorldLoader.player.moveRight) {
-						if(WorldLoader.player.moveUP ^ WorldLoader.player.moveDown)
-						{
-							WorldLoader.player.addX(0.14);
-							WorldLoader.player.incAnim();
-						}else
-						{
-							WorldLoader.player.addX(0.2); 
-							WorldLoader.player.incAnim();
-						}
-					}
-				});
+	private void addKeyGameLoop(EventHandler<ActionEvent> e) {
+		KeyFrame keyf = new KeyFrame(Duration.seconds(0.017),e);
 		GameLoop.getKeyFrames().add(keyf);
 	}
-	
-	
-	
+
+	private final static EventHandler<ActionEvent> getanimationPlayer() {
+		return new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+				if(!WorldLoader.player.moveDown && !WorldLoader.player.moveUP && !WorldLoader.player.moveLeft && !WorldLoader.player.moveRight)
+					WorldLoader.player.resetAnim();
+
+				if(WorldLoader.player.moveDown) {
+					if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight) {
+						WorldLoader.player.addY(0.14);
+						WorldLoader.player.incAnim();
+					}
+					else {
+						WorldLoader.player.addY(0.2);
+						WorldLoader.player.incAnim();
+					}
+				}
+
+				if(WorldLoader.player.moveUP) {
+					if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight)
+					{	
+						WorldLoader.player.addY(-0.14);	
+						WorldLoader.player.incAnim();
+					}else
+					{
+						WorldLoader.player.addY(-0.2);	
+						WorldLoader.player.incAnim();
+					}
+				}
+				if(WorldLoader.player.moveLeft) {
+					if(WorldLoader.player.moveUP ^ WorldLoader.player.moveDown)
+					{
+						WorldLoader.player.addX(-0.14);
+						WorldLoader.player.incAnim();
+					}		else
+					{	WorldLoader.player.addX(-0.2);
+					WorldLoader.player.incAnim();
+					}
+				}
+
+				if(WorldLoader.player.moveRight) {
+					if(WorldLoader.player.moveUP ^ WorldLoader.player.moveDown)
+					{
+						WorldLoader.player.addX(0.14);
+						WorldLoader.player.incAnim();
+					}else
+					{
+						WorldLoader.player.addX(0.2); 
+						WorldLoader.player.incAnim();
+					}
+				}
+			}
+		};
+	}
+
+
 	private void updateHearts() {
 		int maxPv = WorldLoader.player.getMaxPv().intValue();
 		int pv = WorldLoader.player.getPV().intValue();
