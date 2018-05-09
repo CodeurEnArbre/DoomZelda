@@ -25,18 +25,25 @@ public class WorldLoader {
 	public static void KeyInteractDown(KeyCode k) {
 		if(k == KeyCode.Z) {
 			WorldLoader.player.moveUP = true;
-			WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.North);	
+			setDirection(Direction.North);	
 		}else if(k == KeyCode.S){
 			WorldLoader.player.moveDown = true;
-			WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.South);
+			setDirection(Direction.South);
 		}
 		if(k == KeyCode.Q) {
 			WorldLoader.player.moveLeft = true;
-			WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.East);
+			setDirection(Direction.East);
 		}else if(k == KeyCode.D) {
 			WorldLoader.player.moveRight = true;	
-			WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.West);
+			setDirection(Direction.West);
 		}
+	}
+	
+	/*
+	 * Set Direction
+	 * */
+	public static void setDirection(int direction) {
+		WorldLoader.player.getOrientation().getDirectionProperty().setValue(direction);
 	}
 
 	public static void KeyInteractUp(KeyCode k) {
@@ -90,9 +97,4 @@ public class WorldLoader {
 			return null;
 		}
 	}
-
-
-
-
-
 }
