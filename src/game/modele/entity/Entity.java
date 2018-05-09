@@ -2,11 +2,14 @@ package game.modele.entity;
 
 import game.modele.utils.Coordonnees;
 import game.modele.world.WorldLoader;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class Entity {
 
 	private Coordonnees coordonnes;
-
+	protected IntegerProperty animationIndice = new SimpleIntegerProperty(0);
+	
 	public Entity(Coordonnees coordonnees) {
 		this.coordonnes=coordonnees;
 	}
@@ -53,4 +56,19 @@ public class Entity {
 		int tileId = WorldLoader.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).getId() ;
 		return (tileId <= 1 && coordonnees.getX() >= 0 && coordonnees.getY() >= 0);
 	}
+	//animation
+		public void incAnim() {
+			this.animationIndice.set(
+					this.animationIndice.get()
+					+ (this.animationIndice.get() < 11 ? 1 : -11));
+		}
+		
+		public IntegerProperty getAnimationProperty() {
+			return this.animationIndice;
+		}
+		
+		
+		public void resetAnim() {
+			this.animationIndice.set(0);
+		}
 }

@@ -11,7 +11,7 @@ public class EntityLiving extends Entity{
 	protected IntegerProperty PV;
 	protected IntegerProperty maxPv;
 	//La direction du regard
-	protected IntegerProperty animationIndice = new SimpleIntegerProperty(0);
+
 	
 	
 	public EntityLiving(Coordonnees position, Direction direction) {
@@ -59,19 +59,5 @@ public class EntityLiving extends Entity{
 	}
 	
 	
-	//animation
-	public void incAnim() {
-		this.animationIndice.set(
-				this.animationIndice.get()
-				+ (this.animationIndice.get() < 11 ? 1 : -11));
-	}
 	
-	public IntegerProperty getAnimationProperty() {
-		return this.animationIndice;
-	}
-	
-	
-	public void resetAnim() {
-		this.animationIndice.set(0);
-	}
 }
