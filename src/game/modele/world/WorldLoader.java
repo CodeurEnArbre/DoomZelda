@@ -21,34 +21,43 @@ public class WorldLoader {
 	public static void loadPlayer() {
 		player = new Player(null,new Coordonnees(14,10),new Direction(5));
 	}
-	
+
 	/*
 	 * Assignation des booleans de direction à l'enfoncement de la touche
 	 * */
 	public static void KeyInteractDown(KeyCode k) {
+
 		if(k == KeyCode.Z) {
-			WorldLoader.player.moveUP = true;
-			setDirection(Direction.North);	
+			if(!WorldLoader.player.moveDown) {
+				WorldLoader.player.moveUP = true;
+				setDirection(Direction.North);	
+			}
 		}else if(k == KeyCode.S){
-			WorldLoader.player.moveDown = true;
-			setDirection(Direction.South);
+			if(!WorldLoader.player.moveUP) {
+				WorldLoader.player.moveDown = true;
+				setDirection(Direction.South);
+			}
 		}
 		if(k == KeyCode.Q) {
-			WorldLoader.player.moveLeft = true;
-			setDirection(Direction.East);
+			if(!WorldLoader.player.moveRight) {
+				WorldLoader.player.moveLeft = true;
+				setDirection(Direction.East);
+			}
 		}else if(k == KeyCode.D) {
-			WorldLoader.player.moveRight = true;	
-			setDirection(Direction.West);
+			if(!WorldLoader.player.moveLeft) {
+				WorldLoader.player.moveRight = true;	
+				setDirection(Direction.West);
+			}
 		}
 	}
-	
+
 	/*
 	 * Set Direction
 	 * */
 	public static void setDirection(int direction) {
 		WorldLoader.player.getOrientation().getDirectionProperty().setValue(direction);
 	}
-	
+
 	/*
 	 * Assignation des booleans de direction au relachement de la touche
 	 * */
@@ -62,6 +71,11 @@ public class WorldLoader {
 		}else if(k == KeyCode.D) {
 			WorldLoader.player.moveRight = false;
 		}
+
+
+
+
+
 	}
 
 	/*
@@ -91,7 +105,7 @@ public class WorldLoader {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/*
 	 * Chargement d'un Tableau de Tile utilisé par la fonction loadWorld();
 	 * */

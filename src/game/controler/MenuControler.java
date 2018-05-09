@@ -307,9 +307,8 @@ public class MenuControler implements Initializable{
 							break;
 						}
 					}
-
 				}
-				);
+			);
 
 
 	}
