@@ -65,7 +65,7 @@ public class Entity {
 		public void incAnim() {
 			this.animationIndice.set(
 					this.animationIndice.get()
-					+ (this.animationIndice.get() < 11 ? 1 : -11));
+					+ (this.animationIndice.get() < 35 ? 1 : -35));
 		}
 		
 		public IntegerProperty getAnimationProperty() {

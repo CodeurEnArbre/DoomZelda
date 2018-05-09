@@ -294,16 +294,16 @@ public class MenuControler implements Initializable{
 
 						switch(WorldLoader.player.getOrientation().getDirection()) {
 						case Direction.North:
-							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())));
+							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)));
 							break;
 						case Direction.West:
-							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())+12));
+							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+12));
 							break;
 						case Direction.South:
-							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())+24));
+							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+24));
 							break;
 						case Direction.East:
-							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())+36));
+							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+36));
 							break;
 						}
 					}
