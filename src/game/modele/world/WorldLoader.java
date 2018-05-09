@@ -21,24 +21,37 @@ public class WorldLoader {
 	public static void loadPlayer() {
 		player = new Player(null,new Coordonnees(14,10),new Direction(5));
 	}
-
+	
+	/*
+	 * Assignation des booleans de direction à l'enfoncement de la touche
+	 * */
 	public static void KeyInteractDown(KeyCode k) {
 		if(k == KeyCode.Z) {
 			WorldLoader.player.moveUP = true;
-			WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.North);	
+			setDirection(Direction.North);	
 		}else if(k == KeyCode.S){
 			WorldLoader.player.moveDown = true;
-			WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.South);
+			setDirection(Direction.South);
 		}
 		if(k == KeyCode.Q) {
 			WorldLoader.player.moveLeft = true;
-			WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.East);
+			setDirection(Direction.East);
 		}else if(k == KeyCode.D) {
 			WorldLoader.player.moveRight = true;	
-			WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.West);
+			setDirection(Direction.West);
 		}
 	}
-
+	
+	/*
+	 * Set Direction
+	 * */
+	public static void setDirection(int direction) {
+		WorldLoader.player.getOrientation().getDirectionProperty().setValue(direction);
+	}
+	
+	/*
+	 * Assignation des booleans de direction au relachement de la touche
+	 * */
 	public static void KeyInteractUp(KeyCode k) {
 		if(k == KeyCode.Z) {
 			WorldLoader.player.moveUP = false;
@@ -51,6 +64,9 @@ public class WorldLoader {
 		}
 	}
 
+	/*
+	 * Chargement de la map : création du tableau utilisé par l'affichage
+	 * */
 	public static void loadWorld(String file) {
 		try {
 			ArrayList<TileEntity> tileEntity= new ArrayList<TileEntity>();
@@ -75,6 +91,10 @@ public class WorldLoader {
 			e.printStackTrace();
 		}
 	}
+	
+	/*
+	 * Chargement d'un Tableau de Tile utilisé par la fonction loadWorld();
+	 * */
 	private static Tile[][] makeTileGrid(int width,int height,BufferedReader br){
 		try {
 			Tile[][] tile = new Tile[height][width];
@@ -90,9 +110,4 @@ public class WorldLoader {
 			return null;
 		}
 	}
-
-
-
-
-
 }
