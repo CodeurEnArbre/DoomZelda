@@ -130,47 +130,62 @@ public class MenuControler implements Initializable{
 					}
 
 				}
-			);
+				);
 
 
-		
+
 		Timeline GameLoop = new Timeline();
 		GameLoop.setCycleCount(Timeline.INDEFINITE);
 		KeyFrame keyf = new KeyFrame(
 				Duration.seconds(0.017),
 				e -> {
-				
+
 					if(!WorldLoader.player.moveDown && !WorldLoader.player.moveUP && !WorldLoader.player.moveLeft && !WorldLoader.player.moveRight)
 						WorldLoader.player.resetAnim();
-					else
-						WorldLoader.player.incAnim();
-					
+
 					if(WorldLoader.player.moveDown) {
 						if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight) {
 							WorldLoader.player.addY(0.14);
+							WorldLoader.player.incAnim();
 						}
-						else
+						else {
 							WorldLoader.player.addY(0.2);
+							WorldLoader.player.incAnim();
+						}
 					}
 
 					if(WorldLoader.player.moveUP) {
 						if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight)
+						{	
 							WorldLoader.player.addY(-0.14);	
-						else
+							WorldLoader.player.incAnim();
+						}else
+						{
 							WorldLoader.player.addY(-0.2);	
+							WorldLoader.player.incAnim();
+						}
 					}
 					if(WorldLoader.player.moveLeft) {
 						if(WorldLoader.player.moveUP ^ WorldLoader.player.moveDown)
+						{
 							WorldLoader.player.addX(-0.14);
-						else
-							WorldLoader.player.addX(-0.2);
+							WorldLoader.player.incAnim();
+						}		else
+						{	WorldLoader.player.addX(-0.2);
+						WorldLoader.player.incAnim();
+						}
 					}
 
 					if(WorldLoader.player.moveRight) {
 						if(WorldLoader.player.moveUP ^ WorldLoader.player.moveDown)
+						{
 							WorldLoader.player.addX(0.14);
-						else
+							WorldLoader.player.incAnim();
+						}else
+						{
 							WorldLoader.player.addX(0.2); 
+							WorldLoader.player.incAnim();
+						}
 					}
 				});
 		GameLoop.getKeyFrames().add(keyf);
