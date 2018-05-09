@@ -181,11 +181,6 @@ public class MenuControler implements Initializable{
 
 			@Override
 			public void handle(ActionEvent event) {
-
-				System.out.println(WorldLoader.player.moveDown + " "
-						+ WorldLoader.player.moveUP + " "
-						+ WorldLoader.player.moveLeft + " "
-						+ WorldLoader.player.moveRight + " ");
 				
 				if(!WorldLoader.player.moveDown && !WorldLoader.player.moveUP && !WorldLoader.player.moveLeft && !WorldLoader.player.moveRight) {
 					WorldLoader.player.resetAnim();
