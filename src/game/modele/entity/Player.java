@@ -6,9 +6,7 @@ import game.modele.item.Item;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import javafx.beans.property.FloatProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 
 public class Player extends EntityLiving{
 	
@@ -26,12 +24,12 @@ public class Player extends EntityLiving{
 		this.speed = new SimpleFloatProperty();
 	}
 	
+	//Récupérer la vitess de déplacement
 	public FloatProperty getSpeed() {
 		return this.speed;
 	}
 	
-	
-	
+	//Récupérer le nombre d'item dans l'inventaire
 	public int getInventorySize() {
 		return this.inventory.size();
 	}

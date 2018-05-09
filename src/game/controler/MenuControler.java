@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import game.modele.utils.Coordonnees;
+
 import game.modele.utils.Direction;
 import game.modele.world.WorldLoader;
 import game.vue.EntityLivingTexture;
@@ -31,29 +31,25 @@ public class MenuControler implements Initializable{
 	ArrayList<ImageView> coeurs;
 
 	@FXML
-	private Pane paneWindow;//Main
+	private Pane paneWindow;//Main avec tout les autres pane dedans
 
+	@FXML
+	private Pane paneGame;//Contient les panes d'affichage de la map et des entites
 	@FXML 
-	private Pane PaneHUD;
+	private Pane PaneHUD;//Permet d'afficher l'HUD et tout ce qui n'est pas une tile ou une entite
 
-	@FXML
-	private Pane paneGame;
-
-
-	@FXML
-	private Pane EntityPane;
 
 	@FXML
 	private Pane PaneGround;
-
 	@FXML
 	private Pane PaneSolid;
-
+	@FXML
+	private Pane EntityPane;
 	@FXML
 	private Pane PaneTop;
 
 
-	private ImageView player;
+	private ImageView player;//l'image du joueur a l'ecran
 
 
 	@FXML
@@ -71,9 +67,9 @@ public class MenuControler implements Initializable{
 	void quitter(ActionEvent event) {
 
 	}
-	
 
-	private void printCalqueTile(Pane paneTerrain,Pane paneTile,Pane paneTop) {
+	//Permet d'afficher dans dans chaque pane toute les textures de chaque couches de la map
+	private void printCalqueTile(Pane pane,Pane paneTile,Pane paneTop) {
 
 		for(int y=0;y<WorldLoader.currentMap.getHeight();y++) {
 			for(int x=0;x<WorldLoader.currentMap.getWidth();x++) {
@@ -81,7 +77,7 @@ public class MenuControler implements Initializable{
 				ImageView tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTileTerrain(y, x).getId()));	
 				tile.setX(x*32);
 				tile.setY(y*32);
-				paneTerrain.getChildren().add(tile);
+				pane.getChildren().add(tile);
 
 				tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTile(y, x).getId()));
 				tile.setX(x*32);
@@ -93,7 +89,6 @@ public class MenuControler implements Initializable{
 				tile.setY(y*32);
 				paneTop.getChildren().add(tile);
 
-
 			}
 		}
 	}
@@ -101,58 +96,21 @@ public class MenuControler implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-	
-		
-		dicoImageTileTextureMap = new HashMap<>();
-		dicoImageItemTextureMap = new HashMap<>();
-		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
-		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
+		//Chargement dans la memoire de toutes les textures
+		textureLoading();		
 
+		//Chargement de la map
 		WorldLoader.loadWorld("TinyMap");
 
+		//Chargement du joueur
+		player=new ImageView();
+		WorldLoader.loadPlayer();
+		
+		//Affichage des toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
 
-
-		player=new ImageView();
-
-		WorldLoader.loadPlayer();
-
-		player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 2).getTexture(), null));
-		player.setFitWidth(32);
-		player.setFitHeight(64);
-		player.setX(WorldLoader.player.getCoordoner().getX());
-		player.setY(WorldLoader.player.getCoordoner().getY());
-		EntityPane.getChildren().add(player);
-
-		paneGame.layoutXProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(-32).add(432));
-		paneGame.layoutYProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(-32).add(320));
-
-		player.xProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(32).subtract(16));
-		player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
-		
-	
-
-		WorldLoader.player.getOrientation().getDirectionProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				switch(observable.getValue().intValue()) {
-				case Direction.North:
-					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 0).getTexture(), null));
-					break;
-				case Direction.West:
-					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 1).getTexture(), null));
-					break;
-				case Direction.South:
-					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 2).getTexture(), null));
-					break;
-				case Direction.East:
-					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 3).getTexture(), null));
-					break;
-				}
-			}
-		}); 
-
-		coeurs = new ArrayList<ImageView>();
+		//Affichage du joueur
+		affichageDuJoueur();
 
 		for(int numCoeur=WorldLoader.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
 			coeurs.add(new ImageView(dicoImageItemTextureMap.get(2)));
@@ -238,11 +196,48 @@ public class MenuControler implements Initializable{
 
 	}
 
-	/*private void perdrePV() {
-		WorldLoader.player.perdrePV();
+	private void textureLoading() {
+		dicoImageTileTextureMap = new HashMap<>();
+		dicoImageItemTextureMap = new HashMap<>();
+		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
+		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
+		coeurs = new ArrayList<ImageView>();
 	}
+	
+	private void affichageDuJoueur() {
+		player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 2).getTexture(), null));
+		player.setFitWidth(32);
+		player.setFitHeight(64);
+		player.setX(WorldLoader.player.getCoordoner().getX());
+		player.setY(WorldLoader.player.getCoordoner().getY());
+		EntityPane.getChildren().add(player);
 
-	private void gagnerPV() {
-		WorldLoader.player.gagnerPV();
-	}*/
+		paneGame.layoutXProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(-32).add(432));
+		paneGame.layoutYProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(-32).add(320));
+
+		player.xProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(32).subtract(16));
+		player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
+		
+	
+
+		WorldLoader.player.getOrientation().getDirectionProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				switch(observable.getValue().intValue()) {
+				case Direction.North:
+					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 0).getTexture(), null));
+					break;
+				case Direction.West:
+					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 1).getTexture(), null));
+					break;
+				case Direction.South:
+					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 2).getTexture(), null));
+					break;
+				case Direction.East:
+					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 3).getTexture(), null));
+					break;
+				}
+			}
+		}); 
+	}
 }
