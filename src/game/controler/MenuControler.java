@@ -120,7 +120,6 @@ public class MenuControler implements Initializable{
 		
 		//Ajout des listener
 		creationListener();
-		
 
 		Timeline GameLoop = new Timeline();
 		GameLoop.setCycleCount(Timeline.INDEFINITE);
