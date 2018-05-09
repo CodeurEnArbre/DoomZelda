@@ -7,11 +7,14 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import game.modele.utils.Direction;
+import game.modele.world.World;
 import game.modele.world.WorldLoader;
 import game.vue.EntityLivingTexture;
 import game.vue.TextureLoader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
@@ -22,12 +25,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import sun.security.acl.WorldGroupImpl;
 
 public class MenuControler implements Initializable{
 
 
 	Map<Integer,Image> dicoImageTileTextureMap;
 	Map<Integer,Image> dicoImageItemTextureMap;
+	Map<Integer,Image> dicoImageAnimationPlayer;
+
+
+
 	ArrayList<ImageView> coeurs;
 
 	@FXML
@@ -67,35 +75,9 @@ public class MenuControler implements Initializable{
 	void quitter(ActionEvent event) {
 
 	}
-
-	//Permet d'afficher dans dans chaque pane toute les textures de chaque couches de la map
-	private void printCalqueTile(Pane pane,Pane paneTile,Pane paneTop) {
-
-		for(int y=0;y<WorldLoader.currentMap.getHeight();y++) {
-			for(int x=0;x<WorldLoader.currentMap.getWidth();x++) {
-
-				ImageView tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTileTerrain(y, x).getId()));	
-				tile.setX(x*32);
-				tile.setY(y*32);
-				pane.getChildren().add(tile);
-
-				tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTile(y, x).getId()));
-				tile.setX(x*32);
-				tile.setY(y*32);
-				paneTile.getChildren().add(tile);
-
-				tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTileTop(y, x).getId()));
-				tile.setX(x*32);
-				tile.setY(y*32);
-				paneTop.getChildren().add(tile);
-
-			}
-		}
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		//Chargement dans la memoire de toutes les textures
 		textureLoading();		
 
@@ -105,7 +87,7 @@ public class MenuControler implements Initializable{
 		//Chargement du joueur
 		player=new ImageView();
 		WorldLoader.loadPlayer();
-		
+
 		//Affichage des toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
 
@@ -121,7 +103,7 @@ public class MenuControler implements Initializable{
 		for(ImageView coeur:coeurs){
 			PaneHUD.getChildren().add(coeur);
 		}
-		
+
 		WorldLoader.player.getPV().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -129,15 +111,48 @@ public class MenuControler implements Initializable{
 			}
 		});
 
+		WorldLoader.player.getAnimationProperty().addListener(
+				new ChangeListener<Number>() {
+
+					@Override
+					public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
+
+						switch(WorldLoader.player.getOrientation().getDirection()) {
+						case Direction.North:
+							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())));
+							break;
+						case Direction.West:
+							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())+12));
+							break;
+						case Direction.South:
+							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())+24));
+							break;
+						case Direction.East:
+							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())+36));
+							break;
+						}
+					}
+
+				}
+			);
+
+
+		
 		Timeline GameLoop = new Timeline();
 		GameLoop.setCycleCount(Timeline.INDEFINITE);
 		KeyFrame keyf = new KeyFrame(
 				Duration.seconds(0.017),
 				e -> {
+				
+					if(!WorldLoader.player.moveDown && !WorldLoader.player.moveUP && !WorldLoader.player.moveLeft && !WorldLoader.player.moveRight)
+						WorldLoader.player.resetAnim();
+					else
+						WorldLoader.player.incAnim();
 					
 					if(WorldLoader.player.moveDown) {
-						if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight)
+						if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight) {
 							WorldLoader.player.addY(0.14);
+						}
 						else
 							WorldLoader.player.addY(0.2);
 					}
@@ -165,9 +180,53 @@ public class MenuControler implements Initializable{
 		GameLoop.getKeyFrames().add(keyf);
 		GameLoop.play();
 	}
+
+	private void textureLoading() {
+		dicoImageTileTextureMap = new HashMap<>();
+		dicoImageItemTextureMap = new HashMap<>();
+		dicoImageAnimationPlayer = new HashMap<>();
+
+		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
+		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
+		LoadAnimation(dicoImageAnimationPlayer);
+
+		coeurs = new ArrayList<ImageView>();
+	}
+
 	private void LoadDicoMap(Map<Integer,Image> dico,int imageWidthPixels, int imageHeightPixels, int imageWidth, int imageHeight, String textureMapName) {
 		for(int x = 0; x < imageWidth*imageHeight; x++) {
 			dico.put(x + 1,SwingFXUtils.toFXImage(TextureLoader.getTextureMapImage(textureMapName,imageWidthPixels,imageHeightPixels,imageWidth,imageHeight,x).getTexture(), null));
+		}
+	}
+
+	private void LoadAnimation(Map<Integer,Image> dico) {
+		for(int x = 0;x < 12;x++)
+			for(int y = 0;y < 4;y++)
+				dico.put(x + 12 * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, x, y).getTexture(), null));		
+	}
+
+	//Permet d'afficher dans dans chaque pane toute les textures de chaque couches de la map
+	private void printCalqueTile(Pane pane,Pane paneTile,Pane paneTop) {
+
+		for(int y=0;y<WorldLoader.currentMap.getHeight();y++) {
+			for(int x=0;x<WorldLoader.currentMap.getWidth();x++) {
+
+				ImageView tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTileTerrain(y, x).getId()));	
+				tile.setX(x*32);
+				tile.setY(y*32);
+				pane.getChildren().add(tile);
+
+				tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTile(y, x).getId()));
+				tile.setX(x*32);
+				tile.setY(y*32);
+				paneTile.getChildren().add(tile);
+
+				tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTileTop(y, x).getId()));
+				tile.setX(x*32);
+				tile.setY(y*32);
+				paneTop.getChildren().add(tile);
+
+			}
 		}
 	}
 
@@ -196,14 +255,7 @@ public class MenuControler implements Initializable{
 
 	}
 
-	private void textureLoading() {
-		dicoImageTileTextureMap = new HashMap<>();
-		dicoImageItemTextureMap = new HashMap<>();
-		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
-		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
-		coeurs = new ArrayList<ImageView>();
-	}
-	
+
 	private void affichageDuJoueur() {
 		player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 2).getTexture(), null));
 		player.setFitWidth(32);
@@ -217,27 +269,9 @@ public class MenuControler implements Initializable{
 
 		player.xProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(32).subtract(16));
 		player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
-		
-	
 
-		WorldLoader.player.getOrientation().getDirectionProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				switch(observable.getValue().intValue()) {
-				case Direction.North:
-					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 0).getTexture(), null));
-					break;
-				case Direction.West:
-					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 1).getTexture(), null));
-					break;
-				case Direction.South:
-					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 2).getTexture(), null));
-					break;
-				case Direction.East:
-					player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 3).getTexture(), null));
-					break;
-				}
-			}
-		}); 
+
+
+
 	}
 }

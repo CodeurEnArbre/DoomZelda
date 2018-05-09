@@ -6,7 +6,9 @@ import game.modele.item.Item;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import javafx.beans.property.FloatProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class Player extends EntityLiving{
 	
@@ -18,6 +20,8 @@ public class Player extends EntityLiving{
 	public boolean moveRight;
 	public boolean moveLeft;
 	
+	public IntegerProperty animationIndice = new SimpleIntegerProperty(0);
+	
 	public Player(ArrayList<Item> inventory, Coordonnees position, Direction direction) {
 		super(position,direction);
 		this.inventory=inventory;
@@ -28,6 +32,22 @@ public class Player extends EntityLiving{
 	public FloatProperty getSpeed() {
 		return this.speed;
 	}
+	
+	public void incAnim() {
+		this.animationIndice.set(
+				this.animationIndice.get()
+				+ (this.animationIndice.get() < 11 ? 1 : -11));
+	}
+	
+	public IntegerProperty getAnimationProperty() {
+		return this.animationIndice;
+	}
+	
+	
+	public void resetAnim() {
+		this.animationIndice.set(0);
+	}
+	
 	
 	//Récupérer le nombre d'item dans l'inventaire
 	public int getInventorySize() {
