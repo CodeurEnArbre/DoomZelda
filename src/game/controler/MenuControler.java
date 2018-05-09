@@ -68,7 +68,7 @@ public class MenuControler implements Initializable{
 
 	}
 
-	//Permet d'afficher dans dans chaque pane toute les textures de chaque couches de la map
+	//Permet d'afficher dans chaque pane toute les textures de chaque couches de la map
 	private void printCalqueTile(Pane pane,Pane paneTile,Pane paneTop) {
 
 		for(int y=0;y<WorldLoader.currentMap.getHeight();y++) {
@@ -112,22 +112,15 @@ public class MenuControler implements Initializable{
 		//Affichage du joueur
 		affichageDuJoueur();
 
-		for(int numCoeur=WorldLoader.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
-			coeurs.add(new ImageView(dicoImageItemTextureMap.get(2)));
-		}
+		//Affichage de l'HUD
+		affichageHUD();
 
-		updateHearts();
-
-		for(ImageView coeur:coeurs){
-			PaneHUD.getChildren().add(coeur);
-		}
+		//Ajout des bind
+		creationBind();
 		
-		WorldLoader.player.getPV().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				updateHearts();
-			}
-		});
+		//Ajout des listener
+		creationListener();
+		
 
 		Timeline GameLoop = new Timeline();
 		GameLoop.setCycleCount(Timeline.INDEFINITE);
@@ -165,6 +158,7 @@ public class MenuControler implements Initializable{
 		GameLoop.getKeyFrames().add(keyf);
 		GameLoop.play();
 	}
+	
 	private void LoadDicoMap(Map<Integer,Image> dico,int imageWidthPixels, int imageHeightPixels, int imageWidth, int imageHeight, String textureMapName) {
 		for(int x = 0; x < imageWidth*imageHeight; x++) {
 			dico.put(x + 1,SwingFXUtils.toFXImage(TextureLoader.getTextureMapImage(textureMapName,imageWidthPixels,imageHeightPixels,imageWidth,imageHeight,x).getTexture(), null));
@@ -205,21 +199,43 @@ public class MenuControler implements Initializable{
 	}
 	
 	private void affichageDuJoueur() {
+		
 		player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 2).getTexture(), null));
+		
+		//Definition de la taille de la texture en pixels
 		player.setFitWidth(32);
 		player.setFitHeight(64);
+		
+		//Definition des coordoner
 		player.setX(WorldLoader.player.getCoordoner().getX());
 		player.setY(WorldLoader.player.getCoordoner().getY());
+		
 		EntityPane.getChildren().add(player);
 
-		paneGame.layoutXProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(-32).add(432));
-		paneGame.layoutYProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(-32).add(320));
-
-		player.xProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(32).subtract(16));
-		player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
-		
+	}
 	
+	private void affichageHUD(){
+		
+		//Coeurs
+		for(int numCoeur=WorldLoader.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
+			coeurs.add(new ImageView(dicoImageItemTextureMap.get(2)));
+		}
+		
+		updateHearts();
 
+		for(ImageView coeur:coeurs){ PaneHUD.getChildren().add(coeur); }
+		
+	}
+	
+	private void creationListener() {
+		
+		//PV Listener
+		WorldLoader.player.getPV().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) { updateHearts(); }
+		});
+		
+		//Orientation Listener
 		WorldLoader.player.getOrientation().getDirectionProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -238,6 +254,16 @@ public class MenuControler implements Initializable{
 					break;
 				}
 			}
-		}); 
+		});
+		
+	}
+	
+	private void creationBind(){
+		//Joueur
+		paneGame.layoutXProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(-32).add(432));
+		paneGame.layoutYProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(-32).add(320));
+
+		player.xProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(32).subtract(16));
+		player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
 	}
 }
