@@ -15,9 +15,7 @@ public class Player extends EntityLiving{
 	public final double baseSpeed = 0.15f;
 	public final double maxSpeed = 0.3f;
 	public final double acce = 0.0025f;
-
-
-	public final double diaSpeed = 0.10f;
+	
 	private ArrayList<Item> inventory;
 
 	public double speed = 0.15f;

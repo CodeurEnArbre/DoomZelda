@@ -80,7 +80,7 @@ public class MenuControler implements Initializable{
 		textureLoading();		
 
 		//Chargement de la map
-		WorldLoader.loadWorld("Road");
+		WorldLoader.loadWorld("TinyMap");
 
 		//Chargement du joueur
 		player=new ImageView();
@@ -188,7 +188,7 @@ public class MenuControler implements Initializable{
 				}
 				if(WorldLoader.player.moveDown) {
 					if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight) {
-						WorldLoader.player.addY(WorldLoader.player.diaSpeed);
+						WorldLoader.player.addY(WorldLoader.player.speed * 2/3);
 						WorldLoader.player.incAnim();
 					}
 					else {
@@ -203,7 +203,7 @@ public class MenuControler implements Initializable{
 				if(WorldLoader.player.moveUP) {
 					if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight)
 					{	
-						WorldLoader.player.addY(-WorldLoader.player.diaSpeed);	
+						WorldLoader.player.addY(-WorldLoader.player.speed * 2/3);	
 						WorldLoader.player.incAnim();
 					}else
 					{
@@ -217,7 +217,7 @@ public class MenuControler implements Initializable{
 				if(WorldLoader.player.moveLeft) {
 					if(WorldLoader.player.moveUP ^ WorldLoader.player.moveDown)
 					{
-						WorldLoader.player.addX(-WorldLoader.player.diaSpeed);
+						WorldLoader.player.addX(-WorldLoader.player.speed * 2/3);
 						WorldLoader.player.incAnim();
 					}		else
 					{	
@@ -232,7 +232,7 @@ public class MenuControler implements Initializable{
 				if(WorldLoader.player.moveRight) {
 					if(WorldLoader.player.moveUP ^ WorldLoader.player.moveDown)
 					{
-						WorldLoader.player.addX(WorldLoader.player.diaSpeed);
+						WorldLoader.player.addX(WorldLoader.player.speed * 2/3);
 						WorldLoader.player.incAnim();
 					}else
 					{
