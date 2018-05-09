@@ -186,7 +186,7 @@ public class MenuControler implements Initializable{
 			coeur.relocate(coeurAt*32+5, 5);
 			coeurAt++;
 		}
-
+		
 	}
 
 	private void textureLoading() {
@@ -254,7 +254,6 @@ public class MenuControler implements Initializable{
 				}
 			}
 		});
-		
 	}
 	
 	private void creationBind(){
