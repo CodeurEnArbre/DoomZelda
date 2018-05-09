@@ -7,14 +7,11 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import game.modele.utils.Direction;
-import game.modele.world.World;
 import game.modele.world.WorldLoader;
 import game.vue.EntityLivingTexture;
 import game.vue.TextureLoader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
@@ -25,7 +22,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import sun.security.acl.WorldGroupImpl;
 
 public class MenuControler implements Initializable{
 
@@ -188,7 +184,7 @@ public class MenuControler implements Initializable{
 
 		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
 		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
-		LoadAnimation(dicoImageAnimationPlayer);
+		LoadAnimation(dicoImageAnimationPlayer, 12, 4);
 
 		coeurs = new ArrayList<ImageView>();
 	}
@@ -199,9 +195,9 @@ public class MenuControler implements Initializable{
 		}
 	}
 
-	private void LoadAnimation(Map<Integer,Image> dico) {
-		for(int x = 0;x < 12;x++)
-			for(int y = 0;y < 4;y++)
+	private void LoadAnimation(Map<Integer,Image> dico, int frame, int animation) {
+		for(int x = 0;x < frame;x++)
+			for(int y = 0;y < animation;y++)
 				dico.put(x + 12 * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, x, y).getTexture(), null));		
 	}
 
