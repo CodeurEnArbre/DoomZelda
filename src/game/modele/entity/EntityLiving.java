@@ -8,9 +8,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class EntityLiving extends Entity{
 	
 	protected Direction direction;
-	private IntegerProperty PV;
-	private IntegerProperty maxPv;
+	protected IntegerProperty PV;
+	protected IntegerProperty maxPv;
 	//La direction du regard
+	protected IntegerProperty animationIndice = new SimpleIntegerProperty(0);
+	
 	
 	public EntityLiving(Coordonnees position, Direction direction) {
 		super(position);
@@ -54,5 +56,22 @@ public class EntityLiving extends Entity{
 	
 	public IntegerProperty getMaxPv() {
 		return this.maxPv;
+	}
+	
+	
+	//animation
+	public void incAnim() {
+		this.animationIndice.set(
+				this.animationIndice.get()
+				+ (this.animationIndice.get() < 11 ? 1 : -11));
+	}
+	
+	public IntegerProperty getAnimationProperty() {
+		return this.animationIndice;
+	}
+	
+	
+	public void resetAnim() {
+		this.animationIndice.set(0);
 	}
 }

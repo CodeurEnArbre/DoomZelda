@@ -20,8 +20,6 @@ public class Player extends EntityLiving{
 	public boolean moveRight;
 	public boolean moveLeft;
 	
-	public IntegerProperty animationIndice = new SimpleIntegerProperty(0);
-	
 	public Player(ArrayList<Item> inventory, Coordonnees position, Direction direction) {
 		super(position,direction);
 		this.inventory=inventory;
@@ -33,20 +31,7 @@ public class Player extends EntityLiving{
 		return this.speed;
 	}
 	
-	public void incAnim() {
-		this.animationIndice.set(
-				this.animationIndice.get()
-				+ (this.animationIndice.get() < 11 ? 1 : -11));
-	}
 	
-	public IntegerProperty getAnimationProperty() {
-		return this.animationIndice;
-	}
-	
-	
-	public void resetAnim() {
-		this.animationIndice.set(0);
-	}
 	
 	
 	//Récupérer le nombre d'item dans l'inventaire
