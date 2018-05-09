@@ -98,7 +98,6 @@ public class MenuControler implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
 		dicoImageTileTextureMap = new HashMap<>();
 		dicoImageItemTextureMap = new HashMap<>();
 		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
@@ -128,18 +127,20 @@ public class MenuControler implements Initializable{
 		player.xProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(32).subtract(16));
 		player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
 		
-		
-		/*
-		ImageView imageCoeur1 = new ImageView();
-		
-		
-		imageCoeur1.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("CoeurPlein", 64, 64, 0, 0).getTexture(), null));
-		imageCoeur1.setFitWidth(32);
-		imageCoeur1.setFitHeight(32);
-		imageCoeur1.setX(5);
-		imageCoeur1.setY(5);
-		PaneHUD.getChildren().add(imageCoeur1);
-		*/
+		 PaneGround.setOnKeyPressed(k -> {
+			System.out.println("Test");
+			
+		});
+
+
+		 WorldLoader.player.getSpeed().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
+			{
+				System.out.println("Test");
+			}
+		 	});
+		 
 		WorldLoader.player.getOrientation().getDirectionProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -179,6 +180,7 @@ public class MenuControler implements Initializable{
 				updateHearts();
 			}
 		});
+		
 		
 	}
 	private void LoadDicoMap(Map<Integer,Image> dico,int imageWidthPixels, int imageHeightPixels, int imageWidth, int imageHeight, String textureMapName) {

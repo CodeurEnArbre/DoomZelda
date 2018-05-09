@@ -11,6 +11,8 @@ import game.modele.tile.Tile;
 import game.modele.tile.TileEntity;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
+import javafx.beans.property.IntegerProperty;
+import javafx.scene.input.KeyCode;
 
 public class WorldLoader {
 
@@ -21,6 +23,32 @@ public class WorldLoader {
 		player = new Player(null,new Coordonnees(14,10),new Direction(5));
 	}
 
+	public static void KeyInteractDown(KeyCode k) {
+
+		if(k == KeyCode.Z || k == KeyCode.S || k == KeyCode.Q || k == KeyCode.D) {
+			WorldLoader.player.getSpeed().set(1.5f);
+		}
+		
+		
+		
+		if(k == KeyCode.Z) {
+			WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.North);	
+		}else if(k == KeyCode.S){
+			WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.South);
+		}
+		if(k == KeyCode.Q) {
+			WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.East);
+		}else if(k == KeyCode.D) {
+			WorldLoader.player.getOrientation().getDirectionProperty().setValue(Direction.West);
+		}
+	}
+	
+	public static void KeyInteractUp(KeyCode k) {
+		if(k == KeyCode.Z || k == KeyCode.S || k == KeyCode.Q || k == KeyCode.D) {
+			WorldLoader.player.getSpeed().set(0.0f);
+		}
+	}
+	
 	public static void loadWorld(String file) {
 		try {
 			ArrayList<TileEntity> tileEntity= new ArrayList<TileEntity>();
@@ -61,4 +89,8 @@ public class WorldLoader {
 		}
 	}
 
+	
+	
+	
+	
 }
