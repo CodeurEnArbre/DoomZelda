@@ -13,8 +13,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Player extends EntityLiving{
 
 	public final double baseSpeed = 0.15f;
-	public final double maxSpeed = 0.3f;
-	public final double acce = 0.0025f;
+	public final double maxSpeed = 0.25f;
+	public final double acce = 0.0020f;
 	
 	private ArrayList<Item> inventory;
 
