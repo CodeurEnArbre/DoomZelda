@@ -12,13 +12,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Player extends EntityLiving{
 
-	public final double baseSpeed = 0.15f;
-	public final double maxSpeed = 0.25f;
-	public final double acce = 0.0015f;
+	public final double baseSpeed = 0.12f;
+	public final double maxSpeed = 0.19f;
+	public final double acce = 0.0003f;
 	
 	private ArrayList<Item> inventory;
 
-	public double speed = 0.15f;
+	public double speed = baseSpeed;
 
 	public boolean moveUP;
 	public boolean moveDown;
@@ -29,8 +29,6 @@ public class Player extends EntityLiving{
 		super(position,direction);
 		this.inventory=inventory;
 	}
-
-	//Récupérer la vitess de déplacement
 
 	//Récupérer le nombre d'item dans l'inventaire
 	public int getInventorySize() {
