@@ -137,9 +137,9 @@ public class MenuControler implements Initializable{
 					
 					if(WorldLoader.player.moveDown) {
 						if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight)
-							WorldLoader.player.addY(0.2);
-						else
 							WorldLoader.player.addY(0.14);
+						else
+							WorldLoader.player.addY(0.2);
 					}
 
 					if(WorldLoader.player.moveUP) {
