@@ -80,7 +80,7 @@ public class MenuControler implements Initializable{
 		textureLoading();		
 
 		//Chargement de la map
-		WorldLoader.loadWorld("TinyMap");
+		WorldLoader.loadWorld("Road");
 
 		//Chargement du joueur
 		player=new ImageView();
@@ -182,15 +182,19 @@ public class MenuControler implements Initializable{
 			@Override
 			public void handle(ActionEvent event) {
 
-				if(!WorldLoader.player.moveDown && !WorldLoader.player.moveUP && !WorldLoader.player.moveLeft && !WorldLoader.player.moveRight)
+				if(!WorldLoader.player.moveDown && !WorldLoader.player.moveUP && !WorldLoader.player.moveLeft && !WorldLoader.player.moveRight) {
 					WorldLoader.player.resetAnim();
-
+					WorldLoader.player.speed = WorldLoader.player.baseSpeed;
+				}
 				if(WorldLoader.player.moveDown) {
 					if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight) {
 						WorldLoader.player.addY(WorldLoader.player.diaSpeed);
 						WorldLoader.player.incAnim();
 					}
 					else {
+						if(WorldLoader.player.speed < WorldLoader.player.maxSpeed) {
+							WorldLoader.player.speed += WorldLoader.player.acce;
+						}
 						WorldLoader.player.addY(WorldLoader.player.speed);
 						WorldLoader.player.incAnim();
 					}
@@ -203,6 +207,9 @@ public class MenuControler implements Initializable{
 						WorldLoader.player.incAnim();
 					}else
 					{
+						if(WorldLoader.player.speed < WorldLoader.player.maxSpeed) {
+							WorldLoader.player.speed += WorldLoader.player.acce;
+						}
 						WorldLoader.player.addY(-WorldLoader.player.speed);	
 						WorldLoader.player.incAnim();
 					}
@@ -213,8 +220,12 @@ public class MenuControler implements Initializable{
 						WorldLoader.player.addX(-WorldLoader.player.diaSpeed);
 						WorldLoader.player.incAnim();
 					}		else
-					{	WorldLoader.player.addX(-WorldLoader.player.speed);
-					WorldLoader.player.incAnim();
+					{	
+						if(WorldLoader.player.speed < WorldLoader.player.maxSpeed) {
+							WorldLoader.player.speed += WorldLoader.player.acce;
+						}
+						WorldLoader.player.addX(-WorldLoader.player.speed);
+						WorldLoader.player.incAnim();
 					}
 				}
 
@@ -225,6 +236,9 @@ public class MenuControler implements Initializable{
 						WorldLoader.player.incAnim();
 					}else
 					{
+						if(WorldLoader.player.speed < WorldLoader.player.maxSpeed) {
+							WorldLoader.player.speed += WorldLoader.player.acce;
+						}
 						WorldLoader.player.addX(WorldLoader.player.speed); 
 						WorldLoader.player.incAnim();
 					}

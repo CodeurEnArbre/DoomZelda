@@ -54,7 +54,11 @@ public class Entity {
 
 	public boolean setCoordoner(Coordonnees coordonnees) {
 		int tileId = WorldLoader.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).getId() ;
-		return (tileId <= 1 && coordonnees.getX() >= 0 && coordonnees.getY() >= 0);
+		return (tileId <= 1 &&
+				coordonnees.getX() >= 0 &&
+				coordonnees.getY() >= 0 &&
+				(coordonnees.getX() + WorldLoader.player.speed)< WorldLoader.currentMap.getWidth()&&
+				(coordonnees.getY() + WorldLoader.player.speed) < WorldLoader.currentMap.getHeight());
 	}
 	
 	//animation
