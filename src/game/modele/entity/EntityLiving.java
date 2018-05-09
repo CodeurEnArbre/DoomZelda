@@ -49,7 +49,6 @@ public class EntityLiving extends Entity{
 		return PV;
 	}
 	
-	
 	public void addHeart() {
 		this.maxPv.add(4);
 	}
@@ -57,7 +56,4 @@ public class EntityLiving extends Entity{
 	public IntegerProperty getMaxPv() {
 		return this.maxPv;
 	}
-	
-	
-	
 }

@@ -31,9 +31,6 @@ public class Player extends EntityLiving{
 		return this.speed;
 	}
 	
-	
-	
-	
 	//Récupérer le nombre d'item dans l'inventaire
 	public int getInventorySize() {
 		return this.inventory.size();
@@ -46,5 +43,4 @@ public class Player extends EntityLiving{
 	public void addInventoryItem(Item item) {
 		this.inventory.add(item);
 	}
-
 }

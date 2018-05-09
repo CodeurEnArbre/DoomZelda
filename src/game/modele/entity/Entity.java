@@ -56,6 +56,7 @@ public class Entity {
 		int tileId = WorldLoader.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).getId() ;
 		return (tileId <= 1 && coordonnees.getX() >= 0 && coordonnees.getY() >= 0);
 	}
+	
 	//animation
 		public void incAnim() {
 			this.animationIndice.set(

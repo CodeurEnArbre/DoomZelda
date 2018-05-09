@@ -30,6 +30,7 @@ public class MenuControler implements Initializable{
 	Map<Integer,Image> dicoImageItemTextureMap;
 	Map<Integer,Image> dicoImageAnimationPlayer;
 
+	private Timeline GameLoop;
 
 
 	ArrayList<ImageView> coeurs;
@@ -107,34 +108,62 @@ public class MenuControler implements Initializable{
 			}
 		});
 
-		WorldLoader.player.getAnimationProperty().addListener(
-				new ChangeListener<Number>() {
 
-					@Override
-					public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
+		createGameLoop();
+		GameLoop.play();
+	}
 
-						switch(WorldLoader.player.getOrientation().getDirection()) {
-						case Direction.North:
-							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())));
-							break;
-						case Direction.West:
-							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())+12));
-							break;
-						case Direction.South:
-							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())+24));
-							break;
-						case Direction.East:
-							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())+36));
-							break;
-						}
-					}
+	private void textureLoading() {
+		dicoImageTileTextureMap = new HashMap<>();
+		dicoImageItemTextureMap = new HashMap<>();
+		dicoImageAnimationPlayer = new HashMap<>();
 
-				}
-				);
+		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
+		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
+		LoadAnimation(dicoImageAnimationPlayer, 12, 4);
 
+		coeurs = new ArrayList<ImageView>();
+	}
 
+	private void LoadDicoMap(Map<Integer,Image> dico,int imageWidthPixels, int imageHeightPixels, int imageWidth, int imageHeight, String textureMapName) {
+		for(int x = 0; x < imageWidth*imageHeight; x++) {
+			dico.put(x + 1,SwingFXUtils.toFXImage(TextureLoader.getTextureMapImage(textureMapName,imageWidthPixels,imageHeightPixels,imageWidth,imageHeight,x).getTexture(), null));
+		}
+	}
 
-		Timeline GameLoop = new Timeline();
+	private void LoadAnimation(Map<Integer,Image> dico, int frame, int animation) {
+		for(int x = 0;x < frame;x++)
+			for(int y = 0;y < animation;y++)
+				dico.put(x + 12 * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, x, y).getTexture(), null));		
+	}
+
+	//Permet d'afficher dans dans chaque pane toute les textures de chaque couches de la map
+	private void printCalqueTile(Pane pane,Pane paneTile,Pane paneTop) {
+
+		for(int y=0;y<WorldLoader.currentMap.getHeight();y++) {
+			for(int x=0;x<WorldLoader.currentMap.getWidth();x++) {
+
+				ImageView tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTileTerrain(y, x).getId()));	
+				tile.setX(x*32);
+				tile.setY(y*32);
+				pane.getChildren().add(tile);
+
+				tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTile(y, x).getId()));
+				tile.setX(x*32);
+				tile.setY(y*32);
+				paneTile.getChildren().add(tile);
+
+				tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTileTop(y, x).getId()));
+				tile.setX(x*32);
+				tile.setY(y*32);
+				paneTop.getChildren().add(tile);
+
+			}
+		}
+	}
+
+	private void createGameLoop() {
+		GameLoop = new Timeline();
 		GameLoop.setCycleCount(Timeline.INDEFINITE);
 		KeyFrame keyf = new KeyFrame(
 				Duration.seconds(0.017),
@@ -189,58 +218,10 @@ public class MenuControler implements Initializable{
 					}
 				});
 		GameLoop.getKeyFrames().add(keyf);
-		GameLoop.play();
 	}
-
-	private void textureLoading() {
-		dicoImageTileTextureMap = new HashMap<>();
-		dicoImageItemTextureMap = new HashMap<>();
-		dicoImageAnimationPlayer = new HashMap<>();
-
-		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
-		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
-		LoadAnimation(dicoImageAnimationPlayer, 12, 4);
-
-		coeurs = new ArrayList<ImageView>();
-	}
-
-	private void LoadDicoMap(Map<Integer,Image> dico,int imageWidthPixels, int imageHeightPixels, int imageWidth, int imageHeight, String textureMapName) {
-		for(int x = 0; x < imageWidth*imageHeight; x++) {
-			dico.put(x + 1,SwingFXUtils.toFXImage(TextureLoader.getTextureMapImage(textureMapName,imageWidthPixels,imageHeightPixels,imageWidth,imageHeight,x).getTexture(), null));
-		}
-	}
-
-	private void LoadAnimation(Map<Integer,Image> dico, int frame, int animation) {
-		for(int x = 0;x < frame;x++)
-			for(int y = 0;y < animation;y++)
-				dico.put(x + 12 * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, x, y).getTexture(), null));		
-	}
-
-	//Permet d'afficher dans dans chaque pane toute les textures de chaque couches de la map
-	private void printCalqueTile(Pane pane,Pane paneTile,Pane paneTop) {
-
-		for(int y=0;y<WorldLoader.currentMap.getHeight();y++) {
-			for(int x=0;x<WorldLoader.currentMap.getWidth();x++) {
-
-				ImageView tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTileTerrain(y, x).getId()));	
-				tile.setX(x*32);
-				tile.setY(y*32);
-				pane.getChildren().add(tile);
-
-				tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTile(y, x).getId()));
-				tile.setX(x*32);
-				tile.setY(y*32);
-				paneTile.getChildren().add(tile);
-
-				tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTileTop(y, x).getId()));
-				tile.setX(x*32);
-				tile.setY(y*32);
-				paneTop.getChildren().add(tile);
-
-			}
-		}
-	}
-
+	
+	
+	
 	private void updateHearts() {
 		int maxPv = WorldLoader.player.getMaxPv().intValue();
 		int pv = WorldLoader.player.getPV().intValue();
@@ -266,7 +247,6 @@ public class MenuControler implements Initializable{
 
 	}
 
-
 	private void affichageDuJoueur() {
 		player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 64, 0, 2).getTexture(), null));
 		player.setFitWidth(32);
@@ -281,7 +261,30 @@ public class MenuControler implements Initializable{
 		player.xProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(32).subtract(16));
 		player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
 
+		WorldLoader.player.getAnimationProperty().addListener(
+				new ChangeListener<Number>() {
 
+					@Override
+					public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
+
+						switch(WorldLoader.player.getOrientation().getDirection()) {
+						case Direction.North:
+							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())));
+							break;
+						case Direction.West:
+							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())+12));
+							break;
+						case Direction.South:
+							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())+24));
+							break;
+						case Direction.East:
+							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue())+36));
+							break;
+						}
+					}
+
+				}
+				);
 
 
 	}
