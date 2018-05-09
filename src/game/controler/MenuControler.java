@@ -182,10 +182,17 @@ public class MenuControler implements Initializable{
 			@Override
 			public void handle(ActionEvent event) {
 
+				System.out.println(WorldLoader.player.moveDown + " "
+						+ WorldLoader.player.moveUP + " "
+						+ WorldLoader.player.moveLeft + " "
+						+ WorldLoader.player.moveRight + " ");
+				
 				if(!WorldLoader.player.moveDown && !WorldLoader.player.moveUP && !WorldLoader.player.moveLeft && !WorldLoader.player.moveRight) {
 					WorldLoader.player.resetAnim();
 					WorldLoader.player.speed = WorldLoader.player.baseSpeed;
 				}
+				
+				
 				if(WorldLoader.player.moveDown) {
 					if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight) {
 						WorldLoader.player.addY(WorldLoader.player.speed * 2/3);

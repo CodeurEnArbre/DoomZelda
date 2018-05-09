@@ -28,26 +28,27 @@ public class WorldLoader {
 	public static void KeyInteractDown(KeyCode k) {
 
 		if(k == KeyCode.Z) {
-			if(!WorldLoader.player.moveDown) {
-				WorldLoader.player.moveUP = true;
-				setDirection(Direction.North);	
-			}
+
+			WorldLoader.player.moveUP = true;
+			WorldLoader.player.moveDown = false;
+			setDirection(Direction.North);	
+
 		}else if(k == KeyCode.S){
-			if(!WorldLoader.player.moveUP) {
-				WorldLoader.player.moveDown = true;
-				setDirection(Direction.South);
-			}
+			WorldLoader.player.moveDown = true;
+			WorldLoader.player.moveUP = false;
+			setDirection(Direction.South);
+
 		}
 		if(k == KeyCode.Q) {
-			if(!WorldLoader.player.moveRight) {
-				WorldLoader.player.moveLeft = true;
-				setDirection(Direction.East);
-			}
+			WorldLoader.player.moveLeft = true;
+			WorldLoader.player.moveRight = false;
+			setDirection(Direction.East);
+
 		}else if(k == KeyCode.D) {
-			if(!WorldLoader.player.moveLeft) {
-				WorldLoader.player.moveRight = true;	
-				setDirection(Direction.West);
-			}
+			WorldLoader.player.moveRight = true;	
+			WorldLoader.player.moveLeft = false;
+			setDirection(Direction.West);
+
 		}
 	}
 
@@ -71,11 +72,6 @@ public class WorldLoader {
 		}else if(k == KeyCode.D) {
 			WorldLoader.player.moveRight = false;
 		}
-
-
-
-
-
 	}
 
 	/*
