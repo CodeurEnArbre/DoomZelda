@@ -34,15 +34,16 @@ public class WorldLoader {
 			setDirection(Direction.North);	
 
 		}else if(k == KeyCode.S){
-			WorldLoader.player.moveDown = true;
-			WorldLoader.player.moveUP = false;
-			setDirection(Direction.South);
-
+			if(!WorldLoader.player.moveUP) {
+				WorldLoader.player.moveDown = true;
+				setDirection(Direction.South);
+			}
 		}
 		if(k == KeyCode.Q) {
-			WorldLoader.player.moveLeft = true;
-			WorldLoader.player.moveRight = false;
-			setDirection(Direction.East);
+			if(!WorldLoader.player.moveRight) {
+				WorldLoader.player.moveLeft = true;
+				setDirection(Direction.East);
+			}
 
 		}else if(k == KeyCode.D) {
 			WorldLoader.player.moveRight = true;	
