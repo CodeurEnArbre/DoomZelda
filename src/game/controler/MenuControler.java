@@ -80,7 +80,7 @@ public class MenuControler implements Initializable{
 		textureLoading();		
 
 		//Chargement de la map
-		WorldLoader.loadWorld("TinyMap");
+		WorldLoader.loadWorld("Road");
 
 		//Chargement du joueur
 		player=new ImageView();
@@ -187,11 +187,11 @@ public class MenuControler implements Initializable{
 
 				if(WorldLoader.player.moveDown) {
 					if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight) {
-						WorldLoader.player.addY(0.14);
+						WorldLoader.player.addY(WorldLoader.player.diaSpeed);
 						WorldLoader.player.incAnim();
 					}
 					else {
-						WorldLoader.player.addY(0.2);
+						WorldLoader.player.addY(WorldLoader.player.speed);
 						WorldLoader.player.incAnim();
 					}
 				}
@@ -199,21 +199,21 @@ public class MenuControler implements Initializable{
 				if(WorldLoader.player.moveUP) {
 					if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight)
 					{	
-						WorldLoader.player.addY(-0.14);	
+						WorldLoader.player.addY(-WorldLoader.player.diaSpeed);	
 						WorldLoader.player.incAnim();
 					}else
 					{
-						WorldLoader.player.addY(-0.2);	
+						WorldLoader.player.addY(-WorldLoader.player.speed);	
 						WorldLoader.player.incAnim();
 					}
 				}
 				if(WorldLoader.player.moveLeft) {
 					if(WorldLoader.player.moveUP ^ WorldLoader.player.moveDown)
 					{
-						WorldLoader.player.addX(-0.14);
+						WorldLoader.player.addX(-WorldLoader.player.diaSpeed);
 						WorldLoader.player.incAnim();
 					}		else
-					{	WorldLoader.player.addX(-0.2);
+					{	WorldLoader.player.addX(-WorldLoader.player.speed);
 					WorldLoader.player.incAnim();
 					}
 				}
@@ -221,11 +221,11 @@ public class MenuControler implements Initializable{
 				if(WorldLoader.player.moveRight) {
 					if(WorldLoader.player.moveUP ^ WorldLoader.player.moveDown)
 					{
-						WorldLoader.player.addX(0.14);
+						WorldLoader.player.addX(WorldLoader.player.diaSpeed);
 						WorldLoader.player.incAnim();
 					}else
 					{
-						WorldLoader.player.addX(0.2); 
+						WorldLoader.player.addX(WorldLoader.player.speed); 
 						WorldLoader.player.incAnim();
 					}
 				}
