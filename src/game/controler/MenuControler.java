@@ -167,7 +167,6 @@ public class MenuControler implements Initializable{
 	private void updateHearts() {
 		int maxPv = WorldLoader.player.getMaxPv().intValue();
 		int pv = WorldLoader.player.getPV().intValue();
-		System.out.println(pv);
 		for(ImageView coeur:coeurs){
 			int pvid=0;
 
