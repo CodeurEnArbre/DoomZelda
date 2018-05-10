@@ -14,6 +14,7 @@ import game.modele.entity.TileEntityTP;
 import game.modele.tile.Tile;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
+import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
 
 public class WorldLoader {
@@ -80,47 +81,8 @@ public class WorldLoader {
 	/*
 	 * Chargement de la map : création du tableau utilisé par l'affichage
 	 * */
-	public static void loadWorld(String file) {
+	public static void loadWorld(String file, String worldName) {
 		try {
-			//Chargement des entity
-			ArrayList<Entity> entity= new ArrayList<Entity>();
-			BufferedReader entityData = new BufferedReader(new FileReader(new File("ressources/map/"+file+".entity")));
-			while(entityData.readLine()==",") {
-				String entityType = entityData.readLine();
-				double x=Double.parseDouble(entityData.readLine());
-				double y=Double.parseDouble(entityData.readLine());
-				
-				switch (entityType) {
-				
-				case "TileEntity":
-					boolean etatTileEntity= Boolean.parseBoolean(entityData.readLine());
-					entityData.readLine();
-					int idTileEntity=Integer.parseInt(entityData.readLine());
-					entityData.readLine();
-					
-					entity.add(new TileEntity(idTileEntity, new Coordonnees(x, y), etatTileEntity));
-					break;
-					
-				case "EntityLiving":
-					int etatEntityLiving= Integer.parseInt(entityData.readLine());
-					Direction directionEntityLiving=new Direction(Integer.parseInt(entityData.readLine()));
-					int idEntityLiving=Integer.parseInt(entityData.readLine());//TODO a ajouter id dans EntityLiving
-					entityData.readLine();
-				
-					entity.add(new EntityLiving(new Coordonnees(x, y), directionEntityLiving, etatEntityLiving));
-					break;
-					
-				case "TileEntityTP":
-					boolean etatTileEntityTP= Boolean.parseBoolean(entityData.readLine());
-					String mapTP = entityData.readLine();
-					double xTP=Double.parseDouble(entityData.readLine());
-					double yTP=Double.parseDouble(entityData.readLine());//TODO 1-> tpid
-					entity.add(new TileEntityTP(0, new Coordonnees(x, y), etatTileEntityTP, mapTP, new Coordonnees(xTP, yTP)));
-					break;
-				}
-			}
-			entityData.close();
-		
 			//Chargement des tiles
 			BufferedReader tilesData = new BufferedReader(new FileReader(new File("ressources/map/"+file+".map")));
 
@@ -136,14 +98,64 @@ public class WorldLoader {
 			Tile[][] tileTop=  makeTileGrid(width, height, tilesData);
 
 			tilesData.close();
-
-			currentMap=new World(name, width, height, tileGround, tileSolid, tileTop, entity);
+			
+			if(worldName==null)
+				currentMap=new World(name, width, height, tileGround, tileSolid, tileTop, loadEntity(file));
+			else
+				currentMap.newWorld(worldName, width, height, tileGround, tileSolid, tileTop, loadEntity(file));
 
 		}catch(IOException e) {
 			System.out.println("Impossible de charger la map");
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public static ArrayList<Entity> loadEntity(String world) throws IOException{
+		ArrayList<Entity> entity= new ArrayList<Entity>();
+		BufferedReader entityData = new BufferedReader(new FileReader(new File("ressources/map/"+world+".entity")));
+		
+		String nextLine = entityData.readLine();
+		while(nextLine!= null && nextLine.equals(",")) {
+			String entityType = entityData.readLine();
+			double x=Double.parseDouble(entityData.readLine());
+			double y=Double.parseDouble(entityData.readLine());
+			
+			switch (entityType) {
+			
+			case "TileEntity":
+				boolean etatTileEntity= Boolean.parseBoolean(entityData.readLine());
+				entityData.readLine();
+				int idTileEntity=Integer.parseInt(entityData.readLine());
+				entityData.readLine();
+				
+				entity.add(new TileEntity(idTileEntity, new Coordonnees(x, y), etatTileEntity));
+				break;
+				
+			case "EntityLiving":
+				int etatEntityLiving= Integer.parseInt(entityData.readLine());
+				Direction directionEntityLiving=new Direction(Integer.parseInt(entityData.readLine()));
+				int idEntityLiving=Integer.parseInt(entityData.readLine());//TODO a ajouter id dans EntityLiving
+				entityData.readLine();
+			
+				entity.add(new EntityLiving(new Coordonnees(x, y), directionEntityLiving, etatEntityLiving));
+				break;
+				
+			case "TileEntityTP":
+				boolean etatTileEntityTP= Boolean.parseBoolean(entityData.readLine());
+				String mapTP = entityData.readLine();
+				double xTP=Double.parseDouble(entityData.readLine());
+				double yTP=Double.parseDouble(entityData.readLine());//TODO 1-> tpid
+				entity.add(new TileEntityTP(0, new Coordonnees(x, y), etatTileEntityTP, mapTP, new Coordonnees(xTP, yTP)));
+				break;
+			}
+			
+			nextLine = entityData.readLine();
+		}
+		entityData.close();
+		return entity;
+	}
+	
 
 	/*
 	 * Chargement d'un Tableau de Tile utilisé par la fonction loadWorld();

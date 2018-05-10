@@ -40,4 +40,8 @@ public class Coordonnees {
 		this.x.set(x);
 		this.y.set(y);
 	}
+	
+	public String toString() {
+		return ("x:"+this.x.doubleValue()+", y:"+this.y.doubleValue());
+	}
 }

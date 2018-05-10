@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import game.modele.entity.Entity;
 import game.modele.tile.Tile;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class World {
 	
-	private String zoneName;
+	private StringProperty zoneName;
 	private Tile tileGround[][];
 	private Tile tiles[][];
 	private Tile tilesTop[][];
@@ -15,7 +17,17 @@ public class World {
 	private int width,height;
 	
 	public World(String zoneName, int width, int height, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entity) {
-		this.zoneName=zoneName;
+		this.zoneName=new SimpleStringProperty(zoneName);
+		this.width=width;
+		this.height=height;
+		this.tileGround=ground;
+		this.tiles=tiles;
+		this.tilesTop=tilesTop;
+		this.entity=entity;
+	}
+	
+	public void newWorld(String zoneName, int width, int height, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entity) {
+		this.zoneName.setValue(zoneName);
 		this.width=width;
 		this.height=height;
 		this.tileGround=ground;
@@ -25,6 +37,10 @@ public class World {
 	}
 	
 	public String getName() {
+		return this.zoneName.get();
+	}
+	
+	public StringProperty getNameProperty() {
 		return this.zoneName;
 	}
 	

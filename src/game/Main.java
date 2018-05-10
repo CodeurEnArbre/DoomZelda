@@ -3,6 +3,7 @@ package game;
 import java.io.File;
 import java.net.URL;
 
+import game.modele.entity.EntityUpdate;
 import game.modele.world.WorldLoader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application{
+	
+	public static boolean entityUpdate=false;
 	
 	@Override
 	public void start(Stage primaryStage)  {	
@@ -26,6 +29,24 @@ public class Main extends Application{
 			primaryStage.setResizable(false);
 			primaryStage.show();
 
+			Thread firstThread = Thread.currentThread();
+			//EntityGameLoopUpdate
+			Thread EntityGameLoopUpdate = new Thread() {
+				public void run() {
+					while (firstThread.isAlive()) {
+						try {
+							Thread.sleep((1/60)*1000);
+							if(entityUpdate) {
+								EntityUpdate.update();
+							}
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			};
+			EntityGameLoopUpdate.start();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

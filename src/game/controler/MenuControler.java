@@ -6,9 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import game.Main;
 import game.modele.entity.Entity;
-import game.modele.entity.Player;
-import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.world.WorldLoader;
 import game.vue.EntityLivingTexture;
@@ -88,8 +87,8 @@ public class MenuControler implements Initializable{
 		textureLoading();		
 
 		//Chargement de la map
-		WorldLoader.loadWorld("TinyMap");
-
+		WorldLoader.loadWorld("TinyMap",null);
+		
 		//Chargement du joueur
 		player=new ImageView();
 		WorldLoader.loadPlayer();
@@ -129,6 +128,19 @@ public class MenuControler implements Initializable{
 
 
 		GameLoop.play();
+		Main.entityUpdate=true;
+		
+		//Ajout d'un Listener si la map change
+		WorldLoader.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				PaneGround.getChildren().clear();
+				PaneSolid.getChildren().clear();
+				PaneTop.getChildren().clear();
+				printCalqueTile(PaneGround,PaneSolid,PaneTop);
+			}
+		});
+		
 	}
 
 	private void textureLoading() {

@@ -71,6 +71,18 @@ public class Entity {
 				(coordonnees.getY() + WorldLoader.player.speed) < WorldLoader.currentMap.getHeight());
 	}
 	
+	public void forceTp(Coordonnees coordonnees) {
+		this.coordonnes.setX(coordonnees.getX());
+		this.coordonnes.setY(coordonnees.getX());
+	}
+	
+	public boolean isOnTileCoord(Coordonnees coordonnees) {
+		if((int)this.coordonnes.getX()==(int)coordonnees.getX() && (int)this.coordonnes.getY()==(int)coordonnees.getY())
+			return true;
+		else
+			return false;
+	}
+	
 	//animation
 		public void incAnim() {
 			this.animationIndice.set(
