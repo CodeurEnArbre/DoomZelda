@@ -2,8 +2,8 @@ package game.modele.world;
 
 import java.util.ArrayList;
 
+import game.modele.entity.Entity;
 import game.modele.tile.Tile;
-import game.modele.tile.TileEntity;
 
 public class World {
 	
@@ -11,17 +11,17 @@ public class World {
 	private Tile tileGround[][];
 	private Tile tiles[][];
 	private Tile tilesTop[][];
-	private ArrayList<TileEntity> tileEntity;
+	private ArrayList<Entity> entity;
 	private int width,height;
 	
-	public World(String zoneName, int width, int height, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<TileEntity> tileEntity) {
+	public World(String zoneName, int width, int height, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entity) {
 		this.zoneName=zoneName;
 		this.width=width;
 		this.height=height;
 		this.tileGround=ground;
 		this.tiles=tiles;
 		this.tilesTop=tilesTop;
-		this.tileEntity=tileEntity;
+		this.entity=entity;
 	}
 	
 	public String getName() {
@@ -48,8 +48,8 @@ public class World {
 			return tilesTop[x][y];
 	}
 	
-	public ArrayList<TileEntity> getTileEntity(){
-		return this.tileEntity;
+	public ArrayList<Entity> getEntity(){
+		return this.entity;
 	}
 	
 }

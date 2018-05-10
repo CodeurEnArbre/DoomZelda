@@ -7,12 +7,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class EntityLiving extends Entity{
 	
+	//La direction du regard
 	protected Direction direction;
 	protected IntegerProperty PV;
-	protected IntegerProperty maxPv;
-	//La direction du regard
-
-	
+	protected IntegerProperty maxPv;	
 	
 	public EntityLiving(Coordonnees position, Direction direction) {
 		super(position);
@@ -49,7 +47,7 @@ public class EntityLiving extends Entity{
 		return PV;
 	}
 	
-	public void addHeart() {
+	public void addPermanentHeart() {
 		this.maxPv.add(4);
 	}
 	
