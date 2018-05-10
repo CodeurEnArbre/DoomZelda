@@ -52,6 +52,8 @@ public class MenuControler implements Initializable{
 	@FXML
 	private Pane EntityPane;
 	@FXML
+	private Pane PlayerPane;
+	@FXML
 	private Pane PaneTop;
 
 
@@ -191,7 +193,6 @@ public class MenuControler implements Initializable{
 				if(WorldLoader.player.moveDown) {
 					if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight) {
 						WorldLoader.player.addY(WorldLoader.player.speed * 2/3);
-						WorldLoader.player.incAnim();
 					}
 					else {
 						if(WorldLoader.player.speed < WorldLoader.player.maxSpeed) {
@@ -206,7 +207,6 @@ public class MenuControler implements Initializable{
 					if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight)
 					{	
 						WorldLoader.player.addY(-WorldLoader.player.speed * 2/3);	
-						WorldLoader.player.incAnim();
 					}else
 					{
 						if(WorldLoader.player.speed < WorldLoader.player.maxSpeed) {
@@ -280,7 +280,7 @@ public class MenuControler implements Initializable{
 		player.setFitHeight(64);
 		player.setX(WorldLoader.player.getCoordoner().getX());
 		player.setY(WorldLoader.player.getCoordoner().getY());
-		EntityPane.getChildren().add(player);
+		PlayerPane.getChildren().add(player);
 
 		paneGame.layoutXProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(-32).add(432));
 		paneGame.layoutYProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(-32).add(320));
