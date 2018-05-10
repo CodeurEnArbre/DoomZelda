@@ -2,13 +2,16 @@ package game.modele.entity;
 
 import game.modele.utils.Coordonnees;
 import game.modele.world.WorldLoader;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Entity {
 
 	private Coordonnees coordonnes;
 	protected IntegerProperty animationIndice = new SimpleIntegerProperty(0);
+	protected int hitBoxX, hitBoxY;
 	
 	public Entity(Coordonnees coordonnees) {
 		this.coordonnes=coordonnees;
@@ -75,5 +78,15 @@ public class Entity {
 		
 		public void resetAnim() {
 			this.animationIndice.set(0);
+		}
+		
+		public BooleanProperty touche(Entity e) {
+			BooleanProperty result = new SimpleBooleanProperty();
+			if(this.getX() - e.getX() <= this.hitBoxX && this.getY() - e.getY() <= this.hitBoxY)
+				result.setValue(true);
+			else
+				result.setValue(false);
+			
+			return result;
 		}
 }

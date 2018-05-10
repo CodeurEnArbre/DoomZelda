@@ -24,6 +24,8 @@ public class Player extends EntityLiving{
 	public Player(ArrayList<Item> inventory, Coordonnees position, Direction direction) {
 		super(position,direction);
 		this.inventory=inventory;
+		this.hitBoxX = 32;
+		this.hitBoxY = 32;
 	}
 
 	//Récupérer le nombre d'item dans l'inventaire
