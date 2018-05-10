@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import game.modele.entity.Entity;
+import game.modele.entity.Player;
+import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.world.WorldLoader;
 import game.vue.EntityLivingTexture;
@@ -35,6 +38,9 @@ public class MenuControler implements Initializable{
 
 
 	ArrayList<ImageView> coeurs;
+	
+	public ArrayList<Entity> Entitys;
+	public Entity e;
 
 	@FXML
 	private Pane paneWindow;//Main avec tout les autres pane dedans
@@ -90,8 +96,14 @@ public class MenuControler implements Initializable{
 
 		//Affichage des toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
+		
+		//Initialisation de la liste d'entites et affichage des entitées
+		Entitys = new ArrayList<Entity>();
+		e = WorldLoader.player;
+		Entitys.add(e);
+		affichageEntity();
 
-		//Affichage du joueur
+		//Affichage de l'animation du joueur
 		affichageDuJoueur();
 
 		for(int numCoeur=WorldLoader.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
@@ -272,6 +284,18 @@ public class MenuControler implements Initializable{
 			coeurAt++;
 		}
 
+	}
+	
+	private void affichageEntity() {
+		for(Entity entity : Entitys) {
+			entity.getimageView().setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(entity.getTextureFile(), entity.getTextureWidth(), entity.getTextureHeight(), entity.getTextureX(), entity.getTextureY()).getTexture(), null));
+			entity.getimageView().setFitWidth(32);
+			entity.getimageView().setFitHeight(64);
+			entity.getimageView().setX(entity.getX());
+			entity.getimageView().setX(entity.getY());
+			
+			EntityPane.getChildren().add(entity.getimageView());
+		}
 	}
 
 	private void affichageDuJoueur() {

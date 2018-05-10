@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import game.modele.item.Item;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
+import game.vue.TexturesParametres;
 
 public class Player extends EntityLiving{
 
@@ -26,6 +27,7 @@ public class Player extends EntityLiving{
 		this.inventory=inventory;
 		this.hitBoxX = 32;
 		this.hitBoxY = 32;
+		this.textureParametres = new TexturesParametres("player", 24, 32, 0, 2);
 	}
 
 	//Récupérer le nombre d'item dans l'inventaire
@@ -40,4 +42,6 @@ public class Player extends EntityLiving{
 	public void addInventoryItem(Item item) {
 		this.inventory.add(item);
 	}
+	
+	
 }
