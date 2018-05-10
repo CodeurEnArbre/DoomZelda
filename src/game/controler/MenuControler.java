@@ -138,6 +138,7 @@ public class MenuControler implements Initializable{
 				PaneSolid.getChildren().clear();
 				PaneTop.getChildren().clear();
 				printCalqueTile(PaneGround,PaneSolid,PaneTop);
+				System.out.println("World Texture Loading Terminer");
 			}
 		});
 		

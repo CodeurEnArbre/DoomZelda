@@ -3,6 +3,7 @@ package game.modele.entity;
 import java.util.ArrayList;
 
 import game.modele.world.WorldLoader;
+import javafx.application.Platform;
 
 public class EntityUpdate {
 	
@@ -20,9 +21,15 @@ public class EntityUpdate {
 	
 	private static void tileEntityTpUpdate(TileEntityTP entity) {
 		if(WorldLoader.player.isOnTileCoord(entity.getCoordoner())) {
-			System.out.println("TP du joueur a "+entity.getTPmapName()+" en "+entity.getTPCoordonnees());
-			WorldLoader.loadWorld(entity.getTPmapName(),entity.getTPmapName());
+			Platform.runLater(new Runnable(){
+				@Override
+				public void run() {
+					WorldLoader.loadWorld(entity.getTPmapName(),entity.getTPmapName());
+				}
+				
+			});
 			WorldLoader.player.forceTp(entity.getTPCoordonnees());
+			
 		}
 	}
 	

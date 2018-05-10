@@ -101,8 +101,10 @@ public class WorldLoader {
 			
 			if(worldName==null)
 				currentMap=new World(name, width, height, tileGround, tileSolid, tileTop, loadEntity(file));
-			else
+			else {
 				currentMap.newWorld(worldName, width, height, tileGround, tileSolid, tileTop, loadEntity(file));
+				System.out.println("Loading \""+worldName+"\" Terminer");
+				}
 
 		}catch(IOException e) {
 			System.out.println("Impossible de charger la map");

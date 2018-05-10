@@ -73,7 +73,7 @@ public class Entity {
 	
 	public void forceTp(Coordonnees coordonnees) {
 		this.coordonnes.setX(coordonnees.getX());
-		this.coordonnes.setY(coordonnees.getX());
+		this.coordonnes.setY(coordonnees.getY());
 	}
 	
 	public boolean isOnTileCoord(Coordonnees coordonnees) {

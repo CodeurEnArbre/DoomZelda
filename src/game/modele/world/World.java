@@ -27,13 +27,13 @@ public class World {
 	}
 	
 	public void newWorld(String zoneName, int width, int height, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entity) {
-		this.zoneName.setValue(zoneName);
 		this.width=width;
 		this.height=height;
 		this.tileGround=ground;
 		this.tiles=tiles;
 		this.tilesTop=tilesTop;
 		this.entity=entity;
+		this.zoneName.setValue(zoneName);
 	}
 	
 	public String getName() {
