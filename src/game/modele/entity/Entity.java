@@ -22,6 +22,7 @@ public class Entity {
 	public Entity(Coordonnees coordonnees) {
 		this.coordonnes=coordonnees;
 		this.imageView = new ImageView();
+		//textureParametres = new TexturesParametres("player", 24, 32, 0, 2); test à supprimer
 	}
 
 	public Coordonnees getCoordoner() {

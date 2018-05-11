@@ -177,4 +177,8 @@ public class WorldLoader {
 			return null;
 		}
 	}
+	
+	public static World getWorld() {
+		return WorldLoader.currentMap;
+	}
 }

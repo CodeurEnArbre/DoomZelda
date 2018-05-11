@@ -1,6 +1,7 @@
 package game.modele.entity;
 
 import game.modele.utils.Coordonnees;
+import game.vue.TexturesParametres;
 
 public class TileEntityTP extends TileEntity{
 	private Coordonnees tpCoordonnees;
@@ -10,6 +11,7 @@ public class TileEntityTP extends TileEntity{
 		super(id, coordonerPosition, etat);
 		this.tpCoordonnees=tpCoordonnees;
 		this.mapNameTp=mapNameTp;
+		textureParametres = new TexturesParametres("ItemTextureMap", 32, 32, 0, 1);
 	}
 	
 	public String getTPmapName() {

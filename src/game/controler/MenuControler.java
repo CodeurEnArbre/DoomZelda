@@ -97,10 +97,9 @@ public class MenuControler implements Initializable{
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
 		
 		//Initialisation de la liste d'entites et affichage des entitées
-		Entitys = new ArrayList<Entity>();
-		e = WorldLoader.player;
-		Entitys.add(e);
-		affichageEntity();
+		//e = WorldLoader.player;
+		Entitys = WorldLoader.getWorld().getEntity();
+		affichageEntity(Entitys);
 
 		//Affichage de l'animation du joueur
 		affichageDuJoueur();
@@ -299,8 +298,8 @@ public class MenuControler implements Initializable{
 
 	}
 	
-	private void affichageEntity() {
-		for(Entity entity : Entitys) {
+	private void affichageEntity(ArrayList<Entity> e) {
+		for(Entity entity : e) {
 			entity.getimageView().setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(entity.getTextureFile(), entity.getTextureWidth(), entity.getTextureHeight(), entity.getTextureX(), entity.getTextureY()).getTexture(), null));
 			entity.getimageView().setFitWidth(32);
 			entity.getimageView().setFitHeight(64);
