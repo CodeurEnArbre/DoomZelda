@@ -32,13 +32,12 @@ public class MenuControler implements Initializable{
 	Map<Integer,Image> dicoImageTileTextureMap;
 	Map<Integer,Image> dicoImageItemTextureMap;
 	Map<Integer,Image> dicoImageAnimationPlayer;
+	Map<Integer,Image[]> dicoImageAnimationEntity; 
 
 	private Timeline GameLoop;
-
-
+	
 	ArrayList<ImageView> coeurs;
 	
-	public ArrayList<Entity> Entitys;
 	public Entity e;
 
 	@FXML
@@ -64,22 +63,6 @@ public class MenuControler implements Initializable{
 
 	private ImageView player;//l'image du joueur a l'ecran
 
-
-	@FXML
-	void option(ActionEvent event) {
-
-	}
-
-	@FXML
-	void play(ActionEvent event) {
-
-
-	}
-
-	@FXML
-	void quitter(ActionEvent event) {
-
-	}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -98,8 +81,8 @@ public class MenuControler implements Initializable{
 		
 		//Initialisation de la liste d'entites et affichage des entitées
 		//e = WorldLoader.player;
-		Entitys = WorldLoader.getWorld().getEntity();
-		affichageEntity(Entitys);
+		WorldLoader.Entitys = WorldLoader.getWorld().getEntity();
+		affichageEntity(WorldLoader.Entitys);
 
 		//Affichage de l'animation du joueur
 		affichageDuJoueur();
@@ -147,6 +130,7 @@ public class MenuControler implements Initializable{
 		dicoImageTileTextureMap = new HashMap<>();
 		dicoImageItemTextureMap = new HashMap<>();
 		dicoImageAnimationPlayer = new HashMap<>();
+		dicoImageAnimationEntity = new HashMap<>();
 
 		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
 		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
@@ -160,7 +144,6 @@ public class MenuControler implements Initializable{
 			dico.put(x + 1,SwingFXUtils.toFXImage(TextureLoader.getTextureMapImage(textureMapName,imageWidthPixels,imageHeightPixels,imageWidth,imageHeight,x).getTexture(), null));
 		}
 	}
-
 	private void LoadAnimation(Map<Integer,Image> dico, int frame, int animation) {
 		for(int x = 0;x < frame;x++)
 			for(int y = 0;y < animation;y++)
@@ -192,11 +175,13 @@ public class MenuControler implements Initializable{
 		}
 	}
 
+	//Create game Loop du jeu
 	private void createGameLoop() {
 		GameLoop = new Timeline();
 		GameLoop.setCycleCount(Timeline.INDEFINITE);
 	}
 
+	//Ajoute des fonctions qui seront éxécuté dans la gameloop
 	private void addKeyGameLoop(EventHandler<ActionEvent> e) {
 		KeyFrame keyf = new KeyFrame(Duration.seconds(0.017),e);
 		GameLoop.getKeyFrames().add(keyf);
@@ -347,7 +332,5 @@ public class MenuControler implements Initializable{
 					}
 				}
 			);
-
-
 	}
 }

@@ -10,7 +10,7 @@ import game.vue.TexturesParametres;
 public class Player extends EntityLiving{
 
 	public final double baseSpeed = 0.12f;
-	public final double maxSpeed = 0.25f;
+	public final double maxSpeed = 0.20f;
 	public final double acce = 0.00025f;
 	
 	private ArrayList<Item> inventory;

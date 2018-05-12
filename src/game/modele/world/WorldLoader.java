@@ -21,7 +21,9 @@ public class WorldLoader {
 
 	public static World currentMap;
 	public static Player player;
-
+	public static ArrayList<Entity> Entitys;
+	
+	
 	public static void loadPlayer() {
 		player = new Player(null,new Coordonnees(14,10),new Direction(5));
 	}

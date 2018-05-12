@@ -7,8 +7,8 @@ public class Coordonnees {
 	private DoubleProperty x,y;
 	
 	public Coordonnees(double x, double y) {
-		this.x= new SimpleDoubleProperty(x);
-		this.y= new SimpleDoubleProperty(y);
+		this.x = new SimpleDoubleProperty(x);
+		this.y = new SimpleDoubleProperty(y);
 	}
 	
 	public DoubleProperty getXpro() {
