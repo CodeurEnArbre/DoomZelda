@@ -32,25 +32,41 @@ public class WorldLoader {
 	public static void KeyInteractDown(KeyCode k) {
 
 		if(k == KeyCode.Z) {
+			WorldLoader.player.moveUP.attente = false;
+			WorldLoader.player.moveUP.active = true;
+			if(WorldLoader.player.moveDown.active)
+				WorldLoader.player.moveDown.attente = true;
+			WorldLoader.player.moveDown.active = false;
 
-			WorldLoader.player.moveUP = true;
-			WorldLoader.player.moveDown = false;
 			setDirection(Direction.North);	
 
 		}else if(k == KeyCode.S){
-			WorldLoader.player.moveDown = true;
-			WorldLoader.player.moveUP = false;
+			WorldLoader.player.moveDown.attente = false;
+			WorldLoader.player.moveDown.active = true;
+			if(WorldLoader.player.moveUP.active)
+				WorldLoader.player.moveUP.attente = true;
+			WorldLoader.player.moveUP.active = false;
+
 			setDirection(Direction.South);
 
 		}
 		if(k == KeyCode.Q) {
-			WorldLoader.player.moveLeft = true;
-			WorldLoader.player.moveRight = false;
+			WorldLoader.player.moveLeft.attente = false;
+			WorldLoader.player.moveLeft.active = true;
+			if(WorldLoader.player.moveRight.active)
+				WorldLoader.player.moveRight.attente = true;
+
+			WorldLoader.player.moveRight.active = false;
+
 			setDirection(Direction.East);
 
 		}else if(k == KeyCode.D) {
-			WorldLoader.player.moveRight = true;	
-			WorldLoader.player.moveLeft = false;
+			WorldLoader.player.moveRight.attente = false;
+			WorldLoader.player.moveRight.active = true;
+			if(WorldLoader.player.moveLeft.active)
+				WorldLoader.player.moveLeft.attente = true;
+			WorldLoader.player.moveLeft.active = false;
+
 			setDirection(Direction.West);
 
 		}
@@ -68,14 +84,38 @@ public class WorldLoader {
 	 * */
 	public static void KeyInteractUp(KeyCode k) {
 		if(k == KeyCode.Z) {
-			WorldLoader.player.moveUP = false;
+			WorldLoader.player.moveUP.active = false;
+			WorldLoader.player.moveUP.attente = false;
+			if(WorldLoader.player.moveDown.attente) {
+				WorldLoader.player.moveDown.active = WorldLoader.player.moveDown.attente;
+				WorldLoader.player.moveDown.attente = false;
+			}
 		}else if(k == KeyCode.S) {
-			WorldLoader.player.moveDown = false;
+			WorldLoader.player.moveDown.active = false;
+			WorldLoader.player.moveDown.attente = false;
+			if(WorldLoader.player.moveUP.attente) {
+				WorldLoader.player.moveUP.active = WorldLoader.player.moveUP.attente;
+				WorldLoader.player.moveUP.attente = false;
+			}
 		}else if(k == KeyCode.Q) {
-			WorldLoader.player.moveLeft = false;
+			WorldLoader.player.moveLeft.active = false;
+			WorldLoader.player.moveLeft.attente = false;
+			if(WorldLoader.player.moveRight.attente) {
+				WorldLoader.player.moveRight.active = WorldLoader.player.moveRight.attente;
+				WorldLoader.player.moveRight.attente = false;
+			}
 		}else if(k == KeyCode.D) {
-			WorldLoader.player.moveRight = false;
+			WorldLoader.player.moveRight.active = false;
+			WorldLoader.player.moveRight.attente = false;
+			if(WorldLoader.player.moveLeft.attente) {
+				WorldLoader.player.moveLeft.active = WorldLoader.player.moveLeft.attente;
+				WorldLoader.player.moveLeft.attente = false;
+			}
 		}
+
+
+
+
 	}
 
 	/*
@@ -98,51 +138,51 @@ public class WorldLoader {
 			Tile[][] tileTop=  makeTileGrid(width, height, tilesData);
 
 			tilesData.close();
-			
+
 			if(worldName==null)
 				currentMap=new World(name, width, height, tileGround, tileSolid, tileTop, loadEntity(file));
 			else {
 				currentMap.newWorld(worldName, width, height, tileGround, tileSolid, tileTop, loadEntity(file));
 				System.out.println("Loading \""+worldName+"\" Terminer");
-				}
+			}
 
 		}catch(IOException e) {
 			System.out.println("Impossible de charger la map");
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	public static ArrayList<Entity> loadEntity(String world) throws IOException{
 		ArrayList<Entity> entity= new ArrayList<Entity>();
 		BufferedReader entityData = new BufferedReader(new FileReader(new File("ressources/map/"+world+".entity")));
-		
+
 		String nextLine = entityData.readLine();
 		while(nextLine!= null && nextLine.equals(",")) {
 			String entityType = entityData.readLine();
 			double x=Double.parseDouble(entityData.readLine());
 			double y=Double.parseDouble(entityData.readLine());
-			
+
 			switch (entityType) {
-			
+
 			case "TileEntity":
 				boolean etatTileEntity= Boolean.parseBoolean(entityData.readLine());
 				entityData.readLine();
 				int idTileEntity=Integer.parseInt(entityData.readLine());
 				entityData.readLine();
-				
+
 				entity.add(new TileEntity(idTileEntity, new Coordonnees(x, y), etatTileEntity));
 				break;
-				
+
 			case "EntityLiving":
 				int etatEntityLiving= Integer.parseInt(entityData.readLine());
 				Direction directionEntityLiving=new Direction(Integer.parseInt(entityData.readLine()));
 				int idEntityLiving=Integer.parseInt(entityData.readLine());//TODO a ajouter id dans EntityLiving
 				entityData.readLine();
-			
+
 				entity.add(new EntityLiving(new Coordonnees(x, y), directionEntityLiving, etatEntityLiving));
 				break;
-				
+
 			case "TileEntityTP":
 				boolean etatTileEntityTP= Boolean.parseBoolean(entityData.readLine());
 				String mapTP = entityData.readLine();
@@ -151,13 +191,13 @@ public class WorldLoader {
 				entity.add(new TileEntityTP(0, new Coordonnees(x, y), etatTileEntityTP, mapTP, new Coordonnees(xTP, yTP)));
 				break;
 			}
-			
+
 			nextLine = entityData.readLine();
 		}
 		entityData.close();
 		return entity;
 	}
-	
+
 
 	/*
 	 * Chargement d'un Tableau de Tile utilisé par la fonction loadWorld();
@@ -177,7 +217,7 @@ public class WorldLoader {
 			return null;
 		}
 	}
-	
+
 	public static World getWorld() {
 		return WorldLoader.currentMap;
 	}

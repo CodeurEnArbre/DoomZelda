@@ -208,14 +208,14 @@ public class MenuControler implements Initializable{
 			@Override
 			public void handle(ActionEvent event) {
 				
-				if(!WorldLoader.player.moveDown && !WorldLoader.player.moveUP && !WorldLoader.player.moveLeft && !WorldLoader.player.moveRight) {
+				if(!WorldLoader.player.moveDown.active && !WorldLoader.player.moveUP.active && !WorldLoader.player.moveLeft.active && !WorldLoader.player.moveRight.active) {
 					WorldLoader.player.resetAnim();
 					WorldLoader.player.speed = WorldLoader.player.baseSpeed;
 				}
 				
 				
-				if(WorldLoader.player.moveDown) {
-					if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight) {
+				if(WorldLoader.player.moveDown.active) {
+					if(WorldLoader.player.moveLeft.active ^ WorldLoader.player.moveRight.active) {
 						WorldLoader.player.addY(WorldLoader.player.speed * 2/3);
 					}
 					else {
@@ -227,8 +227,8 @@ public class MenuControler implements Initializable{
 					}
 				}
 
-				if(WorldLoader.player.moveUP) {
-					if(WorldLoader.player.moveLeft ^ WorldLoader.player.moveRight)
+				if(WorldLoader.player.moveUP.active) {
+					if(WorldLoader.player.moveLeft.active ^ WorldLoader.player.moveRight.active)
 					{	
 						WorldLoader.player.addY(-WorldLoader.player.speed * 2/3);	
 					}else
@@ -240,8 +240,8 @@ public class MenuControler implements Initializable{
 						WorldLoader.player.incAnim();
 					}
 				}
-				if(WorldLoader.player.moveLeft) {
-					if(WorldLoader.player.moveUP ^ WorldLoader.player.moveDown)
+				if(WorldLoader.player.moveLeft.active) {
+					if(WorldLoader.player.moveUP.active ^ WorldLoader.player.moveDown.active)
 					{
 						WorldLoader.player.addX(-WorldLoader.player.speed * 2/3);
 						WorldLoader.player.incAnim();
@@ -255,8 +255,8 @@ public class MenuControler implements Initializable{
 					}
 				}
 
-				if(WorldLoader.player.moveRight) {
-					if(WorldLoader.player.moveUP ^ WorldLoader.player.moveDown)
+				if(WorldLoader.player.moveRight.active) {
+					if(WorldLoader.player.moveUP.active ^ WorldLoader.player.moveDown.active)
 					{
 						WorldLoader.player.addX(WorldLoader.player.speed * 2/3);
 						WorldLoader.player.incAnim();

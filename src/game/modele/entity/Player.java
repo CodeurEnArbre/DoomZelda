@@ -17,10 +17,17 @@ public class Player extends EntityLiving{
 
 	public double speed = baseSpeed;
 
-	public boolean moveUP;
-	public boolean moveDown;
-	public boolean moveRight;
-	public boolean moveLeft;
+	//représente l'état d'une direction
+	public class infoDeplacement{
+		//la touche est enfoncé
+		public boolean active = false;
+		//la touche est enfoncé mais une autre prend le dessus
+		public boolean attente = false;
+	}
+	public infoDeplacement moveUP;
+	public infoDeplacement moveDown;
+	public infoDeplacement moveRight;
+	public infoDeplacement moveLeft;
 
 	public Player(ArrayList<Item> inventory, Coordonnees position, Direction direction) {
 		super(position,direction);
@@ -28,6 +35,12 @@ public class Player extends EntityLiving{
 		this.hitBoxX = 32;
 		this.hitBoxY = 32;
 		this.textureParametres = new TexturesParametres("player", 24, 32, 0, 2);
+		
+		//déplacement
+		moveUP = new infoDeplacement();
+		moveDown = new infoDeplacement();
+		moveLeft = new infoDeplacement();
+		moveRight = new infoDeplacement();		
 	}
 
 	//Récupérer le nombre d'item dans l'inventaire
