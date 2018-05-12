@@ -7,14 +7,13 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import game.modele.entity.Entity;
-import game.modele.entity.EntityLiving;
-import game.modele.entity.Player;
 import game.modele.entity.TileEntity;
 import game.modele.entity.TileEntityTP;
+import game.modele.entity.Player.Player;
+import game.modele.entity.living.EntityLiving;
 import game.modele.tile.Tile;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
-import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
 
 public class WorldLoader {
@@ -28,6 +27,8 @@ public class WorldLoader {
 		player = new Player(null,new Coordonnees(14,10),new Direction(5));
 	}
 
+	
+	
 	/*
 	 * Assignation des booleans de direction à l'enfoncement de la touche
 	 * */

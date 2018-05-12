@@ -2,6 +2,7 @@ package game.modele.entity;
 
 import java.util.ArrayList;
 
+import game.modele.entity.living.EntityLiving;
 import game.modele.world.WorldLoader;
 import javafx.application.Platform;
 

@@ -28,21 +28,17 @@ import javafx.util.Duration;
 
 public class MenuControler implements Initializable{
 
-
 	Map<Integer,Image> dicoImageTileTextureMap;
 	Map<Integer,Image> dicoImageItemTextureMap;
 	Map<Integer,Image> dicoImageAnimationPlayer;
 	Map<Integer,Image[]> dicoImageAnimationEntity; 
 
 	private Timeline GameLoop;
-	
+
 	ArrayList<ImageView> coeurs;
-	
-	public Entity e;
 
 	@FXML
 	private Pane paneWindow;//Main avec tout les autres pane dedans
-
 	@FXML
 	private Pane paneGame;//Contient les panes d'affichage de la map et des entites
 	@FXML 
@@ -71,16 +67,15 @@ public class MenuControler implements Initializable{
 
 		//Chargement de la map
 		WorldLoader.loadWorld("TinyMap",null);
-		
+
 		//Chargement du joueur
 		player=new ImageView();
 		WorldLoader.loadPlayer();
 
 		//Affichage des toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
-		
+
 		//Initialisation de la liste d'entites et affichage des entitées
-		//e = WorldLoader.player;
 		WorldLoader.Entitys = WorldLoader.getWorld().getEntity();
 		affichageEntity(WorldLoader.Entitys);
 
@@ -111,7 +106,7 @@ public class MenuControler implements Initializable{
 
 		GameLoop.play();
 		Main.entityUpdate=true;
-		
+
 		//Ajout d'un Listener si la map change
 		WorldLoader.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
 			@Override
@@ -123,7 +118,7 @@ public class MenuControler implements Initializable{
 				System.out.println("World Texture Loading Terminer");
 			}
 		});
-		
+
 	}
 
 	private void textureLoading() {
@@ -135,6 +130,7 @@ public class MenuControler implements Initializable{
 		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
 		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
 		LoadAnimation(dicoImageAnimationPlayer, 12, 4);
+
 
 		coeurs = new ArrayList<ImageView>();
 	}
@@ -192,13 +188,11 @@ public class MenuControler implements Initializable{
 
 			@Override
 			public void handle(ActionEvent event) {
-				
+
 				if(!WorldLoader.player.moveDown.active && !WorldLoader.player.moveUP.active && !WorldLoader.player.moveLeft.active && !WorldLoader.player.moveRight.active) {
 					WorldLoader.player.resetAnim();
 					WorldLoader.player.speed = WorldLoader.player.baseSpeed;
 				}
-				
-				
 				if(WorldLoader.player.moveDown.active) {
 					if(WorldLoader.player.moveLeft.active ^ WorldLoader.player.moveRight.active) {
 						WorldLoader.player.addY(WorldLoader.player.speed * 2/3);
@@ -211,7 +205,6 @@ public class MenuControler implements Initializable{
 						WorldLoader.player.incAnim();
 					}
 				}
-
 				if(WorldLoader.player.moveUP.active) {
 					if(WorldLoader.player.moveLeft.active ^ WorldLoader.player.moveRight.active)
 					{	
@@ -239,7 +232,6 @@ public class MenuControler implements Initializable{
 						WorldLoader.player.incAnim();
 					}
 				}
-
 				if(WorldLoader.player.moveRight.active) {
 					if(WorldLoader.player.moveUP.active ^ WorldLoader.player.moveDown.active)
 					{
@@ -282,7 +274,7 @@ public class MenuControler implements Initializable{
 		}
 
 	}
-	
+
 	private void affichageEntity(ArrayList<Entity> e) {
 		for(Entity entity : e) {
 			entity.getimageView().setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(entity.getTextureFile(), entity.getTextureWidth(), entity.getTextureHeight(), entity.getTextureX(), entity.getTextureY()).getTexture(), null));
@@ -290,7 +282,7 @@ public class MenuControler implements Initializable{
 			entity.getimageView().setFitHeight(64);
 			entity.getimageView().setX(entity.getX());
 			entity.getimageView().setX(entity.getY());
-			
+
 			EntityPane.getChildren().add(entity.getimageView());
 		}
 	}
@@ -331,6 +323,6 @@ public class MenuControler implements Initializable{
 						}
 					}
 				}
-			);
+				);
 	}
 }

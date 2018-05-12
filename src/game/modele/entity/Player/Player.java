@@ -1,7 +1,8 @@
-package game.modele.entity;
+package game.modele.entity.Player;
 
 import java.util.ArrayList;
 
+import game.modele.entity.living.EntityLiving;
 import game.modele.item.Item;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
