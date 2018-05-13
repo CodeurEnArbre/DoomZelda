@@ -93,6 +93,13 @@ public class WorldLoader {
 				WorldLoader.player.moveDown.active = WorldLoader.player.moveDown.attente;
 				setDirection(Direction.South);
 				WorldLoader.player.moveDown.attente = false;
+			}else {
+				if(WorldLoader.player.moveLeft.active)
+					setDirection(Direction.East);
+				
+				if(WorldLoader.player.moveRight.active)
+					setDirection(Direction.West);
+				
 			}
 		}else if(k == KeyCode.S) {
 			WorldLoader.player.moveDown.active = false;
@@ -101,6 +108,12 @@ public class WorldLoader {
 				WorldLoader.player.moveUP.active = WorldLoader.player.moveUP.attente;
 				setDirection(Direction.North);	
 				WorldLoader.player.moveUP.attente = false;
+			}else {
+				if(WorldLoader.player.moveLeft.active)
+					setDirection(Direction.East);
+				
+				if(WorldLoader.player.moveRight.active)
+					setDirection(Direction.West);
 			}
 		}else if(k == KeyCode.Q) {
 			WorldLoader.player.moveLeft.active = false;
@@ -109,6 +122,12 @@ public class WorldLoader {
 				WorldLoader.player.moveRight.active = WorldLoader.player.moveRight.attente;
 				setDirection(Direction.West);
 				WorldLoader.player.moveRight.attente = false;
+			}else {
+				if(WorldLoader.player.moveUP.active)
+					setDirection(Direction.North);
+				
+				if(WorldLoader.player.moveDown.active)
+					setDirection(Direction.South);
 			}
 		}else if(k == KeyCode.D) {
 			WorldLoader.player.moveRight.active = false;
@@ -117,6 +136,12 @@ public class WorldLoader {
 				WorldLoader.player.moveLeft.active = WorldLoader.player.moveLeft.attente;
 				setDirection(Direction.East);
 				WorldLoader.player.moveLeft.attente = false;
+			}else {
+				if(WorldLoader.player.moveUP.active)
+					setDirection(Direction.North);
+				
+				if(WorldLoader.player.moveDown.active)
+					setDirection(Direction.South);				
 			}
 		}
 
