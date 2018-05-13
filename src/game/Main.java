@@ -3,6 +3,7 @@ package game;
 import java.io.File;
 import java.net.URL;
 
+import game.controler.Interaction;
 import game.modele.entity.EntityUpdate;
 import game.modele.world.WorldLoader;
 import javafx.application.Application;
@@ -22,8 +23,8 @@ public class Main extends Application{
 			URL url = new File("src/game/vue/game.fxml").toURI().toURL();
 			loader.setLocation(url);
 			Scene scene = new Scene(FXMLLoader.load(url),864,640);
-			scene.setOnKeyPressed(event -> WorldLoader.KeyInteractDown(event.getCode()));//KEY
-			scene.setOnKeyReleased(event ->WorldLoader.KeyInteractUp(event.getCode()));
+			scene.setOnKeyPressed(event -> Interaction.KeyInteractDown(event.getCode()));//KEY
+			scene.setOnKeyReleased(event ->Interaction.KeyInteractUp(event.getCode()));
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Doom Zelda");
 			primaryStage.setResizable(false);
