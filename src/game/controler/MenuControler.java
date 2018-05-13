@@ -56,6 +56,8 @@ public class MenuControler implements Initializable{
 	@FXML
 	private Pane PaneTop;
 
+    @FXML
+    private Pane Menu;
 
 	private ImageView player;//l'image du joueur a l'ecran
 
@@ -118,6 +120,9 @@ public class MenuControler implements Initializable{
 				System.out.println("World Texture Loading Terminer");
 			}
 		});
+		
+
+		
 
 	}
 

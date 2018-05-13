@@ -10,6 +10,9 @@ public class Interaction {
 	 * */
 	public static void KeyInteractDown(KeyCode k) {
 
+		if(k == KeyCode.ESCAPE)
+			WorldLoader.onPause = !WorldLoader.onPause;
+		
 		if(k == KeyCode.Z) {
 			WorldLoader.player.moveUP.attente = false;
 			WorldLoader.player.moveUP.active = true;

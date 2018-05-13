@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-
 import game.modele.entity.Entity;
 import game.modele.entity.TileEntity;
 import game.modele.entity.TileEntityTP;
@@ -14,10 +13,11 @@ import game.modele.entity.living.EntityLiving;
 import game.modele.tile.Tile;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
-import javafx.scene.input.KeyCode;
 
 public class WorldLoader {
 
+	public static boolean onPause = false;
+	
 	public static World currentMap;
 	public static Player player;
 	public static ArrayList<Entity> Entitys;
