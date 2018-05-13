@@ -35,7 +35,6 @@ public class Player extends EntityLiving{
 		this.inventory=inventory;
 		this.hitBoxX = 32;
 		this.hitBoxY = 32;
-		this.textureParametres = new TexturesParametres("player", 24, 32, 0, 2);
 		
 		//déplacement
 		moveUP = new infoDeplacement();

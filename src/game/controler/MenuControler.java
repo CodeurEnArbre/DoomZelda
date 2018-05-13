@@ -79,7 +79,6 @@ public class MenuControler implements Initializable{
 
 		//Initialisation de la liste d'entites et affichage des entitées
 		WorldLoader.Entitys = WorldLoader.getWorld().getEntity();
-		affichageEntity(WorldLoader.Entitys);
 
 		//Affichage de l'animation du joueur
 		affichageDuJoueur();
@@ -117,7 +116,6 @@ public class MenuControler implements Initializable{
 				PaneSolid.getChildren().clear();
 				PaneTop.getChildren().clear();
 				printCalqueTile(PaneGround,PaneSolid,PaneTop);
-				System.out.println("World Texture Loading Terminer");
 			}
 		});
 		
@@ -258,7 +256,6 @@ public class MenuControler implements Initializable{
 	private void updateHearts() {
 		int maxPv = WorldLoader.player.getMaxPv().intValue();
 		int pv = WorldLoader.player.getPV().intValue();
-		System.out.println(pv);
 		for(ImageView coeur:coeurs){
 			int pvid=0;
 
@@ -279,19 +276,6 @@ public class MenuControler implements Initializable{
 		}
 
 	}
-
-	private void affichageEntity(ArrayList<Entity> e) {
-		for(Entity entity : e) {
-			entity.getimageView().setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(entity.getTextureFile(), entity.getTextureWidth(), entity.getTextureHeight(), entity.getTextureX(), entity.getTextureY()).getTexture(), null));
-			entity.getimageView().setFitWidth(32);
-			entity.getimageView().setFitHeight(64);
-			entity.getimageView().setX(entity.getX());
-			entity.getimageView().setX(entity.getY());
-
-			EntityPane.getChildren().add(entity.getimageView());
-		}
-	}
-
 	private void affichageDuJoueur() {
 		player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 32, 0, 2).getTexture(), null));
 		player.setFitWidth(32);

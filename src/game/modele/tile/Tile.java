@@ -11,5 +11,8 @@ public class Tile {
 	public int getId() {
 		return this.id;
 	}
-	
+
+	public boolean solid() {
+		return false;
+	}
 }

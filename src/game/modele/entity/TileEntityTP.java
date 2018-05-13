@@ -11,7 +11,6 @@ public class TileEntityTP extends TileEntity{
 		super(id, coordonerPosition, etat);
 		this.tpCoordonnees=tpCoordonnees;
 		this.mapNameTp=mapNameTp;
-		textureParametres = new TexturesParametres("ItemTextureMap", 32, 32, 0, 1);
 	}
 	
 	public String getTPmapName() {

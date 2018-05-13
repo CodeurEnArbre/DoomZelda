@@ -16,13 +16,11 @@ public class Entity {
 	protected IntegerProperty animationIndice = new SimpleIntegerProperty(0);
 	
 	protected int hitBoxX, hitBoxY;
-	protected TexturesParametres textureParametres;
 	protected ImageView imageView;
 	
 	public Entity(Coordonnees coordonnees) {
 		this.coordonnes=coordonnees;
 		this.imageView = new ImageView();
-		//textureParametres = new TexturesParametres("player", 24, 32, 0, 2); test à supprimer
 	}
 
 	public Coordonnees getCoordoner() {
@@ -108,33 +106,5 @@ public class Entity {
 				result.setValue(false);
 			
 			return result;
-		}
-		
-		public ImageView getimageView() {
-			return this.imageView;
-		}
-		
-		public TexturesParametres getTexturesParametres() {
-			return this.textureParametres;
-		}
-		
-		public String getTextureFile() {
-			return this.getTexturesParametres().getTextureFile();
-		}
-		
-		public int getTextureWidth() {
-			return this.getTexturesParametres().getWidth();
-		}
-		
-		public int getTextureHeight() {
-			return this.getTexturesParametres().getheight();
-		}
-		
-		public int getTextureX() {
-			return this.getTexturesParametres().getX();
-		}
-		
-		public int getTextureY() {
-			return this.getTexturesParametres().getY();
 		}
 }

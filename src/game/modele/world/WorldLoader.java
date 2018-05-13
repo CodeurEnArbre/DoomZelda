@@ -51,7 +51,6 @@ public class WorldLoader {
 				currentMap=new World(name, width, height, tileGround, tileSolid, tileTop, loadEntity(file));
 			else {
 				currentMap.newWorld(worldName, width, height, tileGround, tileSolid, tileTop, loadEntity(file));
-				System.out.println("Loading \""+worldName+"\" Terminer");
 			}
 
 		}catch(IOException e) {
