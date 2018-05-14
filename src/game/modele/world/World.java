@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import game.modele.entity.Entity;
 import game.modele.entity.TileEntityTP;
@@ -15,19 +14,22 @@ import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
 
 public class World {
 
-	public static boolean onPause = false;
-
+	public static BooleanProperty onPause;
 	public static WorldData currentMap;
 	public static Player player;
+	
 	private static Timeline GameLoop = new Timeline();
 
 	public static void loadGameLoop() {
+		onPause = new SimpleBooleanProperty();
 		GameLoop.setCycleCount(Timeline.INDEFINITE);
 		GameLoop.play();
 	}
@@ -38,6 +40,14 @@ public class World {
 		GameLoop.getKeyFrames().add(keyf);
 	}
 
+	public static void pauseGameLoop() {
+		GameLoop.pause();
+	}
+	
+	public static void playGameLoop() {
+		GameLoop.play();
+	}
+	
 	public static void loadPlayer() {
 		player = new Player(null,new Coordonnees(14,10),new Direction(5));
 		addKeyGameLoop(e -> player.update());
@@ -76,7 +86,6 @@ public class World {
 		}
 	}
 
-
 	public static ArrayList<Entity> loadEntity(String world) throws IOException{
 		ArrayList<Entity> entity= new ArrayList<Entity>();
 		BufferedReader entityData = new BufferedReader(new FileReader(new File("ressources/map/"+world+".entity")));
@@ -84,8 +93,8 @@ public class World {
 		String nextLine = entityData.readLine();
 		while(nextLine!= null && nextLine.equals(",")) {
 			String entityType = entityData.readLine();
-			double x=Double.parseDouble(entityData.readLine());
-			double y=Double.parseDouble(entityData.readLine());
+			double x = Double.parseDouble(entityData.readLine());
+			double y = Double.parseDouble(entityData.readLine());
 
 			switch (entityType) {
 
@@ -118,11 +127,6 @@ public class World {
 		entityData.close();
 		return entity;
 	}
-	
-	public static Entity[] entityHere(double x,double y) {
-		return currentMap.entity.stream().filter(a -> a.coordonnes.isSame(x, y)).toArray(Entity[]::new);
-	}
-	
 
 	/*
 	 * Chargement d'un Tableau de Tile utilis� par la fonction loadWorld();

@@ -10,8 +10,13 @@ public class Interaction {
 	 * */
 	public static void KeyInteractDown(KeyCode k) {
 
-		if(k == KeyCode.ESCAPE)
-			World.onPause = !World.onPause;
+		if(k == KeyCode.ESCAPE) {
+			World.onPause.set(!World.onPause.get());
+			if(World.onPause.get())
+				World.pauseGameLoop();
+			else
+				World.playGameLoop();
+		}
 		
 		if(k == KeyCode.Z) {
 			World.player.moveUP.attente = false;

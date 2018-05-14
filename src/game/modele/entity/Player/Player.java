@@ -15,7 +15,7 @@ public class Player extends EntityLiving{
 	public final double baseSpeed = 0.12f;
 	public final double maxSpeed = 0.20f;
 	public final double acce = 0.00025f;
-	
+
 	private ArrayList<Item> inventory;
 
 	private double speed = baseSpeed;
@@ -37,7 +37,7 @@ public class Player extends EntityLiving{
 		this.inventory=inventory;
 		this.hitBoxX = 32;
 		this.hitBoxY = 32;
-		
+
 		//d�placement
 		moveUP = new infoDeplacement();
 		moveDown = new infoDeplacement();
@@ -117,22 +117,25 @@ public class Player extends EntityLiving{
 				incAnim();
 			}
 		}
-		
+
 	}
 
 	@Override
 	public boolean setCoordoner(Coordonnees coordonnees) {
-		for(Entity e :World.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
+		for(Entity e :World.currentMap.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
 			e.active(this);
 		}
-		
-		int tileId = World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).getId() ;
-		return (tileId <= 1 &&
-				coordonnees.getX() >= 0 &&
-				coordonnees.getY() >= 0 &&
-				(coordonnees.getX() + speed)< World.currentMap.getWidth()&&
-				(coordonnees.getY() + speed) < World.currentMap.getHeight());
-	
+		try {
+			int tileId = World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).getId() ;
+			return (tileId <= 1 &&
+					coordonnees.getX() >= 0 &&
+					coordonnees.getY() >= 0 &&
+					(coordonnees.getX() + speed)< World.currentMap.getWidth()&&
+					(coordonnees.getY() + speed) < World.currentMap.getHeight());
+		}catch(ArrayIndexOutOfBoundsException e) 
+		{
+			return false;
+		}
 	}
 
 	@Override
@@ -144,5 +147,4 @@ public class Player extends EntityLiving{
 	public void active(Entity e) {
 		
 	}
-
 }

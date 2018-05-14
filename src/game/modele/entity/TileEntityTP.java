@@ -3,8 +3,6 @@ package game.modele.entity;
 import game.modele.entity.tileEntity.TileEntity;
 import game.modele.utils.Coordonnees;
 import game.modele.world.World;
-import game.vue.TexturesParametres;
-import javafx.application.Platform;
 
 public class TileEntityTP extends TileEntity{
 	private Coordonnees tpCoordonnees;
@@ -26,14 +24,12 @@ public class TileEntityTP extends TileEntity{
 
 	@Override
 	public boolean setCoordoner(Coordonnees coordonnees) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -41,5 +37,4 @@ public class TileEntityTP extends TileEntity{
 		World.loadWorld(this.mapNameTp,this.mapNameTp);
 		World.player.forceTp(this.getTPCoordonnees());
 	}
-
 }

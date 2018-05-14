@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-import game.Main;
 import game.modele.utils.Direction;
 import game.modele.world.World;
 import game.vue.EntityLivingTexture;
@@ -155,7 +153,6 @@ public class MenuControler implements Initializable{
 	}
 	
 	private void updateHearts() {
-		int maxPv = World.player.getMaxPv().intValue();
 		int pv = World.player.getPV().intValue();
 		for(ImageView coeur:coeurs){
 			int pvid = 0;

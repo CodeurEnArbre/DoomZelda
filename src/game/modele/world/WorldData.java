@@ -68,4 +68,8 @@ public class WorldData {
 		return this.entity;
 	}
 	
+	public Entity[] entityHere(double x,double y) {
+		return this.entity.stream().filter(a -> a.coordonnes.isSame(x, y)).toArray(Entity[]::new);
+	}
+	
 }
