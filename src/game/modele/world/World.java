@@ -6,25 +6,41 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import game.modele.entity.Entity;
-import game.modele.entity.TileEntity;
 import game.modele.entity.TileEntityTP;
 import game.modele.entity.Player.Player;
-import game.modele.entity.living.EntityLiving;
 import game.modele.tile.Tile;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.util.Duration;
 
 public class World {
 
 	public static boolean onPause = false;
-	
+
 	public static WorldData currentMap;
 	public static Player player;
+	private static Timeline GameLoop = new Timeline();
 
+	public static void loadGameLoop() {
+		GameLoop.setCycleCount(Timeline.INDEFINITE);
+		GameLoop.play();
+	}
+
+	//Ajoute des fonctions qui seront �x�cut� dans la gameloop
+	private static void addKeyGameLoop(EventHandler<ActionEvent> e) {
+		KeyFrame keyf = new KeyFrame(Duration.seconds(0.017),e);
+		GameLoop.getKeyFrames().add(keyf);
+	}
 
 	public static void loadPlayer() {
 		player = new Player(null,new Coordonnees(14,10),new Direction(5));
+		addKeyGameLoop(e -> player.update());
 	}
+
 	/*
 	 * Chargement de la map : cr�ation du tableau utilis� par l'affichage
 	 * */

@@ -13,8 +13,6 @@ import javafx.stage.Stage;
 
 public class Main extends Application{
 	
-	public static boolean entityUpdate=false;
-	
 	@Override
 	public void start(Stage primaryStage)  {	
 		try {

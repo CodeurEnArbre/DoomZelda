@@ -7,26 +7,18 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import game.Main;
-import game.modele.entity.Entity;
-import game.modele.entity.EntityUpdate;
 import game.modele.utils.Direction;
 import game.modele.world.World;
-import game.modele.world.WorldData;
 import game.vue.EntityLivingTexture;
 import game.vue.TextureLoader;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 
 public class MenuControler implements Initializable{
 
@@ -34,8 +26,6 @@ public class MenuControler implements Initializable{
 	Map<Integer,Image> dicoImageItemTextureMap;
 	Map<Integer,Image> dicoImageAnimationPlayer;
 	Map<Integer,Image[]> dicoImageAnimationEntity; 
-
-	private Timeline GameLoop;
 
 	ArrayList<ImageView> coeurs;
 
@@ -100,13 +90,6 @@ public class MenuControler implements Initializable{
 			}
 		});
 
-
-		createGameLoop();
-		addKeyGameLoop(e ->  World.player.update());
-
-		GameLoop.play();
-		Main.entityUpdate=true;
-
 		//Ajout d'un Listener si la map change
 		World.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
 			@Override
@@ -118,9 +101,7 @@ public class MenuControler implements Initializable{
 			}
 		});
 		
-
-		
-
+		World.loadGameLoop();
 	}
 
 	private void textureLoading() {
@@ -172,38 +153,26 @@ public class MenuControler implements Initializable{
 			}
 		}
 	}
-
-	//Create game Loop du jeu
-	private void createGameLoop() {
-		GameLoop = new Timeline();
-		GameLoop.setCycleCount(Timeline.INDEFINITE);
-	}
-
-	//Ajoute des fonctions qui seront �x�cut� dans la gameloop
-	private void addKeyGameLoop(EventHandler<ActionEvent> e) {
-		KeyFrame keyf = new KeyFrame(Duration.seconds(0.017),e);
-		GameLoop.getKeyFrames().add(keyf);
-	}
 	
 	private void updateHearts() {
 		int maxPv = World.player.getMaxPv().intValue();
 		int pv = World.player.getPV().intValue();
 		for(ImageView coeur:coeurs){
-			int pvid=0;
+			int pvid = 0;
 
-			if(pv>=4)
-				pvid=6;
-			else if(pv<=0)
-				pvid=2;
+			if(pv >= 4)
+				pvid = 6;
+			else if(pv <= 0)
+				pvid = 2;
 			else
-				pvid=pv+2;
+				pvid = pv + 2;
 			coeur.setImage(dicoImageItemTextureMap.get(pvid));
-			pv-=4;
+			pv -= 4;
 		}
 
-		int coeurAt=0;
+		int coeurAt = 0;
 		for(ImageView coeur:coeurs){
-			coeur.relocate(coeurAt*32+5, 5);
+			coeur.relocate(coeurAt * 32 + 5, 5);
 			coeurAt++;
 		}
 

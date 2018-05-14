@@ -30,10 +30,8 @@ public class EntityUpdate {
 				
 			});
 			World.player.forceTp(entity.getTPCoordonnees());
-			
 		}
 	}
-	
 	private static void tileEntityUpdate(TileEntity entity) {
 		//TODO
 		

@@ -129,6 +129,5 @@ public class Player extends EntityLiving{
 				(coordonnees.getY() + speed) < World.currentMap.getHeight());
 	
 	}
-	
-	
+
 }

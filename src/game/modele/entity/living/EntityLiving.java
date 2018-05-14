@@ -58,16 +58,9 @@ public abstract class EntityLiving extends Entity{
 		return this.maxPv;
 	}
 	
-	
 	//deplacement
 	
-	public BooleanProperty touche(Entity e) {
-		BooleanProperty result = new SimpleBooleanProperty();
-		if(this.coordonnes.getX() - e.coordonnes.getX() <= this.hitBoxX && this.coordonnes.getY() - e.coordonnes.getY() <= this.hitBoxY)
-			result.setValue(true);
-		else
-			result.setValue(false);
-
-		return result;
+	public boolean touche(Entity e) {
+		return (this.coordonnes.getX() - e.coordonnes.getX() <= this.hitBoxX && this.coordonnes.getY() - e.coordonnes.getY() <= this.hitBoxY);	
 	}
 }
