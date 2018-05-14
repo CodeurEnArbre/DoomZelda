@@ -3,10 +3,12 @@ package game.modele.entity.living;
 import game.modele.entity.Entity;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class EntityLiving extends Entity{
+public abstract class EntityLiving extends Entity{
 	
 	//La direction du regard
 	protected Direction direction;
@@ -54,5 +56,18 @@ public class EntityLiving extends Entity{
 	
 	public IntegerProperty getMaxPv() {
 		return this.maxPv;
+	}
+	
+	
+	//deplacement
+	
+	public BooleanProperty touche(Entity e) {
+		BooleanProperty result = new SimpleBooleanProperty();
+		if(this.coordonnes.getX() - e.coordonnes.getX() <= this.hitBoxX && this.coordonnes.getY() - e.coordonnes.getY() <= this.hitBoxY)
+			result.setValue(true);
+		else
+			result.setValue(false);
+
+		return result;
 	}
 }

@@ -3,13 +3,13 @@ package game.modele.entity;
 import java.util.ArrayList;
 
 import game.modele.entity.living.EntityLiving;
-import game.modele.world.WorldLoader;
+import game.modele.world.World;
 import javafx.application.Platform;
 
 public class EntityUpdate {
 	
 	public static void update() {
-		ArrayList<Entity> mapEntity=WorldLoader.currentMap.getEntity();
+		ArrayList<Entity> mapEntity=World.currentMap.getEntity();
 		for(Entity entity:mapEntity) {
 			if(entity instanceof TileEntityTP)
 				tileEntityTpUpdate((TileEntityTP) entity);
@@ -21,15 +21,15 @@ public class EntityUpdate {
 	}
 	
 	private static void tileEntityTpUpdate(TileEntityTP entity) {
-		if(WorldLoader.player.isOnTileCoord(entity.getCoordoner())) {
+		if(World.player.isOnTileCoord(entity.coordonnes)) {
 			Platform.runLater(new Runnable(){
 				@Override
 				public void run() {
-					WorldLoader.loadWorld(entity.getTPmapName(),entity.getTPmapName());
+					World.loadWorld(entity.getTPmapName(),entity.getTPmapName());
 				}
 				
 			});
-			WorldLoader.player.forceTp(entity.getTPCoordonnees());
+			World.player.forceTp(entity.getTPCoordonnees());
 			
 		}
 	}

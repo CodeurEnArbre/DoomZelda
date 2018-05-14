@@ -5,7 +5,7 @@ import java.net.URL;
 
 import game.controler.Interaction;
 import game.modele.entity.EntityUpdate;
-import game.modele.world.WorldLoader;
+import game.modele.world.World;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,25 +29,6 @@ public class Main extends Application{
 			primaryStage.setTitle("Doom Zelda");
 			primaryStage.setResizable(false);
 			primaryStage.show();
-
-			Thread firstThread = Thread.currentThread();
-			//EntityGameLoopUpdate
-			Thread EntityGameLoopUpdate = new Thread() {
-				public void run() {
-					while (firstThread.isAlive()) {
-						try {
-							Thread.sleep((1/60)*1000);
-							if(entityUpdate) {
-								EntityUpdate.update();
-							}
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			};
-			EntityGameLoopUpdate.start();
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

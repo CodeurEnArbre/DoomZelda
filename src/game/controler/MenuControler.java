@@ -8,8 +8,10 @@ import java.util.ResourceBundle;
 
 import game.Main;
 import game.modele.entity.Entity;
+import game.modele.entity.EntityUpdate;
 import game.modele.utils.Direction;
-import game.modele.world.WorldLoader;
+import game.modele.world.World;
+import game.modele.world.WorldData;
 import game.vue.EntityLivingTexture;
 import game.vue.TextureLoader;
 import javafx.animation.KeyFrame;
@@ -68,22 +70,20 @@ public class MenuControler implements Initializable{
 		textureLoading();		
 
 		//Chargement de la map
-		WorldLoader.loadWorld("TinyMap",null);
+		World.loadWorld("TinyMap",null);
 
 		//Chargement du joueur
 		player=new ImageView();
-		WorldLoader.loadPlayer();
+		World.loadPlayer();
 
 		//Affichage des toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
 
-		//Initialisation de la liste d'entites et affichage des entitées
-		WorldLoader.Entitys = WorldLoader.getWorld().getEntity();
 
 		//Affichage de l'animation du joueur
 		affichageDuJoueur();
 
-		for(int numCoeur=WorldLoader.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
+		for(int numCoeur=World.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
 			coeurs.add(new ImageView(dicoImageItemTextureMap.get(2)));
 		}
 
@@ -93,7 +93,7 @@ public class MenuControler implements Initializable{
 			PaneHUD.getChildren().add(coeur);
 		}
 
-		WorldLoader.player.getPV().addListener(new ChangeListener<Number>() {
+		World.player.getPV().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				updateHearts();
@@ -102,14 +102,13 @@ public class MenuControler implements Initializable{
 
 
 		createGameLoop();
-		addKeyGameLoop(getanimationPlayer());
-
+		addKeyGameLoop(e ->  World.player.update());
 
 		GameLoop.play();
 		Main.entityUpdate=true;
 
 		//Ajout d'un Listener si la map change
-		WorldLoader.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
+		World.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				PaneGround.getChildren().clear();
@@ -152,20 +151,20 @@ public class MenuControler implements Initializable{
 	//Permet d'afficher dans dans chaque pane toute les textures de chaque couches de la map
 	private void printCalqueTile(Pane pane,Pane paneTile,Pane paneTop) {
 
-		for(int y=0;y<WorldLoader.currentMap.getHeight();y++) {
-			for(int x=0;x<WorldLoader.currentMap.getWidth();x++) {
+		for(int y=0;y<World.currentMap.getHeight();y++) {
+			for(int x=0;x<World.currentMap.getWidth();x++) {
 
-				ImageView tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTileTerrain(y, x).getId()));	
+				ImageView tile = new ImageView(dicoImageTileTextureMap.get(World.currentMap.getTileTerrain(y, x).getId()));	
 				tile.setX(x*32);
 				tile.setY(y*32);
 				pane.getChildren().add(tile);
 
-				tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTile(y, x).getId()));
+				tile = new ImageView(dicoImageTileTextureMap.get(World.currentMap.getTile(y, x).getId()));
 				tile.setX(x*32);
 				tile.setY(y*32);
 				paneTile.getChildren().add(tile);
 
-				tile = new ImageView(dicoImageTileTextureMap.get(WorldLoader.currentMap.getTileTop(y, x).getId()));
+				tile = new ImageView(dicoImageTileTextureMap.get(World.currentMap.getTileTop(y, x).getId()));
 				tile.setX(x*32);
 				tile.setY(y*32);
 				paneTop.getChildren().add(tile);
@@ -180,82 +179,15 @@ public class MenuControler implements Initializable{
 		GameLoop.setCycleCount(Timeline.INDEFINITE);
 	}
 
-	//Ajoute des fonctions qui seront éxécuté dans la gameloop
+	//Ajoute des fonctions qui seront ï¿½xï¿½cutï¿½ dans la gameloop
 	private void addKeyGameLoop(EventHandler<ActionEvent> e) {
 		KeyFrame keyf = new KeyFrame(Duration.seconds(0.017),e);
 		GameLoop.getKeyFrames().add(keyf);
 	}
-
-	private final static EventHandler<ActionEvent> getanimationPlayer() {
-		return new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-
-				if(!WorldLoader.player.moveDown.active && !WorldLoader.player.moveUP.active && !WorldLoader.player.moveLeft.active && !WorldLoader.player.moveRight.active) {
-					WorldLoader.player.resetAnim();
-					WorldLoader.player.speed = WorldLoader.player.baseSpeed;
-				}
-				if(WorldLoader.player.moveDown.active) {
-					if(WorldLoader.player.moveLeft.active ^ WorldLoader.player.moveRight.active) {
-						WorldLoader.player.addY(WorldLoader.player.speed * 2/3);
-					}
-					else {
-						if(WorldLoader.player.speed < WorldLoader.player.maxSpeed) {
-							WorldLoader.player.speed += WorldLoader.player.acce;
-						}
-						WorldLoader.player.addY(WorldLoader.player.speed);
-						WorldLoader.player.incAnim();
-					}
-				}
-				if(WorldLoader.player.moveUP.active) {
-					if(WorldLoader.player.moveLeft.active ^ WorldLoader.player.moveRight.active)
-					{	
-						WorldLoader.player.addY(-WorldLoader.player.speed * 2/3);	
-					}else
-					{
-						if(WorldLoader.player.speed < WorldLoader.player.maxSpeed) {
-							WorldLoader.player.speed += WorldLoader.player.acce;
-						}
-						WorldLoader.player.addY(-WorldLoader.player.speed);	
-						WorldLoader.player.incAnim();
-					}
-				}
-				if(WorldLoader.player.moveLeft.active) {
-					if(WorldLoader.player.moveUP.active ^ WorldLoader.player.moveDown.active)
-					{
-						WorldLoader.player.addX(-WorldLoader.player.speed * 2/3);
-						WorldLoader.player.incAnim();
-					}		else
-					{	
-						if(WorldLoader.player.speed < WorldLoader.player.maxSpeed) {
-							WorldLoader.player.speed += WorldLoader.player.acce;
-						}
-						WorldLoader.player.addX(-WorldLoader.player.speed);
-						WorldLoader.player.incAnim();
-					}
-				}
-				if(WorldLoader.player.moveRight.active) {
-					if(WorldLoader.player.moveUP.active ^ WorldLoader.player.moveDown.active)
-					{
-						WorldLoader.player.addX(WorldLoader.player.speed * 2/3);
-						WorldLoader.player.incAnim();
-					}else
-					{
-						if(WorldLoader.player.speed < WorldLoader.player.maxSpeed) {
-							WorldLoader.player.speed += WorldLoader.player.acce;
-						}
-						WorldLoader.player.addX(WorldLoader.player.speed); 
-						WorldLoader.player.incAnim();
-					}
-				}
-			}
-		};
-	}
-
+	
 	private void updateHearts() {
-		int maxPv = WorldLoader.player.getMaxPv().intValue();
-		int pv = WorldLoader.player.getPV().intValue();
+		int maxPv = World.player.getMaxPv().intValue();
+		int pv = World.player.getPV().intValue();
 		for(ImageView coeur:coeurs){
 			int pvid=0;
 
@@ -280,23 +212,23 @@ public class MenuControler implements Initializable{
 		player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 32, 0, 2).getTexture(), null));
 		player.setFitWidth(32);
 		player.setFitHeight(64);
-		player.setX(WorldLoader.player.getCoordoner().getX());
-		player.setY(WorldLoader.player.getCoordoner().getY());
+		player.setX(World.player.coordonnes.getX());
+		player.setY(World.player.coordonnes.getY());
 		PlayerPane.getChildren().add(player);
 
-		paneGame.layoutXProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(-32).add(432));
-		paneGame.layoutYProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(-32).add(320));
+		paneGame.layoutXProperty().bind(World.player.coordonnes.getXpro().multiply(-32).add(432));
+		paneGame.layoutYProperty().bind(World.player.coordonnes.getYpro().multiply(-32).add(320));
 
-		player.xProperty().bind(WorldLoader.player.getCoordoner().getXpro().multiply(32).subtract(16));
-		player.yProperty().bind(WorldLoader.player.getCoordoner().getYpro().multiply(32).subtract(48));
+		player.xProperty().bind(World.player.coordonnes.getXpro().multiply(32).subtract(16));
+		player.yProperty().bind(World.player.coordonnes.getYpro().multiply(32).subtract(48));
 
-		WorldLoader.player.getAnimationProperty().addListener(
+		World.player.etatDeplacement.addListener(
 				new ChangeListener<Number>() {
 
 					@Override
 					public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
 
-						switch(WorldLoader.player.getOrientation().getDirection()) {
+						switch(World.player.getOrientation().getDirection()) {
 						case Direction.North:
 							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)));
 							break;

@@ -21,4 +21,16 @@ public class TileEntityTP extends TileEntity{
 		return this.tpCoordonnees;
 	}
 
+	@Override
+	public boolean setCoordoner(Coordonnees coordonnees) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

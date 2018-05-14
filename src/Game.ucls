@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.0" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <enumeration id="1" language="java" name="game.modele.utils.Orientation.Direction" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/modele/utils/Orientation.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="861" y="165"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </enumeration>  
-  <class id="2" language="java" name="game.vue.EntityLivingTexture" project="ZeldaGame" 
+  <class id="1" language="java" name="game.vue.EntityLivingTexture" project="ZeldaGame" 
     file="/ZeldaGame/src/game/vue/EntityLivingTexture.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="457" y="139"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -19,16 +10,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="game.vue.TileTexture" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/vue/TileTexture.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="442" y="5"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="4" language="java" name="game.Main" project="ZeldaGame" file="/ZeldaGame/src/game/Main.java" binary="false" 
+  <class id="2" language="java" name="game.Main" project="ZeldaGame" file="/ZeldaGame/src/game/Main.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="226" y="568"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -37,7 +19,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="game.modele.entity.Entity" project="ZeldaGame" 
+  <class id="3" language="java" name="game.modele.entity.Entity" project="ZeldaGame" 
     file="/ZeldaGame/src/game/modele/entity/Entity.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1216" y="260"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -46,7 +28,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="game.modele.tile.Tile" project="ZeldaGame" 
+  <class id="4" language="java" name="game.modele.tile.Tile" project="ZeldaGame" 
     file="/ZeldaGame/src/game/modele/tile/Tile.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1576" y="626"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -55,7 +37,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="game.modele.entity.Player" project="ZeldaGame" 
+  <class id="5" language="java" name="game.modele.entity.Player" project="ZeldaGame" 
     file="/ZeldaGame/src/game/modele/entity/Player.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1192" y="520"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -64,17 +46,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="game.modele.utils.Orientation" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/modele/utils/Orientation.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="724" y="18"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="9" language="java" name="game.modele.world.World" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/modele/world/World.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="game.modele.world.WorldData" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/modele/world/WorldData.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1566" y="255"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -82,7 +55,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="game.modele.entity.EntityLiving" project="ZeldaGame" 
+  <class id="7" language="java" name="game.modele.entity.EntityLiving" project="ZeldaGame" 
     file="/ZeldaGame/src/game/modele/entity/EntityLiving.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1002" y="340"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -91,7 +64,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="game.modele.utils.Coordonnees" project="ZeldaGame" 
+  <class id="8" language="java" name="game.modele.utils.Coordonnees" project="ZeldaGame" 
     file="/ZeldaGame/src/game/modele/utils/Coordonnees.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1224" y="44"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -100,7 +73,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="game.vue.Texture" project="ZeldaGame" file="/ZeldaGame/src/game/vue/Texture.java" 
+  <class id="9" language="java" name="game.vue.Texture" project="ZeldaGame" file="/ZeldaGame/src/game/vue/Texture.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="453" y="344"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -109,7 +82,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="game.modele.tile.TileEntity" project="ZeldaGame" 
+  <class id="10" language="java" name="game.modele.tile.TileEntity" project="ZeldaGame" 
     file="/ZeldaGame/src/game/modele/tile/TileEntity.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1412" y="608"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -118,7 +91,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="game.controler.MenuControler" project="ZeldaGame" 
+  <class id="11" language="java" name="game.controler.MenuControler" project="ZeldaGame" 
     file="/ZeldaGame/src/game/controler/MenuControler.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="218" y="205"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -127,8 +100,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="game.modele.world.WorldLoader" project="ZeldaGame" 
-    file="/ZeldaGame/src/game/modele/world/WorldLoader.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="12" language="java" name="game.modele.world.World" project="ZeldaGame" 
+    file="/ZeldaGame/src/game/modele/world/World.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1576" y="17"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -136,7 +109,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="16" language="java" name="game.modele.item.Item" project="ZeldaGame" 
+  <class id="13" language="java" name="game.modele.item.Item" project="ZeldaGame" 
     file="/ZeldaGame/src/game/modele/item/Item.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="972" y="724"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -145,118 +118,90 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="17">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="18" name="tileGround">        
+  <generalization id="14">    
+    <bendpoint x="1351" y="255"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="15">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="16" name="currentMap">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="19" minimum="0" maximum="2147483647">        
+      <multiplicity id="17" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="20">    
+  <association id="18">    
     <bendpoint x="1372" y="255"/>    
-    <end type="SOURCE" refId="15" navigable="false">      
-      <attribute id="21" name="player">        
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="19" name="player">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="22" minimum="0" maximum="1">        
+      <multiplicity id="20" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
+    <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="23">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="10"/>  
-  </generalization>  
+  <association id="21">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="22" name="tilesTop">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="23" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <association id="24">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="25" name="tileEntity">        
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="25" name="tileGround">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="26" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="27">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <generalization id="28">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="29">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="30" name="tiles">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="31" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="32">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="33" name="inventory">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="34" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
     <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="27">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="28" name="direction">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="29" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="30">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="1"/>  
-  </nesting>  
-  <generalization id="31">    
-    <bendpoint x="1351" y="255"/>    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="5"/>  
-  </generalization>  
-  <generalization id="32">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="5"/>  
-  </generalization>  
-  <association id="33">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="34" name="tiles">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="35" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="36">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="37" name="tilesTop">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="38" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="39">    
-    <end type="SOURCE" refId="15" navigable="false">      
-      <attribute id="40" name="currentMap">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="41" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="42">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="43" name="inventory">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="44" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

@@ -2,7 +2,7 @@ package game.modele.entity;
 
 import game.modele.utils.Coordonnees;
 
-public class TileEntity extends Entity {
+public abstract class TileEntity extends Entity {
 	private int id;
 	private boolean etat;
 	

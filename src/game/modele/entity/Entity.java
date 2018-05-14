@@ -1,110 +1,73 @@
 package game.modele.entity;
 
+import java.util.ArrayList;
+
+import game.modele.entity.living.EntityLiving;
 import game.modele.utils.Coordonnees;
 
 import javafx.scene.image.ImageView;
-import game.modele.world.WorldLoader;
-import game.vue.TexturesParametres;
+import game.modele.world.World;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Entity {
+public abstract class Entity {
 
-	private Coordonnees coordonnes;
-	protected IntegerProperty animationIndice = new SimpleIntegerProperty(0);
-	
+	public Coordonnees coordonnes;
+	public IntegerProperty etatDeplacement = new SimpleIntegerProperty(0);
+
 	protected int hitBoxX, hitBoxY;
 	protected ImageView imageView;
-	
+
 	public Entity(Coordonnees coordonnees) {
 		this.coordonnes=coordonnees;
 		this.imageView = new ImageView();
-	}
-
-	public Coordonnees getCoordoner() {
-		return this.coordonnes;
-	}	
-
-	public void setX(double x) {
-		this.coordonnes.setX(x);
-	}
-	public double getX() {
-		return this.coordonnes.getX();
 	}
 
 	public void addX(double x)
 	{
 		if(this.setCoordoner(
 				new Coordonnees(
-						this.getX() + x,
-						this.getY()
+						this.coordonnes.getX() + x,
+						this.coordonnes.getY()
 						))) {
-			this.coordonnes.setX(this.getX() + x);
+			this.coordonnes.setX(this.coordonnes.getX() + x);
 		}
 	}
-
-	public void setY(double y) {
-		this.coordonnes.setY(y);
-	}
-	public double getY() {
-		return this.getCoordoner().getY();
-	}
-
 	public void addY(double y) {
 		if(this.setCoordoner(
 				new Coordonnees(
-						this.getX(),
-						this.getY() + y))) {
-			this.coordonnes.setY(this.getY() + y);
+						this.coordonnes.getX(),
+						this.coordonnes.getY() + y))) {
+			this.coordonnes.setY(this.coordonnes.getY() + y);
 		}
 	}
-
-	public boolean setCoordoner(Coordonnees coordonnees) {
-		int tileId = WorldLoader.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).getId() ;
-		return (tileId <= 1 &&
-				coordonnees.getX() >= 0 &&
-				coordonnees.getY() >= 0 &&
-				(coordonnees.getX() + WorldLoader.player.speed)< WorldLoader.currentMap.getWidth()&&
-				(coordonnees.getY() + WorldLoader.player.speed) < WorldLoader.currentMap.getHeight());
-	}
-	
+	public abstract boolean setCoordoner(Coordonnees coordonnees);
 	public void forceTp(Coordonnees coordonnees) {
 		this.coordonnes.setX(coordonnees.getX());
 		this.coordonnes.setY(coordonnees.getY());
 	}
-	
 	public boolean isOnTileCoord(Coordonnees coordonnees) {
 		if((int)this.coordonnes.getX()==(int)coordonnees.getX() && (int)this.coordonnes.getY()==(int)coordonnees.getY())
 			return true;
 		else
 			return false;
 	}
+
+	//UpdateIA
 	
-	//animation
-		public void incAnim() {
-			this.animationIndice.set(
-					this.animationIndice.get()
-					+ (this.animationIndice.get() < 35 ? 1 : -35));
-		}
-		
-		public IntegerProperty getAnimationProperty() {
-			return this.animationIndice;
-		}
-		
-		
-		public void resetAnim() {
-			this.animationIndice.set(0);
-		}
-		
-		public BooleanProperty touche(Entity e) {
-			BooleanProperty result = new SimpleBooleanProperty();
-			if(this.getX() - e.getX() <= this.hitBoxX && this.getY() - e.getY() <= this.hitBoxY)
-				result.setValue(true);
-			else
-				result.setValue(false);
-			
-			return result;
-		}
+	public abstract void update();
+	
+	
+	//deplacement
+	public void incAnim() {
+		this.etatDeplacement.set(
+				this.etatDeplacement.get()
+				+ (this.etatDeplacement.get() < 35 ? 1 : -35));
+	}
+	public void resetAnim() {
+		this.etatDeplacement.set(0);
+	}
+
 }
