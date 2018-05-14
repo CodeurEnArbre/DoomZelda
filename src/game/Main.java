@@ -4,8 +4,6 @@ import java.io.File;
 import java.net.URL;
 
 import game.controler.Interaction;
-import game.modele.entity.EntityUpdate;
-import game.modele.world.World;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

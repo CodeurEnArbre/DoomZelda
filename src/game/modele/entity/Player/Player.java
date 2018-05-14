@@ -2,12 +2,13 @@ package game.modele.entity.Player;
 
 import java.util.ArrayList;
 
+import game.modele.entity.AllEntity;
+import game.modele.entity.Entity;
 import game.modele.entity.living.EntityLiving;
 import game.modele.item.Item;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.world.World;
-import game.vue.TexturesParametres;
 
 public class Player extends EntityLiving{
 
@@ -121,6 +122,10 @@ public class Player extends EntityLiving{
 
 	@Override
 	public boolean setCoordoner(Coordonnees coordonnees) {
+		for(Entity e :World.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
+			e.active(this);
+		}
+		
 		int tileId = World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).getId() ;
 		return (tileId <= 1 &&
 				coordonnees.getX() >= 0 &&
@@ -128,6 +133,16 @@ public class Player extends EntityLiving{
 				(coordonnees.getX() + speed)< World.currentMap.getWidth()&&
 				(coordonnees.getY() + speed) < World.currentMap.getHeight());
 	
+	}
+
+	@Override
+	public int getId() {
+		return AllEntity.Entity_Player.getId();
+	}
+
+	@Override
+	public void active(Entity e) {
+		
 	}
 
 }

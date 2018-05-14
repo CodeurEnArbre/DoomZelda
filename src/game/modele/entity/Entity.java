@@ -1,19 +1,13 @@
 package game.modele.entity;
 
-import java.util.ArrayList;
-
-import game.modele.entity.living.EntityLiving;
 import game.modele.utils.Coordonnees;
 
 import javafx.scene.image.ImageView;
-import game.modele.world.World;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Entity {
-
+	
 	public Coordonnees coordonnes;
 	public IntegerProperty etatDeplacement = new SimpleIntegerProperty(0);
 
@@ -24,7 +18,6 @@ public abstract class Entity {
 		this.coordonnes=coordonnees;
 		this.imageView = new ImageView();
 	}
-
 	public void addX(double x)
 	{
 		if(this.setCoordoner(
@@ -49,16 +42,20 @@ public abstract class Entity {
 		this.coordonnes.setY(coordonnees.getY());
 	}
 	public boolean isOnTileCoord(Coordonnees coordonnees) {
-		if((int)this.coordonnes.getX()==(int)coordonnees.getX() && (int)this.coordonnes.getY()==(int)coordonnees.getY())
-			return true;
-		else
-			return false;
+		return((int)this.coordonnes.getX()==(int)coordonnees.getX() && (int)this.coordonnes.getY()==(int)coordonnees.getY());
 	}
 
+	//ID
+	
+	public abstract int getId();
+	
 	//UpdateIA
 	
 	public abstract void update();
 	
+	//Active (Marche dessus)
+	
+	public abstract void active(Entity e);
 	
 	//deplacement
 	public void incAnim() {

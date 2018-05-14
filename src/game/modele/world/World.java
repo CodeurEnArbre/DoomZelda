@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
 import game.modele.entity.Entity;
 import game.modele.entity.TileEntityTP;
 import game.modele.entity.Player.Player;
@@ -116,7 +118,11 @@ public class World {
 		entityData.close();
 		return entity;
 	}
-
+	
+	public static Entity[] entityHere(double x,double y) {
+		return currentMap.entity.stream().filter(a -> a.coordonnes.isSame(x, y)).toArray(Entity[]::new);
+	}
+	
 
 	/*
 	 * Chargement d'un Tableau de Tile utilis� par la fonction loadWorld();

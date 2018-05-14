@@ -41,6 +41,11 @@ public class Coordonnees {
 		this.y.set(y);
 	}
 	
+	public boolean isSame(double x,double y) {
+		return (int)this.x.get() == (int)x && 
+				(int)this.y.get() == (int)y;
+	}
+	
 	public String toString() {
 		return ("x:"+this.x.doubleValue()+", y:"+this.y.doubleValue());
 	}

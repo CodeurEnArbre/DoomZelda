@@ -3,6 +3,7 @@ package game.modele.entity.living;
 import game.modele.entity.Entity;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
+import game.modele.world.World;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -61,6 +62,7 @@ public abstract class EntityLiving extends Entity{
 	//deplacement
 	
 	public boolean touche(Entity e) {
-		return (this.coordonnes.getX() - e.coordonnes.getX() <= this.hitBoxX && this.coordonnes.getY() - e.coordonnes.getY() <= this.hitBoxY);	
+		return (this.coordonnes.getX() - e.coordonnes.getX() <= this.hitBoxX
+				&& this.coordonnes.getY() - e.coordonnes.getY() <= this.hitBoxY);	
 	}
 }

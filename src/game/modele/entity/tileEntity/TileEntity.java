@@ -1,5 +1,6 @@
-package game.modele.entity;
+package game.modele.entity.tileEntity;
 
+import game.modele.entity.Entity;
 import game.modele.utils.Coordonnees;
 
 public abstract class TileEntity extends Entity {

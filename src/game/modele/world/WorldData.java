@@ -13,7 +13,7 @@ public class WorldData {
 	private Tile tileGround[][];
 	private Tile tiles[][];
 	private Tile tilesTop[][];
-	private ArrayList<Entity> entity;
+	public ArrayList<Entity> entity;
 	private int width,height;
 	
 	public WorldData(String zoneName, int width, int height, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entity) {
