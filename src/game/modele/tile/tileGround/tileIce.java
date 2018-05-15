@@ -16,8 +16,12 @@ public class tileIce extends tileGround{
 
 	@Override
 	public void onEntityOver(Entity e) {
-			System.out.println("Test");
-		
+		e.slow = 2;
+	}
+
+	@Override
+	public void leaveEntity(Entity e) {
+		e.slow = 1;		
 	}
 
 }

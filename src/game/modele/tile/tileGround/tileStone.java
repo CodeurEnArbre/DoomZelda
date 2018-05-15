@@ -30,7 +30,13 @@ public class tileStone extends tileGround{
 
 	@Override
 	public void onEntityOver(Entity e) {
-		// TODO Auto-generated method stub
+		e.slow = 0.2;
+		
+	}
+
+	@Override
+	public void leaveEntity(Entity e) {
+		e.slow = 1;
 		
 	}
 

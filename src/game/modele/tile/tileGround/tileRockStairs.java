@@ -41,6 +41,12 @@ public class tileRockStairs extends tileGround {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void leaveEntity(Entity e) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

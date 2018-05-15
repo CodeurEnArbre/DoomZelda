@@ -39,4 +39,10 @@ public class tileSign extends tileInteract{
 		
 	}
 
+	@Override
+	public void leaveEntity(Entity e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

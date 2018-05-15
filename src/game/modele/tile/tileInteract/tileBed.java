@@ -38,4 +38,10 @@ public class tileBed extends tileInteract {
 		
 	}
 
+	@Override
+	public void leaveEntity(Entity e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

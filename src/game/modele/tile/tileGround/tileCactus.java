@@ -20,4 +20,10 @@ public class tileCactus extends tileGround{
 		
 	}
 
+	@Override
+	public void leaveEntity(Entity e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

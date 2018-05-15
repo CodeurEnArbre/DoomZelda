@@ -25,7 +25,7 @@ public abstract class Tile {
 	//quand on marche dessus
 	public abstract void onEntityOver(Entity e);
 	
-	
+	public abstract void leaveEntity(Entity e);
 	
 	
 	

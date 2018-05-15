@@ -41,4 +41,10 @@ public class tileFloor extends tileGround{
 		
 	}
 
+	@Override
+	public void leaveEntity(Entity e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

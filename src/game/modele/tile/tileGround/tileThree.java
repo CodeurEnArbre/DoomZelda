@@ -62,4 +62,10 @@ public class tileThree extends tileGround{
 		
 	}
 
+	@Override
+	public void leaveEntity(Entity e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -12,13 +12,11 @@ import game.modele.world.World;
 
 public class Player extends EntityLiving{
 
-	public final double baseSpeed = 0.12f;
-	public final double maxSpeed = 0.20f;
-	public final double acce = 0.00025f;
+	private final double baseSpeed = 0.11f;
+	private final double maxSpeed = 0.16f;
+	private final double acce = 0.00025f;
 
 	private ArrayList<Item> inventory;
-
-	private double speed = baseSpeed;
 
 	//repr�sente l'�tat d'une direction
 	public class infoDeplacement{
@@ -37,7 +35,9 @@ public class Player extends EntityLiving{
 		this.inventory=inventory;
 		this.hitBoxX = 32;
 		this.hitBoxY = 32;
-
+		this.speed = baseSpeed;
+		this.slow =	1;
+		
 		//d�placement
 		moveUP = new infoDeplacement();
 		moveDown = new infoDeplacement();
@@ -66,80 +66,58 @@ public class Player extends EntityLiving{
 		}
 		if(moveDown.active) {
 			if(moveLeft.active ^ moveRight.active) {
-				addY(speed * 2/3);
+				addY(speed * 2/3 * slow);
 			}
 			else {
 				if(speed < maxSpeed) {
 					speed += acce;
 				}
-				addY(speed);
+				addY(speed * slow);
 				incAnim();
 			}
 		}
 		if(moveUP.active) {
 			if(moveLeft.active ^ moveRight.active)
 			{	
-				addY(-speed * 2/3);	
+				addY(-speed * 2/3 * slow);	
 			}else
 			{
 				if(speed < maxSpeed) {
 					speed += acce;
 				}
-				addY(-speed);	
+				addY(-speed * slow);	
 				incAnim();
 			}
 		}
 		if(moveLeft.active) {
 			if(moveUP.active ^ moveDown.active)
 			{
-				addX(-speed * 2/3);
+				addX(-speed * 2/3 * slow);
 				incAnim();
 			}		else
 			{	
 				if(speed < maxSpeed) {
 					speed += acce;
 				}
-				addX(-speed);
+				addX(-speed * slow);
 				incAnim();
 			}
 		}
 		if(moveRight.active) {
 			if(moveUP.active ^ moveDown.active)
 			{
-				addX(speed * 2/3);
+				addX(speed * 2/3 * slow);
 				incAnim();
 			}else
 			{
 				if(speed < maxSpeed) {
 					speed += acce;
 				}
-				addX(speed); 
+				addX(speed * slow); 
 				incAnim();
 			}
 		}
 
-	}
-
-	@Override
-	public boolean setCoordoner(Coordonnees coordonnees) {
-		for(Entity e :World.currentMap.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
-			e.active(this);
-		}
-		try {
-			if(!World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).solid() &&
-					coordonnees.getX() >= 0 &&
-					coordonnees.getY() >= 0 &&
-					(coordonnees.getX() + speed)< World.currentMap.getWidth()&&
-					(coordonnees.getY() + speed) < World.currentMap.getHeight())
-			{
-				World.currentMap.getTileTerrain((int)this.coordonnes.getY(), (int)this.coordonnes.getX()).onEntityOver(this);
-				return true;
-			}else 
-				return false;
-		}catch(ArrayIndexOutOfBoundsException e) 
-		{
-			return false;
-		}
 	}
 
 	@Override
