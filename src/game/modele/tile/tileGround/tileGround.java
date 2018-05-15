@@ -8,4 +8,7 @@ public abstract class tileGround extends Tile{
 		super(id);
 	}
 
+	
+	
+	
 }

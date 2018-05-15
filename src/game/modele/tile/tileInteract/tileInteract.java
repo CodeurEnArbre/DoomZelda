@@ -1,9 +1,18 @@
 package game.modele.tile.tileInteract;
 
-public class tileInteract {
+import game.modele.tile.Tile;
 
-	public tileInteract() {
-		// TODO Auto-generated constructor stub
+public abstract class tileInteract extends Tile{
+
+	public tileInteract(int id) {
+		super(id);
 	}
 
+	public void Action() {
+		System.out.println("appuyer sur enter");
+		Show();
+	}
+	protected abstract void Show();
+	
+	
 }

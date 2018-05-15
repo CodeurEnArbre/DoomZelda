@@ -1,6 +1,6 @@
 package game.modele.tile;
 
-public class Tile {
+public abstract class Tile {
 	
 	private int id;
 	
@@ -11,4 +11,17 @@ public class Tile {
 	public int getId() {
 		return this.id;
 	}
+	
+	//solid
+	public boolean solid() {
+		return true;
+	}
+	
+	//quand on marche dessus
+	public abstract void Action();
+	
+	
+	
+	
+	
 }

@@ -10,6 +10,7 @@ import game.modele.entity.Entity;
 import game.modele.entity.EntityTP;
 import game.modele.entity.Player.Player;
 import game.modele.tile.Tile;
+import game.modele.tile.TileFactory;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import javafx.animation.KeyFrame;
@@ -138,7 +139,7 @@ public class World {
 			for(int i = 0; i < height;i++) {
 				String[] tabGround = pat.split(new StringBuilder(br.readLine()));
 				for(int x = 0; x < tabGround.length ; x++)
-					tile[i][x] = new Tile(Integer.parseInt(tabGround[x]));
+					tile[i][x] = TileFactory.get(Integer.parseInt(tabGround[x]));
 			}
 			return tile;
 		}catch(IOException e) {
