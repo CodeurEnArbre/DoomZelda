@@ -1,10 +1,17 @@
 package game.modele.tile;
 
+import game.modele.tile.tileGround.tileCactus;
 import game.modele.tile.tileGround.tileDirt;
 import game.modele.tile.tileGround.tileDirt.Dirt;
+import game.modele.tile.tileGround.tileFloor.Floor;
+import game.modele.tile.tileGround.tileFloor;
 import game.modele.tile.tileGround.tileGrass;
 import game.modele.tile.tileGround.tileGrass.Grass;
+import game.modele.tile.tileGround.tileHouse;
+import game.modele.tile.tileGround.tileHouse.House;
 import game.modele.tile.tileGround.tileIce;
+import game.modele.tile.tileGround.tileLadder;
+import game.modele.tile.tileGround.tileLadder.Ladder;
 import game.modele.tile.tileGround.tileRock;
 import game.modele.tile.tileGround.tileRock.Rock;
 import game.modele.tile.tileGround.tileRockStrair;
@@ -14,6 +21,10 @@ import game.modele.tile.tileGround.tileThree;
 import game.modele.tile.tileGround.tileThree.Three;
 import game.modele.tile.tileGround.tileStone;
 import game.modele.tile.tileGround.tileVoid;
+import game.modele.tile.tileInteract.tileBed;
+import game.modele.tile.tileInteract.tileBed.Bed;
+import game.modele.tile.tileInteract.tileSign;
+import game.modele.tile.tileInteract.tileSign.Sign;
 
 public class TileFactory {	
 	public static Tile get(int id) {
@@ -74,7 +85,7 @@ public class TileFactory {
 		case 26:
 			return new tileRock(Rock.Rock_CornerBottomLeft);
 		case 27:
-			//NOT USED
+			return new tileCactus();
 		case 28:
 			//NOT USED
 		case 29:
@@ -106,7 +117,9 @@ public class TileFactory {
 		case 42:
 			return new tileRock(Rock.Rock_CornerTopLeft);
 		case 43:
+			return new tileSign(Sign.Sign_Direction);
 		case 44:
+			return new tileSign();
 		case 45:
 		case 46:
 		case 47:
@@ -118,15 +131,22 @@ public class TileFactory {
 		case 51:
 			return new tileThree(Three.Three_LeaveRightTop);
 		case 52:
+			return new tileThree(Three.DeadThree_LeftTop);
 		case 53:
+			return new tileThree(Three.DeadThree_Top);
 		case 54:
+			return new tileThree(Three.DeadThree_RightTop);
 		case 55:
 		case 56:
 		case 57:
 		case 58:
+			return new tileHouse(House.House_TopLeft);
 		case 59:
+			return new tileHouse(House.House_TopCenter1);
 		case 60:
+			return new tileHouse(House.House_TopCenter2);
 		case 61:
+			return new tileHouse(House.House_TopRight);
 		case 62:
 		case 63:
 		case 64:
@@ -137,15 +157,22 @@ public class TileFactory {
 		case 67:
 			return new tileThree(Three.Three_LeaveBotRight);
 		case 68:
+			return new tileThree(Three.DeadThree_LeftCenter);
 		case 69:
+			return new tileThree(Three.DeadThree_Center);
 		case 70:
+			return new tileThree(Three.DeadThree_RightCenter);
 		case 71:
 		case 72:
 		case 73:
 		case 74:
+			return new tileHouse(House.House_CenterLeft);
 		case 75:
+			return new tileHouse(House.House_CenterDoor);
 		case 76:
+			return new tileHouse(House.House_Center);
 		case 77:
+			return new tileHouse(House.House_CenterRight);
 		case 78:
 		case 79:
 		case 80:
@@ -156,20 +183,29 @@ public class TileFactory {
 		case 83:
 			return new tileThree(Three.Three_RootRight);
 		case 84:
+			return new tileThree(Three.DeadThree_LeftBot);
 		case 85:	
+			return new tileThree(Three.DeadThree_Bot);
 		case 86:
+			return new tileThree(Three.DeadThree_RightBot);
 		case 87:
 		case 88:
 		case 89:
 		case 90:
+			return new tileHouse(House.House_BotLeft);
 		case 91:
+			return new tileHouse(House.House_Door);
 		case 92:
+			return new tileHouse(House.House_Bot);
 		case 93:
+			return new tileHouse(House.House_BotRight);
 		case 94:
 		case 95:
 		case 96:
 		case 97:
+			return new tileThree(Three.Bush_TopLeft);
 		case 98:
+			return new tileThree(Three.Bush_TopRight);
 		case 99:
 		case 100:
 		case 101:
@@ -178,14 +214,20 @@ public class TileFactory {
 		case 104:
 		case 105:
 		case 106:
+			return new tileBed();
 		case 107:
+			return new tileLadder(Ladder.Ladder_Top);
 		case 108:
+			return new tileFloor();
 		case 109:
+			return new tileFloor(Floor.Floor_other);
 		case 110:
 		case 111:
 		case 112:
 		case 113:
+			return new tileThree(Three.Bush_BotLeft);
 		case 114:
+			return new tileThree(Three.Bush_BotRight);
 		case 115:
 		case 116:
 		case 117:
@@ -194,6 +236,7 @@ public class TileFactory {
 		case 120:
 		case 121:	
 		case 122:
+			return new tileBed(Bed.Bed_Bottom);
 		case 123:
 		case 124:
 		case 125:
@@ -211,6 +254,7 @@ public class TileFactory {
 		case 137:
 		case 138:
 		case 139:
+			return new tileLadder(Ladder.Ladder_Bottom);
 		case 140:
 		case 141:
 		case 142:
@@ -224,7 +268,7 @@ public class TileFactory {
 		case 150:
 			return new tileVoid();
 		default:
-			throw new Error("tile non trouvé");
+			throw new Error("tile non trouvé : " + id);
 		}
 
 	}

@@ -14,8 +14,8 @@ public class tileRock extends tileGround{
 		Rock_TopLeft(40),
 		Rock_CornerBottomRight(25),
 		Rock_CornerBottomLeft(26),
-		Rock_CornerTopRight(31),
-		Rock_CornerTopLeft(32),
+		Rock_CornerTopRight(41),
+		Rock_CornerTopLeft(42),
 		Rock_Stone(13);
 		
 		private int id; 
