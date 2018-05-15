@@ -1,6 +1,7 @@
 package game.modele.entity;
 
 import game.modele.tile.Tile;
+import game.modele.tile.tileGround.tileVoid;
 import game.modele.utils.Coordonnees;
 import game.modele.world.World;
 import javafx.scene.image.ImageView;
@@ -9,9 +10,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Entity {
 
-	protected Tile currentTile = null;
-
-
+	protected Tile currentTile = new tileVoid();
+	protected Tile currentTerrain = new tileVoid();
+	protected Tile currentTop = new tileVoid();
+	
 	public Coordonnees coordonnes;
 	public IntegerProperty etatDeplacement = new SimpleIntegerProperty(0);
 
@@ -56,22 +58,34 @@ public abstract class Entity {
 		}
 
 		try {
-			Tile t = World.currentMap.getTileTerrain((int)coordonnees.getY(), (int)coordonnees.getX());
-			World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).Action(this);
+			Tile tile = World.currentMap.getTileTerrain((int)coordonnees.getY(), (int)coordonnees.getX());
+			Tile terrain = World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX());
+			Tile top =  World.currentMap.getTileTop((int)coordonnees.getY(), (int)coordonnees.getX());
+			
+			if(currentTerrain != terrain) {
+				currentTerrain.distant(this);
+				terrain.Action(this);
+				currentTerrain = terrain;
+			}
+			
+			if(currentTop != top) {
+				currentTop.EntityLeaveUnder(this);
+				top.EntityUnder(this);
+				currentTop = top;
+			}
+			
+			
 			if(!World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).solid() &&
-					coordonnees.getX() >= 0 &&
-					coordonnees.getY() >= 0 &&
+					coordonnees.getX() >= 0 && coordonnees.getY() >= 0 &&
 					(coordonnees.getX() + speed)< World.currentMap.getWidth()&&
 					(coordonnees.getY() + speed) < World.currentMap.getHeight())
 			{
-				if(this.currentTile != t) {
-					if(currentTile != null)
-						currentTile.leaveEntity(this);
-					t.onEntityOver(this);
-					currentTile = t;
+				if(this.currentTile != tile) {
+					currentTile.leaveEntity(this);
+					tile.onEntityOver(this);
+					currentTile = tile;
 
 				}
-
 				return true;
 			}else 
 				return false;
