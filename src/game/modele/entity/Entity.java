@@ -43,7 +43,6 @@ public abstract class Entity {
 			this.coordonnes.setY(this.coordonnes.getY() + y);
 		}
 	}
-
 	public void forceTp(Coordonnees coordonnees) {
 		this.coordonnes.setX(coordonnees.getX());
 		this.coordonnes.setY(coordonnees.getY());
@@ -51,7 +50,6 @@ public abstract class Entity {
 	public boolean isOnTileCoord(Coordonnees coordonnees) {
 		return((int)this.coordonnes.getX()==(int)coordonnees.getX() && (int)this.coordonnes.getY()==(int)coordonnees.getY());
 	}
-
 	public boolean setCoordoner(Coordonnees coordonnees) {
 		for(Entity e :World.currentMap.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
 			e.active(this);
@@ -59,6 +57,7 @@ public abstract class Entity {
 
 		try {
 			Tile t = World.currentMap.getTileTerrain((int)coordonnees.getY(), (int)coordonnees.getX());
+			World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).Action(this);
 			if(!World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).solid() &&
 					coordonnees.getX() >= 0 &&
 					coordonnees.getY() >= 0 &&

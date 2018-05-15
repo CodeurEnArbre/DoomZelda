@@ -19,7 +19,7 @@ public abstract class Tile {
 		return true;
 	}
 	
-	//quand on regarde de pres
+	//quand on touche
 	public void Action(Entity e) {
 		//nothing
 	}
