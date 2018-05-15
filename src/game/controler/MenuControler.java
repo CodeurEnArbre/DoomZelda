@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+
 import game.modele.utils.Direction;
 import game.modele.world.World;
 import game.vue.EntityLivingTexture;
@@ -12,8 +13,10 @@ import game.vue.TextureLoader;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -47,12 +50,29 @@ public class MenuControler implements Initializable{
 	private Pane PaneTop;
 
     @FXML
-    private Pane Menu;
+    private Pane PaneMenu;
+    
+    @FXML
+    private Button buttonReprendre;
+    
 
 	private ImageView player;//l'image du joueur a l'ecran
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+			
+			//
+			World.onPause.addListener(new ChangeListener<Boolean>() {
+
+				@Override
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					if(newValue) 
+						PaneMenu.setOpacity(1.0);
+					else
+						PaneMenu.setOpacity(0.0);
+				}
+				
+			});
 
 		//Chargement dans la memoire de toutes les textures
 		textureLoading();		

@@ -23,14 +23,13 @@ import javafx.util.Duration;
 
 public class World {
 
-	public static BooleanProperty onPause;
+	public static BooleanProperty onPause = new SimpleBooleanProperty(false);
 	public static WorldData currentMap;
 	public static Player player;
 	
 	private static Timeline GameLoop = new Timeline();
 
 	public static void loadGameLoop() {
-		onPause = new SimpleBooleanProperty();
 		GameLoop.setCycleCount(Timeline.INDEFINITE);
 		GameLoop.play();
 	}
@@ -43,6 +42,7 @@ public class World {
 
 	public static void pauseGameLoop() {
 		GameLoop.pause();
+		onPause.set(true);
 	}
 	
 	public static void playGameLoop() {
