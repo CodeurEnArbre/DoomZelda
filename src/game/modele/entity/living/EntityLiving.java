@@ -60,9 +60,4 @@ public abstract class EntityLiving extends Entity{
 	}
 	
 	//deplacement
-	
-	public boolean touche(Entity e) {
-		return (this.coordonnes.getX() - e.coordonnes.getX() <= this.hitBoxX
-				&& this.coordonnes.getY() - e.coordonnes.getY() <= this.hitBoxY);	
-	}
 }

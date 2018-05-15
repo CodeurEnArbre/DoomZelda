@@ -33,8 +33,6 @@ public class Player extends EntityLiving{
 	public Player(ArrayList<Item> inventory, Coordonnees position, Direction direction) {
 		super(position,direction);
 		this.inventory=inventory;
-		this.hitBoxX = 32;
-		this.hitBoxY = 32;
 		this.speed = baseSpeed;
 		this.slow =	1;
 		

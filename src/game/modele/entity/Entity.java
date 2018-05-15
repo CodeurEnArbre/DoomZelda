@@ -15,7 +15,6 @@ public abstract class Entity {
 	public Coordonnees coordonnes;
 	public IntegerProperty etatDeplacement = new SimpleIntegerProperty(0);
 
-	protected int hitBoxX, hitBoxY;
 	protected ImageView imageView;
 
 	protected double speed;
