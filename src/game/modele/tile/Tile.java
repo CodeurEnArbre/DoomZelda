@@ -1,5 +1,7 @@
 package game.modele.tile;
 
+import game.modele.entity.Entity;
+
 public abstract class Tile {
 	
 	private int id;
@@ -17,8 +19,11 @@ public abstract class Tile {
 		return true;
 	}
 	
+	//quand on regarde de pres
+	public abstract void Action(Entity e);
+	
 	//quand on marche dessus
-	public abstract void Action();
+	public abstract void onEntityOver(Entity e);
 	
 	
 	

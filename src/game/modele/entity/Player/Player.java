@@ -126,12 +126,16 @@ public class Player extends EntityLiving{
 			e.active(this);
 		}
 		try {
-			int tileId = World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).getId() ;
-			return (tileId <= 1 &&
+			if(!World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).solid() &&
 					coordonnees.getX() >= 0 &&
 					coordonnees.getY() >= 0 &&
 					(coordonnees.getX() + speed)< World.currentMap.getWidth()&&
-					(coordonnees.getY() + speed) < World.currentMap.getHeight());
+					(coordonnees.getY() + speed) < World.currentMap.getHeight())
+			{
+				World.currentMap.getTileTerrain((int)this.coordonnes.getY(), (int)this.coordonnes.getX()).onEntityOver(this);
+				return true;
+			}else 
+				return false;
 		}catch(ArrayIndexOutOfBoundsException e) 
 		{
 			return false;
@@ -145,6 +149,6 @@ public class Player extends EntityLiving{
 
 	@Override
 	public void active(Entity e) {
-		
+
 	}
 }

@@ -1,5 +1,7 @@
 package game.modele.tile.tileInteract;
 
+import game.modele.entity.Entity;
+
 public class tileSign extends tileInteract{
 
 	public enum Sign{
@@ -28,6 +30,12 @@ public class tileSign extends tileInteract{
 	@Override
 	protected void Show() {
 		
+		
+	}
+
+	@Override
+	public void onEntityOver(Entity e) {
+		// TODO Auto-generated method stub
 		
 	}
 

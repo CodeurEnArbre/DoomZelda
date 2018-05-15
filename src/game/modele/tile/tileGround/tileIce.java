@@ -1,5 +1,7 @@
 package game.modele.tile.tileGround;
 
+import game.modele.entity.Entity;
+
 public class tileIce extends tileGround{
 
 	public tileIce() {
@@ -7,8 +9,14 @@ public class tileIce extends tileGround{
 	}
 
 	@Override
-	public void Action() {
+	public void Action(Entity e) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onEntityOver(Entity e) {
+			System.out.println("Test");
 		
 	}
 

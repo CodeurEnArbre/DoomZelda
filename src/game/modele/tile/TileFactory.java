@@ -14,8 +14,8 @@ import game.modele.tile.tileGround.tileLadder;
 import game.modele.tile.tileGround.tileLadder.Ladder;
 import game.modele.tile.tileGround.tileRock;
 import game.modele.tile.tileGround.tileRock.Rock;
-import game.modele.tile.tileGround.tileRockStrair;
-import game.modele.tile.tileGround.tileRockStrair.RockStair;
+import game.modele.tile.tileGround.tileRockStairs;
+import game.modele.tile.tileGround.tileRockStairs.RockStairs;
 import game.modele.tile.tileGround.tileStone.Stone;
 import game.modele.tile.tileGround.tileThree;
 import game.modele.tile.tileGround.tileThree.Three;
@@ -49,13 +49,13 @@ public class TileFactory {
 		case 8:
 			return new tileRock(Rock.Rock_BottomLeft);
 		case 9:
-			return new tileRockStrair(RockStair.RockStair_Top);
+			return new tileRockStairs(RockStairs.RockStair_Top);
 		case 10:
-			return new tileRockStrair(RockStair.RockStair_Bottom);
+			return new tileRockStairs(RockStairs.RockStair_Bottom);
 		case 11:
-			return new tileRockStrair(RockStair.RockStair_Left);
+			return new tileRockStairs(RockStairs.RockStair_Left);
 		case 12:
-			return new tileRockStrair(RockStair.RockStair_Right);
+			return new tileRockStairs(RockStairs.RockStair_Right);
 		case 13:
 			return new tileRock(Rock.Rock_Stone);
 		case 14:

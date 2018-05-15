@@ -1,5 +1,7 @@
 package game.modele.tile.tileInteract;
 
+import game.modele.entity.Entity;
+
 public class tileBed extends tileInteract {
 
 	public enum Bed{
@@ -26,6 +28,12 @@ public class tileBed extends tileInteract {
 
 	@Override
 	protected void Show() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onEntityOver(Entity e) {
 		// TODO Auto-generated method stub
 		
 	}

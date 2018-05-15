@@ -1,5 +1,6 @@
 package game.modele.tile.tileGround;
 
+import game.modele.entity.Entity;
 
 public class tileRock extends tileGround{
 
@@ -40,7 +41,13 @@ public class tileRock extends tileGround{
 	
 
 	@Override
-	public void Action() {
-		System.out.println("ROCK");
+	public void Action(Entity e) {
+		//TODO 
+	}
+
+	@Override
+	public void onEntityOver(Entity e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -2,37 +2,38 @@ package game.modele.tile.tileGround;
 
 import game.modele.entity.Entity;
 
-public class tileDirt extends tileGround{
+public class tileRockStairs extends tileGround {
 
-	public enum Dirt{
-		Dirt_TopLeft(17),
-		Dirt_TopRight(18),
-		Dirt_BotLeft(33),
-		Dirt_BotRight(34);
+	public enum RockStairs{
+		RockStair_Top(9),
+		RockStair_Bottom(10),
+		RockStair_Left(11),
+		RockStair_Right(12);
+		
 		
 		private int id; 
-		Dirt(int id) {
+		RockStairs(int id) {
 			this.id = id;
 		}
 		public int get() {
 			return id;
 		}
 		
+		
 	}
 	
-	public tileDirt() {
-		super(20);
+	public tileRockStairs(RockStairs r) {
+		super(r.id);
 	}
 
-	public tileDirt(Dirt d)
-	{
-		super(d.get());
-	}
-	
 	@Override
 	public void Action(Entity e) {
 		
-		
+	}
+	
+	@Override
+	public boolean solid() {
+		return false;
 	}
 
 	@Override
@@ -40,5 +41,6 @@ public class tileDirt extends tileGround{
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	
 }

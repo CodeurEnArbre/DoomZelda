@@ -1,5 +1,7 @@
 package game.modele.tile.tileGround;
 
+import game.modele.entity.Entity;
+
 public class tileCactus extends tileGround{
 
 	public tileCactus() {
@@ -7,8 +9,14 @@ public class tileCactus extends tileGround{
 	}
 
 	@Override
-	public void Action() {
+	public void Action(Entity e) {
 		
+		
+	}
+
+	@Override
+	public void onEntityOver(Entity e) {
+		// TODO Auto-generated method stub
 		
 	}
 

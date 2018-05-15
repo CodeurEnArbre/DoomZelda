@@ -1,5 +1,7 @@
 package game.modele.tile.tileGround;
 
+import game.modele.entity.Entity;
+
 public class tileVoid  extends tileGround{
 
 	public tileVoid() {
@@ -7,7 +9,20 @@ public class tileVoid  extends tileGround{
 	}
 
 	@Override
-	public void Action() {
-		System.out.println(0);
+	public void Action(Entity e) {
+
 	}
+	
+	@Override
+	public boolean solid() {
+		return false;
+	}
+
+	@Override
+	public void onEntityOver(Entity e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 }

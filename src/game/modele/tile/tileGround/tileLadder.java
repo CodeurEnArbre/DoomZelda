@@ -1,5 +1,7 @@
 package game.modele.tile.tileGround;
 
+import game.modele.entity.Entity;
+
 public class tileLadder extends tileGround{
 
 	public enum Ladder{
@@ -26,7 +28,13 @@ public class tileLadder extends tileGround{
 	
 
 	@Override
-	public void Action() {
+	public void Action(Entity e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onEntityOver(Entity e) {
 		// TODO Auto-generated method stub
 		
 	}

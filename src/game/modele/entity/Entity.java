@@ -1,7 +1,7 @@
 package game.modele.entity;
 
 import game.modele.utils.Coordonnees;
-
+import game.modele.world.World;
 import javafx.scene.image.ImageView;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -34,7 +34,7 @@ public abstract class Entity {
 						this.coordonnes.getX(),
 						this.coordonnes.getY() + y))) {
 			this.coordonnes.setY(this.coordonnes.getY() + y);
-		}
+			}
 	}
 	public abstract boolean setCoordoner(Coordonnees coordonnees);
 	public void forceTp(Coordonnees coordonnees) {
