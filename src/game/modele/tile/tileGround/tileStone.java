@@ -23,21 +23,15 @@ public class tileStone extends tileGround{
 	public tileStone(Stone s) {
 		super(s.id);
 	}
-	@Override
-	public void Action(Entity e) {
-		
-	}
 
 	@Override
 	public void onEntityOver(Entity e) {
-		e.slow = 0.2;
-		
+		e.slow = 0.4;
 	}
 
 	@Override
 	public void leaveEntity(Entity e) {
 		e.slow = 1;
-		
 	}
 
 }

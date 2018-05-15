@@ -1,7 +1,5 @@
 package game.modele.tile.tileGround;
 
-import game.modele.entity.Entity;
-
 public class tileFloor extends tileGround{
 	
 	public enum Floor{
@@ -25,26 +23,4 @@ public class tileFloor extends tileGround{
 	public tileFloor(Floor f) {
 		super(f.id);
 	}
-	
-	
-	
-
-	@Override
-	public void Action(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onEntityOver(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void leaveEntity(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

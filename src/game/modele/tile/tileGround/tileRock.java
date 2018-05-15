@@ -1,7 +1,5 @@
 package game.modele.tile.tileGround;
 
-import game.modele.entity.Entity;
-
 public class tileRock extends tileGround{
 
 	public enum Rock{
@@ -37,23 +35,5 @@ public class tileRock extends tileGround{
 	
 	public tileRock(Rock r) {
 		super(r.get());
-	}
-	
-
-	@Override
-	public void Action(Entity e) {
-		//TODO 
-	}
-
-	@Override
-	public void onEntityOver(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void leaveEntity(Entity e) {
-		// TODO Auto-generated method stub
-		
 	}
 }

@@ -1,7 +1,5 @@
 package game.modele.tile.tileGround;
 
-import game.modele.entity.Entity;
-
 public class tileRockStairs extends tileGround {
 
 	public enum RockStairs{
@@ -25,28 +23,9 @@ public class tileRockStairs extends tileGround {
 	public tileRockStairs(RockStairs r) {
 		super(r.id);
 	}
-
-	@Override
-	public void Action(Entity e) {
-		
-	}
 	
 	@Override
 	public boolean solid() {
 		return false;
-	}
-
-	@Override
-	public void onEntityOver(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void leaveEntity(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
+	}	
 }

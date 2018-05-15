@@ -23,23 +23,9 @@ public class tileBed extends tileInteract {
 	public tileBed(Bed b) {
 		super(b.id);
 	}
-	
-	
 
 	@Override
 	protected void Show() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onEntityOver(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void leaveEntity(Entity e) {
 		// TODO Auto-generated method stub
 		
 	}

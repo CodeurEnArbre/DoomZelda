@@ -32,17 +32,4 @@ public class tileSign extends tileInteract{
 		
 		
 	}
-
-	@Override
-	public void onEntityOver(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void leaveEntity(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

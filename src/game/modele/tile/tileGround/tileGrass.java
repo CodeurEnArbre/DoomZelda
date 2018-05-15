@@ -1,7 +1,5 @@
 package game.modele.tile.tileGround;
 
-import game.modele.entity.Entity;
-
 public class tileGrass extends tileGround{
 
 	public enum Grass{
@@ -33,22 +31,4 @@ public class tileGrass extends tileGround{
 	public tileGrass(Grass g) {
 		super(g.get());
 	}
-	
-
-	@Override
-	public void Action(Entity e) {
-
-	}
-
-	@Override
-	public void onEntityOver(Entity e) {
-		
-	}
-
-	@Override
-	public void leaveEntity(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

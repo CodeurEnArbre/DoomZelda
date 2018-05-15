@@ -1,6 +1,5 @@
 package game.modele.tile.tileGround;
 
-import game.modele.entity.Entity;
 
 public class tileLadder extends tileGround{
 
@@ -25,24 +24,4 @@ public class tileLadder extends tileGround{
 	public tileLadder(Ladder l) {
 		super(l.id);
 	}
-	
-
-	@Override
-	public void Action(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onEntityOver(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void leaveEntity(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

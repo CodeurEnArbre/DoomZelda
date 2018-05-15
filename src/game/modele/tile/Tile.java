@@ -20,12 +20,18 @@ public abstract class Tile {
 	}
 	
 	//quand on regarde de pres
-	public abstract void Action(Entity e);
+	public void Action(Entity e) {
+		//nothing
+	}
 	
 	//quand on marche dessus
-	public abstract void onEntityOver(Entity e);
+	public void onEntityOver(Entity e) {
+		//nothing
+	}
 	
-	public abstract void leaveEntity(Entity e);
+	public void leaveEntity(Entity e) {
+		//Nothing
+	}
 	
 	
 	

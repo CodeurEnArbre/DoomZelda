@@ -9,12 +9,6 @@ public class tileIce extends tileGround{
 	}
 
 	@Override
-	public void Action(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void onEntityOver(Entity e) {
 		e.slow = 2;
 	}

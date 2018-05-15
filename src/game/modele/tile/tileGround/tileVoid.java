@@ -17,18 +17,4 @@ public class tileVoid  extends tileGround{
 	public boolean solid() {
 		return false;
 	}
-
-	@Override
-	public void onEntityOver(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void leaveEntity(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
 }
