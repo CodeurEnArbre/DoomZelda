@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import game.modele.entity.Entity;
-import game.modele.entity.TileEntityTP;
+import game.modele.entity.EntityTP;
 import game.modele.entity.Player.Player;
 import game.modele.tile.Tile;
 import game.modele.utils.Coordonnees;
@@ -118,7 +118,7 @@ public class World {
 				String mapTP = entityData.readLine();
 				double xTP=Double.parseDouble(entityData.readLine());
 				double yTP=Double.parseDouble(entityData.readLine());//TODO 1-> tpid
-				entity.add(new TileEntityTP(0, new Coordonnees(x, y), etatTileEntityTP, mapTP, new Coordonnees(xTP, yTP)));
+				entity.add(new EntityTP(0, new Coordonnees(x, y), etatTileEntityTP, mapTP, new Coordonnees(xTP, yTP)));
 				break;
 			}
 

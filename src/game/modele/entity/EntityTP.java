@@ -4,11 +4,11 @@ import game.modele.entity.tileEntity.TileEntity;
 import game.modele.utils.Coordonnees;
 import game.modele.world.World;
 
-public class TileEntityTP extends TileEntity{
+public class EntityTP extends TileEntity{
 	private Coordonnees tpCoordonnees;
 	private String mapNameTp;
 
-	public TileEntityTP(int id, Coordonnees coordonerPosition, boolean etat, String mapNameTp, Coordonnees tpCoordonnees) {
+	public EntityTP(int id, Coordonnees coordonerPosition, boolean etat, String mapNameTp, Coordonnees tpCoordonnees) {
 		super(id, coordonerPosition, etat);
 		this.tpCoordonnees=tpCoordonnees;
 		this.mapNameTp=mapNameTp;
