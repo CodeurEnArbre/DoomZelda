@@ -1,6 +1,9 @@
 ﻿Cahier d’initialisation
 
--Quête: Tuer le boss de la map et libérer la princesse de ses souffrance.
+
+
+-Quête:
+	 Tuer le boss de la map et libérer la princesse de ses souffrance.
 
 -Touches: 
 
