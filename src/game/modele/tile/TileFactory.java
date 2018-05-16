@@ -1,6 +1,5 @@
 package game.modele.tile;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -127,7 +126,9 @@ public class TileFactory {
 
 			dicoTile.put(113, new tileThree(Three.Bush_BotLeft));
 			dicoTile.put(114, new tileThree(Three.Bush_BotRight));
-
+			
+			dicoTile.put(123, new tileLadder());
+			
 			dicoTile.put(122, new tileBed(Bed.Bed_Bottom));
 
 			dicoTile.put(139,new tileLadder(Ladder.Ladder_Bottom));

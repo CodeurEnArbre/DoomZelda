@@ -89,11 +89,12 @@ public class World {
 			else {
 				currentMap.newWorld(worldName, width, height, tileGround, tileSolid, tileTop, loadEntity(file));
 			}
-
+			isWorldLoaded.setValue(true);
 		}catch(IOException e) {
 			System.out.println("Impossible de charger la map");
 			e.printStackTrace();
 		}
+		
 	}
 
 	public static ArrayList<Entity> loadEntity(String world) throws IOException{
