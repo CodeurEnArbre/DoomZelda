@@ -7,8 +7,8 @@ import game.modele.utils.Direction;
 
 public abstract class EntityMonster extends EntityLiving {
 
-	public EntityMonster(Coordonnees position, Direction direction) {
-		super(position, direction);
+	public EntityMonster(int id,Coordonnees position, Direction direction) {
+		super(id,position, direction);
 	}
 
 

@@ -63,7 +63,7 @@ public class Interaction {
 	 * Set Direction
 	 * */
 	public static void setDirection(int direction) {
-		World.player.getOrientation().getDirectionProperty().setValue(direction);
+		World.player.direction.getDirectionProperty().setValue(direction);
 	}
 
 	/*

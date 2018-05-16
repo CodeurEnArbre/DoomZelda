@@ -3,6 +3,7 @@ package game.modele.entity;
 import game.modele.tile.Tile;
 import game.modele.tile.tileGround.tileVoid;
 import game.modele.utils.Coordonnees;
+import game.modele.utils.Direction;
 import game.modele.world.World;
 import javafx.scene.image.ImageView;
 import javafx.beans.property.IntegerProperty;
@@ -10,6 +11,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Entity {
 
+	protected int id;
+	public Direction direction;
+	
 	protected Tile currentTile = new tileVoid();
 	protected Tile currentTerrain = new tileVoid();
 	protected Tile currentTop = new tileVoid();
@@ -23,7 +27,9 @@ public abstract class Entity {
 	public double slow;
 
 
-	public Entity(Coordonnees coordonnees) {
+	public Entity(int id,Coordonnees coordonnees,Direction direction) {
+		this.direction=direction;
+		this.id = id;
 		this.coordonnes=coordonnees;
 		this.imageView = new ImageView();
 	}
@@ -54,7 +60,8 @@ public abstract class Entity {
 	}
 	public boolean setCoordoner(Coordonnees coordonnees) {
 		for(Entity e :World.currentMap.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
-			e.active(this);
+			if(e != this)
+				e.active(this);
 		}
 
 		try {
@@ -94,12 +101,12 @@ public abstract class Entity {
 			return false;
 		}
 	}
-
-
-
+	
 	//ID
 
-	public abstract int getId();
+	public int getId() {
+		return this.id;
+	}
 
 	//UpdateIA
 
@@ -110,11 +117,7 @@ public abstract class Entity {
 	public abstract void active(Entity e);
 
 	//deplacement
-	public void incAnim() {
-		this.etatDeplacement.set(
-				this.etatDeplacement.get()
-				+ (this.etatDeplacement.get() < 83 ? 1 : -83));
-	}
+	public abstract void incAnim();
 	public void resetAnim() {
 		this.etatDeplacement.set(0);
 	}

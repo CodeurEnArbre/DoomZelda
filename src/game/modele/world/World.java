@@ -51,9 +51,15 @@ public class World {
 	
 	public static void loadPlayer() {
 		player = new Player(null,new Coordonnees(14,10),new Direction(5));
-		addKeyGameLoop(e -> player.update());
+		addEntity(player);
 	}
 
+	public static void addEntity(Entity e) {
+		currentMap.entity.add(e);
+		addKeyGameLoop(y -> e.update());
+	}
+	
+	
 	/*
 	 * Chargement de la map : cr�ation du tableau utilis� par l'affichage
 	 * */
@@ -119,7 +125,7 @@ public class World {
 				String mapTP = entityData.readLine();
 				double xTP=Double.parseDouble(entityData.readLine());
 				double yTP=Double.parseDouble(entityData.readLine());//TODO 1-> tpid
-				entity.add(new EntityTP(0, new Coordonnees(x, y), etatTileEntityTP, mapTP, new Coordonnees(xTP, yTP)));
+				entity.add(new EntityTP(0, new Coordonnees(x, y),new Direction(Direction.North), etatTileEntityTP, mapTP, new Coordonnees(xTP, yTP)));
 				break;
 			}
 

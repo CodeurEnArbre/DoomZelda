@@ -6,6 +6,8 @@ import game.modele.entity.Entity;
 import game.modele.tile.Tile;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class WorldData {
 	
@@ -13,26 +15,32 @@ public class WorldData {
 	private Tile tileGround[][];
 	private Tile tiles[][];
 	private Tile tilesTop[][];
-	public ArrayList<Entity> entity;
+	public ObservableList<Entity> entity;
 	private int width,height;
 	
-	public WorldData(String zoneName, int width, int height, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entity) {
+	public WorldData(String zoneName, int width, int height, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {
 		this.zoneName=new SimpleStringProperty(zoneName);
 		this.width=width;
 		this.height=height;
 		this.tileGround=ground;
 		this.tiles=tiles;
 		this.tilesTop=tilesTop;
-		this.entity=entity;
+		this.entity= FXCollections.observableArrayList();
+		for(Entity e : entitys)
+			this.entity.add(e);
+	
 	}
 	
-	public void newWorld(String zoneName, int width, int height, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entity) {
+	public void newWorld(String zoneName, int width, int height, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {
 		this.width=width;
 		this.height=height;
 		this.tileGround=ground;
 		this.tiles=tiles;
 		this.tilesTop=tilesTop;
-		this.entity=entity;
+		this.entity = FXCollections.observableArrayList();
+		for(Entity e : entitys)
+			this.entity.add(e);
+		
 		this.zoneName.setValue(zoneName);
 	}
 	
@@ -64,7 +72,7 @@ public class WorldData {
 			return tilesTop[x][y];
 	}
 	
-	public ArrayList<Entity> getEntity(){
+	public ObservableList<Entity> getEntity(){
 		return this.entity;
 	}
 	

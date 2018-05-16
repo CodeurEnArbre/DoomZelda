@@ -2,13 +2,11 @@ package game.modele.entity.Player;
 
 import java.util.ArrayList;
 
-import game.modele.entity.AllEntity;
 import game.modele.entity.Entity;
 import game.modele.entity.living.EntityLiving;
 import game.modele.item.Item;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
-import game.modele.world.World;
 
 public class Player extends EntityLiving{
 
@@ -31,7 +29,7 @@ public class Player extends EntityLiving{
 	public infoDeplacement moveLeft;
 
 	public Player(ArrayList<Item> inventory, Coordonnees position, Direction direction) {
-		super(position,direction);
+		super(-1,position,direction);
 		this.inventory=inventory;
 		this.speed = baseSpeed;
 		this.slow =	1;
@@ -119,10 +117,12 @@ public class Player extends EntityLiving{
 	}
 
 	@Override
-	public int getId() {
-		return AllEntity.Entity_Player.getId();
+	public void incAnim() {
+		this.etatDeplacement.set(
+				this.etatDeplacement.get()
+				+ (this.etatDeplacement.get() < 83 ? 1 : -83));
 	}
-
+	
 	@Override
 	public void active(Entity e) {
 

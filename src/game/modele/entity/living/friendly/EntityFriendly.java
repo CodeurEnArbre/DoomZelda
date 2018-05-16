@@ -6,8 +6,8 @@ import game.modele.utils.Direction;
 
 public abstract class EntityFriendly extends EntityLiving{
 
-	public EntityFriendly(Coordonnees position, Direction direction) {
-		super(position, direction);
+	public EntityFriendly(int id,Coordonnees position, Direction direction) {
+		super(id,position, direction);
 	}
 
 }

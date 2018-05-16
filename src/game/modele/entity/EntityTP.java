@@ -2,14 +2,15 @@ package game.modele.entity;
 
 import game.modele.entity.tileEntity.TileEntity;
 import game.modele.utils.Coordonnees;
+import game.modele.utils.Direction;
 import game.modele.world.World;
 
 public class EntityTP extends TileEntity{
 	private Coordonnees tpCoordonnees;
 	private String mapNameTp;
 
-	public EntityTP(int id, Coordonnees coordonerPosition, boolean etat, String mapNameTp, Coordonnees tpCoordonnees) {
-		super(id, coordonerPosition, etat);
+	public EntityTP(int id, Coordonnees coordonerPosition,Direction direction, boolean etat, String mapNameTp, Coordonnees tpCoordonnees) {
+		super(id, coordonerPosition,direction, etat);
 		this.tpCoordonnees=tpCoordonnees;
 		this.mapNameTp=mapNameTp;
 	}
@@ -37,4 +38,12 @@ public class EntityTP extends TileEntity{
 		World.loadWorld(this.mapNameTp,this.mapNameTp);
 		World.player.forceTp(this.getTPCoordonnees());
 	}
+
+	@Override
+	public void incAnim() {
+		// NONE
+	}
+	
+	
+	
 }
