@@ -12,6 +12,8 @@ import javax.imageio.ImageIO;
 
 import game.MainMenu;
 import game.modele.entity.Entity;
+import game.modele.entity.living.monster.Zombie;
+import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.world.World;
 import game.vue.EntityLivingTexture;
@@ -33,7 +35,8 @@ public class MenuControler implements Initializable{
 	Map<Integer,Image> dicoImageItemTextureMap;
 	Map<Integer,Image> dicoImageAnimationPlayer;
 	Map<Integer,Image[]> dicoImageAnimationEntity; 
-
+	Map<Entity,ImageView> listEntityView = new HashMap<>();
+	
 	ArrayList<ImageView> coeurs;
 
 	@FXML
@@ -42,7 +45,6 @@ public class MenuControler implements Initializable{
 	private Pane paneGame;//Contient les panes d'affichage de la map et des entites
 	@FXML 
 	private Pane PaneHUD;//Permet d'afficher l'HUD et tout ce qui n'est pas une tile ou une entite
-
 
 	@FXML
 	private Pane PaneGround;
@@ -136,6 +138,10 @@ public class MenuControler implements Initializable{
 		player=new ImageView();
 		World.loadPlayer();
 
+		World.addEntity(new Zombie(new Coordonnees(10, 10), new Direction(Direction.North)));
+		
+		
+		
 		//Affichage de l'animation du joueur
 		affichageDuJoueur();
 
@@ -210,7 +216,7 @@ public class MenuControler implements Initializable{
 	private void LoadAnimation(Map<Integer,Image> dico, int frame, int animation) {
 		for(int x = 0;x < frame;x++)
 			for(int y = 0;y < animation;y++)
-				dico.put(x + frame * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 32, x, y).getTexture(), null));		
+				dico.put(x + frame * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player_ombre", 24, 32, x, y).getTexture(), null));		
 	}
 
 	//Permet d'afficher dans dans chaque pane toute les textures de chaque couches de la map
@@ -274,8 +280,14 @@ public class MenuControler implements Initializable{
 		player.xProperty().bind(World.player.coordonnes.getXpro().multiply(32).subtract(16));
 		player.yProperty().bind(World.player.coordonnes.getYpro().multiply(32).subtract(48));
 	}
-	private void affichageEntitys() {
-
+	
+	
+	
+	
+	
+	
+	
+	private void affichageEntitys() {	
 		World.currentMap.entity.addListener(new ListChangeListener<Entity>(){
 
 			@Override
@@ -285,6 +297,8 @@ public class MenuControler implements Initializable{
 
 					}
 					for (Entity addEntity : c.getAddedSubList()) {
+						listEntityView.put(addEntity, new ImageView());
+						
 						if(addEntity.getId() == -1) {
 							addEntity.etatDeplacement.addListener(
 									new ChangeListener<Number>() {
@@ -318,25 +332,25 @@ public class MenuControler implements Initializable{
 
 											switch(addEntity.direction.getDirection()) {
 											case Direction.North:
-												player.setImage(
+												listEntityView.get(addEntity).setImage(
 														dicoImageAnimationEntity.get(
 																addEntity.getId())
 														[observable.getValue().intValue() / 3]);
 												break;
 											case Direction.West:
-												player.setImage(
+												listEntityView.get(addEntity).setImage(
 														dicoImageAnimationEntity.get(
 																addEntity.getId())
 														[observable.getValue().intValue() / 3 + 28]);
 												break;
 											case Direction.South:
-												player.setImage(
+												listEntityView.get(addEntity).setImage(
 														dicoImageAnimationEntity.get(
 																addEntity.getId())
 														[observable.getValue().intValue() / 3 + 56]);
 												break;
 											case Direction.East:
-												player.setImage(
+												listEntityView.get(addEntity).setImage(
 														dicoImageAnimationEntity.get(
 																addEntity.getId())
 														[observable.getValue().intValue() / 3 + 84]);
@@ -352,4 +366,5 @@ public class MenuControler implements Initializable{
 			}
 		});
 	}
+
 }
