@@ -57,22 +57,22 @@ public class MenuControler implements Initializable{
 
 	@FXML
 	private Pane PaneMenu;
-	
-	@FXML
-    private Pane homeMenu;
-	
-	@FXML
-    private ImageView menuImageFont;
 
 	@FXML
-    private ImageView selectionArrow;
-	
-    @FXML
-    private ImageView playImg;
-    @FXML
-    private ImageView optionImg;
-    @FXML
-    private ImageView exitImg;
+	private Pane homeMenu;
+
+	@FXML
+	private ImageView menuImageFont;
+
+	@FXML
+	private ImageView selectionArrow;
+
+	@FXML
+	private ImageView playImg;
+	@FXML
+	private ImageView optionImg;
+	@FXML
+	private ImageView exitImg;
 
 	@FXML
 	private Button buttonReprendre;
@@ -85,7 +85,7 @@ public class MenuControler implements Initializable{
 
 		//chagement du menu principale
 		menuLoading();
-		
+
 		//
 		World.onPause.addListener(new ChangeListener<Boolean>() {
 
@@ -105,9 +105,9 @@ public class MenuControler implements Initializable{
 				System.out.println(newValue);
 				selectionArrow.relocate(playImg.getLayoutX()-60, playImg.getLayoutY()+120*newValue.intValue());
 			}
-			
+
 		});
-		
+
 		//Chargement dans la memoire de toutes les textures
 		textureLoading();		
 
@@ -119,62 +119,62 @@ public class MenuControler implements Initializable{
 				System.out.println("Loading save");
 				if(newValue) {
 					loadMapTexture();
-					
+
 				}
 			}
 
 		});
-		
+
 	}
-	
+
 	public void loadMapTexture() {
 		//Chargement de la map
 
 
-				affichageEntitys();
-				//Chargement du joueur
-				player=new ImageView();
-				World.loadPlayer();
+		affichageEntitys();
+		//Chargement du joueur
+		player=new ImageView();
+		World.loadPlayer();
 
-				//Affichage de l'animation du joueur
-				affichageDuJoueur();
-				
-				//Affichage des toutes les couches de la map
-				printCalqueTile(PaneGround,PaneSolid,PaneTop);
+		//Affichage de l'animation du joueur
+		affichageDuJoueur();
+
+		//Affichage des toutes les couches de la map
+		printCalqueTile(PaneGround,PaneSolid,PaneTop);
 
 
 
-				for(int numCoeur=World.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
-					coeurs.add(new ImageView(dicoImageItemTextureMap.get(2)));
-				}
+		for(int numCoeur=World.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
+			coeurs.add(new ImageView(dicoImageItemTextureMap.get(2)));
+		}
 
+		updateHearts();
+
+		for(ImageView coeur:coeurs){
+			PaneHUD.getChildren().add(coeur);
+		}
+
+		World.player.getPV().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				updateHearts();
+			}
+		});
 
-				for(ImageView coeur:coeurs){
-					PaneHUD.getChildren().add(coeur);
-				}
+		//Ajout d'un Listener si la map change
+		World.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				PaneGround.getChildren().clear();
+				PaneSolid.getChildren().clear();
+				PaneTop.getChildren().clear();
+				printCalqueTile(PaneGround,PaneSolid,PaneTop);
+			}
+		});
 
-				World.player.getPV().addListener(new ChangeListener<Number>() {
-					@Override
-					public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-						updateHearts();
-					}
-				});
-
-				//Ajout d'un Listener si la map change
-				World.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
-					@Override
-					public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-						PaneGround.getChildren().clear();
-						PaneSolid.getChildren().clear();
-						PaneTop.getChildren().clear();
-						printCalqueTile(PaneGround,PaneSolid,PaneTop);
-					}
-				});
-
-				World.loadGameLoop();
+		World.loadGameLoop();
 	}
-	
+
 	private void menuLoading() {
 		try {
 			menuImageFont.setImage(SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/background.png").toURI().toURL()),null));
@@ -275,80 +275,80 @@ public class MenuControler implements Initializable{
 		player.yProperty().bind(World.player.coordonnes.getYpro().multiply(32).subtract(48));
 	}
 	private void affichageEntitys() {
-		
+
 		World.currentMap.entity.addListener(new ListChangeListener<Entity>(){
 
 			@Override
 			public void onChanged(Change<? extends Entity> c) {
-				 while (c.next()) {
-		                     for (Entity remEntity : c.getRemoved()) {
-		                         
-		                     }
-		                     for (Entity addEntity : c.getAddedSubList()) {
-		                    	 if(addEntity.getId() == -1) {
-		                    		 addEntity.etatDeplacement.addListener(
-		             						new ChangeListener<Number>() {
+				while (c.next()) {
+					for (Entity remEntity : c.getRemoved()) {
 
-		             							@Override
-		             							public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
+					}
+					for (Entity addEntity : c.getAddedSubList()) {
+						if(addEntity.getId() == -1) {
+							addEntity.etatDeplacement.addListener(
+									new ChangeListener<Number>() {
 
-		             								switch(addEntity.direction.getDirection()) {
-		             								case Direction.North:
-		             									player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)));
-		             									break;
-		             								case Direction.West:
-		             									player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+28));
-		             									break;
-		             								case Direction.South:
-		             									player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+56));
-		             									break;
-		             								case Direction.East:
-		             									player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+84));
-		             									break;
-		             								}
-		             							}
-		             						}
-		             						);
-		                    	 }else {
-		                    		 addEntity.etatDeplacement.addListener(
-		             						new ChangeListener<Number>() {
+										@Override
+										public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
 
-		             							@Override
-		             							public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
+											switch(addEntity.direction.getDirection()) {
+											case Direction.North:
+												player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)));
+												break;
+											case Direction.West:
+												player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+28));
+												break;
+											case Direction.South:
+												player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+56));
+												break;
+											case Direction.East:
+												player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+84));
+												break;
+											}
+										}
+									}
+									);
+						}else {
+							addEntity.etatDeplacement.addListener(
+									new ChangeListener<Number>() {
 
-		             								switch(addEntity.direction.getDirection()) {
-		             								case Direction.North:
-		             									player.setImage(
-		             											dicoImageAnimationEntity.get(
-		             													addEntity.getId())
-		             											[observable.getValue().intValue() / 3]);
-		             									break;
-		             								case Direction.West:
-		             									player.setImage(
-		             											dicoImageAnimationEntity.get(
-		             													addEntity.getId())
-		             											[observable.getValue().intValue() / 3 + 28]);
-		             									break;
-		             								case Direction.South:
-		             									player.setImage(
-		             											dicoImageAnimationEntity.get(
-		             													addEntity.getId())
-		             											[observable.getValue().intValue() / 3 + 56]);
-		             									break;
-		             								case Direction.East:
-		             									player.setImage(
-		             											dicoImageAnimationEntity.get(
-		             													addEntity.getId())
-		             											[observable.getValue().intValue() / 3 + 84]);
-		             									break;
-		             								}
-		             							}
-		             						}
-		             						);
-		                    	 }
-		                     }
-		                 }
-		             
+										@Override
+										public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
+
+											switch(addEntity.direction.getDirection()) {
+											case Direction.North:
+												player.setImage(
+														dicoImageAnimationEntity.get(
+																addEntity.getId())
+														[observable.getValue().intValue() / 3]);
+												break;
+											case Direction.West:
+												player.setImage(
+														dicoImageAnimationEntity.get(
+																addEntity.getId())
+														[observable.getValue().intValue() / 3 + 28]);
+												break;
+											case Direction.South:
+												player.setImage(
+														dicoImageAnimationEntity.get(
+																addEntity.getId())
+														[observable.getValue().intValue() / 3 + 56]);
+												break;
+											case Direction.East:
+												player.setImage(
+														dicoImageAnimationEntity.get(
+																addEntity.getId())
+														[observable.getValue().intValue() / 3 + 84]);
+												break;
+											}
+										}
+									}
+									);
+						}
+					}
+				}
+
 			}
 		});
 	}

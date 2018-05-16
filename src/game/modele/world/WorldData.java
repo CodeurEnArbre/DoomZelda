@@ -17,6 +17,7 @@ public class WorldData {
 	private Tile tilesTop[][];
 	public ObservableList<Entity> entity;
 	private int width,height;
+	private boolean outSide = true;
 	
 	public WorldData(String zoneName, int width, int height, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {
 		this.zoneName=new SimpleStringProperty(zoneName);
