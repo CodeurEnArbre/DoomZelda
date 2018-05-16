@@ -70,13 +70,15 @@ public abstract class Entity {
 			Tile top =  World.currentMap.getTileTop((int)coordonnees.getY(), (int)coordonnees.getX());
 			
 			if(currentTerrain != terrain) {
-				currentTerrain.distant(this);
+				if(currentTerrain != null)
+					currentTerrain.distant(this);
 				terrain.Action(this);
 				currentTerrain = terrain;
 			}
 			
 			if(currentTop != top) {
-				currentTop.EntityLeaveUnder(this);
+				if(currentTop != null)
+					currentTop.EntityLeaveUnder(this);
 				top.EntityUnder(this);
 				currentTop = top;
 			}
@@ -88,7 +90,8 @@ public abstract class Entity {
 					(coordonnees.getY() + speed) < World.currentMap.getHeight())
 			{
 				if(this.currentTile != tile) {
-					currentTile.leaveEntity(this);
+					if(currentTile != null)
+						currentTile.leaveEntity(this);
 					tile.onEntityOver(this);
 					currentTile = tile;
 

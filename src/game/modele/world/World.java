@@ -25,8 +25,9 @@ public class World {
 
 	public static BooleanProperty onPause = new SimpleBooleanProperty(false);
 	public static WorldData currentMap;
-	public static BooleanProperty isWorldLoaded = new SimpleBooleanProperty(false);
 	public static Player player;
+	public static BooleanProperty isWorldLoaded = new SimpleBooleanProperty(false);
+	
 	
 	private static Timeline GameLoop = new Timeline();
 
@@ -65,6 +66,7 @@ public class World {
 	 * Chargement de la map : cr�ation du tableau utilis� par l'affichage
 	 * */
 	public static void loadWorld(String file, String worldName) {
+		TileFactory.load();
 		try {
 			//Chargement des tiles
 			BufferedReader tilesData = new BufferedReader(new FileReader(new File("ressources/map/"+file+".map")));
@@ -87,11 +89,12 @@ public class World {
 			else {
 				currentMap.newWorld(worldName, width, height, tileGround, tileSolid, tileTop, loadEntity(file));
 			}
-			World.isWorldLoaded.set(true);
+			isWorldLoaded.setValue(true);
 		}catch(IOException e) {
 			System.out.println("Impossible de charger la map");
 			e.printStackTrace();
 		}
+		
 	}
 
 	public static ArrayList<Entity> loadEntity(String world) throws IOException{

@@ -1,5 +1,7 @@
 package game.modele.tile.tileGround;
 
+import game.modele.entity.Entity;
+
 public class tileGrass extends tileGround{
 
 	public enum Grass{
@@ -19,8 +21,6 @@ public class tileGrass extends tileGround{
 		public int get() {
 			return id;
 		}
-		
-		
 	}
 	
 	
