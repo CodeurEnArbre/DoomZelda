@@ -130,7 +130,7 @@ public class MenuControler implements Initializable{
 
 		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
 		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
-		LoadAnimation(dicoImageAnimationPlayer, 12, 4);
+		LoadAnimation(dicoImageAnimationPlayer, 28, 4);
 
 
 		coeurs = new ArrayList<ImageView>();
@@ -219,13 +219,13 @@ public class MenuControler implements Initializable{
 							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)));
 							break;
 						case Direction.West:
-							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+12));
+							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+28));
 							break;
 						case Direction.South:
-							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+24));
+							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+56));
 							break;
 						case Direction.East:
-							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+36));
+							player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+84));
 							break;
 						}
 					}

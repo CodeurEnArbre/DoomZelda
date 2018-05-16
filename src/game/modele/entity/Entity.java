@@ -113,7 +113,7 @@ public abstract class Entity {
 	public void incAnim() {
 		this.etatDeplacement.set(
 				this.etatDeplacement.get()
-				+ (this.etatDeplacement.get() < 35 ? 1 : -35));
+				+ (this.etatDeplacement.get() < 83 ? 1 : -83));
 	}
 	public void resetAnim() {
 		this.etatDeplacement.set(0);
