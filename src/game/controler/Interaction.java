@@ -1,5 +1,6 @@
 package game.controler;
 
+import game.MainMenu;
 import game.modele.utils.Direction;
 import game.modele.world.World;
 import javafx.scene.input.KeyCode;
@@ -10,51 +11,76 @@ public class Interaction {
 	 * */
 	public static void KeyInteractDown(KeyCode k) {
 
-		if(k == KeyCode.ESCAPE) {
-			World.onPause.set(!World.onPause.get());
-			if(World.onPause.get())
-				World.pauseGameLoop();
-			else
-				World.playGameLoop();
-		}
-		
-		if(k == KeyCode.Z) {
-			World.player.moveUP.attente = false;
-			World.player.moveUP.active = true;
-			if(World.player.moveDown.active)
-				World.player.moveDown.attente = true;
-			World.player.moveDown.active = false;
+		if(k == KeyCode.ENTER) {
+			if(World.isWorldLoaded.get()) {
 
-			setDirection(Direction.North);	
+			}else {
+				World.loadWorld("TinyMap",null);
+			}
+		}
+
+		if(k == KeyCode.ESCAPE) {
+			if(World.isWorldLoaded.get()) {
+				World.onPause.set(!World.onPause.get());
+				if(World.onPause.get())
+					World.pauseGameLoop();
+				else
+					World.playGameLoop();
+			}else {
+
+			}
+		}
+
+		if(k == KeyCode.Z) {
+			if(World.isWorldLoaded.get()) {
+				World.player.moveUP.attente = false;
+				World.player.moveUP.active = true;
+				if(World.player.moveDown.active)
+					World.player.moveDown.attente = true;
+				World.player.moveDown.active = false;
+
+				setDirection(Direction.North);	
+			}else {
+				if(MainMenu.selectedButton.get()>0)
+					MainMenu.selectedButton.set(MainMenu.selectedButton.get()-1);
+			}
 
 		}else if(k == KeyCode.S){
-			World.player.moveDown.attente = false;
-			World.player.moveDown.active = true;
-			if(World.player.moveUP.active)
-				World.player.moveUP.attente = true;
-			World.player.moveUP.active = false;
+			if(World.isWorldLoaded.get()) {
+				World.player.moveDown.attente = false;
+				World.player.moveDown.active = true;
+				if(World.player.moveUP.active)
+					World.player.moveUP.attente = true;
+				World.player.moveUP.active = false;
 
-			setDirection(Direction.South);
-
+				setDirection(Direction.South);
+			}else {
+				if(MainMenu.selectedButton.get()<3) {
+					MainMenu.selectedButton.set(MainMenu.selectedButton.get()+1);
+				}
+			}
 		}
 		if(k == KeyCode.Q) {
-			World.player.moveLeft.attente = false;
-			World.player.moveLeft.active = true;
-			if(World.player.moveRight.active)
-				World.player.moveRight.attente = true;
+			if(World.isWorldLoaded.get()) {
+				World.player.moveLeft.attente = false;
+				World.player.moveLeft.active = true;
+				if(World.player.moveRight.active)
+					World.player.moveRight.attente = true;
 
-			World.player.moveRight.active = false;
+				World.player.moveRight.active = false;
 
-			setDirection(Direction.East);
-
+				setDirection(Direction.East);
+			}
 		}else if(k == KeyCode.D) {
-			World.player.moveRight.attente = false;
-			World.player.moveRight.active = true;
-			if(World.player.moveLeft.active)
-				World.player.moveLeft.attente = true;
-			World.player.moveLeft.active = false;
+			if(World.isWorldLoaded.get()) {
+				World.player.moveRight.attente = false;
+				World.player.moveRight.active = true;
+				if(World.player.moveLeft.active)
+					World.player.moveLeft.attente = true;
+				World.player.moveLeft.active = false;
 
-			setDirection(Direction.West);
+				setDirection(Direction.West);
+			}
 
 		}
 	}
@@ -71,61 +97,70 @@ public class Interaction {
 	 * */
 	public static void KeyInteractUp(KeyCode k) {
 		if(k == KeyCode.Z) {
-			World.player.moveUP.active = false;
-			World.player.moveUP.attente = false;
-			if(World.player.moveDown.attente) {
-				World.player.moveDown.active = World.player.moveDown.attente;
-				setDirection(Direction.South);
-				World.player.moveDown.attente = false;
-			}else {
-				if(World.player.moveLeft.active)
-					setDirection(Direction.East);
-
-				if(World.player.moveRight.active)
-					setDirection(Direction.West);
-
-			}
-		}else if(k == KeyCode.S) {
-			World.player.moveDown.active = false;
-			World.player.moveDown.attente = false;
-			if(World.player.moveUP.attente) {
-				World.player.moveUP.active = World.player.moveUP.attente;
-				setDirection(Direction.North);	
+			if(World.isWorldLoaded.get()) {
+				World.player.moveUP.active = false;
 				World.player.moveUP.attente = false;
-			}else {
-				if(World.player.moveLeft.active)
-					setDirection(Direction.East);
+				if(World.player.moveDown.attente) {
+					World.player.moveDown.active = World.player.moveDown.attente;
+					setDirection(Direction.South);
+					World.player.moveDown.attente = false;
+				}else {
+					if(World.player.moveLeft.active)
+						setDirection(Direction.East);
 
-				if(World.player.moveRight.active)
-					setDirection(Direction.West);
+					if(World.player.moveRight.active)
+						setDirection(Direction.West);
+
+				}
+			}
+
+		}else if(k == KeyCode.S) {
+			if(World.isWorldLoaded.get()) {
+				World.player.moveDown.active = false;
+				World.player.moveDown.attente = false;
+				if(World.player.moveUP.attente) {
+					World.player.moveUP.active = World.player.moveUP.attente;
+					setDirection(Direction.North);	
+					World.player.moveUP.attente = false;
+				}else {
+					if(World.player.moveLeft.active)
+						setDirection(Direction.East);
+
+					if(World.player.moveRight.active)
+						setDirection(Direction.West);
+				}
 			}
 		}else if(k == KeyCode.Q) {
-			World.player.moveLeft.active = false;
-			World.player.moveLeft.attente = false;
-			if(World.player.moveRight.attente) {
-				World.player.moveRight.active = World.player.moveRight.attente;
-				setDirection(Direction.West);
-				World.player.moveRight.attente = false;
-			}else {
-				if(World.player.moveUP.active)
-					setDirection(Direction.North);
+			if(World.isWorldLoaded.get()) {
+				World.player.moveLeft.active = false;
+				World.player.moveLeft.attente = false;
+				if(World.player.moveRight.attente) {
+					World.player.moveRight.active = World.player.moveRight.attente;
+					setDirection(Direction.West);
+					World.player.moveRight.attente = false;
+				}else {
+					if(World.player.moveUP.active)
+						setDirection(Direction.North);
 
-				if(World.player.moveDown.active)
-					setDirection(Direction.South);
+					if(World.player.moveDown.active)
+						setDirection(Direction.South);
+				}
 			}
 		}else if(k == KeyCode.D) {
-			World.player.moveRight.active = false;
-			World.player.moveRight.attente = false;
-			if(World.player.moveLeft.attente) {
-				World.player.moveLeft.active = World.player.moveLeft.attente;
-				setDirection(Direction.East);
-				World.player.moveLeft.attente = false;
-			}else {
-				if(World.player.moveUP.active)
-					setDirection(Direction.North);
+			if(World.isWorldLoaded.get()) {
+				World.player.moveRight.active = false;
+				World.player.moveRight.attente = false;
+				if(World.player.moveLeft.attente) {
+					World.player.moveLeft.active = World.player.moveLeft.attente;
+					setDirection(Direction.East);
+					World.player.moveLeft.attente = false;
+				}else {
+					if(World.player.moveUP.active)
+						setDirection(Direction.North);
 
-				if(World.player.moveDown.active)
-					setDirection(Direction.South);				
+					if(World.player.moveDown.active)
+						setDirection(Direction.South);				
+				}
 			}
 		}
 

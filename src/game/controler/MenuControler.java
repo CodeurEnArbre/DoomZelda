@@ -1,11 +1,16 @@
 package game.controler;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.imageio.ImageIO;
+
+import game.MainMenu;
 import game.modele.entity.Entity;
 import game.modele.utils.Direction;
 import game.modele.world.World;
@@ -52,6 +57,22 @@ public class MenuControler implements Initializable{
 
 	@FXML
 	private Pane PaneMenu;
+	
+	@FXML
+    private Pane homeMenu;
+	
+	@FXML
+    private ImageView menuImageFont;
+
+	@FXML
+    private ImageView selectionArrow;
+	
+    @FXML
+    private ImageView playImg;
+    @FXML
+    private ImageView optionImg;
+    @FXML
+    private ImageView exitImg;
 
 	@FXML
 	private Button buttonReprendre;
@@ -62,6 +83,9 @@ public class MenuControler implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		//chagement du menu principale
+		menuLoading();
+		
 		//
 		World.onPause.addListener(new ChangeListener<Boolean>() {
 
@@ -75,56 +99,93 @@ public class MenuControler implements Initializable{
 
 		});
 
+		MainMenu.selectedButton.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				System.out.println(newValue);
+				selectionArrow.relocate(playImg.getLayoutX()-60, playImg.getLayoutY()+120*newValue.intValue());
+			}
+			
+		});
+		
 		//Chargement dans la memoire de toutes les textures
 		textureLoading();		
 
-		//Chargement de la map
-		World.loadWorld("TinyMap",null);
+		World.isWorldLoaded.addListener(new ChangeListener<Boolean>() {
 
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				homeMenu.setOpacity(0);
+				System.out.println("Loading save");
+				if(newValue) {
+					loadMapTexture();
+					
+				}
+			}
 
-
-		affichageEntitys();
-		//Chargement du joueur
-		player=new ImageView();
-		World.loadPlayer();
-
-		//Affichage de l'animation du joueur
-		affichageDuJoueur();
+		});
 		
-		//Affichage des toutes les couches de la map
-		printCalqueTile(PaneGround,PaneSolid,PaneTop);
+	}
+	
+	public void loadMapTexture() {
+		//Chargement de la map
 
 
+				affichageEntitys();
+				//Chargement du joueur
+				player=new ImageView();
+				World.loadPlayer();
 
-		for(int numCoeur=World.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
-			coeurs.add(new ImageView(dicoImageItemTextureMap.get(2)));
-		}
-
-		updateHearts();
-
-		for(ImageView coeur:coeurs){
-			PaneHUD.getChildren().add(coeur);
-		}
-
-		World.player.getPV().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				updateHearts();
-			}
-		});
-
-		//Ajout d'un Listener si la map change
-		World.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				PaneGround.getChildren().clear();
-				PaneSolid.getChildren().clear();
-				PaneTop.getChildren().clear();
+				//Affichage de l'animation du joueur
+				affichageDuJoueur();
+				
+				//Affichage des toutes les couches de la map
 				printCalqueTile(PaneGround,PaneSolid,PaneTop);
-			}
-		});
 
-		World.loadGameLoop();
+
+
+				for(int numCoeur=World.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
+					coeurs.add(new ImageView(dicoImageItemTextureMap.get(2)));
+				}
+
+				updateHearts();
+
+				for(ImageView coeur:coeurs){
+					PaneHUD.getChildren().add(coeur);
+				}
+
+				World.player.getPV().addListener(new ChangeListener<Number>() {
+					@Override
+					public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+						updateHearts();
+					}
+				});
+
+				//Ajout d'un Listener si la map change
+				World.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
+					@Override
+					public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+						PaneGround.getChildren().clear();
+						PaneSolid.getChildren().clear();
+						PaneTop.getChildren().clear();
+						printCalqueTile(PaneGround,PaneSolid,PaneTop);
+					}
+				});
+
+				World.loadGameLoop();
+	}
+	
+	private void menuLoading() {
+		try {
+			menuImageFont.setImage(SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/background.png").toURI().toURL()),null));
+			playImg.setImage(SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/playButton.png").toURI().toURL()),null));
+			optionImg.setImage(SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/optionButton.png").toURI().toURL()),null));
+			exitImg.setImage(SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/exitButton.png").toURI().toURL()),null));
+			selectionArrow.setImage(SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/selectionArrow.png").toURI().toURL()),null));
+			selectionArrow.relocate(playImg.getLayoutX()-60, playImg.getLayoutY());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void textureLoading() {
