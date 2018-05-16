@@ -17,12 +17,13 @@ public class WorldData {
 	private Tile tilesTop[][];
 	public ObservableList<Entity> entity;
 	private int width,height;
-	private boolean outSide = true;
+	private boolean outSide;
 	
-	public WorldData(String zoneName, int width, int height, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {
+	public WorldData(String zoneName, int width, int height, boolean outside, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {
 		this.zoneName=new SimpleStringProperty(zoneName);
 		this.width=width;
 		this.height=height;
+		this.outSide=outside;
 		this.tileGround=ground;
 		this.tiles=tiles;
 		this.tilesTop=tilesTop;
@@ -32,9 +33,10 @@ public class WorldData {
 	
 	}
 	
-	public void newWorld(String zoneName, int width, int height, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {
+	public void newWorld(String zoneName, int width, int height, boolean outside, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {
 		this.width=width;
 		this.height=height;
+		this.outSide=outside;
 		this.tileGround=ground;
 		this.tiles=tiles;
 		this.tilesTop=tilesTop;
@@ -47,6 +49,10 @@ public class WorldData {
 	
 	public String getName() {
 		return this.zoneName.get();
+	}
+	
+	public boolean isOutside() {
+		return this.outSide;
 	}
 	
 	public StringProperty getNameProperty() {
