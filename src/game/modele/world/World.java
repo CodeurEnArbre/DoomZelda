@@ -74,7 +74,7 @@ public class World {
 			String name = tilesData.readLine();
 			int width = Integer.parseInt(tilesData.readLine());
 			int height = Integer.parseInt(tilesData.readLine());
-
+			boolean outside = Boolean.parseBoolean(tilesData.readLine());
 
 			Tile[][] tileGround = makeTileGrid(width, height, tilesData);
 
@@ -85,9 +85,9 @@ public class World {
 			tilesData.close();
 
 			if(worldName==null)
-				currentMap=new WorldData(name, width, height, tileGround, tileSolid, tileTop, loadEntity(file));
+				currentMap=new WorldData(name, width, height, outside, tileGround, tileSolid, tileTop, loadEntity(file));
 			else {
-				currentMap.newWorld(worldName, width, height, tileGround, tileSolid, tileTop, loadEntity(file));
+				currentMap.newWorld(worldName, width, height, outside, tileGround, tileSolid, tileTop, loadEntity(file));
 			}
 			isWorldLoaded.setValue(true);
 		}catch(IOException e) {
