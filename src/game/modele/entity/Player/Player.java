@@ -13,32 +13,13 @@ public class Player extends EntityLiving{
 	private final double baseSpeed = 0.11f;
 	private final double maxSpeed = 0.16f;
 	private final double acce = 0.00025f;
-
 	private ArrayList<Item> inventory;
-
-	//repr�sente l'�tat d'une direction
-	public class infoDeplacement{
-		//la touche est enfonc�
-		public boolean active = false;
-		//la touche est enfonc� mais une autre prend le dessus
-		public boolean attente = false;
-	}
-	public infoDeplacement moveUP;
-	public infoDeplacement moveDown;
-	public infoDeplacement moveRight;
-	public infoDeplacement moveLeft;
-
+	
 	public Player(ArrayList<Item> inventory, Coordonnees position, Direction direction) {
 		super(-1,position,direction);
 		this.inventory=inventory;
 		this.speed = baseSpeed;
 		this.slow =	1;
-		
-		//d�placement
-		moveUP = new infoDeplacement();
-		moveDown = new infoDeplacement();
-		moveLeft = new infoDeplacement();
-		moveRight = new infoDeplacement();		
 	}
 
 	//R�cup�rer le nombre d'item dans l'inventaire

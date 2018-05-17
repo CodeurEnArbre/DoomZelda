@@ -36,7 +36,7 @@ public class MenuControler implements Initializable{
 	Map<Integer,Image> dicoImageAnimationPlayer;
 	Map<Integer,Image[]> dicoImageAnimationEntity; 
 	Map<Entity,ImageView> listEntityView = new HashMap<>();
-	
+
 	ArrayList<ImageView> coeurs;
 
 	@FXML
@@ -139,11 +139,6 @@ public class MenuControler implements Initializable{
 		World.loadPlayer();
 
 		World.addEntity(new Zombie(new Coordonnees(10, 10), new Direction(Direction.North)));
-		
-		
-		
-		//Affichage de l'animation du joueur
-		affichageDuJoueur();
 
 		//Affichage des toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
@@ -167,7 +162,7 @@ public class MenuControler implements Initializable{
 			}
 		});
 
-		//Ajout d'un Listener si la map change
+		//Ajout d'un Listener si la mapaffichageEntity change
 		World.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -266,27 +261,32 @@ public class MenuControler implements Initializable{
 		}
 
 	}
-	private void affichageDuJoueur() {
-		player.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 32, 0, 2).getTexture(), null));
-		player.setFitWidth(32);
-		player.setFitHeight(64);
-		player.setX(World.player.coordonnes.getX());
-		player.setY(World.player.coordonnes.getY());
-		PlayerPane.getChildren().add(player);
+	private void affichageEntity(ImageView i,Entity e) {
+		i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 32, 0, 2).getTexture(), null));
+		i.setFitWidth(32);
+		i.setFitHeight(64);
+		i.setX(World.player.coordonnes.getX());
+		i.setY(World.player.coordonnes.getY());
+		PlayerPane.getChildren().add(i);
 
-		paneGame.layoutXProperty().bind(World.player.coordonnes.getXpro().multiply(-32).add(432));
-		paneGame.layoutYProperty().bind(World.player.coordonnes.getYpro().multiply(-32).add(320));
-
-		player.xProperty().bind(World.player.coordonnes.getXpro().multiply(32).subtract(16));
-		player.yProperty().bind(World.player.coordonnes.getYpro().multiply(32).subtract(48));
+		i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
+		i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));
 	}
-	
-	
-	
-	
-	
-	
-	
+
+
+
+	private void affichageDuJoueur(ImageView i,Entity e) {
+		affichageEntity(i, e);
+		paneGame.layoutXProperty().bind(e.coordonnes.getXpro().multiply(-32).add(432));
+		paneGame.layoutYProperty().bind(e.coordonnes.getYpro().multiply(-32).add(320));
+	}
+
+
+
+
+
+
+
 	private void affichageEntitys() {	
 		World.currentMap.entity.addListener(new ListChangeListener<Entity>(){
 
@@ -298,8 +298,9 @@ public class MenuControler implements Initializable{
 					}
 					for (Entity addEntity : c.getAddedSubList()) {
 						listEntityView.put(addEntity, new ImageView());
-						
+
 						if(addEntity.getId() == -1) {
+							affichageDuJoueur(listEntityView.get(addEntity),addEntity);
 							addEntity.etatDeplacement.addListener(
 									new ChangeListener<Number>() {
 
@@ -308,22 +309,24 @@ public class MenuControler implements Initializable{
 
 											switch(addEntity.direction.getDirection()) {
 											case Direction.North:
-												player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)));
+												listEntityView.get(addEntity).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)));
 												break;
 											case Direction.West:
-												player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+28));
+												listEntityView.get(addEntity).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+28));
 												break;
 											case Direction.South:
-												player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+56));
+												listEntityView.get(addEntity).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+56));
 												break;
 											case Direction.East:
-												player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+84));
+												listEntityView.get(addEntity).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+84));
 												break;
 											}
 										}
 									}
 									);
 						}else {
+							
+							affichageEntity(listEntityView.get(addEntity),addEntity);
 							addEntity.etatDeplacement.addListener(
 									new ChangeListener<Number>() {
 

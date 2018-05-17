@@ -12,13 +12,7 @@ public class Zombie extends EntityMonster{
 
 	@Override
 	public void update() {
-		//TODO
-		
-	}
-
-	@Override
-	public boolean setCoordoner(Coordonnees coordonnees) {
-		return false;
+		addX(0.2);
 	}
 
 	@Override

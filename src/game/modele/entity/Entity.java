@@ -11,6 +11,19 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Entity {
 
+
+	//repr�sente l'�tat d'une direction
+	public class infoDeplacement{
+		//la touche est enfonc�
+		public boolean active = false;
+		//la touche est enfonc� mais une autre prend le dessus
+		public boolean attente = false;
+	}
+	public infoDeplacement moveUP;
+	public infoDeplacement moveDown;
+	public infoDeplacement moveRight;
+	public infoDeplacement moveLeft;
+	
 	protected int id;
 	public Direction direction;
 	
@@ -32,10 +45,15 @@ public abstract class Entity {
 		this.id = id;
 		this.coordonnes=coordonnees;
 		this.imageView = new ImageView();
+		//d�placement
+		moveUP = new infoDeplacement();
+		moveDown = new infoDeplacement();
+		moveLeft = new infoDeplacement();
+		moveRight = new infoDeplacement();		
 	}
 	public void addX(double x)
 	{
-		if(this.setCoordoner(
+		if(this.setCoordoner(// TODO Auto-generated method stub
 				new Coordonnees(
 						this.coordonnes.getX() + x,
 						this.coordonnes.getY()
@@ -63,7 +81,7 @@ public abstract class Entity {
 			if(e != this)
 				e.active(this);
 		}
-
+		
 		try {
 			Tile tile = World.currentMap.getTileTerrain((int)coordonnees.getY(), (int)coordonnees.getX());
 			Tile terrain = World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX());
