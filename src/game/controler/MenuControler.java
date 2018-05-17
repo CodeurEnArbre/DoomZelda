@@ -91,7 +91,6 @@ public class MenuControler implements Initializable{
 
 		//
 		World.onPause.addListener(new ChangeListener<Boolean>() {
-
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if(newValue) 
@@ -164,13 +163,14 @@ public class MenuControler implements Initializable{
 			}
 		});
 
-		//Ajout d'un Listener si la mapaffichageEntity change
+		//Ajout d'un Listener si la map change
 		World.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				PaneGround.getChildren().clear();
 				PaneSolid.getChildren().clear();
 				PaneTop.getChildren().clear();
+				EntityPane.getChildren().clear();
 				printCalqueTile(PaneGround,PaneSolid,PaneTop);
 			}
 		});
@@ -269,7 +269,10 @@ public class MenuControler implements Initializable{
 		i.setFitHeight(64);
 		i.setX(World.player.coordonnes.getX());
 		i.setY(World.player.coordonnes.getY());
-		PlayerPane.getChildren().add(i);
+		if(e.getId() == -1)
+			PlayerPane.getChildren().add(i);
+		else
+			EntityPane.getChildren().add(i);
 
 		i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
 		i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));

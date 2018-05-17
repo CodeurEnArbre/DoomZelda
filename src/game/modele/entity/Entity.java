@@ -11,7 +11,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Entity {
 
-	private static int key = 0;
+	public static int key = 0;
 	public int primaryKey; 
 	
 	//repr�sente l'�tat d'une direction
