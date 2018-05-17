@@ -7,7 +7,7 @@ import game.modele.utils.Direction;
 public class Zombie extends EntityMonster{
 
 	public Zombie(Coordonnees c,Direction d) {
-		super(0,c,d);
+		super("Zombie",c,d);
 	}
 
 	@Override

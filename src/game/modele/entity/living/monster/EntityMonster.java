@@ -7,7 +7,7 @@ import game.modele.utils.Direction;
 
 public abstract class EntityMonster extends EntityLiving {
 
-	public EntityMonster(int id,Coordonnees position, Direction direction) {
+	public EntityMonster(String id,Coordonnees position, Direction direction) {
 		super(id,position, direction);
 	}
 

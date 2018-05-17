@@ -12,7 +12,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public abstract class Entity {
 
 	public static int key = 0;
-	public int primaryKey; 
+	public int primaryKey;
 	
 	//repr�sente l'�tat d'une direction
 	public class infoDeplacement{
@@ -26,7 +26,7 @@ public abstract class Entity {
 	public infoDeplacement moveRight;
 	public infoDeplacement moveLeft;
 	
-	protected int id;
+	protected String id;
 	public Direction direction;
 	
 	protected Tile currentTile = new tileVoid();
@@ -43,7 +43,7 @@ public abstract class Entity {
 	public double slow;
 
 
-	public Entity(int id,Coordonnees coordonnees,Direction direction) {
+	public Entity(String id,Coordonnees coordonnees,Direction direction) {
 		primaryKey = key++; 
 		this.direction=direction;
 		this.id = id;
@@ -137,7 +137,7 @@ public abstract class Entity {
 	}
 	
 	//ID
-	public int getId() {
+	public String getId() {
 		return this.id;
 	}
 

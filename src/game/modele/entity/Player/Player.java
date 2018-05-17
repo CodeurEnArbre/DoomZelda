@@ -16,7 +16,7 @@ public class Player extends EntityLiving{
 	private ArrayList<Item> inventory;
 	
 	public Player(ArrayList<Item> inventory, Coordonnees position, Direction direction) {
-		super(-1,position,direction);
+		super("Player",position,direction);
 		this.inventory=inventory;
 		this.speed = baseSpeed;
 		this.slow =	1;

@@ -15,14 +15,14 @@ public abstract class EntityLiving extends Entity{
 	protected IntegerProperty PV;
 	protected IntegerProperty maxPv;	
 	
-	public EntityLiving(int id,Coordonnees position, Direction direction) {
+	public EntityLiving(String id,Coordonnees position, Direction direction) {
 		super(id,position,direction);
 		
 		PV=new SimpleIntegerProperty(12);
 		maxPv=new SimpleIntegerProperty(12);
 	}
 	
-	public EntityLiving(int id,Coordonnees position, Direction direction, int pv) {
+	public EntityLiving(String id,Coordonnees position, Direction direction, int pv) {
 		super(id,position,direction);
 		this.direction=direction;
 		PV.set(pv);

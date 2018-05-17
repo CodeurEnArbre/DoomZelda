@@ -213,7 +213,7 @@ public class MenuControler implements Initializable{
 	private void LoadAnimation(Map<Integer,Image> dico, int frame, int animation) {
 		for(int x = 0;x < frame;x++)
 			for(int y = 0;y < animation;y++)
-				dico.put(x + frame * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player_ombre", 24, 32, x, y).getTexture(), null));		
+				dico.put(x + frame * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 32, x, y).getTexture(), null));		
 	}
 
 	//Permet d'afficher dans dans chaque pane toute les textures de chaque couches de la map
@@ -264,12 +264,12 @@ public class MenuControler implements Initializable{
 
 	}
 	private void affichageEntity(ImageView i,Entity e) {
-		i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 32, 0, 2).getTexture(), null));
+		i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 24, 32, 0, 2).getTexture(), null));
 		i.setFitWidth(32);
 		i.setFitHeight(64);
 		i.setX(World.player.coordonnes.getX());
 		i.setY(World.player.coordonnes.getY());
-		if(e.getId() == -1)
+		if(e.getId().equals("Player"))
 			PlayerPane.getChildren().add(i);
 		else
 			EntityPane.getChildren().add(i);
@@ -304,7 +304,7 @@ public class MenuControler implements Initializable{
 					for (Entity addEntity : c.getAddedSubList()) {
 						listEntityView.put(addEntity, new ImageView());
 
-						if(addEntity.getId() == -1) {
+						if(addEntity.getId().equals("Player")) {
 							affichageDuJoueur(listEntityView.get(addEntity),addEntity);
 							addEntity.etatDeplacement.addListener(
 									new ChangeListener<Number>() {
