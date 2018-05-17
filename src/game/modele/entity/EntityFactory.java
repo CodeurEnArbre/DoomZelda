@@ -37,8 +37,6 @@ public class EntityFactory {
 				|SecurityException e1) {
 			e1.printStackTrace();
 		}
-		if(e != null)
-			System.out.println(e.primaryKey);
 		return e;
 	}
 	public static Object[] castParams(Constructor<?> c,String parameters){
