@@ -9,9 +9,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
-
-import com.sun.glass.ui.CommonDialogs.Type;
-
 import game.MainMenu;
 import game.modele.entity.Entity;
 import game.modele.entity.EntityFactory;

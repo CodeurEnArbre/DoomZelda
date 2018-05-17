@@ -105,7 +105,7 @@ public class World {
 		BufferedReader entityData = new BufferedReader(new FileReader(new File("ressources/map/"+world+".entity")));
 
 		String nextLine = entityData.readLine();
-		while(nextLine!= null && nextLine.length()> 1) {
+		while(nextLine != null && nextLine.length()> 1) {
 			entity.add(EntityFactory.create(nextLine, entityData.readLine()));
 			//entity.add(EntityFactory.create(entityData.readLine(), entityData.readLine()));
 

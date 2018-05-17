@@ -35,6 +35,8 @@ public class EntityFactory {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		if(e != null)
+			System.out.println(e.primaryKey);
 		return e;
 	}
 	public static Object[] castParams(Constructor<?> c,String parameters){
@@ -45,7 +47,7 @@ public class EntityFactory {
 		int nb = 0;
 
 
-		for(int i = 0; i < os.length;i++) {
+		for(int i = 0; i < os.length;i++) {			
 			Class<?> o = c.getParameterTypes()[i];
 			if(o.getName().equals(Coordonnees.class.getName())) {
 				os[i] = new Coordonnees(
@@ -53,8 +55,10 @@ public class EntityFactory {
 			}else if(o.getName().equals(Direction.class.getName())) {
 				os[i] = new Direction(
 						Integer.parseInt(params[nb++]));
-			}else if(o.getName().equals(Boolean.class.getName())) {
+			}else if(o.getName().equals(boolean.class.getName())) {
 				os[i] =	Boolean.parseBoolean(params[nb++]);
+			}else if(o.getName().equals(String.class.getName())) {
+				os[i] = params[nb++]; 
 			}
 
 		}
