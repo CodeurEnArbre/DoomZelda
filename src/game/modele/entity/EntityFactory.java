@@ -15,13 +15,13 @@ public class EntityFactory {
 		try {
 			switch(id) {
 			case "Player":
-				e = (Player) Player.class.getConstructors()[0]
+				return e = (Player) Player.class.getConstructors()[0]
 						.newInstance(castParams(Player.class.getConstructors()[0],params));
 			case "TileEntityTP":
-				e = (EntityTP) EntityTP.class.getConstructors()[0]
+				return e = (EntityTP) EntityTP.class.getConstructors()[0]
 						.newInstance(castParams(EntityTP.class.getConstructors()[0],params));
 			case "Zombie":
-				e = (Entity) Zombie.class.getConstructors()[0]
+				return e = (Entity) Zombie.class.getConstructors()[0]
 						.newInstance(castParams(Zombie.class.getConstructors()[0],params));
 			default :
 
