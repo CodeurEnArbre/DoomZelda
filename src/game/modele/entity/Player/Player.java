@@ -10,9 +10,7 @@ import game.modele.utils.Direction;
 
 public class Player extends EntityLiving{
 
-	private final double baseSpeed = 0.11f;
-	private final double maxSpeed = 0.16f;
-	private final double acce = 0.00025f;
+	
 	private ArrayList<Item> inventory;
 	
 	public Player(ArrayList<Item> inventory, Coordonnees position, Direction direction) {
@@ -37,66 +35,10 @@ public class Player extends EntityLiving{
 
 	@Override
 	public void update() {
-		if(!moveDown.active && !moveUP.active && !moveLeft.active && !moveRight.active) {
-			resetAnim();
-			speed = baseSpeed;
-		}
-		if(moveDown.active) {
-			if(moveLeft.active ^ moveRight.active) {
-				addY(speed * 2/3 * slow);
-			}
-			else {
-				if(speed < maxSpeed) {
-					speed += acce;
-				}
-				addY(speed * slow);
-				incAnim();
-			}
-		}
-		if(moveUP.active) {
-			if(moveLeft.active ^ moveRight.active)
-			{	
-				addY(-speed * 2/3 * slow);	
-			}else
-			{
-				if(speed < maxSpeed) {
-					speed += acce;
-				}
-				addY(-speed * slow);	
-				incAnim();
-			}
-		}
-		if(moveLeft.active) {
-			if(moveUP.active ^ moveDown.active)
-			{
-				addX(-speed * 2/3 * slow);
-				incAnim();
-			}		else
-			{	
-				if(speed < maxSpeed) {
-					speed += acce;
-				}
-				addX(-speed * slow);
-				incAnim();
-			}
-		}
-		if(moveRight.active) {
-			if(moveUP.active ^ moveDown.active)
-			{
-				addX(speed * 2/3 * slow);
-				incAnim();
-			}else
-			{
-				if(speed < maxSpeed) {
-					speed += acce;
-				}
-				addX(speed * slow); 
-				incAnim();
-			}
-		}
+		move();
 
 	}
-
+	
 	@Override
 	public void incAnim() {
 		this.etatDeplacement.set(

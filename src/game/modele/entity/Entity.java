@@ -5,7 +5,6 @@ import game.modele.tile.tileGround.tileVoid;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.world.World;
-import javafx.scene.image.ImageView;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -13,6 +12,10 @@ public abstract class Entity {
 
 	public static int key = 0;
 	public int primaryKey;
+	
+	protected double baseSpeed = 0.11f;
+	protected double maxSpeed = 0.16f;
+	protected double acce = 0.00025f;
 	
 	//repr�sente l'�tat d'une direction
 	public class infoDeplacement{
@@ -37,10 +40,8 @@ public abstract class Entity {
 	public Coordonnees coordonnes;
 	public IntegerProperty etatDeplacement = new SimpleIntegerProperty(0);
 
-	protected ImageView imageView;
-
 	protected double speed;
-	public double slow;
+	public double slow = 1;
 
 
 	public Entity(String id,Coordonnees coordonnees,Direction direction) {
@@ -48,7 +49,6 @@ public abstract class Entity {
 		this.direction=direction;
 		this.id = id;
 		this.coordonnes=coordonnees;
-		this.imageView = new ImageView();
 		//deplacement
 		moveUP = new infoDeplacement();
 		moveDown = new infoDeplacement();
@@ -86,8 +86,7 @@ public abstract class Entity {
 	}
 	
 	public boolean setCoordoner(Coordonnees coordonnees) {
-		
-		for(Entity e :World.currentMap.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
+		for(Entity e : World.currentMap.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
 			if(e != this && currentE != e) {
 				currentE = e;
 				e.active(this);
@@ -133,6 +132,66 @@ public abstract class Entity {
 				return false;
 		}catch(ArrayIndexOutOfBoundsException e) {
 			return false;
+		}
+	}
+	
+	public void move() {
+		if(!moveDown.active && !moveUP.active && !moveLeft.active && !moveRight.active) {
+			resetAnim();
+			speed = baseSpeed;
+		}
+		if(this.moveDown.active) {
+			if(this.moveLeft.active ^ this.moveRight.active) {
+				this.addY(this.speed * 2/3 * this.slow);
+			}
+			else {
+				if(this.speed < this.maxSpeed) {
+					this.speed += this.acce;
+				}
+				this.addY(this.speed * this.slow);
+				this.incAnim();
+			}
+		}
+		if(this.moveUP.active) {
+			if(this.moveLeft.active ^ this.moveRight.active)
+			{	
+				this.addY(-this.speed * 2/3 * this.slow);	
+			}else
+			{
+				if(this.speed < this.maxSpeed) {
+					this.speed += this.acce;
+				}
+				this.addY(-this.speed * this.slow);	
+				incAnim();
+			}
+		}
+		if(this.moveLeft.active) {
+			if(this.moveUP.active ^ this.moveDown.active)
+			{
+				this.addX(-this.speed * 2/3 * this.slow);
+				this.incAnim();
+			}		else
+			{	
+				if(this.speed < this.maxSpeed) {
+					this.speed += this.acce;
+				}
+				this.addX(-speed * this.slow);
+				this.incAnim();
+			}
+		}
+		if(this.moveRight.active) {
+			if(this.moveUP.active ^ this.moveDown.active)
+			{
+				this.addX(speed * 2/3 * slow);
+				this.incAnim();
+			}else
+			{
+				if(this.speed < this.maxSpeed) {
+					this.speed += this.acce;
+				}
+				this.addX(this.speed * this.slow); 
+				this.incAnim();
+			}
 		}
 	}
 	

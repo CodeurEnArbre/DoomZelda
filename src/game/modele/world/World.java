@@ -57,10 +57,8 @@ public class World {
 	}
 
 	public static void addEntity(Entity e) {
-		if(e != null) {
 			currentMap.entity.add(e);
 			addKeyGameLoop(y -> e.update());
-		}
 	}
 	
 	
