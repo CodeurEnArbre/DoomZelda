@@ -12,12 +12,12 @@ public class Zombie extends EntityMonster{
 
 	@Override
 	public void update() {
-		addX(0.2);
+
 	}
 
 	@Override
 	public void active(Entity e) {
-		// TODO Auto-generated method stub
+		System.out.println("Bonjour je suis " + primaryKey);
 		
 	}
 

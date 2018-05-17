@@ -10,8 +10,11 @@ import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
+import com.sun.glass.ui.CommonDialogs.Type;
+
 import game.MainMenu;
 import game.modele.entity.Entity;
+import game.modele.entity.EntityFactory;
 import game.modele.entity.living.monster.Zombie;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
@@ -84,7 +87,8 @@ public class MenuControler implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		EntityFactory.create("Test", "1,2,3");
+		
 		//chagement du menu principale
 		menuLoading();
 
@@ -139,6 +143,7 @@ public class MenuControler implements Initializable{
 		World.loadPlayer();
 
 		World.addEntity(new Zombie(new Coordonnees(10, 10), new Direction(Direction.North)));
+		World.addEntity(new Zombie(new Coordonnees(12, 12), new Direction(Direction.North)));
 
 		//Affichage des toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);

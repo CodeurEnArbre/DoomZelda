@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import game.modele.entity.Entity;
+import game.modele.entity.EntityFactory;
 import game.modele.entity.EntityTP;
 import game.modele.entity.Player.Player;
 import game.modele.tile.Tile;
@@ -102,36 +103,9 @@ public class World {
 		BufferedReader entityData = new BufferedReader(new FileReader(new File("ressources/map/"+world+".entity")));
 
 		String nextLine = entityData.readLine();
-		while(nextLine!= null && nextLine.equals(",")) {
-			String entityType = entityData.readLine();
-			double x = Double.parseDouble(entityData.readLine());
-			double y = Double.parseDouble(entityData.readLine());
+		while(nextLine!= null) {
 
-			switch (entityType) {
-
-			case "TileEntity":
-				boolean etatTileEntity= Boolean.parseBoolean(entityData.readLine());
-				entityData.readLine();
-				int idTileEntity=Integer.parseInt(entityData.readLine());
-				entityData.readLine();
-				break;
-
-			case "EntityLiving":
-				int etatEntityLiving= Integer.parseInt(entityData.readLine());
-				Direction directionEntityLiving=new Direction(Integer.parseInt(entityData.readLine()));
-				int idEntityLiving=Integer.parseInt(entityData.readLine());//TODO a ajouter id dans EntityLiving
-				entityData.readLine();
-
-				break;
-
-			case "TileEntityTP":
-				boolean etatTileEntityTP= Boolean.parseBoolean(entityData.readLine());
-				String mapTP = entityData.readLine();
-				double xTP=Double.parseDouble(entityData.readLine());
-				double yTP=Double.parseDouble(entityData.readLine());//TODO 1-> tpid
-				entity.add(new EntityTP(0, new Coordonnees(x, y),new Direction(Direction.North), etatTileEntityTP, mapTP, new Coordonnees(xTP, yTP)));
-				break;
-			}
+			//entity.add(EntityFactory.create(entityData.readLine(), entityData.readLine()));
 
 			nextLine = entityData.readLine();
 		}

@@ -11,7 +11,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Entity {
 
-
+	private static int key = 0;
+	public int primaryKey; 
+	
 	//repr�sente l'�tat d'une direction
 	public class infoDeplacement{
 		//la touche est enfonc�
@@ -30,6 +32,7 @@ public abstract class Entity {
 	protected Tile currentTile = new tileVoid();
 	protected Tile currentTerrain = new tileVoid();
 	protected Tile currentTop = new tileVoid();
+	protected Entity currentE = null;
 	
 	public Coordonnees coordonnes;
 	public IntegerProperty etatDeplacement = new SimpleIntegerProperty(0);
@@ -41,6 +44,7 @@ public abstract class Entity {
 
 
 	public Entity(int id,Coordonnees coordonnees,Direction direction) {
+		primaryKey = key++; 
 		this.direction=direction;
 		this.id = id;
 		this.coordonnes=coordonnees;
@@ -78,8 +82,12 @@ public abstract class Entity {
 	}
 	public boolean setCoordoner(Coordonnees coordonnees) {
 		for(Entity e :World.currentMap.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
-			if(e != this)
+			if(e != this && currentE != e) {
+				currentE = e;
 				e.active(this);
+			}else if(currentE == null){
+				currentE = e;
+			}
 		}
 		
 		try {
