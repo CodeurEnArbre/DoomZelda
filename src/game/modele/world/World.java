@@ -58,8 +58,10 @@ public class World {
 	}
 
 	public static void addEntity(Entity e) {
-		currentMap.entity.add(e);
-		addKeyGameLoop(y -> e.update());
+		if(e != null) {
+			currentMap.entity.add(e);
+			addKeyGameLoop(y -> e.update());
+		}
 	}
 	
 	
@@ -103,8 +105,8 @@ public class World {
 		BufferedReader entityData = new BufferedReader(new FileReader(new File("ressources/map/"+world+".entity")));
 
 		String nextLine = entityData.readLine();
-		while(nextLine!= null) {
-
+		while(nextLine!= null && nextLine.length()> 1) {
+			entity.add(EntityFactory.create(nextLine, entityData.readLine()));
 			//entity.add(EntityFactory.create(entityData.readLine(), entityData.readLine()));
 
 			nextLine = entityData.readLine();
