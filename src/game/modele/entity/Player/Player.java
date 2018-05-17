@@ -22,7 +22,7 @@ public class Player extends EntityLiving{
 		this.slow =	1;
 	}
 
-	//R�cup�rer le nombre d'item dans l'inventaire
+	//Recuperer le nombre d'item dans l'inventaire
 	public int getInventorySize() {
 		return this.inventory.size();
 	}

@@ -41,7 +41,7 @@ public class Coordonnees {
 		this.y.set(y);
 	}
 	
-	public boolean isSame(double x,double y) {
+	public boolean isSameTile(double x,double y) {
 		return (int)this.x.get() == (int)x && 
 				(int)this.y.get() == (int)y;
 	}

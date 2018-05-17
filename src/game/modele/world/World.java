@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 
 import game.modele.entity.Entity;
 import game.modele.entity.EntityFactory;
-import game.modele.entity.EntityTP;
 import game.modele.entity.Player.Player;
 import game.modele.tile.Tile;
 import game.modele.tile.TileFactory;
@@ -66,7 +65,7 @@ public class World {
 	
 	
 	/*
-	 * Chargement de la map : cr�ation du tableau utilis� par l'affichage
+	 * Chargement de la map : creation du tableau utilisee par l'affichage
 	 * */
 	public static void loadWorld(String file, String worldName) {
 		TileFactory.load();
@@ -86,7 +85,7 @@ public class World {
 			Tile[][] tileTop=  makeTileGrid(width, height, tilesData);
 
 			tilesData.close();
-
+			
 			if(worldName==null)
 				currentMap=new WorldData(name, width, height, outside, tileGround, tileSolid, tileTop, loadEntity(file));
 			else {
@@ -106,9 +105,9 @@ public class World {
 
 		String nextLine = entityData.readLine();
 		while(nextLine != null && nextLine.length()> 1) {
-			entity.add(EntityFactory.create(nextLine, entityData.readLine()));
-			//entity.add(EntityFactory.create(entityData.readLine(), entityData.readLine()));
-
+			Entity newEntity = EntityFactory.create(nextLine, entityData.readLine());
+			if(newEntity != null)
+				entity.add(newEntity);
 			nextLine = entityData.readLine();
 		}
 		entityData.close();
@@ -116,7 +115,7 @@ public class World {
 	}
 
 	/*
-	 * Chargement d'un Tableau de Tile utilis� par la fonction loadWorld();
+	 * Chargement d'un Tableau de Tile utilise par la fonction loadWorld();
 	 * */
 	private static Tile[][] makeTileGrid(int width,int height,BufferedReader br){
 		try {

@@ -40,7 +40,7 @@ public class WorldData {
 		this.tileGround=ground;
 		this.tiles=tiles;
 		this.tilesTop=tilesTop;
-		this.entity = FXCollections.observableArrayList();
+		this.entity.clear();
 		for(Entity e : entitys)
 			this.entity.add(e);
 		
@@ -84,7 +84,7 @@ public class WorldData {
 	}
 	
 	public Entity[] entityHere(double x,double y) {
-		return this.entity.stream().filter(a -> a.coordonnes.isSame(x, y)).toArray(Entity[]::new);
+		return this.entity.stream().filter(a -> a.coordonnes.isSameTile(x, y)).toArray(Entity[]::new);
 	}
 	
 }

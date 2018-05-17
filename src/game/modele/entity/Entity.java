@@ -49,15 +49,15 @@ public abstract class Entity {
 		this.id = id;
 		this.coordonnes=coordonnees;
 		this.imageView = new ImageView();
-		//d�placement
+		//deplacement
 		moveUP = new infoDeplacement();
 		moveDown = new infoDeplacement();
 		moveLeft = new infoDeplacement();
 		moveRight = new infoDeplacement();		
 	}
-	public void addX(double x)
-	{
-		if(this.setCoordoner(// TODO Auto-generated method stub
+	
+	public void addX(double x){
+		if(this.setCoordoner(
 				new Coordonnees(
 						this.coordonnes.getX() + x,
 						this.coordonnes.getY()
@@ -65,6 +65,7 @@ public abstract class Entity {
 			this.coordonnes.setX(this.coordonnes.getX() + x);
 		}
 	}
+	
 	public void addY(double y) {
 		if(this.setCoordoner(
 				new Coordonnees(
@@ -73,14 +74,19 @@ public abstract class Entity {
 			this.coordonnes.setY(this.coordonnes.getY() + y);
 		}
 	}
+	
+	//Teleporte l'entity meme si il y a une tile qui bloque
 	public void forceTp(Coordonnees coordonnees) {
 		this.coordonnes.setX(coordonnees.getX());
 		this.coordonnes.setY(coordonnees.getY());
 	}
+	
 	public boolean isOnTileCoord(Coordonnees coordonnees) {
 		return((int)this.coordonnes.getX()==(int)coordonnees.getX() && (int)this.coordonnes.getY()==(int)coordonnees.getY());
 	}
+	
 	public boolean setCoordoner(Coordonnees coordonnees) {
+		
 		for(Entity e :World.currentMap.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
 			if(e != this && currentE != e) {
 				currentE = e;
@@ -125,28 +131,25 @@ public abstract class Entity {
 				return true;
 			}else 
 				return false;
-		}catch(ArrayIndexOutOfBoundsException e) 
-		{
+		}catch(ArrayIndexOutOfBoundsException e) {
 			return false;
 		}
 	}
 	
 	//ID
-
 	public int getId() {
 		return this.id;
 	}
 
 	//UpdateIA
-
 	public abstract void update();
 
 	//Active (Marche dessus)
-
 	public abstract void active(Entity e);
 
 	//deplacement
 	public abstract void incAnim();
+	
 	public void resetAnim() {
 		this.etatDeplacement.set(0);
 	}

@@ -15,14 +15,17 @@ public class EntityFactory {
 		try {
 			switch(id) {
 			case "Player":
-				return e = (Player) Player.class.getConstructors()[0]
+				e = (Player) Player.class.getConstructors()[0]
 						.newInstance(castParams(Player.class.getConstructors()[0],params));
+				break;
 			case "TileEntityTP":
-				return e = (EntityTP) EntityTP.class.getConstructors()[0]
+				e = (EntityTP) EntityTP.class.getConstructors()[0]
 						.newInstance(castParams(EntityTP.class.getConstructors()[0],params));
+				break;
 			case "Zombie":
-				return e = (Entity) Zombie.class.getConstructors()[0]
+				e = (Entity) Zombie.class.getConstructors()[0]
 						.newInstance(castParams(Zombie.class.getConstructors()[0],params));
+				break;
 			default :
 
 
@@ -32,7 +35,6 @@ public class EntityFactory {
 				|IllegalArgumentException 
 				|InvocationTargetException 
 				|SecurityException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		if(e != null)
