@@ -116,8 +116,10 @@ public enum FunctionBank {
 			{
 				e.addAction(new CountActionConsumer(60,FunctionBank.MoveIceRight));
 			}
-		}});
-
+		}}),
+	ForceMove(e -> {
+		
+	});
 	
 	public Consumer<Entity> element;
 	private FunctionBank(Consumer<Entity> c) {

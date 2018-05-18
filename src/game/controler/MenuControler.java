@@ -86,19 +86,19 @@ public class MenuControler implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		EntityFactory.create("Test", "1,2,3");
-
 		//chagement du menu principale
 		menuLoading();
-
+		
 		//
 		World.onPause.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if(newValue) 
-					PaneMenu.setOpacity(1.0);
-				else
+				if(newValue) {
+					PaneMenu.setOpacity(1.0);				
+				}
+				else {
 					PaneMenu.setOpacity(0.0);
+				}
 			}
 
 		});
@@ -107,14 +107,10 @@ public class MenuControler implements Initializable{
 		MainMenu.selectedButton.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				System.out.println(newValue);
 				selectionArrow.relocate(playImg.getLayoutX()-60, playImg.getLayoutY()+120*newValue.intValue());
 			}
 
 		});
-
-		//Chargement dans la memoire de toutes les textures
-		textureLoading();		
 
 		World.isWorldLoaded.addListener(new ChangeListener<Boolean>() {
 
@@ -123,24 +119,22 @@ public class MenuControler implements Initializable{
 				homeMenu.setOpacity(0);
 				System.out.println("Loading save");
 				if(newValue) {
-					loadMapTexture();
-
+					loadMapTexture();				
 				}
 			}
-
 		});
-
+		
+		//Chargement dans la memoire de toutes les textures
+		textureLoading();		
 	}
 
 	public void loadMapTexture() {
 		
 		//Affichage des toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
-		
-		//Affichage des entitys
-		affichageEntitys();
-		
+
 		//Chargement du joueur
+		affichageEntitys();
 		World.loadPlayer();
 
 		for(int numCoeur=World.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
@@ -290,7 +284,6 @@ public class MenuControler implements Initializable{
 		i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
 		i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));
 		
-		System.out.println(e.getId());
 		if(e.getId().equals("Player")) {
 			i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 24, 32, 0, 2).getTexture(), null));
 			PlayerPane.getChildren().add(i);
@@ -301,20 +294,11 @@ public class MenuControler implements Initializable{
 
 	}
 
-
-
 	private void affichageDuJoueur(ImageView i,Entity e) {
 		affichageEntity(i, e);
 		paneGame.layoutXProperty().bind(e.coordonnes.getXpro().multiply(-32).add(432));
 		paneGame.layoutYProperty().bind(e.coordonnes.getYpro().multiply(-32).add(320));
 	}
-
-
-
-
-
-
-
 	private void affichageEntitys() {	
 		
 		World.currentMap.entity.addListener(new ListChangeListener<Entity>(){
@@ -351,7 +335,7 @@ public class MenuControler implements Initializable{
 									}
 									);
 						}else {
-
+						
 							affichageEntity(listEntityView.get(addEntity),addEntity);
 							addEntity.etatDeplacement.addListener(
 									new ChangeListener<Number>() {
