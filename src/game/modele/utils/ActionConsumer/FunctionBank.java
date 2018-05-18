@@ -9,13 +9,13 @@ import game.modele.entity.Entity;
  */
 public enum FunctionBank {	
 	
-	MoveIceDownAND(e -> e.addY(e.speed * 2/60 * e.slow)),
+	MoveIceDownAND(e -> e.addY(e.speed * 2/30 * e.slow)),
 	MoveIceDown(e -> e.addY(e.speed * e.slow / 15)),
-	MoveIceUpAND(e -> e.addY(-e.speed * 2/60 * e.slow)),
+	MoveIceUpAND(e -> e.addY(-e.speed * 2/30 * e.slow)),
 	MoveIceUp(e -> e.addY(-e.speed * e.slow / 15)),
-	MoveIceRightAND(e -> e.addX(e.speed * 2/60 * e.slow)),
+	MoveIceRightAND(e -> e.addX(e.speed * 2/30 * e.slow)),
 	MoveIceRight(e -> e.addX(e.speed * e.slow / 15)),
-	MoveIceLeftAND(e -> e.addX(-e.speed * 2/60 * e.slow)),
+	MoveIceLeftAND(e -> e.addX(-e.speed * 2/30 * e.slow)),
 	MoveIceLeft(e -> e.addX(-e.speed * e.slow / 15)),
 	
 	
@@ -77,43 +77,44 @@ public enum FunctionBank {
 		if(!e.moveDown.active && !e.moveUP.active && !e.moveLeft.active && !e.moveRight.active) {
 			e.resetAnim();
 		}}),
+
 	IceMove(e ->{
 		if(!e.moveDown.active && !e.moveUP.active && !e.moveLeft.active && !e.moveRight.active) {
 			e.speed = e.baseSpeed;
 		}
 		if(e.moveDown.active) {
 			if(e.moveLeft.active ^ e.moveRight.active) {
-				e.addAction(new CountActionConsumer(40, FunctionBank.MoveIceDownAND));
+				e.addAction(new CountActionConsumer(60, FunctionBank.MoveIceDownAND));
 			}
 			else {
-				e.addAction(new CountActionConsumer(40,FunctionBank.MoveIceDown));
+				e.addAction(new CountActionConsumer(60,FunctionBank.MoveIceDown));
 			}
 		}
 		if(e.moveUP.active) {
 			if(e.moveLeft.active ^ e.moveRight.active)
 			{	
-				e.addAction(new CountActionConsumer(40,FunctionBank.MoveIceUpAND));
+				e.addAction(new CountActionConsumer(60,FunctionBank.MoveIceUpAND));
 			}else
 			{
-				e.addAction(new CountActionConsumer(40,FunctionBank.MoveIceUp));
+				e.addAction(new CountActionConsumer(60,FunctionBank.MoveIceUp));
 			}
 		}
 		if(e.moveLeft.active) {
 			if(e.moveUP.active ^ e.moveDown.active)
 			{
-				e.addAction(new CountActionConsumer(40,FunctionBank.MoveIceLeftAND));
+				e.addAction(new CountActionConsumer(60,FunctionBank.MoveIceLeftAND));
 			}		else
 			{	
-				e.addAction(new CountActionConsumer(40,FunctionBank.MoveIceLeft));
+				e.addAction(new CountActionConsumer(60,FunctionBank.MoveIceLeft));
 			}
 		}
 		if(e.moveRight.active) {
 			if(e.moveUP.active ^ e.moveDown.active)
 			{
-				e.addAction(new CountActionConsumer(40,FunctionBank.MoveIceRightAND));
+				e.addAction(new CountActionConsumer(60,FunctionBank.MoveIceRightAND));
 			}else
 			{
-				e.addAction(new CountActionConsumer(40,FunctionBank.MoveIceRight));
+				e.addAction(new CountActionConsumer(60,FunctionBank.MoveIceRight));
 			}
 		}});
 

@@ -1,7 +1,5 @@
 package game.modele.utils.ActionConsumer;
 
-import java.util.function.Consumer;
-
 import game.modele.entity.Entity;
 
 public class InfiniteActionConsumer implements ConsumerAction{

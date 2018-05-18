@@ -1,7 +1,6 @@
 package game.modele.utils.ActionConsumer;
 
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 import game.modele.entity.Entity;
 
@@ -21,7 +20,6 @@ public class ListConsumerAction{
 				list.remove(i);
 				i--;
 			}
-			
 		}
 	}
 	public void act(Entity e) {

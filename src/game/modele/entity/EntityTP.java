@@ -32,6 +32,7 @@ public class EntityTP extends TileEntity{
 	public void active(Entity e) {
 		World.loadWorld(this.mapNameTp,this.mapNameTp);
 		World.player.forceTp(this.getTPCoordonnees());
+		
 	}
 
 	@Override

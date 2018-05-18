@@ -18,8 +18,10 @@ import game.modele.utils.Direction;
 import game.modele.world.World;
 import game.vue.EntityLivingTexture;
 import game.vue.TextureLoader;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
@@ -85,7 +87,7 @@ public class MenuControler implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		EntityFactory.create("Test", "1,2,3");
-		
+
 		//chagement du menu principale
 		menuLoading();
 
@@ -172,6 +174,7 @@ public class MenuControler implements Initializable{
 				PaneTop.getChildren().clear();
 				EntityPane.getChildren().clear();
 				printCalqueTile(PaneGround,PaneSolid,PaneTop);
+				affichageEntitys();
 			}
 		});
 
@@ -264,7 +267,8 @@ public class MenuControler implements Initializable{
 
 	}
 	private void affichageEntity(ImageView i,Entity e) {
-		i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 24, 32, 0, 2).getTexture(), null));
+		i = new ImageView();
+		listEntityView.put(e,i);
 		i.setFitWidth(32);
 		i.setFitHeight(64);
 		i.setX(World.player.coordonnes.getX());
@@ -299,10 +303,13 @@ public class MenuControler implements Initializable{
 			public void onChanged(Change<? extends Entity> c) {
 				while (c.next()) {
 					for (Entity remEntity : c.getRemoved()) {
-
+						if(remEntity.getId().equals("Player")) {
+							
+						}else
+							listEntityView.remove(remEntity);					
 					}
 					for (Entity addEntity : c.getAddedSubList()) {
-						listEntityView.put(addEntity, new ImageView());
+						
 
 						if(addEntity.getId().equals("Player")) {
 							affichageDuJoueur(listEntityView.get(addEntity),addEntity);
@@ -330,7 +337,7 @@ public class MenuControler implements Initializable{
 									}
 									);
 						}else {
-							
+
 							affichageEntity(listEntityView.get(addEntity),addEntity);
 							addEntity.etatDeplacement.addListener(
 									new ChangeListener<Number>() {
@@ -366,7 +373,7 @@ public class MenuControler implements Initializable{
 											}
 										}
 									}
-									);
+								);
 						}
 					}
 				}

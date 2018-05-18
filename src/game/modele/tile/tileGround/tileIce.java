@@ -1,7 +1,6 @@
 package game.modele.tile.tileGround;
 
 import game.modele.entity.Entity;
-import game.modele.utils.ActionConsumer.ConsumerAction;
 import game.modele.utils.ActionConsumer.FunctionBank;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
 
