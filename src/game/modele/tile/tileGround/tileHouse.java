@@ -33,4 +33,9 @@ public class tileHouse extends tileGround{
 	public tileHouse(House h) {
 		super(h.id);
 	}
+	
+	@Override
+	public boolean solid() {
+		return super.id==91?false:true;
+	}
 }

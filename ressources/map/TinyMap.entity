@@ -47,4 +47,10 @@ TileEntityTP
 TileEntityTP
 23.0,23.0,0,false,Road,1.0,25.0
 TileEntityTP
-17.0,12.0,0,false,house,5.0,8.0
+17.0,11.0,0,false,house,5.0,8.0
+Zombie
+9.0,9.0,0
+Zombie
+10.0,9.0,0
+Zombie
+11.0,9.0,0

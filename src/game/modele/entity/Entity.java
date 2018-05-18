@@ -23,11 +23,14 @@ public abstract class Entity {
 	public double slow = 1;
 	public double speed;
 	
-	//repr�sente l'�tat d'une direction
+	public double hitBoxX=0;//W.I.P
+	public double hitBoxY=0;//W.I.P
+	
+	//represente l'etat d'une direction
 	public class infoDeplacement{
-		//la touche est enfonc�
+		//la touche est enfonce
 		public boolean active = false;
-		//la touche est enfonc� mais une autre prend le dessus
+		//la touche est enfonce mais une autre prend le dessus
 		public boolean attente = false;
 	}
 	public infoDeplacement moveUP;
@@ -67,11 +70,7 @@ public abstract class Entity {
 	}
 	
 	public void addX(double x){
-		if(this.setCoordoner(
-				new Coordonnees(
-						this.coordonnes.getX() + x,
-						this.coordonnes.getY()
-						))) {
+		if(this.setCoordoner( new Coordonnees(this.coordonnes.getX() + x,this.coordonnes.getY() ))) {
 			this.coordonnes.setX(this.coordonnes.getX() + x);
 		}
 	}
@@ -126,9 +125,10 @@ public abstract class Entity {
 			
 			
 			if(!World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).solid() &&
+					!World.currentMap.getTile((int)(coordonnees.getY()+ hitBoxY), (int)(coordonnees.getX()+ hitBoxX)).solid() &&
 					coordonnees.getX() >= 0 && coordonnees.getY() >= 0 &&
-					(coordonnees.getX() + speed)< World.currentMap.getWidth()&&
-					(coordonnees.getY() + speed) < World.currentMap.getHeight())
+					(coordonnees.getX() + speed + hitBoxX) < World.currentMap.getWidth() &&
+					(coordonnees.getY() + speed + hitBoxY) < World.currentMap.getHeight() )
 			{
 				if(this.currentTile != tile) {
 					if(currentTile != null)

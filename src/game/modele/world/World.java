@@ -36,7 +36,7 @@ public class World {
 		GameLoop.play();
 	}
 
-	//Ajoute des fonctions qui seront �x�cut� dans la gameloop
+	//Ajoute des fonctions qui seront execute dans la gameloop
 	private static void addKeyGameLoop(EventHandler<ActionEvent> e) {
 		KeyFrame keyf = new KeyFrame(Duration.seconds(0.017),e);
 		GameLoop.getKeyFrames().add(keyf);

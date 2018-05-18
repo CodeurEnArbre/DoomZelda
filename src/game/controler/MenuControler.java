@@ -80,9 +80,9 @@ public class MenuControler implements Initializable{
 
 	@FXML
 	private Button buttonReprendre;
-
-
-	private ImageView player;//l'image du joueur a l'ecran
+	
+	@FXML
+	private ImageView player;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -103,6 +103,7 @@ public class MenuControler implements Initializable{
 
 		});
 
+		//Listener de la fleche des menu
 		MainMenu.selectedButton.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -132,21 +133,15 @@ public class MenuControler implements Initializable{
 	}
 
 	public void loadMapTexture() {
-		//Chargement de la map
-
-
-		affichageEntitys();
-		//Chargement du joueur
-		player=new ImageView();
-		World.loadPlayer();
-
-		World.addEntity(new Zombie(new Coordonnees(10, 10), new Direction(Direction.North)));
-		World.addEntity(new Zombie(new Coordonnees(12, 12), new Direction(Direction.North)));
-
+		
 		//Affichage des toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
-
-
+		
+		//Affichage des entitys
+		affichageEntitys();
+		
+		//Chargement du joueur
+		World.loadPlayer();
 
 		for(int numCoeur=World.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
 			coeurs.add(new ImageView(dicoImageItemTextureMap.get(2)));
@@ -165,6 +160,7 @@ public class MenuControler implements Initializable{
 			}
 		});
 
+
 		//Ajout d'un Listener si la map change
 		World.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
 			@Override
@@ -173,7 +169,11 @@ public class MenuControler implements Initializable{
 				PaneSolid.getChildren().clear();
 				PaneTop.getChildren().clear();
 				EntityPane.getChildren().clear();
-				printCalqueTile(PaneGround,PaneSolid,PaneTop);
+				for(ImageView entity:listEntityView.values()) {
+					if(entity.getId()!="Player")
+						listEntityView.remove(entity);
+				}
+				printCalqueTile(PaneGround,PaneSolid,PaneTop);		
 				affichageEntitys();
 			}
 		});
@@ -202,7 +202,8 @@ public class MenuControler implements Initializable{
 
 		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
 		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
-		LoadAnimation(dicoImageAnimationPlayer, 28, 4);
+		loadAnimationPlayer(dicoImageAnimationPlayer, 28, 4);
+		//loadAnimation(dicoImageAnimationEntity, 28,4);
 
 
 		coeurs = new ArrayList<ImageView>();
@@ -213,10 +214,21 @@ public class MenuControler implements Initializable{
 			dico.put(x + 1,SwingFXUtils.toFXImage(TextureLoader.getTextureMapImage(textureMapName,imageWidthPixels,imageHeightPixels,imageWidth,imageHeight,x).getTexture(), null));
 		}
 	}
-	private void LoadAnimation(Map<Integer,Image> dico, int frame, int animation) {
+	
+	private void loadAnimationPlayer(Map<Integer,Image> dico, int frame, int animation) {
 		for(int x = 0;x < frame;x++)
 			for(int y = 0;y < animation;y++)
 				dico.put(x + frame * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("Player", 24, 32, x, y).getTexture(), null));		
+	}
+	
+	private void loadAnimation(Map<Integer,Image[]> dico, int frame, int animation) {
+		for(int entity=0;entity<3;entity++) {//TODO
+			Image[] imgs=new Image[frame*animation];
+			for(int x = 0;x < frame;x++)
+				for(int y = 0;y < animation;y++)
+					imgs[x + frame * y]=SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("Zombie", 32, 48, x, y).getTexture(), null);	
+			dico.put(entity,imgs);
+		}
 	}
 
 	//Permet d'afficher dans dans chaque pane toute les textures de chaque couches de la map
@@ -269,17 +281,24 @@ public class MenuControler implements Initializable{
 	private void affichageEntity(ImageView i,Entity e) {
 		i = new ImageView();
 		listEntityView.put(e,i);
+		i.setId(e.getId());
 		i.setFitWidth(32);
 		i.setFitHeight(64);
 		i.setX(World.player.coordonnes.getX());
 		i.setY(World.player.coordonnes.getY());
-		if(e.getId().equals("Player"))
-			PlayerPane.getChildren().add(i);
-		else
-			EntityPane.getChildren().add(i);
-
+		
 		i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
 		i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));
+		
+		System.out.println(e.getId());
+		if(e.getId().equals("Player")) {
+			i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 24, 32, 0, 2).getTexture(), null));
+			PlayerPane.getChildren().add(i);
+		}else {
+			i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 32, 48, 0, 0).getTexture(), null));
+			EntityPane.getChildren().add(i);
+		}
+
 	}
 
 
@@ -297,19 +316,14 @@ public class MenuControler implements Initializable{
 
 
 	private void affichageEntitys() {	
+		
 		World.currentMap.entity.addListener(new ListChangeListener<Entity>(){
 
 			@Override
 			public void onChanged(Change<? extends Entity> c) {
 				while (c.next()) {
-					for (Entity remEntity : c.getRemoved()) {
-						if(remEntity.getId().equals("Player")) {
-							
-						}else
-							listEntityView.remove(remEntity);					
-					}
+					
 					for (Entity addEntity : c.getAddedSubList()) {
-						
 
 						if(addEntity.getId().equals("Player")) {
 							affichageDuJoueur(listEntityView.get(addEntity),addEntity);
