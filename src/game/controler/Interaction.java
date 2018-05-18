@@ -55,8 +55,8 @@ public class Interaction {
 
 				setDirection(Direction.South);
 			}else {
-				if(MainMenu.selectedButton.get()<3) {
-					MainMenu.selectedButton.set(MainMenu.selectedButton.get()+1);
+				if(MainMenu.selectedButton.get()<2) {
+					MainMenu.selectedButton.set(MainMenu.selectedButton.get()+1);		
 				}
 			}
 		}

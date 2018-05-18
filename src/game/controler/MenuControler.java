@@ -213,7 +213,7 @@ public class MenuControler implements Initializable{
 	private void LoadAnimation(Map<Integer,Image> dico, int frame, int animation) {
 		for(int x = 0;x < frame;x++)
 			for(int y = 0;y < animation;y++)
-				dico.put(x + frame * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("player", 24, 32, x, y).getTexture(), null));		
+				dico.put(x + frame * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("Player", 24, 32, x, y).getTexture(), null));		
 	}
 
 	//Permet d'afficher dans dans chaque pane toute les textures de chaque couches de la map
