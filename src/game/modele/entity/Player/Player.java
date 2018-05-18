@@ -7,6 +7,8 @@ import game.modele.entity.living.EntityLiving;
 import game.modele.item.Item;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
+import game.modele.utils.ActionConsumer.FunctionBank;
+import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
 
 public class Player extends EntityLiving{
 
@@ -18,6 +20,10 @@ public class Player extends EntityLiving{
 		this.inventory=inventory;
 		this.speed = baseSpeed;
 		this.slow =	1;
+		
+		addAction(new InfiniteActionConsumer(FunctionBank.SimpleMove));
+		addAction(new InfiniteActionConsumer(FunctionBank.SimpleMovement));
+		
 	}
 
 	//Recuperer le nombre d'item dans l'inventaire
@@ -31,12 +37,6 @@ public class Player extends EntityLiving{
 
 	public void addInventoryItem(Item item) {
 		this.inventory.add(item);
-	}
-
-	@Override
-	public void update() {
-		move();
-
 	}
 	
 	@Override

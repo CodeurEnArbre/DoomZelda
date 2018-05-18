@@ -1,0 +1,128 @@
+package game.modele.utils.ActionConsumer;
+
+import java.util.function.Consumer;
+
+import game.modele.entity.Entity;
+
+/* Cette Class référence toutes les fonctions applicables sur les entitées
+ *
+ */
+public enum FunctionBank {	
+	
+	MoveIceDownAND(e -> e.addY(e.speed * 2/60 * e.slow)),
+	MoveIceDown(e -> e.addY(e.speed * e.slow / 15)),
+	MoveIceUpAND(e -> e.addY(-e.speed * 2/60 * e.slow)),
+	MoveIceUp(e -> e.addY(-e.speed * e.slow / 15)),
+	MoveIceRightAND(e -> e.addX(e.speed * 2/60 * e.slow)),
+	MoveIceRight(e -> e.addX(e.speed * e.slow / 15)),
+	MoveIceLeftAND(e -> e.addX(-e.speed * 2/60 * e.slow)),
+	MoveIceLeft(e -> e.addX(-e.speed * e.slow / 15)),
+	
+	
+	SimpleMove(e-> {
+		if(!e.moveDown.active && !e.moveUP.active && !e.moveLeft.active && !e.moveRight.active) {
+			e.speed = e.baseSpeed;
+		}
+		if(e.moveDown.active) {
+			if(e.moveLeft.active ^ e.moveRight.active) {
+				e.addY(e.speed * 2/3 * e.slow);
+			}
+			else {
+				if(e.speed < e.maxSpeed) {
+					e.speed += e.acce;
+				}
+				e.addY(e.speed * e.slow);
+			}
+		}
+		if(e.moveUP.active) {
+			if(e.moveLeft.active ^ e.moveRight.active)
+			{	
+				e.addY(-e.speed * 2/3 * e.slow);	
+			}else
+			{
+				if(e.speed < e.maxSpeed) {
+					e.speed += e.acce;
+				}
+				e.addY(-e.speed * e.slow);	
+			}
+		}
+		if(e.moveLeft.active) {
+			if(e.moveUP.active ^ e.moveDown.active)
+			{
+				e.addX(-e.speed * 2/3 * e.slow);
+			}		else
+			{	
+				if(e.speed < e.maxSpeed) {
+					e.speed += e.acce;
+				}
+				e.addX(-e.speed * e.slow);
+			}
+		}
+		if(e.moveRight.active) {
+			if(e.moveUP.active ^ e.moveDown.active)
+			{
+				e.addX(e.speed * 2/3 * e.slow);
+			}else
+			{
+				if(e.speed < e.maxSpeed) {
+					e.speed += e.acce;
+				}
+				e.addX(e.speed * e.slow); 
+			}
+		}
+	}),
+	SimpleMovement(e -> {
+		if(e.moveDown.active || e.moveUP.active || e.moveLeft.active || e.moveRight.active)
+			e.incAnim();
+		if(!e.moveDown.active && !e.moveUP.active && !e.moveLeft.active && !e.moveRight.active) {
+			e.resetAnim();
+		}}),
+	IceMove(e ->{
+		if(!e.moveDown.active && !e.moveUP.active && !e.moveLeft.active && !e.moveRight.active) {
+			e.speed = e.baseSpeed;
+		}
+		if(e.moveDown.active) {
+			if(e.moveLeft.active ^ e.moveRight.active) {
+				e.addAction(new CountActionConsumer(40, FunctionBank.MoveIceDownAND));
+			}
+			else {
+				e.addAction(new CountActionConsumer(40,FunctionBank.MoveIceDown));
+			}
+		}
+		if(e.moveUP.active) {
+			if(e.moveLeft.active ^ e.moveRight.active)
+			{	
+				e.addAction(new CountActionConsumer(40,FunctionBank.MoveIceUpAND));
+			}else
+			{
+				e.addAction(new CountActionConsumer(40,FunctionBank.MoveIceUp));
+			}
+		}
+		if(e.moveLeft.active) {
+			if(e.moveUP.active ^ e.moveDown.active)
+			{
+				e.addAction(new CountActionConsumer(40,FunctionBank.MoveIceLeftAND));
+			}		else
+			{	
+				e.addAction(new CountActionConsumer(40,FunctionBank.MoveIceLeft));
+			}
+		}
+		if(e.moveRight.active) {
+			if(e.moveUP.active ^ e.moveDown.active)
+			{
+				e.addAction(new CountActionConsumer(40,FunctionBank.MoveIceRightAND));
+			}else
+			{
+				e.addAction(new CountActionConsumer(40,FunctionBank.MoveIceRight));
+			}
+		}});
+
+	
+	public Consumer<Entity> element;
+	private FunctionBank(Consumer<Entity> c) {
+		this.element = c;
+	}
+	public int index() {
+		return this.ordinal();
+	}
+}

@@ -4,18 +4,24 @@ import game.modele.tile.Tile;
 import game.modele.tile.tileGround.tileVoid;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
+import game.modele.utils.ActionConsumer.ConsumerAction;
+import game.modele.utils.ActionConsumer.FunctionBank;
+import game.modele.utils.ActionConsumer.ListConsumerAction;
 import game.modele.world.World;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Entity {
-
+	
+	ListConsumerAction ce = new ListConsumerAction();
 	public static int key = 0;
 	public int primaryKey;
 	
-	protected double baseSpeed = 0.11f;
-	protected double maxSpeed = 0.16f;
-	protected double acce = 0.00025f;
+	public double baseSpeed = 0.11f;
+	public double maxSpeed = 0.16f;
+	public double acce = 0.00025f;
+	public double slow = 1;
+	public double speed;
 	
 	//repr�sente l'�tat d'une direction
 	public class infoDeplacement{
@@ -39,11 +45,7 @@ public abstract class Entity {
 	
 	public Coordonnees coordonnes;
 	public IntegerProperty etatDeplacement = new SimpleIntegerProperty(0);
-
-	protected double speed;
-	public double slow = 1;
-
-
+	
 	public Entity(String id,Coordonnees coordonnees,Direction direction) {
 		primaryKey = key++; 
 		this.direction=direction;
@@ -54,6 +56,14 @@ public abstract class Entity {
 		moveDown = new infoDeplacement();
 		moveLeft = new infoDeplacement();
 		moveRight = new infoDeplacement();		
+	}
+	
+	public void addAction(ConsumerAction c) {
+		ce.add(c);
+	}
+	
+	public void delAction(FunctionBank c) {
+		ce.del(c);
 	}
 	
 	public void addX(double x){
@@ -134,81 +144,15 @@ public abstract class Entity {
 			return false;
 		}
 	}
-	
-	public void move() {
-		if(!moveDown.active && !moveUP.active && !moveLeft.active && !moveRight.active) {
-			resetAnim();
-			speed = baseSpeed;
-		}
-		if(this.moveDown.active) {
-			if(this.moveLeft.active ^ this.moveRight.active) {
-				this.addY(this.speed * 2/3 * this.slow);
-			}
-			else {
-				if(this.speed < this.maxSpeed) {
-					this.speed += this.acce;
-				}
-				this.addY(this.speed * this.slow);
-				this.incAnim();
-			}
-		}
-		if(this.moveUP.active) {
-			if(this.moveLeft.active ^ this.moveRight.active)
-			{	
-				this.addY(-this.speed * 2/3 * this.slow);	
-			}else
-			{
-				if(this.speed < this.maxSpeed) {
-					this.speed += this.acce;
-				}
-				this.addY(-this.speed * this.slow);	
-				incAnim();
-			}
-		}
-		if(this.moveLeft.active) {
-			if(this.moveUP.active ^ this.moveDown.active)
-			{
-				this.addX(-this.speed * 2/3 * this.slow);
-				this.incAnim();
-			}		else
-			{	
-				if(this.speed < this.maxSpeed) {
-					this.speed += this.acce;
-				}
-				this.addX(-speed * this.slow);
-				this.incAnim();
-			}
-		}
-		if(this.moveRight.active) {
-			if(this.moveUP.active ^ this.moveDown.active)
-			{
-				this.addX(speed * 2/3 * slow);
-				this.incAnim();
-			}else
-			{
-				if(this.speed < this.maxSpeed) {
-					this.speed += this.acce;
-				}
-				this.addX(this.speed * this.slow); 
-				this.incAnim();
-			}
-		}
-	}
-	
-	//ID
+
 	public String getId() {
 		return this.id;
 	}
-
-	//UpdateIA
-	public abstract void update();
-
-	//Active (Marche dessus)
+	public final void update() {
+		ce.act(this);
+	}
 	public abstract void active(Entity e);
-
-	//deplacement
 	public abstract void incAnim();
-	
 	public void resetAnim() {
 		this.etatDeplacement.set(0);
 	}
