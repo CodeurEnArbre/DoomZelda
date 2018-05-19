@@ -112,7 +112,7 @@ public class MenuControler implements Initializable{
 		World.onPause.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if(!InGameMenu.enterMenu.get()) {
+				if(!InGameMenu.enterOptions.get()) {
 					if(newValue) {
 						PaneMenu.setDisable(false);
 						PaneMenu.setOpacity(1.0);				
@@ -141,13 +141,14 @@ public class MenuControler implements Initializable{
 			}});
 		
 		//Listener de l'appuie d'"ENTRER" ou d'"ESCAPE" dans le menu inGame
-		InGameMenu.enterMenu.addListener(new ChangeListener<Boolean>() {
+		InGameMenu.enterOptions.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if(newValue) {
+					System.out.println(InGameMenu.selectedButtonInGame.get());
 					PaneOptions.setDisable(false);
-					PaneOptions.setOpacity(1);
-				}else {				
+					PaneOptions.setOpacity(1);		
+				}else {		
 					PaneOptions.setOpacity(0);
 					PaneOptions.setDisable(true);
 				}

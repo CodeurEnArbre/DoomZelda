@@ -15,7 +15,9 @@ public class Interaction {
 		if(k == KeyCode.ENTER) {
 			if(World.isWorldLoaded.get()) {
 				if(World.onPause.get()) {
-					InGameMenu.enterMenu.set(true);
+					if(InGameMenu.selectedButtonInGame.get() == 0) {
+						InGameMenu.enterOptions.set(true);
+					}
 				}
 
 			}else {
@@ -33,8 +35,8 @@ public class Interaction {
 			if(World.isWorldLoaded.get()) {
 				World.onPause.set(!World.onPause.get());
 				if(World.onPause.get()) {
-					if(InGameMenu.enterMenu.get()) {
-						InGameMenu.enterMenu.set(false);
+					if(InGameMenu.enterOptions.get()) {
+						InGameMenu.enterOptions.set(false);
 					}
 					World.pauseGameLoop();
 				}
