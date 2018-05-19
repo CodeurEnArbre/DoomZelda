@@ -136,7 +136,7 @@ public class MenuControler implements Initializable{
 		//Chargement du joueur
 		affichageEntitys();
 		World.loadPlayer();
-
+	
 		for(int numCoeur=World.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
 			coeurs.add(new ImageView(dicoImageItemTextureMap.get(2)));
 		}
