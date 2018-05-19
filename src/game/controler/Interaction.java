@@ -1,6 +1,7 @@
 package game.controler;
 
 import game.MainMenu;
+import game.InGameMenu;
 import game.modele.utils.Direction;
 import game.modele.world.World;
 import javafx.scene.input.KeyCode;
@@ -33,12 +34,17 @@ public class Interaction {
 
 		if(k == KeyCode.Z) {
 			if(World.isWorldLoaded.get()) {
-				World.player.moveUP.attente = false;
-				World.player.moveUP.active = true;
-				if(World.player.moveDown.active)
-					World.player.moveDown.attente = true;
-				World.player.moveDown.active = false;
-
+				if(World.onPause.get()) {
+					InGameMenu.selectionUp();
+				}else {
+					World.player.moveUP.attente = false;
+					World.player.moveUP.active = true;
+					if(World.player.moveDown.active) {
+						World.player.moveDown.attente = true;
+						World.player.moveDown.active = false;
+					}
+				}
+				
 				setDirection(Direction.North);	
 			}else {
 				if(MainMenu.selectedButton.get()>0)
@@ -47,13 +53,17 @@ public class Interaction {
 
 		}else if(k == KeyCode.S){
 			if(World.isWorldLoaded.get()) {
-				World.player.moveDown.attente = false;
-				World.player.moveDown.active = true;
-				if(World.player.moveUP.active)
-					World.player.moveUP.attente = true;
-				World.player.moveUP.active = false;
+				if(World.onPause.get()) {
+					InGameMenu.selectionDown();
+				}else {
+					World.player.moveDown.attente = false;
+					World.player.moveDown.active = true;
+					if(World.player.moveUP.active)
+						World.player.moveUP.attente = true;
+					World.player.moveUP.active = false;
 
 				setDirection(Direction.South);
+				}
 			}else {
 				if(MainMenu.selectedButton.get()<2) {
 					MainMenu.selectedButton.set(MainMenu.selectedButton.get()+1);		

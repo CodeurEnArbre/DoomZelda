@@ -2,7 +2,6 @@ package game.controler;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +10,7 @@ import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
+import game.InGameMenu;
 import game.MainMenu;
 import game.modele.entity.Entity;
 import game.modele.tile.Tile;
@@ -84,6 +84,15 @@ public class MenuControler implements Initializable{
 	private ImageView optionImg;
 	@FXML
 	private ImageView exitImg;
+	
+    @FXML
+    private ImageView optionInGameImg;
+    @FXML
+    private ImageView saveInGameImg;
+    @FXML
+    private ImageView quitInGameImg;
+    @FXML
+	private ImageView selectionArrowInGame;
 
 	@FXML
 	private Button buttonReprendre;
@@ -115,6 +124,13 @@ public class MenuControler implements Initializable{
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				selectionArrow.relocate(playImg.getLayoutX()-60, playImg.getLayoutY()+120*newValue.intValue());
+			}});
+		
+		//Listener de la fleche du menu ingame
+		InGameMenu.selectedButtonInGame.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+					selectionArrowInGame.relocate(optionInGameImg.getLayoutX()-85, optionInGameImg.getLayoutY()+100*newValue.intValue()-10);
 			}});
 
 		World.isWorldLoaded.addListener(new ChangeListener<Boolean>() {
