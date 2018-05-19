@@ -146,17 +146,7 @@ public class MenuControler implements Initializable{
 		hudLoading();
 		
 		//Ajout de l'affichage des ombres si la map est a l'interieur
-		//if(!World.currentMap.isOutside())
-		shadowBackgroundPane.getChildren().clear();
-		shadowSolidPane.getChildren().clear();
-		shadowTopPane.getChildren().clear();
-		for(int x=0; x < World.currentMap.getWidth() ;x++) {
-			for(int y=0; y < World.currentMap.getWidth() ;y++) {
-				createShadow(shadowBackgroundPane, World.currentMap.getTileTerrain(x, y),x,y);
-				createShadow(shadowSolidPane, World.currentMap.getTile(x, y),x,y);
-				createShadow(shadowTopPane, World.currentMap.getTileTop(x, y),x,y);
-			}
-		}
+		affichageOmbres();
 		
 		//Ajout d'un Listener si la map change
 		World.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
@@ -172,6 +162,7 @@ public class MenuControler implements Initializable{
 				}
 				printCalqueTile(PaneGround,PaneSolid,PaneTop);		
 				affichageEntitys();
+				affichageOmbres();
 			}
 		});
 
@@ -211,13 +202,33 @@ public class MenuControler implements Initializable{
 		});
 	}
 	
-	private void createShadow(Pane pane, Tile tile, int x, int y) {
+	private void affichageOmbres() {
+		shadowBackgroundPane.getChildren().clear();
+		shadowSolidPane.getChildren().clear();
+		shadowTopPane.getChildren().clear();
+		if(!World.currentMap.isOutside())
+		for(int x=0; x < World.currentMap.getWidth() ;x++) {
+			for(int y=0; y < World.currentMap.getWidth() ;y++) {
+				boolean isShadow=false;
+				
+				isShadow=createShadow(shadowTopPane, World.currentMap.getTileTop(x, y),x,y);
+				
+				if(!isShadow)
+					isShadow=createShadow(shadowSolidPane, World.currentMap.getTile(x, y),x,y);
+				
+				if(!isShadow)
+					isShadow=createShadow(shadowBackgroundPane, World.currentMap.getTileTerrain(x, y),x,y);	
+			}
+		}
+	}
+	
+	private boolean createShadow(Pane pane, Tile tile, int x, int y) {
 		if(!(tile instanceof tileVoid)) {
 			ImageView shadow = new ImageView();
 			shadow.setImage(shadowImg);
 			shadow.minWidth(32);shadow.maxWidth(32);shadow.minHeight(32);shadow.maxHeight(32);
 			shadow.relocate(y*32, x*32);
-			shadow.setOpacity(World.currentMap.getTile(x, y).light.doubleValue()/4);
+			shadow.setOpacity((4-World.currentMap.getTile(x, y).light.doubleValue())/Tile.Max_Light);
 			tile.light.addListener(new ChangeListener<Number>() {
 				@Override
 				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -225,7 +236,9 @@ public class MenuControler implements Initializable{
 				}
 			});
 			pane.getChildren().add(shadow);
+			return true;
 		}
+		return false;
 	}
 	
 	private void textureLoading() {

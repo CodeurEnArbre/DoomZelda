@@ -9,7 +9,7 @@ public abstract class Tile {
 	public static final int Max_Light = 4;
 	public static final int Min_Light = 0;
 	
-	public IntegerProperty light = new SimpleIntegerProperty(2);
+	public IntegerProperty light = new SimpleIntegerProperty(4);
 	protected int id;
 
 	public Tile(int id) {
