@@ -33,15 +33,17 @@ public class Interaction {
 
 		if(k == KeyCode.ESCAPE) {
 			if(World.isWorldLoaded.get()) {
-				World.onPause.set(!World.onPause.get());
 				if(World.onPause.get()) {
-					if(InGameMenu.enterOptions.get()) {
-						InGameMenu.enterOptions.set(false);
+					if(!InGameMenu.enterOptions.get()) {
+						World.onPause.set(!World.onPause.get());
+					}else {
+						InGameMenu.enterOptions.set(false);			
 					}
-					World.pauseGameLoop();
+					World.playGameLoop();	
+				}else {
+					World.pauseGameLoop();					
 				}
-				else
-					World.playGameLoop();
+							
 			}else {
 
 			}

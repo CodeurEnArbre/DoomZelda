@@ -146,11 +146,9 @@ public class MenuControler implements Initializable{
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if(newValue) {
 					System.out.println(InGameMenu.selectedButtonInGame.get());
-					PaneOptions.setDisable(false);
 					PaneOptions.setOpacity(1);		
 				}else {		
 					PaneOptions.setOpacity(0);
-					PaneOptions.setDisable(true);
 				}
 			}});
 		
