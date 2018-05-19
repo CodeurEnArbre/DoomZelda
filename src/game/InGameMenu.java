@@ -1,11 +1,15 @@
 package game;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class InGameMenu {
 	
 	public static IntegerProperty selectedButtonInGame=new SimpleIntegerProperty(0);
+	public static BooleanProperty enterMenu=new SimpleBooleanProperty(false);
+
 	
 	public static void Save(String name) {
 		//TODO

@@ -14,6 +14,9 @@ public class Interaction {
 
 		if(k == KeyCode.ENTER) {
 			if(World.isWorldLoaded.get()) {
+				if(World.onPause.get()) {
+					InGameMenu.enterMenu.set(true);
+				}
 
 			}else {
 				switch(MainMenu.selectedButton.get()) {
@@ -29,8 +32,12 @@ public class Interaction {
 		if(k == KeyCode.ESCAPE) {
 			if(World.isWorldLoaded.get()) {
 				World.onPause.set(!World.onPause.get());
-				if(World.onPause.get())
+				if(World.onPause.get()) {
+					if(InGameMenu.enterMenu.get()) {
+						InGameMenu.enterMenu.set(false);
+					}
 					World.pauseGameLoop();
+				}
 				else
 					World.playGameLoop();
 			}else {

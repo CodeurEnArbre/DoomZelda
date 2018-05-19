@@ -135,4 +135,5 @@ public class World {
 	public static WorldData getWorld() {
 		return World.currentMap;
 	}
+
 }

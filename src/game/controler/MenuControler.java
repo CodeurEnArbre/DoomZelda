@@ -70,6 +70,9 @@ public class MenuControler implements Initializable{
 	private Pane PaneMenu;
 
 	@FXML
+	private Pane PaneOptions;
+	
+	@FXML
 	private Pane homeMenu;
 
 	@FXML
@@ -109,11 +112,15 @@ public class MenuControler implements Initializable{
 		World.onPause.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if(newValue) {
-					PaneMenu.setOpacity(1.0);				
-				}
-				else {
-					PaneMenu.setOpacity(0.0);
+				if(!InGameMenu.enterMenu.get()) {
+					if(newValue) {
+						PaneMenu.setDisable(false);
+						PaneMenu.setOpacity(1.0);				
+					}
+					else {
+						PaneMenu.setOpacity(0.0);
+						PaneMenu.setDisable(true);
+					}
 				}
 			}
 
@@ -130,11 +137,22 @@ public class MenuControler implements Initializable{
 		InGameMenu.selectedButtonInGame.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				System.out.println(selectorPauseInGame.getLayoutY());
 				selectorPauseInGame.relocate(optionInGameImg.getLayoutX(), optionInGameImg.getLayoutY()+120*newValue.intValue());
-				System.out.println(selectorPauseInGame.getLayoutY());
 			}});
-
+		
+		//Listener de l'appuie d'"ENTRER" ou d'"ESCAPE" dans le menu inGame
+		InGameMenu.enterMenu.addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if(newValue) {
+					PaneOptions.setDisable(false);
+					PaneOptions.setOpacity(1);
+				}else {				
+					PaneOptions.setOpacity(0);
+					PaneOptions.setDisable(true);
+				}
+			}});
+		
 		World.isWorldLoaded.addListener(new ChangeListener<Boolean>() {
 
 			@Override
