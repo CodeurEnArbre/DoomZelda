@@ -16,7 +16,13 @@ public class Interaction {
 			if(World.isWorldLoaded.get()) {
 
 			}else {
-				World.loadWorld("TinyMap",null);
+				switch(MainMenu.selectedButton.get()) {
+					case 0 : World.loadWorld("TinyMap",null);
+						break;
+					case 1 : //TODO OPTIONS
+						break;
+					case 2 : System.exit(0); 
+				}
 			}
 		}
 

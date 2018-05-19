@@ -19,28 +19,28 @@
          </children>
       </Pane>
       <Pane fx:id="PaneHUD" prefHeight="400.0" prefWidth="600.0" />
-      <Pane fx:id="PaneMenu" layoutX="154.0" layoutY="122.0" opacity="0.0" prefHeight="340.0" prefWidth="555.0" style="-fx-border-color: black; -fx-border-width: 2px;">
+      <Pane fx:id="PaneMenu" layoutX="154.0" layoutY="122.0" opacity="0.0" prefHeight="340.0" prefWidth="555.0">
          <children>
-            <ImageView fx:id="selectionArrowInGame" fitHeight="56.0" fitWidth="114.0" layoutX="72.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+            <Pane layoutX="-153.0" layoutY="-122.0" opacity="0.94" prefHeight="778.0" prefWidth="976.0" style="-fx-background-color: black;" />
+            <ImageView fx:id="optionInGameImg" fitHeight="72.0" fitWidth="480.0" layoutX="70.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/selectionArrow.png" />
+                  <Image url="@../../../ressources/textures/Optionsingameimg.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="optionInGameImg" fitHeight="56.0" fitWidth="236.0" layoutX="157.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="saveInGameImg" fitHeight="72.0" fitWidth="480.0" layoutX="70.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/optionButton.png" />
+                  <Image url="@../../../ressources/textures/Saveingameimg.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="saveInGameImg" fitHeight="56.0" fitWidth="236.0" layoutX="157.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="quitInGameImg" fitHeight="72.0" fitWidth="480.0" layoutX="70.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/saveButton.png" />
+                  <Image url="@../../../ressources/textures/Quitsingameimg.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="quitInGameImg" fitHeight="56.0" fitWidth="236.0" layoutX="157.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="selectorPauseInGame" fitHeight="72.0" fitWidth="480.0" layoutX="70.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/exitButton.png" />
-               </image>
-            </ImageView>
+                  <Image url="@../../../ressources/textures/selectoringameimg.png" />
+               </image></ImageView>
          </children></Pane>
       <Pane fx:id="homeMenu" prefHeight="640.0" prefWidth="870.0">
          <children>

@@ -85,14 +85,14 @@ public class MenuControler implements Initializable{
 	@FXML
 	private ImageView exitImg;
 	
+	@FXML
+	private ImageView selectorPauseInGame;
     @FXML
     private ImageView optionInGameImg;
     @FXML
     private ImageView saveInGameImg;
     @FXML
     private ImageView quitInGameImg;
-    @FXML
-	private ImageView selectionArrowInGame;
 
 	@FXML
 	private Button buttonReprendre;
@@ -130,7 +130,9 @@ public class MenuControler implements Initializable{
 		InGameMenu.selectedButtonInGame.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-					selectionArrowInGame.relocate(optionInGameImg.getLayoutX()-85, optionInGameImg.getLayoutY()+100*newValue.intValue()-10);
+				System.out.println(selectorPauseInGame.getLayoutY());
+				selectorPauseInGame.relocate(optionInGameImg.getLayoutX(), optionInGameImg.getLayoutY()+120*newValue.intValue());
+				System.out.println(selectorPauseInGame.getLayoutY());
 			}});
 
 		World.isWorldLoaded.addListener(new ChangeListener<Boolean>() {

@@ -12,7 +12,7 @@ public class InGameMenu {
 	}
 
 	public static void selectionDown() {
-		if(selectedButtonInGame.get() < 3)
+		if(selectedButtonInGame.get() < 2)
 			selectedButtonInGame.set(selectedButtonInGame.get()+1);			
 	}
 	
