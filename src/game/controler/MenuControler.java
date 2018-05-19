@@ -2,6 +2,7 @@ package game.controler;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,19 +10,17 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
+
 import game.MainMenu;
 import game.modele.entity.Entity;
-import game.modele.entity.EntityFactory;
-import game.modele.entity.living.monster.Zombie;
-import game.modele.utils.Coordonnees;
+import game.modele.tile.Tile;
+import game.modele.tile.tileGround.tileVoid;
 import game.modele.utils.Direction;
 import game.modele.world.World;
 import game.vue.EntityLivingTexture;
 import game.vue.TextureLoader;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
@@ -31,6 +30,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+@SuppressWarnings("unlikely-arg-type")
 public class MenuControler implements Initializable{
 
 	Map<Integer,Image> dicoImageTileTextureMap;
@@ -40,6 +40,7 @@ public class MenuControler implements Initializable{
 	Map<Entity,ImageView> listEntityView = new HashMap<>();
 
 	ArrayList<ImageView> coeurs;
+	Image shadowImg;
 
 	@FXML
 	private Pane paneWindow;//Main avec tout les autres pane dedans
@@ -51,13 +52,19 @@ public class MenuControler implements Initializable{
 	@FXML
 	private Pane PaneGround;
 	@FXML
+    private Pane shadowBackgroundPane;
+	@FXML
 	private Pane PaneSolid;
+	@FXML
+    private Pane shadowSolidPane;
 	@FXML
 	private Pane EntityPane;
 	@FXML
 	private Pane PlayerPane;
 	@FXML
 	private Pane PaneTop;
+	@FXML
+    private Pane shadowTopPane;
 
 	@FXML
 	private Pane PaneMenu;
@@ -108,9 +115,7 @@ public class MenuControler implements Initializable{
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				selectionArrow.relocate(playImg.getLayoutX()-60, playImg.getLayoutY()+120*newValue.intValue());
-			}
-
-		});
+			}});
 
 		World.isWorldLoaded.addListener(new ChangeListener<Boolean>() {
 
@@ -120,9 +125,7 @@ public class MenuControler implements Initializable{
 				System.out.println("Loading save");
 				if(newValue) {
 					loadMapTexture();				
-				}
-			}
-		});
+				}}});
 		
 		//Chargement dans la memoire de toutes les textures
 		textureLoading();		
@@ -130,31 +133,31 @@ public class MenuControler implements Initializable{
 
 	public void loadMapTexture() {
 		
-		//Affichage des toutes les couches de la map
+		//Affichage de toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
 
 		//Chargement du joueur
-		affichageEntitys();
 		World.loadPlayer();
-	
-		for(int numCoeur=World.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
-			coeurs.add(new ImageView(dicoImageItemTextureMap.get(2)));
-		}
-
-		updateHearts();
-
-		for(ImageView coeur:coeurs){
-			PaneHUD.getChildren().add(coeur);
-		}
-
-		World.player.getPV().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				updateHearts();
+		
+		//Chargement des ImageView des entites
+		affichageEntitys();
+		
+		//Chargement de l'HUD
+		hudLoading();
+		
+		//Ajout de l'affichage des ombres si la map est a l'interieur
+		//if(!World.currentMap.isOutside())
+		shadowBackgroundPane.getChildren().clear();
+		shadowSolidPane.getChildren().clear();
+		shadowTopPane.getChildren().clear();
+		for(int x=0; x < World.currentMap.getWidth() ;x++) {
+			for(int y=0; y < World.currentMap.getWidth() ;y++) {
+				createShadow(shadowBackgroundPane, World.currentMap.getTileTerrain(x, y),x,y);
+				createShadow(shadowSolidPane, World.currentMap.getTile(x, y),x,y);
+				createShadow(shadowTopPane, World.currentMap.getTileTop(x, y),x,y);
 			}
-		});
-
-
+		}
+		
 		//Ajout d'un Listener si la map change
 		World.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
 			@Override
@@ -172,6 +175,7 @@ public class MenuControler implements Initializable{
 			}
 		});
 
+		//Demarage des la gameloop
 		World.loadGameLoop();
 	}
 
@@ -187,7 +191,43 @@ public class MenuControler implements Initializable{
 			e.printStackTrace();
 		}
 	}
+	
+	private void hudLoading() {
+		for(int numCoeur=World.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
+			coeurs.add(new ImageView(dicoImageItemTextureMap.get(2)));
+		}
 
+		updateHearts();
+
+		for(ImageView coeur:coeurs){
+			PaneHUD.getChildren().add(coeur);
+		}
+
+		World.player.getPV().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				updateHearts();
+			}
+		});
+	}
+	
+	private void createShadow(Pane pane, Tile tile, int x, int y) {
+		if(!(tile instanceof tileVoid)) {
+			ImageView shadow = new ImageView();
+			shadow.setImage(shadowImg);
+			shadow.minWidth(32);shadow.maxWidth(32);shadow.minHeight(32);shadow.maxHeight(32);
+			shadow.relocate(y*32, x*32);
+			shadow.setOpacity(World.currentMap.getTile(x, y).light.doubleValue()/4);
+			tile.light.addListener(new ChangeListener<Number>() {
+				@Override
+				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+					shadow.setOpacity(newValue.doubleValue()/4);
+				}
+			});
+			pane.getChildren().add(shadow);
+		}
+	}
+	
 	private void textureLoading() {
 		dicoImageTileTextureMap = new HashMap<>();
 		dicoImageItemTextureMap = new HashMap<>();
@@ -197,8 +237,12 @@ public class MenuControler implements Initializable{
 		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
 		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
 		loadAnimationPlayer(dicoImageAnimationPlayer, 28, 4);
-		//loadAnimation(dicoImageAnimationEntity, 28,4);
-
+		//TODO loadAnimation(dicoImageAnimationEntity, 28,4);
+		try {
+			shadowImg=SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/shadow.png").toURI().toURL()),null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		coeurs = new ArrayList<ImageView>();
 	}
@@ -274,8 +318,9 @@ public class MenuControler implements Initializable{
 	}
 	private void affichageEntity(ImageView i,Entity e) {
 		i = new ImageView();
+		System.out.println(e+" added");
 		listEntityView.put(e,i);
-		i.setId(e.getId());
+		i.setId(""+e.primaryKey);
 		i.setFitWidth(32);
 		i.setFitHeight(64);
 		i.setX(World.player.coordonnes.getX());
@@ -286,6 +331,31 @@ public class MenuControler implements Initializable{
 		
 		if(e.getId().equals("Player")) {
 			i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 24, 32, 0, 2).getTexture(), null));
+			paneGame.layoutXProperty().bind(e.coordonnes.getXpro().multiply(-32).add(432));
+			paneGame.layoutYProperty().bind(e.coordonnes.getYpro().multiply(-32).add(320));
+			e.etatDeplacement.addListener(
+					new ChangeListener<Number>() {
+
+						@Override
+						public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
+
+							switch(e.direction.getDirection()) {
+							case Direction.North:
+								listEntityView.get(e).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)));
+								break;
+							case Direction.West:
+								listEntityView.get(e).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+28));
+								break;
+							case Direction.South:
+								listEntityView.get(e).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+56));
+								break;
+							case Direction.East:
+								listEntityView.get(e).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+84));
+								break;
+							}
+						}
+					}
+					);
 			PlayerPane.getChildren().add(i);
 		}else {
 			i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 32, 48, 0, 0).getTexture(), null));
@@ -294,12 +364,28 @@ public class MenuControler implements Initializable{
 
 	}
 
-	private void affichageDuJoueur(ImageView i,Entity e) {
-		affichageEntity(i, e);
-		paneGame.layoutXProperty().bind(e.coordonnes.getXpro().multiply(-32).add(432));
-		paneGame.layoutYProperty().bind(e.coordonnes.getYpro().multiply(-32).add(320));
-	}
 	private void affichageEntitys() {	
+		//Supprime tout les imageview d'entites inutilisee
+		for(ImageView img : listEntityView.values()) {
+			boolean found = false;
+			for(Entity entity : World.currentMap.getEntity()) {
+				if(img.getId().equals(entity.primaryKey)) {
+					found=true;
+					break;
+				}
+			}
+			if(!found) {
+				System.out.println(img+" removed");
+				listEntityView.remove(img);
+			}
+			
+		}
+		
+		//Cree les imageviews des entites
+		for(Entity entity:World.currentMap.getEntity()) {
+			if(entity != null)
+				affichageEntity(new ImageView(), entity);
+		}
 		
 		World.currentMap.entity.addListener(new ListChangeListener<Entity>(){
 
@@ -309,32 +395,7 @@ public class MenuControler implements Initializable{
 					
 					for (Entity addEntity : c.getAddedSubList()) {
 
-						if(addEntity.getId().equals("Player")) {
-							affichageDuJoueur(listEntityView.get(addEntity),addEntity);
-							addEntity.etatDeplacement.addListener(
-									new ChangeListener<Number>() {
-
-										@Override
-										public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
-
-											switch(addEntity.direction.getDirection()) {
-											case Direction.North:
-												listEntityView.get(addEntity).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)));
-												break;
-											case Direction.West:
-												listEntityView.get(addEntity).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+28));
-												break;
-											case Direction.South:
-												listEntityView.get(addEntity).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+56));
-												break;
-											case Direction.East:
-												listEntityView.get(addEntity).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+84));
-												break;
-											}
-										}
-									}
-									);
-						}else {
+						if(!addEntity.getId().equals("Player")){
 						
 							affichageEntity(listEntityView.get(addEntity),addEntity);
 							addEntity.etatDeplacement.addListener(
@@ -369,12 +430,9 @@ public class MenuControler implements Initializable{
 														[observable.getValue().intValue() / 3 + 84]);
 												break;
 											}
-										}
-									}
-								);
-						}
-					}
-				}
+											
+								}});
+						}}}
 
 			}
 		});
