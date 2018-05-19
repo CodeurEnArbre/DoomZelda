@@ -9,7 +9,7 @@ public abstract class Tile {
 	public static final int Max_Light = 4;
 	public static final int Min_Light = 0;
 	
-	public IntegerProperty light = new SimpleIntegerProperty(4);
+	public IntegerProperty light = new SimpleIntegerProperty(2);
 	protected int id;
 
 	public Tile(int id) {
@@ -33,16 +33,16 @@ public abstract class Tile {
 		light.add(i);
 	}	
 	
-	//solid
+	//Si la tile est solid
 	public boolean solid() {
 		return true;
 	}
 
-	//quand on touche
+	//Quand on touche
 	public void Action(Entity e){/*Nothing*/}
 	public void distant(Entity e) {/*Nothing*/}
 	
-	//quand on marche dessus
+	//Quand on marche dessus
 	public void onEntityOver(Entity e) {/*Nothing*/}
 	public void leaveEntity(Entity e) {/*Nothing*/}
 
