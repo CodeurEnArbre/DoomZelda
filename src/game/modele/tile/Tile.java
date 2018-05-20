@@ -37,6 +37,9 @@ public abstract class Tile {
 	public boolean solid() {
 		return true;
 	}
+	
+	//Quand on l'update
+	public void onUpdate() {/*Nothing*/}
 
 	//Quand on touche
 	public void Action(Entity e){/*Nothing*/}
@@ -49,4 +52,5 @@ public abstract class Tile {
 	//passe en dessous
 	public void EntityUnder(Entity e) {/*Nothing*/}
 	public void EntityLeaveUnder(Entity e) {/*Nothing*/}
+	
 }

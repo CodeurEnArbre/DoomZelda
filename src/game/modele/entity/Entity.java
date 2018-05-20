@@ -148,7 +148,7 @@ public abstract class Entity {
 	public String getId() {
 		return this.id;
 	}
-	public final void update() {
+	public void update() { //TODO final enlevee
 		ce.act(this);
 	}
 	public abstract void active(Entity e);

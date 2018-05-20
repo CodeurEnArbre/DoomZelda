@@ -1,8 +1,6 @@
 package game.modele.tile.tileInteract;
 
-import game.modele.entity.Entity;
-
-public class tileBed extends tileInteract {
+public class tileBed extends TileInteract {
 
 	public enum Bed{
 		Bed_Bottom(122);

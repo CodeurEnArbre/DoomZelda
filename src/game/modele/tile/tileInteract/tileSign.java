@@ -1,8 +1,6 @@
 package game.modele.tile.tileInteract;
 
-import game.modele.entity.Entity;
-
-public class tileSign extends tileInteract{
+public class tileSign extends TileInteract{
 
 	public enum Sign{
 		Sign_Direction(43);

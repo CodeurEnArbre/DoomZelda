@@ -1,8 +1,6 @@
 package game.modele.tile.tileGround;
 
-import game.modele.entity.Entity;
-
-public class tileGrass extends tileGround{
+public class tileGrass extends TileGround{
 
 	public enum Grass{
 		Grass_BottomRight(3),

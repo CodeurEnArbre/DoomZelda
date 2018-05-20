@@ -1,6 +1,6 @@
 package game.modele.tile.tileGround;
 
-public class tileFloor extends tileGround{
+public class tileFloor extends TileGround{
 	
 	public enum Floor{
 		Floor_other(109);

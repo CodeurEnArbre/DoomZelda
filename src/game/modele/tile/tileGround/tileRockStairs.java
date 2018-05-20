@@ -1,6 +1,6 @@
 package game.modele.tile.tileGround;
 
-public class tileRockStairs extends tileGround {
+public class tileRockStairs extends TileGround {
 
 	public enum RockStairs{
 		RockStair_Top(9),

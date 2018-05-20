@@ -2,9 +2,9 @@ package game.modele.tile.tileGround;
 
 import game.modele.tile.Tile;
 
-public abstract class tileGround extends Tile{
+public abstract class TileGround extends Tile{
 
-	public tileGround(int id) {
+	public TileGround(int id) {
 		super(id);
 	}	
 }

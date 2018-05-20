@@ -1,6 +1,6 @@
 package game.modele.tile.tileGround;
 
-public class tileRock extends tileGround{
+public class tileRock extends TileGround{
 
 	public enum Rock{
 		Rock_BottomRight(6),

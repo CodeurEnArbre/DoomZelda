@@ -4,7 +4,7 @@ import game.modele.entity.Entity;
 import game.modele.utils.ActionConsumer.FunctionBank;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
 
-public class tileIce extends tileGround{
+public class tileIce extends TileGround{
 
 	public tileIce() {
 		super(16);

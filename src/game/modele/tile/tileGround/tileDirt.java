@@ -1,6 +1,6 @@
 package game.modele.tile.tileGround;
 
-public class tileDirt extends tileGround{
+public class tileDirt extends TileGround{
 
 	public enum Dirt{
 		Dirt_TopLeft(17),

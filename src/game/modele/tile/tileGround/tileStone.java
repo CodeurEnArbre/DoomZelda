@@ -2,7 +2,7 @@ package game.modele.tile.tileGround;
 
 import game.modele.entity.Entity;
 
-public class tileStone extends tileGround{
+public class tileStone extends TileGround{
 
 	public enum Stone{
 		SandStone(15);

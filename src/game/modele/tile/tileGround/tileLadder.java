@@ -1,7 +1,7 @@
 package game.modele.tile.tileGround;
 
 
-public class tileLadder extends tileGround{
+public class tileLadder extends TileGround{
 
 	public enum Ladder{
 		Ladder_Top(107),

@@ -1,7 +1,7 @@
 package game.modele.tile.tileGround;
 
 
-public class tileHouse extends tileGround{
+public class tileHouse extends TileGround{
 
 	public enum House{
 		House_TopLeft(58),

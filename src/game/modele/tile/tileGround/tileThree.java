@@ -1,8 +1,6 @@
 package game.modele.tile.tileGround;
 
-import game.modele.entity.Entity;
-
-public class tileThree extends tileGround{
+public class tileThree extends TileGround{
 
 	public enum Three{
 		Three_LeaveLeftTop(49),

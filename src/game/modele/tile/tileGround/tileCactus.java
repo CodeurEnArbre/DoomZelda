@@ -3,7 +3,7 @@ package game.modele.tile.tileGround;
 import game.modele.entity.Entity;
 import game.modele.entity.living.EntityLiving;
 
-public class tileCactus extends tileGround{
+public class tileCactus extends TileGround{
 
 	public tileCactus() {
 		super(27);
@@ -13,7 +13,7 @@ public class tileCactus extends tileGround{
 	public void Action(Entity e) {
 		if(e instanceof EntityLiving) {
 			((EntityLiving) e).perdrePV();
-			System.out.println(((EntityLiving) e).getPV());	
+			System.out.println(((EntityLiving) e).getPV().doubleValue());	
 		}
 	}
 }
