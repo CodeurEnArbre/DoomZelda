@@ -61,7 +61,7 @@ public class InGameMenu {
 	public static void setBind(KeyCode k) {
 		switch(selecterInOption.get()) {
 			case 0: bind1.setValue(k.toString());
-			System.out.println(bind1.get());
+		//System.out.println(bind1.get());
 		}
 		
 	}
