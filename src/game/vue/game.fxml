@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <Pane fx:id="paneWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="864.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controler.MenuControler">
    <children>
@@ -43,6 +45,31 @@
                </image></ImageView>
             <Pane fx:id="PaneOptions" disable="true" layoutX="-146.0" layoutY="-114.0" opacity="0.0" prefHeight="621.0" prefWidth="845.0" style="-fx-background-color: black;">
                <children>
+                  <Label fx:id="labelBind1" layoutX="500.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="48.0" style="-fx-font-weight: bold;" text="Z" textFill="WHITE">
+                     <font>
+                        <Font name="Impact" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelBind2" layoutX="500.0" layoutY="240.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="48.0" style="-fx-font-weight: bold;" text="S" textFill="WHITE">
+                     <font>
+                        <Font name="Impact" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelBind3" layoutX="500.0" layoutY="310.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="48.0" style="-fx-font-weight: bold;" text="D" textFill="WHITE">
+                     <font>
+                        <Font name="Impact" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelBind4" layoutX="500.0" layoutY="380.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="48.0" style="-fx-font-weight: bold;" text="Q" textFill="WHITE">
+                     <font>
+                        <Font name="Impact" size="22.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="selectorInOption" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../ressources/textures/optionsImg/selectorinoption.png" />
+                     </image>
+                  </ImageView>
                   <ImageView fx:id="optionsImg" fitHeight="125.0" fitWidth="500.0" layoutX="154.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../ressources/textures/optionsImg/optionImg.png" />

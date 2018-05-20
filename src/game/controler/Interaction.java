@@ -16,7 +16,14 @@ public class Interaction {
 			if(World.isWorldLoaded.get()) {
 				if(World.onPause.get()) {
 					if(InGameMenu.selectedButtonInGame.get() == 0) {
-						InGameMenu.enterOptions.set(true);
+						if(InGameMenu.enterMenu.get()) {
+							InGameMenu.enterOption.set(true);
+							if(k.isLetterKey()) {
+								InGameMenu.setBind(k);
+							}
+						}else {
+							InGameMenu.enterMenu.set(true);
+						}
 					}
 				}
 
@@ -34,10 +41,14 @@ public class Interaction {
 		if(k == KeyCode.ESCAPE) {
 			if(World.isWorldLoaded.get()) {
 				if(World.onPause.get()) {
-					if(!InGameMenu.enterOptions.get()) {
-						World.onPause.set(!World.onPause.get());
+					if(InGameMenu.enterMenu.get()) {
+						if(InGameMenu.enterOption.get()) {
+							InGameMenu.enterOption.set(false);
+						}else {
+							InGameMenu.enterMenu.set(false);
+						}
 					}else {
-						InGameMenu.enterOptions.set(false);			
+						World.onPause.set(!World.onPause.get());
 					}
 					World.playGameLoop();	
 				}else {
@@ -52,7 +63,12 @@ public class Interaction {
 		if(k == KeyCode.Z) {
 			if(World.isWorldLoaded.get()) {
 				if(World.onPause.get()) {
-					InGameMenu.selectionUp();
+					if(InGameMenu.enterMenu.get()) {
+						InGameMenu.selectionUpOption();
+						
+					}else {
+						InGameMenu.selectionUp();
+					}
 				}else {
 					World.player.moveUP.attente = false;
 					World.player.moveUP.active = true;
@@ -71,7 +87,11 @@ public class Interaction {
 		}else if(k == KeyCode.S){
 			if(World.isWorldLoaded.get()) {
 				if(World.onPause.get()) {
-					InGameMenu.selectionDown();
+					if(InGameMenu.enterMenu.get()) {
+						InGameMenu.selectionDownOption();
+					}else {
+						InGameMenu.selectionDown();
+					}
 				}else {
 					World.player.moveDown.attente = false;
 					World.player.moveDown.active = true;
@@ -111,6 +131,7 @@ public class Interaction {
 
 		}
 	}
+
 
 	/*
 	 * Set Direction

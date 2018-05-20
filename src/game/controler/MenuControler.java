@@ -26,6 +26,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -96,7 +97,20 @@ public class MenuControler implements Initializable{
     private ImageView saveInGameImg;
     @FXML
     private ImageView quitInGameImg;
-
+    
+    @FXML
+    private ImageView selectorInOption;
+    @FXML
+    private ImageView fowardImg;
+    @FXML
+    private Label labelBind1;
+    @FXML
+    private Label labelBind2;
+    @FXML
+    private Label labelBind3;
+    @FXML
+    private Label labelBind4;
+    
 	@FXML
 	private Button buttonReprendre;
 	
@@ -112,7 +126,7 @@ public class MenuControler implements Initializable{
 		World.onPause.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if(!InGameMenu.enterOptions.get()) {
+				if(!InGameMenu.enterMenu.get()) {
 					if(newValue) {
 						PaneMenu.setDisable(false);
 						PaneMenu.setOpacity(1.0);				
@@ -133,7 +147,7 @@ public class MenuControler implements Initializable{
 				selectionArrow.relocate(playImg.getLayoutX()-60, playImg.getLayoutY()+120*newValue.intValue());
 			}});
 		
-		//Listener de la fleche du menu ingame
+		//Listener du selecteur du menu ingame
 		InGameMenu.selectedButtonInGame.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -141,15 +155,21 @@ public class MenuControler implements Initializable{
 			}});
 		
 		//Listener de l'appuie d'"ENTRER" ou d'"ESCAPE" dans le menu inGame
-		InGameMenu.enterOptions.addListener(new ChangeListener<Boolean>() {
+		InGameMenu.enterMenu.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if(newValue) {
-					System.out.println(InGameMenu.selectedButtonInGame.get());
 					PaneOptions.setOpacity(1);		
 				}else {		
 					PaneOptions.setOpacity(0);
 				}
+			}});
+		
+		//Listener du selecteur dans les options
+		InGameMenu.selecterInOption.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*newValue.intValue());
 			}});
 		
 		World.isWorldLoaded.addListener(new ChangeListener<Boolean>() {
@@ -161,6 +181,18 @@ public class MenuControler implements Initializable{
 				if(newValue) {
 					loadMapTexture();				
 				}}});
+		
+		/*//Listener de l'appuie d'"ENTRER" ou d'"ESCAPE" dans le menu des options
+				InGameMenu.enterOption.addListener(new ChangeListener<Boolean>() {
+					@Override
+					public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+						if(newValue) {
+							InGameMenu.bindTouche();
+							
+						}else {		
+							//
+						}
+					}});*/
 		
 		//Chargement dans la memoire de toutes les textures
 		textureLoading();		
