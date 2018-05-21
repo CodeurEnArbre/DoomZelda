@@ -156,5 +156,9 @@ public abstract class Entity {
 	public void resetAnim() {
 		this.etatDeplacement.set(0);
 	}
+	
+	public String toString() {
+		return id;
+	}
 
 }

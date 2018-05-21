@@ -3,6 +3,7 @@ package game.modele.world;
 import java.util.ArrayList;
 
 import game.modele.entity.Entity;
+import game.modele.entity.tileEntity.TileEntity;
 import game.modele.tile.Tile;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -11,7 +12,7 @@ import javafx.collections.ObservableList;
 
 public class WorldData {
 	
-	private StringProperty zoneName;
+	private StringProperty zoneName=new SimpleStringProperty("null");
 	private Tile tileGround[][];
 	private Tile tiles[][];
 	private Tile tilesTop[][];
@@ -20,7 +21,7 @@ public class WorldData {
 	private boolean outSide;
 	
 	public WorldData(String zoneName, int width, int height, boolean outside, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {
-		this.zoneName=new SimpleStringProperty(zoneName);
+		this.zoneName.setValue(zoneName);
 		this.width=width;
 		this.height=height;
 		this.outSide=outside;
@@ -28,8 +29,10 @@ public class WorldData {
 		this.tiles=tiles;
 		this.tilesTop=tilesTop;
 		this.entity= FXCollections.observableArrayList();
-		for(Entity e : entitys)
+		for(Entity e : entitys) {
 			this.entity.add(e);
+			World.addKeyGameLoop(y -> e.update());
+		}
 	
 	}
 	
@@ -42,8 +45,10 @@ public class WorldData {
 		this.tiles=tiles;
 		this.tilesTop=tilesTop;
 		this.entity.clear();
-		for(Entity e : entitys)
+		for(Entity e : entitys) {
 			this.entity.add(e);
+			World.addKeyGameLoop(y -> e.update());
+		}
 		
 		this.zoneName.setValue(zoneName);
 	}

@@ -13,12 +13,16 @@ import javax.imageio.ImageIO;
 import game.InGameMenu;
 import game.MainMenu;
 import game.modele.entity.Entity;
+import game.modele.entity.living.EntityLiving;
+import game.modele.entity.tileEntity.EntityLight;
+import game.modele.entity.tileEntity.TileEntity;
 import game.modele.tile.Tile;
 import game.modele.tile.tileGround.tileVoid;
 import game.modele.utils.Direction;
 import game.modele.world.World;
 import game.vue.EntityLivingTexture;
 import game.vue.TextureLoader;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -295,13 +299,14 @@ public class MenuControler implements Initializable{
 			shadow.setImage(shadowImg);
 			shadow.minWidth(32);shadow.maxWidth(32);shadow.minHeight(32);shadow.maxHeight(32);
 			shadow.relocate(y*32, x*32);
-			shadow.setOpacity((4-World.currentMap.getTile(x, y).light.doubleValue())/Tile.Max_Light);
+			shadow.setOpacity((Tile.Max_Light-tile.light.doubleValue())/Tile.Max_Light);
 			tile.light.addListener(new ChangeListener<Number>() {
 				@Override
 				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-					shadow.setOpacity(newValue.doubleValue()/4);
+					shadow.setOpacity((Tile.Max_Light-tile.light.doubleValue())/Tile.Max_Light);
 				}
 			});
+		//	shadow.opacityProperty().bind(new SimpleIntegerProperty(Tile.Max_Light).subtract(tile.light).divide(Tile.Max_Light));
 			pane.getChildren().add(shadow);
 			return true;
 		}
@@ -438,13 +443,26 @@ public class MenuControler implements Initializable{
 					);
 			PlayerPane.getChildren().add(i);
 		}else {
-			i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 32, 48, 0, 0).getTexture(), null));
+			if(e instanceof EntityLiving)
+				i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 32, 48, 0, 0).getTexture(), null));
+			else if(e instanceof EntityLight)
+				i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 32, 112, 1, 0).getTexture(), null));
 			EntityPane.getChildren().add(i);
 		}
 
 	}
+	
+	private ImageView getEntityImageView(Entity e) {
+		ImageView img = null;
+		for(ImageView imageView:listEntityView.values())
+			if(imageView.getId().equals(e.getId())) {
+				return imageView;
+			}
+		
+		return img;
+	}
 
-	private void affichageEntitys() {	
+	private void affichageEntitys() {
 		//Supprime tout les imageview d'entites inutilisee
 		for(ImageView img : listEntityView.values()) {
 			boolean found = false;
@@ -455,7 +473,7 @@ public class MenuControler implements Initializable{
 				}
 			}
 			if(!found) {
-				System.out.println(img+" removed");
+				
 				listEntityView.remove(img);
 			}
 			
@@ -463,8 +481,25 @@ public class MenuControler implements Initializable{
 		
 		//Cree les imageviews des entites
 		for(Entity entity:World.currentMap.getEntity()) {
-			if(entity != null)
+			if(entity != null) {
 				affichageEntity(new ImageView(), entity);
+				if(entity instanceof TileEntity) {
+					((TileEntity) entity).getEtatProperty().addListener(new ChangeListener<Boolean>() {
+
+						@Override
+						public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+								Boolean newValue) {			
+							ImageView entityImg = getEntityImageView(entity);
+							if(((TileEntity) entity).getEtat() && entityImg != null)
+								entityImg.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(entity.getId(), 32, 112, 1, 0).getTexture(), null));
+					//		else
+					//Bug			entityImg.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(entity.getId(), 32, 112, 0, 0).getTexture(), null));
+							
+						}
+						
+					});
+				}
+			}
 		}
 		
 		World.currentMap.entity.addListener(new ListChangeListener<Entity>(){

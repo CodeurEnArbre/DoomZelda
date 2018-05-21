@@ -37,7 +37,7 @@ public class World {
 	}
 
 	//Ajoute des fonctions qui seront execute dans la gameloop
-	private static void addKeyGameLoop(EventHandler<ActionEvent> e) {
+	public static void addKeyGameLoop(EventHandler<ActionEvent> e) {
 		KeyFrame keyf = new KeyFrame(Duration.seconds(0.017),e);
 		GameLoop.getKeyFrames().add(keyf);
 	}
@@ -66,6 +66,7 @@ public class World {
 	 * Chargement de la map : creation du tableau utilisee par l'affichage
 	 * */
 	public static void loadWorld(String file, String worldName) {
+		
 		TileFactory.load();
 		try {
 			//Chargement des tiles
@@ -83,12 +84,13 @@ public class World {
 			Tile[][] tileTop=  makeTileGrid(width, height, tilesData);
 
 			tilesData.close();
-			
+			ArrayList<Entity> entitys = loadEntity(file);
 			if(worldName==null)
-				currentMap=new WorldData(name, width, height, outside, tileGround, tileSolid, tileTop, loadEntity(file));
+				currentMap=new WorldData(name, width, height, outside, tileGround, tileSolid, tileTop, entitys);
 			else {
-				currentMap.newWorld(worldName, width, height, outside, tileGround, tileSolid, tileTop, loadEntity(file));
+				currentMap.newWorld(worldName, width, height, outside, tileGround, tileSolid, tileTop, entitys);
 			}
+			
 			isWorldLoaded.setValue(true);
 		}catch(IOException e) {
 			System.out.println("Impossible de charger la map");

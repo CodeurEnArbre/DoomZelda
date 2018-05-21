@@ -25,6 +25,11 @@ public class Interaction {
 							InGameMenu.enterMenu.set(true);
 						}
 					}
+				}else {//In the game
+					System.out.println("Terrain light "+World.currentMap.getTileTerrain((int)World.player.coordonnes.getY(), (int)World.player.coordonnes.getX()).getLight());
+					System.out.println("Solid light "+World.currentMap.getTile((int)World.player.coordonnes.getY(), (int)World.player.coordonnes.getX()).getLight());
+					System.out.println("Top light "+World.currentMap.getTileTop((int)World.player.coordonnes.getY(), (int)World.player.coordonnes.getX()).getLight());
+					World.currentMap.getTileTerrain((int)World.player.coordonnes.getY(), (int)World.player.coordonnes.getX()).setLight(1);
 				}
 
 			}else {

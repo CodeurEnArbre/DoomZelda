@@ -9,7 +9,7 @@ public abstract class Tile {
 	public static final int Max_Light = 4;
 	public static final int Min_Light = 0;
 	
-	public IntegerProperty light = new SimpleIntegerProperty(4);
+	public IntegerProperty light = new SimpleIntegerProperty(0);
 	protected int id;
 
 	public Tile(int id) {
@@ -31,7 +31,11 @@ public abstract class Tile {
 	
 	public void modifLight(int i) {
 		light.add(i);
-	}	
+	}
+	
+	public void setLight(int i) {
+		light.set(i);
+	}
 	
 	//Si la tile est solid
 	public boolean solid() {

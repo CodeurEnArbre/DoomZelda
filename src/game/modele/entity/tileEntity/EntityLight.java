@@ -8,7 +8,7 @@ import game.modele.world.World;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class EntityLight extends TileEntity{
+public abstract class EntityLight extends TileEntity{
 
 	public IntegerProperty lightLvl;
 	
@@ -20,9 +20,15 @@ public class EntityLight extends TileEntity{
 
 	@Override
 	public void update() {
-		for(double x=coordonnes.getX()-lightLvl.intValue(); x < World.currentMap.getWidth() && x < coordonnes.getX()+lightLvl.intValue();x++)
-			for(double y=coordonnes.getY()-lightLvl.intValue(); y < World.currentMap.getHeight() && y < coordonnes.getY()+lightLvl.intValue();y++)
-				World.currentMap.getTile((int)x, (int)y).modifLight(Tile.Max_Light);
+		if(etat.get())
+		for(double y=coordonnes.getX()-lightLvl.intValue(); y < World.currentMap.getWidth() && y < coordonnes.getX()+lightLvl.intValue();y++)
+			for(double x=coordonnes.getY()-lightLvl.intValue(); x < World.currentMap.getHeight() && x < coordonnes.getY()+lightLvl.intValue();x++) {
+				World.currentMap.getTileTerrain((int)x, (int)y).setLight(Tile.Max_Light);
+				World.currentMap.getTile((int)x, (int)y).setLight(Tile.Max_Light);
+				World.currentMap.getTileTop((int)x, (int)y).setLight(Tile.Max_Light);
+				this.setCoordoner(new Coordonnees(x,y));
+			}
+		
 	}
 
 	@Override
@@ -33,7 +39,16 @@ public class EntityLight extends TileEntity{
 
 	@Override
 	public void active(Entity e) {
-		// TODO Auto-generated method stub
+		super.setEtat(!etat.get());
+		if(!etat.get()) {
+			for(double y=coordonnes.getX()-lightLvl.intValue(); y < World.currentMap.getWidth() && y < coordonnes.getX()+lightLvl.intValue();y++)
+				for(double x=coordonnes.getY()-lightLvl.intValue(); x < World.currentMap.getHeight() && x < coordonnes.getY()+lightLvl.intValue();x++) {
+					World.currentMap.getTileTerrain((int)x, (int)y).setLight(Tile.Min_Light);
+					World.currentMap.getTile((int)x, (int)y).setLight(Tile.Min_Light);
+					World.currentMap.getTileTop((int)x, (int)y).setLight(Tile.Min_Light);
+					this.setCoordoner(new Coordonnees(x,y));
+				}
+		}
 		
 	}
 

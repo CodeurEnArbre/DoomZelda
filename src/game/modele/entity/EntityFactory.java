@@ -24,8 +24,11 @@ public class EntityFactory {
 						.newInstance(castParams(EntityTP.class.getConstructors()[0],params));
 				break;
 			case "TikiTorchSmall":
-				e = (TikiTorchSmall) TikiTorchSmall.class.getConstructors()[0]
-						.newInstance(castParams(TikiTorchSmall.class.getConstructors()[0],params));
+				String[] param = params.split(",");
+				System.out.println(" val is "+Boolean.parseBoolean(param[3]));
+				e = (TikiTorchSmall) TikiTorchSmall.class.getConstructors()[0].newInstance(new Coordonnees(Double.parseDouble(param[0]), Double.parseDouble(param[1])), new Direction(Integer.parseInt(param[2])),Boolean.parseBoolean(param[3]),Integer.parseInt(param[4]));
+				//e = (TikiTorchSmall) TikiTorchSmall.class.getConstructors()[0]
+				//		.newInstance(castParams(TikiTorchSmall.class.getConstructors()[0],params));
 				break;
 			case "Zombie":
 				e = (Entity) Zombie.class.getConstructors()[0]
