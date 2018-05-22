@@ -11,7 +11,7 @@ public class Interaction {
 	 * Assignation des booleans de direction � l'enfoncement de la touche
 	 * */
 	public static void KeyInteractDown(KeyCode k) {
-
+		
 		if(k == KeyCode.ENTER) {
 			if(World.isWorldLoaded.get()) {
 				if(World.onPause.get()) {

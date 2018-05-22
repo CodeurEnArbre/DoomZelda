@@ -33,108 +33,7 @@ public class TileFactory {
 	private static Map<Integer,Tile> dicoTile = new HashMap<Integer, Tile>();
 
 	public static Tile get(int id) {
-		return load(id);
-		//return dicoTile.get(id);
-	}
-	
-	private static Tile load(int id) {
-		if( id == 0 ) return new tileVoid();
-		if( id == 1 ) return new tileGrass();
-		if( id == 2 ) return new tileGrass();
-		if( id == 3 ) return new tileGrass(Grass.Grass_BottomRight);
-		if( id == 4 ) return new tileGrass(Grass.Grass_Bottom);
-		if( id == 5 ) return new tileGrass(Grass.Grass_BottomLeft);
-		if( id == 6 ) return new tileRock(Rock.Rock_BottomRight);
-		if( id == 7 ) return new tileRock(Rock.Rock_Bottom);
-		if( id == 8 ) return new tileRock(Rock.Rock_BottomLeft);
-		if( id == 9 ) return new tileRockStairs(RockStairs.RockStair_Top);
-		if( id == 10 ) return new tileRockStairs(RockStairs.RockStair_Bottom);
-		if( id == 11 ) return new tileRockStairs(RockStairs.RockStair_Left);
-		if( id == 12 ) return new tileRockStairs(RockStairs.RockStair_Right);
-		if( id == 13 ) return new tileRock(Rock.Rock_Stone);
-		if( id == 14 ) return new tileStone();
-		if( id == 15 ) return new tileStone(Stone.SandStone);
-		if( id == 16 ) return new tileIce();
-		if( id == 17 ) return new tileDirt(Dirt.Dirt_TopLeft);
-		if( id == 18 ) return new tileDirt(Dirt.Dirt_TopRight);
-		if( id == 19 ) return new tileGrass(Grass.Grass_Right);
-		if( id == 20 ) return new tileDirt();
-		if( id == 21 ) return new tileGrass(Grass.Grass_Left);
-		if( id == 22 ) return new tileRock(Rock.Rock_Right);
-		if( id == 23 ) return new tileRock();
-		if( id == 24 ) return new tileRock(Rock.Rock_Left);
-		if( id == 25 ) return new tileRock(Rock.Rock_CornerBottomRight);
-		if( id == 26 ) return new tileRock(Rock.Rock_CornerBottomLeft);
-		if( id == 27 ) return new tileCactus();
-
-		if( id == 33 ) return new tileDirt(Dirt.Dirt_BotLeft);
-		if( id == 34 ) return new tileDirt(Dirt.Dirt_BotRight);
-		if( id == 35 ) return new tileGrass(Grass.Grass_TopRight);
-		if( id == 36 ) return new tileGrass(Grass.Grass_Top);
-		if( id == 37 ) return new tileGrass(Grass.Grass_TopLeft);
-		if( id == 38 ) return new tileRock(Rock.Rock_TopRight);
-		if( id == 39 ) return new tileRock(Rock.Rock_Top);
-		if( id == 40 ) return new tileRock(Rock.Rock_TopLeft);
-		if( id == 41 ) return new tileRock(Rock.Rock_CornerTopRight);
-		if( id == 42 ) return new tileRock(Rock.Rock_CornerTopLeft);
-		if( id == 43 ) return new tileSign(Sign.Sign_Direction);
-		if( id == 44 ) return new tileSign();
-
-		if( id == 49 ) return new tileThree(Three.Three_LeaveLeftTop);
-		if( id == 50 ) return new tileThree(Three.Three_LeaveTop);
-		if( id == 51 ) return new tileThree(Three.Three_LeaveRightTop);
-		if( id == 52 ) return new tileThree(Three.DeadThree_LeftTop);
-		if( id == 53 ) return new tileThree(Three.DeadThree_Top);
-		if( id == 54 ) return new tileThree(Three.DeadThree_RightTop);
-
-		if( id == 58 ) return new tileHouse(House.House_TopLeft);
-		if( id == 59 ) return new tileHouse(House.House_TopCenter1);
-		if( id == 60 ) return new tileHouse(House.House_TopCenter2);
-		if( id == 61 ) return new tileHouse(House.House_TopRight);
-
-		if( id == 65 ) return new tileThree(Three.Three_LeaveBotLeft);
-		if( id == 66 ) return new tileThree(Three.Three_LeaveBot);
-		if( id == 67 ) return new tileThree(Three.Three_LeaveBotRight);
-		if( id == 68 ) return new tileThree(Three.DeadThree_LeftCenter);
-		if( id == 69 ) return new tileThree(Three.DeadThree_Center);
-		if( id == 70 ) return new tileThree(Three.DeadThree_RightCenter);
-
-		if( id == 74 ) return new tileHouse(House.House_CenterLeft);
-		if( id == 75 ) return new tileHouse(House.House_CenterDoor);
-		if( id == 76 ) return new tileHouse(House.House_Center);
-		if( id == 77 ) return new tileHouse(House.House_CenterRight);
-		
-		if( id == 81 ) return new tileThree(Three.Three_RootLeft);
-		if( id == 82 ) return new tileThree(Three.Three_Root);
-		if( id == 83 ) return new tileThree(Three.Three_RootRight);
-		if( id == 84 ) return new tileThree(Three.DeadThree_LeftBot);
-		if( id == 85 ) return new tileThree(Three.DeadThree_Bot);
-		if( id == 86 ) return new tileThree(Three.DeadThree_RightBot);
-
-		if( id == 90 ) return new tileHouse(House.House_BotLeft);
-		if( id == 91 ) return new tileHouse(House.House_Door);
-		if( id == 92 ) return new tileHouse(House.House_Bot);
-		if( id == 93 ) return new tileHouse(House.House_BotRight);
-
-		if( id == 97 ) return new tileThree(Three.Bush_TopLeft);
-		if( id == 98 ) return new tileThree(Three.Bush_TopRight);
-
-		if( id == 106 ) return new tileBed();
-		if( id == 107 ) return new tileLadder(Ladder.Ladder_Top);
-		if( id == 108 ) return new tileFloor();
-		if( id == 109 ) return new tileFloor(Floor.Floor_other);
-
-		if( id == 113 ) return new tileThree(Three.Bush_BotLeft);
-		if( id == 114 ) return new tileThree(Three.Bush_BotRight);
-		
-		if( id == 123 ) return new tileLadder();
-		
-		if( id == 122 ) return new tileBed(Bed.Bed_Bottom);
-
-		if( id == 139 ) return new tileLadder(Ladder.Ladder_Bottom);
-		
-		return null;
-
+		return dicoTile.get(id);
 	}
 	
 	public static void load() {
@@ -233,6 +132,9 @@ public class TileFactory {
 
 			dicoTile.put(139,new tileLadder(Ladder.Ladder_Bottom));
 
+			
+			
+			
 	}
 
 

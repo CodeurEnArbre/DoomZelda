@@ -12,7 +12,7 @@ public class tileIce extends TileGround{
 
 	@Override
 	public void onEntityOver(Entity e) {
-		e.slow = 0.5;
+		e.slow = 0.4;
 		e.addAction(new InfiniteActionConsumer(FunctionBank.IceMove));
 	}
 

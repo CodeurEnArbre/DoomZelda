@@ -3,8 +3,11 @@ package game.modele.utils.ActionConsumer;
 import java.util.function.Consumer;
 
 import game.modele.entity.Entity;
+import game.modele.tile.Tile;
+import game.modele.utils.Coordonnees;
+import game.modele.world.World;
 
-/* Cette Class référence toutes les fonctions applicables sur les entitées
+/* Cette Class rï¿½fï¿½rence toutes les fonctions applicables sur les entitï¿½es
  *
  */
 public enum FunctionBank {	

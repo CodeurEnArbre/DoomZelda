@@ -22,6 +22,7 @@ import game.modele.utils.Direction;
 import game.modele.world.World;
 import game.vue.EntityLivingTexture;
 import game.vue.TextureLoader;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -43,7 +44,9 @@ public class MenuControler implements Initializable{
 	Map<Integer,Image> dicoImageAnimationPlayer;
 	Map<Integer,Image[]> dicoImageAnimationEntity; 
 	Map<Entity,ImageView> listEntityView = new HashMap<>();
-
+	Map<Integer,Image> dicoShadow;
+	
+	
 	ArrayList<ImageView> coeurs;
 	Image shadowImg;
 
@@ -57,11 +60,7 @@ public class MenuControler implements Initializable{
 	@FXML
 	private Pane PaneGround;
 	@FXML
-    private Pane shadowBackgroundPane;
-	@FXML
 	private Pane PaneSolid;
-	@FXML
-    private Pane shadowSolidPane;
 	@FXML
 	private Pane EntityPane;
 	@FXML
@@ -274,43 +273,31 @@ public class MenuControler implements Initializable{
 	}
 	
 	private void affichageOmbres() {
-		shadowBackgroundPane.getChildren().clear();
-		shadowSolidPane.getChildren().clear();
 		shadowTopPane.getChildren().clear();
 		if(!World.currentMap.isOutside())
 		for(int x=0; x < World.currentMap.getWidth() ;x++) {
-			for(int y=0; y < World.currentMap.getWidth() ;y++) {
-				boolean isShadow=false;
-				
-				isShadow=createShadow(shadowTopPane, World.currentMap.getTileTop(x, y),x,y);
-				
-				if(!isShadow)
-					isShadow=createShadow(shadowSolidPane, World.currentMap.getTile(x, y),x,y);
-				
-				if(!isShadow)
-					isShadow=createShadow(shadowBackgroundPane, World.currentMap.getTileTerrain(x, y),x,y);	
-			}
+			for(int y=0; y < World.currentMap.getHeight() ;y++) {
+					createShadow(shadowTopPane, World.currentMap.getShadow(x, y),x,y);
+				}
 		}
 	}
 	
-	private boolean createShadow(Pane pane, Tile tile, int x, int y) {
-		if(!(tile instanceof tileVoid)) {
-			ImageView shadow = new ImageView();
-			shadow.setImage(shadowImg);
-			shadow.minWidth(32);shadow.maxWidth(32);shadow.minHeight(32);shadow.maxHeight(32);
-			shadow.relocate(y*32, x*32);
-			shadow.setOpacity((Tile.Max_Light-tile.light.doubleValue())/Tile.Max_Light);
-			tile.light.addListener(new ChangeListener<Number>() {
-				@Override
-				public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-					shadow.setOpacity((Tile.Max_Light-tile.light.doubleValue())/Tile.Max_Light);
-				}
-			});
-		//	shadow.opacityProperty().bind(new SimpleIntegerProperty(Tile.Max_Light).subtract(tile.light).divide(Tile.Max_Light));
-			pane.getChildren().add(shadow);
-			return true;
-		}
-		return false;
+	private void createShadow(Pane pane, IntegerProperty shadow, int x, int y) {
+		ImageView i = new ImageView();
+		i.relocate(x * 32, y * 32);
+		i.setImage(dicoShadow.get(0));
+		i.minHeight(32);
+		i.minWidth(32);
+		i.maxHeight(32);
+		i.maxWidth(32);
+		shadow.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				i.setImage(dicoShadow.get(observable.getValue().intValue() <= 15 ? observable.getValue() : 15));
+			}
+		});		
+		
+		pane.getChildren().add(i);
 	}
 	
 	private void textureLoading() {
@@ -318,24 +305,27 @@ public class MenuControler implements Initializable{
 		dicoImageItemTextureMap = new HashMap<>();
 		dicoImageAnimationPlayer = new HashMap<>();
 		dicoImageAnimationEntity = new HashMap<>();
-
+		dicoShadow = new HashMap<>();
+		
 		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
 		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
 		loadAnimationPlayer(dicoImageAnimationPlayer, 28, 4);
-		//TODO loadAnimation(dicoImageAnimationEntity, 28,4);
-		try {
-			shadowImg=SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/shadow.png").toURI().toURL()),null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
-		coeurs = new ArrayList<ImageView>();
+		coeurs = new ArrayList<>();
+		
+		for(int i = 0; i < 16;i++)
+		
+		dicoShadow.put(i,SwingFXUtils.toFXImage(
+				EntityLivingTexture.getEntityTexture("darkness",32,32,i,0).getTexture(), null));
+		
+		
+		
 	}
-
+	
 	private void LoadDicoMap(Map<Integer,Image> dico,int imageWidthPixels, int imageHeightPixels, int imageWidth, int imageHeight, String textureMapName) {
 		for(int x = 0; x < imageWidth*imageHeight; x++) {
 			dico.put(x + 1,SwingFXUtils.toFXImage(TextureLoader.getTextureMapImage(textureMapName,imageWidthPixels,imageHeightPixels,imageWidth,imageHeight,x).getTexture(), null));
-		}
+			}
 	}
 	
 	private void loadAnimationPlayer(Map<Integer,Image> dico, int frame, int animation) {
