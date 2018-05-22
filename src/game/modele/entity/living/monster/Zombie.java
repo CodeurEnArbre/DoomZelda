@@ -18,7 +18,7 @@ public class Zombie extends EntityMonster{
 
 	@Override
 	public void active(Entity e) {
-		System.out.println("I'm a "+this.id);
+
 	}
 
 	@Override

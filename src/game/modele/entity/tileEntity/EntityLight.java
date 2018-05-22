@@ -20,9 +20,9 @@ public abstract class EntityLight extends TileEntity{
 		this.lightLvl = lightLvl;
 		
 		
-			
-			
-			
+		
+		
+		
 		
 	}
 

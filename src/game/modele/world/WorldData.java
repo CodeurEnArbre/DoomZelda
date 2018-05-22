@@ -1,5 +1,6 @@
 package game.modele.world;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -119,32 +120,44 @@ public class WorldData {
 	}
 
 	public void AddTorch(int x,int y,int i,int pas) {
-		ArrayList<IntegerProperty> tmp = new ArrayList<>();
-		AddLight(tmp, x, y, i,pas);
+		ArrayList<SimpleEntry<Integer,Integer>> tmp = new ArrayList<>();
+		tmp.add(new SimpleEntry<Integer, Integer>(x,y));
+		int current = 0;
+		addLight(tmp, current, i, pas);
+
 	}
 
-	public void AddLight(ArrayList<IntegerProperty> tmp,int x,int y,int i,int pas) {
+	public void addLight(ArrayList<SimpleEntry<Integer,Integer>> tmp, int current , int i , int pas) {
 		if(i <= 0) return;
 
-		if(tmp.contains(luminosity[x][y])) return;
+		int lenght = tmp.size();
+		for(int p = current; p < lenght;p++) {			
+			SimpleEntry<Integer,Integer> si = tmp.get(p);
+			if(!tmp.contains(new SimpleEntry<Integer, Integer>(si.getKey() + 1,si.getValue())))
+				tmp.add(new SimpleEntry<Integer, Integer>(si.getKey() + 1,si.getValue()));
 
-		System.out.println(x + ":" + y + "  : " + i);
+			if(!tmp.contains(new SimpleEntry<Integer, Integer>(si.getKey(),si.getValue() + 1)))
+				tmp.add(new SimpleEntry<Integer, Integer>(si.getKey(),si.getValue() + 1));
 
-		tmp.add(luminosity[x][y]);
-		luminosity[x][y].set(i);
+			if(!tmp.contains(new SimpleEntry<Integer, Integer>(si.getKey() - 1,si.getValue())))
+				tmp.add(new SimpleEntry<Integer, Integer>(si.getKey() - 1,si.getValue()));
 
-		if(x + 1 > World.currentMap.getHeight()) return;
+			if(!tmp.contains(new SimpleEntry<Integer, Integer>(si.getKey(),si.getValue() - 1)))
+				tmp.add(new SimpleEntry<Integer, Integer>(si.getKey(),si.getValue() - 1));
 
-		AddLight(tmp,x + 1, y, i-pas,pas);
-		if(x - 1 < 0) return;
-		AddLight(tmp,x - 1, y, i-pas,pas);
-		if(y + 1 > World.currentMap.getWidth())return;
-		AddLight(tmp,x , y  +1, i-pas,pas);
-		if(y - 1 < 0) return;
-		AddLight(tmp,x, y - 1, i-pas,pas);
+			if(si.getKey().intValue() < this.getHeight() 
+					&& si.getKey().intValue() >= 0 
+					&& si.getValue().intValue() < this.getWidth() 
+					&& si.getValue().intValue() >= 0) {
+				World.currentMap.luminosity[si.getKey()][si.getValue()].set(i);
+				System.out.println(i);
+			}
 
+			current++;
+		}
+
+		addLight(tmp, current, i - pas, pas);
 	}
-
 
 
 
