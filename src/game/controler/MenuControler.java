@@ -106,6 +106,8 @@ public class MenuControler implements Initializable{
     @FXML
     private ImageView fowardImg;
     @FXML
+    private ImageView temoinAssignation;
+    @FXML
     private Label labelBind1;
     @FXML
     private Label labelBind2;
@@ -185,17 +187,26 @@ public class MenuControler implements Initializable{
 					loadMapTexture();				
 				}}});
 		
-		/*//Listener de l'appuie d'"ENTRER" ou d'"ESCAPE" dans le menu des options
-				InGameMenu.enterOption.addListener(new ChangeListener<Boolean>() {
-					@Override
-					public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-						if(newValue) {
-							InGameMenu.bindTouche();
-							
-						}else {		
-							//
-						}
-					}});*/
+		//Listener du témoin graphique d'assignation des touches
+		InGameMenu.enterOption.addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if(newValue) {
+					temoinAssignation.setOpacity(1);
+				}else {
+					temoinAssignation.setOpacity(0);
+				}
+				
+			}
+			
+		});
+		
+		//Bind des valeurs d'assignation de touches
+		labelBind1.textProperty().bind(InGameMenu.bind1);
+		labelBind2.textProperty().bind(InGameMenu.bind2);
+		labelBind3.textProperty().bind(InGameMenu.bind3);
+		labelBind4.textProperty().bind(InGameMenu.bind4);
 		
 		//Chargement dans la memoire de toutes les textures
 		textureLoading();		

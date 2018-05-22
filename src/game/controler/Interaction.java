@@ -10,6 +10,12 @@ public class Interaction {
 	/*
 	 * Assignation des booleans de direction � l'enfoncement de la touche
 	 * */
+	
+	public static KeyCode AVANCER = KeyCode.Z;
+	public static KeyCode RECULER = KeyCode.S;
+	public static KeyCode GAUCHE = KeyCode.Q;
+	public static KeyCode DROITE = KeyCode.D;
+	
 	public static void KeyInteractDown(KeyCode k) {
 		
 		if(k == KeyCode.ENTER) {
@@ -18,9 +24,7 @@ public class Interaction {
 					if(InGameMenu.selectedButtonInGame.get() == 0) {
 						if(InGameMenu.enterMenu.get()) {
 							InGameMenu.enterOption.set(true);
-							if(k.isLetterKey()) {
-								InGameMenu.setBind(k);
-							}
+							
 						}else {
 							InGameMenu.enterMenu.set(true);
 						}
@@ -62,10 +66,10 @@ public class Interaction {
 			}
 		}
 
-		if(k == KeyCode.Z) {
+		if(k == AVANCER) {
 			if(World.isWorldLoaded.get()) {
-				if(World.onPause.get()) {
-					if(InGameMenu.enterMenu.get()) {
+				if(World.onPause.get() && !InGameMenu.enterOption.get()) {
+					if(InGameMenu.enterMenu.get() ) {
 						InGameMenu.selectionUpOption();
 						
 					}else {
@@ -86,10 +90,10 @@ public class Interaction {
 					MainMenu.selectedButton.set(MainMenu.selectedButton.get()-1);
 			}
 
-		}else if(k == KeyCode.S){
+		}else if(k == RECULER){
 			if(World.isWorldLoaded.get()) {
-				if(World.onPause.get()) {
-					if(InGameMenu.enterMenu.get()) {
+				if(World.onPause.get() && !InGameMenu.enterOption.get()) {
+					if(InGameMenu.enterMenu.get() ) {
 						InGameMenu.selectionDownOption();
 					}else {
 						InGameMenu.selectionDown();
@@ -109,7 +113,7 @@ public class Interaction {
 				}
 			}
 		}
-		if(k == KeyCode.Q) {
+		if(k == GAUCHE && !InGameMenu.enterOption.get()) {
 			if(World.isWorldLoaded.get()) {
 				World.player.moveLeft.attente = false;
 				World.player.moveLeft.active = true;
@@ -120,7 +124,7 @@ public class Interaction {
 
 				setDirection(Direction.East);
 			}
-		}else if(k == KeyCode.D) {
+		}else if(k == DROITE && !InGameMenu.enterOption.get()) {
 			if(World.isWorldLoaded.get()) {
 				World.player.moveRight.attente = false;
 				World.player.moveRight.active = true;
@@ -131,6 +135,11 @@ public class Interaction {
 				setDirection(Direction.West);
 			}
 
+		}else if(k != KeyCode.ENTER) {
+			if(InGameMenu.enterOption.get()) {
+				InGameMenu.setBind(k);
+				InGameMenu.enterOption.set(false);
+			}
 		}
 	}
 
