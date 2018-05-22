@@ -49,7 +49,7 @@ public class WorldData {
 		this.luminosity = new SimpleIntegerProperty[width][height];
 		for(int x = 0 ; x < width ; x++)
 			for(int y = 0; y < height ; y++)
-				luminosity[x][y] = new SimpleIntegerProperty(16);
+				luminosity[x][y] = new SimpleIntegerProperty(0);
 
 	}
 
@@ -69,7 +69,7 @@ public class WorldData {
 		this.luminosity = new SimpleIntegerProperty[width][height];
 		for(int x = 0 ; x < width ; x++)
 			for(int y = 0; y < height ; y++) {
-				luminosity[x][y] = new SimpleIntegerProperty(16);
+				luminosity[x][y] = new SimpleIntegerProperty(0);
 			}
 
 		this.zoneName.setValue(zoneName);
@@ -128,7 +128,7 @@ public class WorldData {
 	}
 
 	public void addLight(ArrayList<SimpleEntry<Integer,Integer>> tmp, int current , int i , int pas) {
-		if(i <= 0) return;
+		if(i == 0) return;
 
 		int lenght = tmp.size();
 		for(int p = current; p < lenght;p++) {			
@@ -149,8 +149,8 @@ public class WorldData {
 					&& si.getKey().intValue() >= 0 
 					&& si.getValue().intValue() < this.getWidth() 
 					&& si.getValue().intValue() >= 0) {
-				World.currentMap.luminosity[si.getKey()][si.getValue()].set(i);
-				System.out.println(i);
+				World.currentMap.luminosity[si.getKey()][si.getValue()]
+						.set(World.currentMap.luminosity[si.getKey()][si.getValue()].get() + i);
 			}
 
 			current++;

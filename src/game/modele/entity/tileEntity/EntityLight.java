@@ -14,14 +14,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 public abstract class EntityLight extends TileEntity{
 
 	protected int lightLvl;
-	
+	private boolean f = true;
 	public EntityLight(String id, Coordonnees coordoner, Direction direction, boolean etat, int lightLvl) {
 		super(id, coordoner, direction, etat);
 		this.lightLvl = lightLvl;
 		
 		
-		
-		
+				
 		
 		
 	}
@@ -37,7 +36,11 @@ public abstract class EntityLight extends TileEntity{
 
 	@Override
 	public void active(Entity e) {
-		World.currentMap.AddTorch((int)this.coordonnes.getX(), (int)this.coordonnes.getY(),12,1);
+		if(f)
+			World.currentMap.AddTorch((int)this.coordonnes.getX(), (int)this.coordonnes.getY(),12,1);
+		else
+			World.currentMap.AddTorch((int)this.coordonnes.getX(), (int)this.coordonnes.getY(),-12,-1);
+		f = !f;
 	}
 
 }
