@@ -3,16 +3,20 @@ package game.modele.menu;
 import java.util.Scanner;
 
 import game.controler.Interaction;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
 
 public class Options {
 	
-	public static StringProperty bind1 = new SimpleStringProperty("Z");
-	public static StringProperty bind2 = new SimpleStringProperty("S");
-	public static StringProperty bind3 = new SimpleStringProperty("D");
-	public static StringProperty bind4 = new SimpleStringProperty("Q");
+	public static StringProperty upKey = new SimpleStringProperty("Z");
+	public static StringProperty downKey = new SimpleStringProperty("S");
+	public static StringProperty rightKey = new SimpleStringProperty("D");
+	public static StringProperty leftKey = new SimpleStringProperty("Q");
+	
+	public static BooleanProperty enterOption=new SimpleBooleanProperty(false);
 	
 	public static void bindTouche() {
 		Scanner sc = new Scanner(System.in);
@@ -29,28 +33,28 @@ public class Options {
 			case 0: 
 				if(verifBind(k)) {
 					Interaction.AVANCER = k;
-					bind1.setValue(k.toString());
+					upKey.setValue(k.toString());
 				}
 			break;
 			
 			case 1:
 				if(verifBind(k)) {
 					Interaction.RECULER = k;
-					bind2.setValue(k.toString());
+					downKey.setValue(k.toString());
 			}
 			break;
 			
 			case 2: 
 				if(verifBind(k)) {
 					Interaction.GAUCHE = k;
-					bind3.setValue(k.toString());
+					rightKey.setValue(k.toString());
 				}
 			break;
 			
 			case 3: 
 				if(verifBind(k)) {
 					Interaction.DROITE = k;
-					bind4.setValue(k.toString());
+					leftKey.setValue(k.toString());
 				}
 			break;
 		 
@@ -59,7 +63,7 @@ public class Options {
 	}
 	
 	public static void enterPressed() {
-		if(selecterInOption.get() == 4) {
+		if(Menu.selectedButton.get() == 4) {
 			defaultReset();
 		}else {
 			enterOption.set(true);
@@ -68,20 +72,20 @@ public class Options {
 	
 	private static void defaultReset() {
 		Interaction.AVANCER = KeyCode.Z;
-		bind1.setValue("Z");
+		upKey.setValue("Z");
 		Interaction.RECULER = KeyCode.S;
-		bind2.setValue("S");
+		downKey.setValue("S");
 		Interaction.DROITE = KeyCode.D;
-		bind3.setValue("D");
+		rightKey.setValue("D");
 		Interaction.GAUCHE = KeyCode.Q;
-		bind4.setValue("Q");
+		leftKey.setValue("Q");
 	}
 	
 	private static boolean verifBind(KeyCode k) {
-		if(k.toString().equals(bind1.getValue()) ||
-			k.toString().equals(bind2.getValue()) ||
-			k.toString().equals(bind3.getValue()) ||
-			k.toString().equals(bind4.getValue())) {
+		if(k.toString().equals(upKey.getValue()) ||
+			k.toString().equals(downKey.getValue()) ||
+			k.toString().equals(rightKey.getValue()) ||
+			k.toString().equals(leftKey.getValue())) {
 				System.out.println("TOUCHE DEJA ASSIGNEE");
 				return false;		
 		}else {
@@ -91,6 +95,11 @@ public class Options {
 	
 	public static void Save(String name) {
 		//TODO
+	}
+
+	public static void validate() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

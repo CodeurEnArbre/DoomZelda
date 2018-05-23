@@ -26,11 +26,13 @@ public class WorldData {
 	
 	private Map<SimpleEntry<Integer,Integer>, Stack<SimpleEntry<Integer,Integer>>> dijkstra;
 
-	public ObservableList<Entity> entity;
+	public ObservableList<Entity> entity ;
 	private int width,height;
 	private boolean outSide;
 
 	public WorldData(String zoneName, int width, int height, boolean outside, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {
+		this.entity = FXCollections.observableArrayList();
+		this.luminosity = new SimpleIntegerProperty[width][height];
 		newWorld(zoneName, width, height, outside, ground, tiles, tilesTop, entitys);
 	}
 

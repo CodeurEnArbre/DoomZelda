@@ -1,7 +1,7 @@
 package game.controler;
 
-import game.MainMenu;
-import game.InGameMenu;
+import game.modele.menu.Menu;
+import game.modele.menu.Options;
 import game.modele.utils.Direction;
 import game.modele.world.World;
 import javafx.scene.input.KeyCode;
@@ -19,92 +19,41 @@ public class Interaction {
 	public static void KeyInteractDown(KeyCode k) {
 		
 		if(k == KeyCode.ENTER) {
-			if(World.isWorldLoaded.get()) {
-				if(World.onPause.get()) {
-					if(InGameMenu.selectedButtonInGame.get() == 0) {
-						if(InGameMenu.enterMenu.get()) {
-							InGameMenu.enterPressed();							
-						}else {
-							InGameMenu.enterMenu.set(true);
-						}
-					}				
-				}else {//In the game
-					
-				}
-
-			}else {
-				switch(MainMenu.selectedButton.get()) {
-					case 0 : World.loadWorld("TinyMap",null);
-						break;
-					case 1 : 
-						World.onPause.set(true);
-						InGameMenu.enterMenu.set(true);
-						break;
-					case 2 : System.exit(0); 
-				}
-			}
+			Menu.validate();
+				
 		}
 
 		if(k == KeyCode.ESCAPE) {
+			Menu.back();
+			
 			if(World.isWorldLoaded.get()) {
-				if(World.onPause.get()) {
-					if(InGameMenu.enterMenu.get()) {
-						if(InGameMenu.enterOption.get()) {
-							InGameMenu.enterOption.set(false);
-						}else {
-							InGameMenu.enterMenu.set(false);
-						}
-					}else {
-						World.onPause.set(!World.onPause.get());
-					}
+				
+				if(World.onPause.get())			
 					World.playGameLoop();	
-				}else {
-					World.pauseGameLoop();					
-				}
+				else
+					World.pauseGameLoop();
 							
 			}else {
-				InGameMenu.enterMenu.set(false);
 				World.onPause.set(false);
 			}
 		}
 
 		if(k == AVANCER) {
+			Menu.selectUp();
 			if(World.isWorldLoaded.get()) {
-				if(World.onPause.get() && !InGameMenu.enterOption.get()) {
-					if(InGameMenu.enterMenu.get() ) {
-						InGameMenu.selectionUpOption();
-						
-					}else {
-						InGameMenu.selectionUp();
-					}
-				}else {
 					World.player.moveUP.attente = false;
 					World.player.moveUP.active = true;
 					if(World.player.moveDown.active) {
 						World.player.moveDown.attente = true;
 						World.player.moveDown.active = false;
-					}
 				}
 				
 				setDirection(Direction.North);	
-			}else {
-				if(MainMenu.selectedButton.get()>0)
-					MainMenu.selectedButton.set(MainMenu.selectedButton.get()-1);
-				
-				if(InGameMenu.enterMenu.get()) {
-					InGameMenu.selectionUpOption();
-				}
 			}
 
 		}else if(k == RECULER){
+			Menu.selectDown();
 			if(World.isWorldLoaded.get()) {
-				if(World.onPause.get() && !InGameMenu.enterOption.get()) {
-					if(InGameMenu.enterMenu.get() ) {
-						InGameMenu.selectionDownOption();
-					}else {
-						InGameMenu.selectionDown();
-					}
-				}else {
 					World.player.moveDown.attente = false;
 					World.player.moveDown.active = true;
 					if(World.player.moveUP.active)
@@ -112,17 +61,9 @@ public class Interaction {
 					World.player.moveUP.active = false;
 
 				setDirection(Direction.South);
-				}
-			}else {
-				if(MainMenu.selectedButton.get()<2) {
-					MainMenu.selectedButton.set(MainMenu.selectedButton.get()+1);		
-				}
-				if(InGameMenu.enterMenu.get()) {
-					InGameMenu.selectionDownOption();
-				}
 			}
 		}
-		if(k == GAUCHE && !InGameMenu.enterOption.get()) {
+		if(k == GAUCHE && !Options.enterOption.get()) {
 			if(World.isWorldLoaded.get()) {
 				World.player.moveLeft.attente = false;
 				World.player.moveLeft.active = true;
@@ -133,7 +74,7 @@ public class Interaction {
 
 				setDirection(Direction.East);
 			}
-		}else if(k == DROITE && !InGameMenu.enterOption.get()) {
+		}else if(k == DROITE && !Options.enterOption.get()) {
 			if(World.isWorldLoaded.get()) {
 				World.player.moveRight.attente = false;
 				World.player.moveRight.active = true;
@@ -145,9 +86,9 @@ public class Interaction {
 			}
 
 		}else if(k != KeyCode.ENTER) {
-			if(InGameMenu.enterOption.get()) {
-				InGameMenu.setBind(k);
-				InGameMenu.enterOption.set(false);
+			if(Options.enterOption.get()) {
+				Options.setBind(k);
+				Options.enterOption.set(false);
 			}
 		}
 	}

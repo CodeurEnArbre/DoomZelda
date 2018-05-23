@@ -1,29 +1,23 @@
 package game.controler;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.imageio.ImageIO;
-
-import game.InGameMenu;
-import game.MainMenu;
 import game.modele.entity.Entity;
 import game.modele.entity.living.EntityLiving;
 import game.modele.entity.tileEntity.EntityLight;
 import game.modele.entity.tileEntity.TileEntity;
-import game.modele.tile.Tile;
-import game.modele.tile.tileGround.tileVoid;
+import game.modele.menu.InGameMenu;
+import game.modele.menu.Menu;
+import game.modele.menu.Options;
 import game.modele.utils.Direction;
 import game.modele.world.World;
 import game.vue.EntityLivingTexture;
 import game.vue.TextureLoader;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -127,13 +121,14 @@ public class MenuControler implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//chagement du menu principale
+		
 		//menuLoading();
 		
 		//
 		World.onPause.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if(!InGameMenu.enterMenu.get()) {
+				if(!newValue) {
 					if(newValue) {
 						PaneMenu.setDisable(false);
 						PaneMenu.setOpacity(1.0);				
@@ -148,29 +143,33 @@ public class MenuControler implements Initializable{
 		});
 
 		//Listener de la fleche des menu
-		MainMenu.selectedButton.addListener(new ChangeListener<Number>() {
+		Menu.selectedButton.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				selectorMain.relocate(playImg.getLayoutX(), playImg.getLayoutY()+120*newValue.intValue());
 			}});
 		
 		//Listener du selecteur du menu ingame
-		InGameMenu.selectedButtonInGame.addListener(new ChangeListener<Number>() {
+		Menu.selectedButton.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				selectorPauseInGame.relocate(optionInGameImg.getLayoutX(), optionInGameImg.getLayoutY()+120*newValue.intValue());
 			}});
 		
 		//Listener de l'appuie d'"ENTRER" ou d'"ESCAPE" dans le menu inGame
-		InGameMenu.enterMenu.addListener(new ChangeListener<Boolean>() {
+		Menu.currentMenu.addListener(new ChangeListener<String>() {
+
 			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if(newValue) {
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if(newValue.equals("Options")) {
 					PaneOptions.setOpacity(1);		
 				}else {		
 					PaneOptions.setOpacity(0);
 				}
-			}});
+				
+			}
+			
+		});
 		
 		//Listener du selecteur dans les options
 		InGameMenu.selecterInOption.addListener(new ChangeListener<Number>() {
@@ -193,8 +192,8 @@ public class MenuControler implements Initializable{
 					loadMapTexture();				
 				}}});
 		
-		//Listener du t�moin graphique d'assignation des touches
-		InGameMenu.enterOption.addListener(new ChangeListener<Boolean>() {
+		//Listener du temoin graphique d'assignation des touches
+		Options.enterOption.addListener(new ChangeListener<Boolean>() {
 
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -210,10 +209,10 @@ public class MenuControler implements Initializable{
 		});
 		
 		//Bind des valeurs d'assignation de touches
-		labelBind1.textProperty().bind(InGameMenu.bind1);
-		labelBind2.textProperty().bind(InGameMenu.bind2);
-		labelBind3.textProperty().bind(InGameMenu.bind3);
-		labelBind4.textProperty().bind(InGameMenu.bind4);
+		labelBind1.textProperty().bind(Options.upKey);
+		labelBind2.textProperty().bind(Options.downKey);
+		labelBind3.textProperty().bind(Options.rightKey);
+		labelBind4.textProperty().bind(Options.leftKey);
 		
 		//Chargement dans la memoire de toutes les textures
 		textureLoading();		
