@@ -10,7 +10,6 @@ import game.modele.entity.Entity;
 import game.modele.entity.living.EntityLiving;
 import game.modele.entity.tileEntity.EntityLight;
 import game.modele.entity.tileEntity.TileEntity;
-import game.modele.menu.InGameMenu;
 import game.modele.menu.Menu;
 import game.modele.menu.Options;
 import game.modele.utils.Direction;
@@ -104,13 +103,13 @@ public class MenuControler implements Initializable{
     @FXML
     private ImageView resetDefaultImg;
     @FXML
-    private Label labelBind1;
+    private Label KeyName1;
     @FXML
-    private Label labelBind2;
+    private Label KeyName2;
     @FXML
-    private Label labelBind3;
+    private Label KeyName3;
     @FXML
-    private Label labelBind4;
+    private Label KeyName4;
     
 	@FXML
 	private Button buttonReprendre;
@@ -120,81 +119,90 @@ public class MenuControler implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//chagement du menu principale
+		//chagement des menus
+		loadMenus();
 		
-		//menuLoading();
-		
-		//
-		World.onPause.addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if(!newValue) {
-					if(newValue) {
-						PaneMenu.setDisable(false);
-						PaneMenu.setOpacity(1.0);				
-					}
-					else {
-						PaneMenu.setOpacity(0.0);
-						PaneMenu.setDisable(true);
-					}
-				}
-			}
-
-		});
-
-		//Listener de la fleche des menu
-		Menu.selectedButton.addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				selectorMain.relocate(playImg.getLayoutX(), playImg.getLayoutY()+120*newValue.intValue());
-			}});
-		
-		//Listener du selecteur du menu ingame
-		Menu.selectedButton.addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				selectorPauseInGame.relocate(optionInGameImg.getLayoutX(), optionInGameImg.getLayoutY()+120*newValue.intValue());
-			}});
-		
-		//Listener de l'appuie d'"ENTRER" ou d'"ESCAPE" dans le menu inGame
-		Menu.currentMenu.addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if(newValue.equals("Options")) {
-					PaneOptions.setOpacity(1);		
-				}else {		
-					PaneOptions.setOpacity(0);
-				}
-				
-			}
-			
-		});
-		
-		//Listener du selecteur dans les options
-		InGameMenu.selecterInOption.addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				if(newValue.intValue() == 4) {
-					selectorInOption.relocate(resetDefaultImg.getLayoutX(), resetDefaultImg.getLayoutY()+10);
-				}else {
-					selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*newValue.intValue());
-				}
-			}});
+		//Bind des valeurs d'assignation de touches
+		KeyName1.textProperty().bind(Options.upKey);
+		KeyName2.textProperty().bind(Options.downKey);
+		KeyName3.textProperty().bind(Options.rightKey);
+		KeyName4.textProperty().bind(Options.leftKey);
 		
 		World.isWorldLoaded.addListener(new ChangeListener<Boolean>() {
-
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				homeMenu.setOpacity(0);
-				System.out.println("Loading save");
 				if(newValue) {
+					System.out.println("Loading save");
 					loadMapTexture();				
-				}}});
+				}
+			}});
+		
+		//Chargement dans la memoire de toutes les textures
+		textureLoading();		
+	}
+	
+	public void loadMenus() {
+
+		//Listener de la selection des boutons des Menus
+		Menu.selectedButton.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				switch (Menu.currentMenu.get()) {
+				
+				case Menu.MainMenuID:
+					selectorMain.relocate(playImg.getLayoutX(), playImg.getLayoutY()+120*newValue.intValue());
+					break;
+					
+				case Menu.InGameMenuID:
+					selectorPauseInGame.relocate(optionInGameImg.getLayoutX(), optionInGameImg.getLayoutY()+120*newValue.intValue());
+					break;
+					
+				case Menu.OptionsMenuID:
+					if(newValue.intValue() == 4) {
+						selectorInOption.relocate(resetDefaultImg.getLayoutX(), resetDefaultImg.getLayoutY()+10);
+					}else {
+						selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*newValue.intValue());
+					}
+					break;
+				}
+				
+			}});
+
+
+		//Listener de changement de menu
+		Menu.currentMenu.addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				
+				Menu.selectedButton.set(0);
+				selectorMain.relocate(playImg.getLayoutX(), playImg.getLayoutY()+120*Menu.selectedButton.intValue());
+				selectorPauseInGame.relocate(optionInGameImg.getLayoutX(), optionInGameImg.getLayoutY()+120*Menu.selectedButton.intValue());
+				selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*Menu.selectedButton.intValue());
+				
+				switch(newValue.intValue()) {
+				case Menu.OptionsMenuID:
+					PaneOptions.setOpacity(1);
+					PaneMenu.setOpacity(0);
+					break;
+					
+				case Menu.InGameMenuID:
+					PaneOptions.setOpacity(0);
+					PaneMenu.setOpacity(1);
+					break;
+				
+				default :
+					PaneOptions.setOpacity(0);
+					PaneMenu.setOpacity(0);
+					break;
+				
+				}
+
+			}});	
 		
 		//Listener du temoin graphique d'assignation des touches
 		Options.enterOption.addListener(new ChangeListener<Boolean>() {
-
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if(newValue) {
@@ -204,18 +212,7 @@ public class MenuControler implements Initializable{
 					temoinAssignation.setOpacity(0);
 				}
 				
-			}
-			
-		});
-		
-		//Bind des valeurs d'assignation de touches
-		labelBind1.textProperty().bind(Options.upKey);
-		labelBind2.textProperty().bind(Options.downKey);
-		labelBind3.textProperty().bind(Options.rightKey);
-		labelBind4.textProperty().bind(Options.leftKey);
-		
-		//Chargement dans la memoire de toutes les textures
-		textureLoading();		
+			}});
 	}
 
 	public void loadMapTexture() {
@@ -339,15 +336,15 @@ public class MenuControler implements Initializable{
 				dico.put(x + frame * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("Player", 24, 32, x, y).getTexture(), null));		
 	}
 	
-	private void loadAnimation(Map<Integer,Image[]> dico, int frame, int animation) {
-		for(int entity=0;entity<3;entity++) {//TODO
-			Image[] imgs=new Image[frame*animation];
-			for(int x = 0;x < frame;x++)
-				for(int y = 0;y < animation;y++)
-					imgs[x + frame * y]=SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("Zombie", 32, 48, x, y).getTexture(), null);	
-			dico.put(entity,imgs);
-		}
-	}
+//	private void loadAnimation(Map<Integer,Image[]> dico, int frame, int animation) {
+//		for(int entity=0;entity<3;entity++) {
+//			Image[] imgs=new Image[frame*animation];
+//			for(int x = 0;x < frame;x++)
+//				for(int y = 0;y < animation;y++)
+//					imgs[x + frame * y]=SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("Zombie", 32, 48, x, y).getTexture(), null);	
+//			dico.put(entity,imgs);
+//		}
+//	}
 
 	//Permet d'afficher dans dans chaque pane toute les textures de chaque couches de la map
 	private void printCalqueTile(Pane pane,Pane paneTile,Pane paneTop) {

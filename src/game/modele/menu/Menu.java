@@ -3,70 +3,93 @@ package game.modele.menu;
 import game.modele.world.World;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 public class Menu {
 	
-	public static IntegerProperty selectedButton=new SimpleIntegerProperty(0);
-	public static StringProperty currentMenu = new SimpleStringProperty("Main");
-	public static String lastMenu;
+	//Menus id
+	public static final int NoMenuID = -1;
+	public static final int MainMenuID = 0;
+	public static final int InGameMenuID = 1 ;
+	public static final int OptionsMenuID = 2 ;
 	
-	public static void back() {
+	public static IntegerProperty selectedButton = new SimpleIntegerProperty(0);
+	public static IntegerProperty currentMenu = new SimpleIntegerProperty(MainMenuID);
+	public static int lastMenu;
+	
+	public static void escape() {
+		
 		switch (currentMenu.get()) {
-		case "Main":
-			//Nothing to do
+		case InGameMenuID:
+			currentMenu.setValue(NoMenuID);
+			World.playGameLoop();
+			World.onPause.set(false);
+			lastMenu=InGameMenuID;
 			break;
-		case "InGame":
-			lastMenu=null;
-			currentMenu.setValue(null);
-			break;
-		case "Options":
+			
+		case OptionsMenuID:
 			currentMenu.set(lastMenu);
-			lastMenu=null;
-			break;		
+			lastMenu=OptionsMenuID;
+			break;	
+			
 		default:
-			if(World.isWorldLoaded.get())
-				currentMenu.set("InGame");
+			if(World.isWorldLoaded.get()) {
+				if(!World.onPause.get()) {
+					World.pauseGameLoop();
+					World.onPause.set(true);
+					currentMenu.set(InGameMenuID);
+				}
+				
+			}
 			break;
+			
 		}
 	}
 	
 	public static void validate() {
-		switch (currentMenu.get()) {
-		case "Main":
-			MainMenu.validate();
-			break;
-		case "inGame":
-			InGameMenu.validate();
-			break;
-		case "options":
-			Options.validate();
-			break;
+		if(currentMenu.get() != NoMenuID) {
+			switch (currentMenu.get()) {
+			case MainMenuID:
+				MainMenu.validate();
+				break;
+			case InGameMenuID:
+				InGameMenu.validate();
+				break;
+			case OptionsMenuID:
+				Options.validate();
+				break;
+			default:
+				
+				break;
+			}
 		}
 	}
 	
 	public static void selectUp() {
-		if(selectedButton.get()>0)
-			selectedButton.add(1);
+		if(currentMenu.get() != NoMenuID) {
+			if(selectedButton.get()>0)
+				selectedButton.set(selectedButton.get()-1);
+		}
 	}
 	
 	public static void selectDown() {
-		int min=0;
-		switch(currentMenu.get()) {
-		case "Main":
-			min=3;
-			break;
-		case "inGame":
-			min=3;
-			break;
-		case "options":
-			min=5;
-			break;
+		if(currentMenu.get() != NoMenuID) {
+			int min=0;
+			switch(currentMenu.get()) {
+			case MainMenuID:
+				min=3;
+				break;
+			case InGameMenuID:
+				min=3;
+				break;
+			case OptionsMenuID:
+				min=5;
+				break;
+			}
+			min--;
+			
+			if(selectedButton.get()<min) {
+				selectedButton.set(selectedButton.get()+1);
+			}
 		}
-		
-		if(selectedButton.get()<min)
-			selectedButton.subtract(1);
 	}
-	
 }

@@ -24,18 +24,7 @@ public class Interaction {
 		}
 
 		if(k == KeyCode.ESCAPE) {
-			Menu.back();
-			
-			if(World.isWorldLoaded.get()) {
-				
-				if(World.onPause.get())			
-					World.playGameLoop();	
-				else
-					World.pauseGameLoop();
-							
-			}else {
-				World.onPause.set(false);
-			}
+			Menu.escape();
 		}
 
 		if(k == AVANCER) {

@@ -46,14 +46,14 @@ public class Options {
 			
 			case 2: 
 				if(verifBind(k)) {
-					Interaction.GAUCHE = k;
+					Interaction.DROITE = k;
 					rightKey.setValue(k.toString());
 				}
 			break;
 			
 			case 3: 
 				if(verifBind(k)) {
-					Interaction.DROITE = k;
+					Interaction.GAUCHE = k;
 					leftKey.setValue(k.toString());
 				}
 			break;
@@ -62,23 +62,15 @@ public class Options {
 		
 	}
 	
-	public static void enterPressed() {
-		if(Menu.selectedButton.get() == 4) {
-			defaultReset();
-		}else {
-			enterOption.set(true);
-		}
-	}
-	
 	private static void defaultReset() {
 		Interaction.AVANCER = KeyCode.Z;
-		upKey.setValue("Z");
+		upKey.setValue(KeyCode.Z.getName());
 		Interaction.RECULER = KeyCode.S;
-		downKey.setValue("S");
+		downKey.setValue(KeyCode.S.getName());
 		Interaction.DROITE = KeyCode.D;
-		rightKey.setValue("D");
+		rightKey.setValue(KeyCode.D.getName());
 		Interaction.GAUCHE = KeyCode.Q;
-		leftKey.setValue("Q");
+		leftKey.setValue(KeyCode.Q.getName());
 	}
 	
 	private static boolean verifBind(KeyCode k) {
@@ -86,7 +78,7 @@ public class Options {
 			k.toString().equals(downKey.getValue()) ||
 			k.toString().equals(rightKey.getValue()) ||
 			k.toString().equals(leftKey.getValue())) {
-				System.out.println("TOUCHE DEJA ASSIGNEE");
+				System.out.println("La touche est deja assignee");
 				return false;		
 		}else {
 			return true;
@@ -98,7 +90,11 @@ public class Options {
 	}
 
 	public static void validate() {
-		// TODO Auto-generated method stub
+		if(Menu.selectedButton.get() == 4) {
+			defaultReset();
+		}else {
+			enterOption.set(true);
+		}
 		
 	}
 	
