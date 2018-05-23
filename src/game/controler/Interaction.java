@@ -28,7 +28,7 @@ public class Interaction {
 						}else {
 							InGameMenu.enterMenu.set(true);
 						}
-					}
+					}				
 				}else {//In the game
 					
 				}
@@ -155,7 +155,7 @@ public class Interaction {
 	 * Assignation des booleans de direction au relachement de la touche
 	 * */
 	public static void KeyInteractUp(KeyCode k) {
-		if(k == KeyCode.Z) {
+		if(k == AVANCER) {
 			if(World.isWorldLoaded.get()) {
 				World.player.moveUP.active = false;
 				World.player.moveUP.attente = false;
@@ -173,7 +173,7 @@ public class Interaction {
 				}
 			}
 
-		}else if(k == KeyCode.S) {
+		}else if(k == RECULER) {
 			if(World.isWorldLoaded.get()) {
 				World.player.moveDown.active = false;
 				World.player.moveDown.attente = false;
@@ -189,7 +189,7 @@ public class Interaction {
 						setDirection(Direction.West);
 				}
 			}
-		}else if(k == KeyCode.Q) {
+		}else if(k == GAUCHE) {
 			if(World.isWorldLoaded.get()) {
 				World.player.moveLeft.active = false;
 				World.player.moveLeft.attente = false;
@@ -205,7 +205,7 @@ public class Interaction {
 						setDirection(Direction.South);
 				}
 			}
-		}else if(k == KeyCode.D) {
+		}else if(k == DROITE) {
 			if(World.isWorldLoaded.get()) {
 				World.player.moveRight.active = false;
 				World.player.moveRight.attente = false;

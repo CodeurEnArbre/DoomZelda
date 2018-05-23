@@ -97,6 +97,7 @@ public class InGameMenu {
 			k.toString().equals(bind2.getValue()) ||
 			k.toString().equals(bind3.getValue()) ||
 			k.toString().equals(bind4.getValue())) {
+				System.out.println("TOUCHE DEJA ASSIGNEE");
 				return false;		
 		}else {
 			return true;
