@@ -27,6 +27,34 @@
          </children>
       </Pane>
       <Pane fx:id="PaneHUD" prefHeight="400.0" prefWidth="600.0" />
+      <Pane fx:id="homeMenu" prefHeight="640.0" prefWidth="870.0">
+         <children>
+            <ImageView fx:id="menuImageFont" fitHeight="640.0" fitWidth="870.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../ressources/textures/background.png" />
+               </image></ImageView>
+            <ImageView fx:id="playImg" fitHeight="72.0" fitWidth="445.0" layoutX="230.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../ressources/textures/Playsingameimg.png" />
+               </image>
+               <effect>
+                  <Blend />
+               </effect></ImageView>
+            <ImageView fx:id="optionImg" fitHeight="72.0" fitWidth="445.0" layoutX="230.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../ressources/textures/Optionsingameimg.png" />
+               </image></ImageView>
+            <ImageView fx:id="exitImg" fitHeight="72.0" fitWidth="445.0" layoutX="230.0" layoutY="365.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../ressources/textures/Quitsingameimg.png" />
+               </image></ImageView>
+            <ImageView fx:id="selectorMain" fitHeight="72.0" fitWidth="416.0" layoutX="230.0" layoutY="125.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../ressources/textures/optionsImg/selectorinoption.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
       <Pane fx:id="PaneMenu" layoutX="154.0" layoutY="122.0" opacity="0.0" prefHeight="340.0" prefWidth="555.0">
          <children>
             <Pane layoutX="-153.0" layoutY="-122.0" opacity="0.94" prefHeight="778.0" prefWidth="976.0" style="-fx-background-color: black;" />
@@ -115,14 +143,5 @@
                </children>
             </Pane>
          </children></Pane>
-      <Pane fx:id="homeMenu" prefHeight="640.0" prefWidth="870.0">
-         <children>
-            <ImageView fx:id="menuImageFont" fitHeight="640.0" fitWidth="870.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="playImg" fitHeight="77.0" fitWidth="369.0" layoutX="251.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="optionImg" fitHeight="77.0" fitWidth="369.0" layoutX="251.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="exitImg" fitHeight="77.0" fitWidth="369.0" layoutX="251.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="selectionArrow" fitHeight="56.0" fitWidth="105.0" layoutX="98.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </Pane>
    </children>
 </Pane>

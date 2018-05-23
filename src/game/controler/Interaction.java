@@ -36,7 +36,9 @@ public class Interaction {
 				switch(MainMenu.selectedButton.get()) {
 					case 0 : World.loadWorld("TinyMap",null);
 						break;
-					case 1 : //TODO OPTIONS
+					case 1 : 
+						World.onPause.set(true);
+						InGameMenu.enterMenu.set(true);
 						break;
 					case 2 : System.exit(0); 
 				}
@@ -61,7 +63,8 @@ public class Interaction {
 				}
 							
 			}else {
-
+				InGameMenu.enterMenu.set(false);
+				World.onPause.set(false);
 			}
 		}
 
@@ -87,6 +90,10 @@ public class Interaction {
 			}else {
 				if(MainMenu.selectedButton.get()>0)
 					MainMenu.selectedButton.set(MainMenu.selectedButton.get()-1);
+				
+				if(InGameMenu.enterMenu.get()) {
+					InGameMenu.selectionUpOption();
+				}
 			}
 
 		}else if(k == RECULER){
@@ -109,6 +116,9 @@ public class Interaction {
 			}else {
 				if(MainMenu.selectedButton.get()<2) {
 					MainMenu.selectedButton.set(MainMenu.selectedButton.get()+1);		
+				}
+				if(InGameMenu.enterMenu.get()) {
+					InGameMenu.selectionDownOption();
 				}
 			}
 		}

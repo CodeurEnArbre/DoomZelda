@@ -83,7 +83,7 @@ public class MenuControler implements Initializable{
 	private ImageView menuImageFont;
 
 	@FXML
-	private ImageView selectionArrow;
+	private ImageView selectorMain;
 
 	@FXML
 	private ImageView playImg;
@@ -127,7 +127,7 @@ public class MenuControler implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//chagement du menu principale
-		menuLoading();
+		//menuLoading();
 		
 		//
 		World.onPause.addListener(new ChangeListener<Boolean>() {
@@ -151,7 +151,7 @@ public class MenuControler implements Initializable{
 		MainMenu.selectedButton.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				selectionArrow.relocate(playImg.getLayoutX()-60, playImg.getLayoutY()+120*newValue.intValue());
+				selectorMain.relocate(playImg.getLayoutX(), playImg.getLayoutY()+120*newValue.intValue());
 			}});
 		
 		//Listener du selecteur du menu ingame
@@ -258,18 +258,6 @@ public class MenuControler implements Initializable{
 		World.loadGameLoop();
 	}
 
-	private void menuLoading() {
-		try {
-			menuImageFont.setImage(SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/background.png").toURI().toURL()),null));
-			playImg.setImage(SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/playButton.png").toURI().toURL()),null));
-			optionImg.setImage(SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/optionButton.png").toURI().toURL()),null));
-			exitImg.setImage(SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/exitButton.png").toURI().toURL()),null));
-			selectionArrow.setImage(SwingFXUtils.toFXImage(ImageIO.read(new File("ressources/textures/selectionArrow.png").toURI().toURL()),null));
-			selectionArrow.relocate(playImg.getLayoutX()-60, playImg.getLayoutY());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	private void hudLoading() {
 		for(int numCoeur=World.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
