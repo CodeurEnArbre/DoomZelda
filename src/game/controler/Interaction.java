@@ -23,8 +23,7 @@ public class Interaction {
 				if(World.onPause.get()) {
 					if(InGameMenu.selectedButtonInGame.get() == 0) {
 						if(InGameMenu.enterMenu.get()) {
-							InGameMenu.enterOption.set(true);
-							
+							InGameMenu.enterPressed();							
 						}else {
 							InGameMenu.enterMenu.set(true);
 						}

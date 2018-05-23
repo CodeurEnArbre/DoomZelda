@@ -108,6 +108,8 @@ public class MenuControler implements Initializable{
     @FXML
     private ImageView temoinAssignation;
     @FXML
+    private ImageView resetDefaultImg;
+    @FXML
     private Label labelBind1;
     @FXML
     private Label labelBind2;
@@ -174,7 +176,11 @@ public class MenuControler implements Initializable{
 		InGameMenu.selecterInOption.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*newValue.intValue());
+				if(newValue.intValue() == 4) {
+					selectorInOption.relocate(resetDefaultImg.getLayoutX(), resetDefaultImg.getLayoutY()+10);
+				}else {
+					selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*newValue.intValue());
+				}
 			}});
 		
 		World.isWorldLoaded.addListener(new ChangeListener<Boolean>() {
@@ -187,12 +193,13 @@ public class MenuControler implements Initializable{
 					loadMapTexture();				
 				}}});
 		
-		//Listener du témoin graphique d'assignation des touches
+		//Listener du tï¿½moin graphique d'assignation des touches
 		InGameMenu.enterOption.addListener(new ChangeListener<Boolean>() {
 
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if(newValue) {
+					
 					temoinAssignation.setOpacity(1);
 				}else {
 					temoinAssignation.setOpacity(0);

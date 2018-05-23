@@ -14,9 +14,9 @@ import javafx.scene.input.KeyCode;
 public class InGameMenu {
 	
 	public static StringProperty bind1 = new SimpleStringProperty("Z");
-	public static StringProperty bind2 = new SimpleStringProperty("Q");
-	public static StringProperty bind3 = new SimpleStringProperty("S");
-	public static StringProperty bind4 = new SimpleStringProperty("D");
+	public static StringProperty bind2 = new SimpleStringProperty("S");
+	public static StringProperty bind3 = new SimpleStringProperty("D");
+	public static StringProperty bind4 = new SimpleStringProperty("Q");
 	public static IntegerProperty selectedButtonInGame=new SimpleIntegerProperty(0);
 	public static IntegerProperty selecterInOption=new SimpleIntegerProperty(0);
 	public static BooleanProperty enterMenu=new SimpleBooleanProperty(false);
@@ -39,7 +39,7 @@ public class InGameMenu {
 	}
 
 	public static void selectionDownOption() {
-		if(selecterInOption.get() < 3)
+		if(selecterInOption.get() < 4)
 			selecterInOption.set(selecterInOption.get()+1);	
 		
 	}
@@ -90,6 +90,25 @@ public class InGameMenu {
 		 
 		}
 		
+	}
+	
+	public static void enterPressed() {
+		if(selecterInOption.get() == 4) {
+			defaultReset();
+		}else {
+			enterOption.set(true);
+		}
+	}
+	
+	private static void defaultReset() {
+		Interaction.AVANCER = KeyCode.Z;
+		bind1.setValue("Z");
+		Interaction.RECULER = KeyCode.S;
+		bind2.setValue("S");
+		Interaction.DROITE = KeyCode.D;
+		bind3.setValue("D");
+		Interaction.GAUCHE = KeyCode.Q;
+		bind4.setValue("Q");
 	}
 	
 	private static boolean verifBind(KeyCode k) {
