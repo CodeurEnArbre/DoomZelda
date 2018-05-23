@@ -27,8 +27,8 @@ public class World {
 	public static WorldData currentMap;
 	public static Player player;
 	public static BooleanProperty isWorldLoaded = new SimpleBooleanProperty(false);
-	
-	
+
+
 	private static Timeline GameLoop = new Timeline();
 
 	public static void loadGameLoop() {
@@ -46,27 +46,28 @@ public class World {
 		GameLoop.pause();
 		onPause.set(true);
 	}
-	
+
 	public static void playGameLoop() {
 		GameLoop.play();
 	}
-	
+
 	public static void loadPlayer() {
 		player = new Player(null,new Coordonnees(14,10),new Direction(5));
 		addEntity(player);
+		addKeyGameLoop(p -> currentMap.g.Dijkstra((int)player.coordonnes.getX(),(int)player.coordonnes.getY()));
 	}
 
 	public static void addEntity(Entity e) {
-			currentMap.entity.add(e);
-			addKeyGameLoop(y -> e.update());
+		currentMap.entity.add(e);
+		addKeyGameLoop(y -> e.update());
 	}
-	
-	
+
+
 	/*
 	 * Chargement de la map : creation du tableau utilisee par l'affichage
 	 * */
 	public static void loadWorld(String file, String worldName) {
-		
+
 		TileFactory.load();
 		try {
 			//Chargement des tiles
@@ -90,13 +91,13 @@ public class World {
 			else {
 				currentMap.newWorld(worldName, width, height, outside, tileGround, tileSolid, tileTop, entitys);
 			}
-			
+
 			isWorldLoaded.setValue(true);
 		}catch(IOException e) {
 			System.out.println("Impossible de charger la map");
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public static ArrayList<Entity> loadEntity(String world) throws IOException{

@@ -1,15 +1,9 @@
 package game.modele.entity.tileEntity;
 
 import game.modele.entity.Entity;
-import game.modele.tile.Tile;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
-import game.modele.utils.ActionConsumer.ConsumerAction;
-import game.modele.utils.ActionConsumer.CountActionConsumer;
-import game.modele.utils.ActionConsumer.FunctionBank;
 import game.modele.world.World;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class EntityLight extends TileEntity{
 

@@ -33,5 +33,8 @@ public class tileStone extends TileGround{
 	public void leaveEntity(Entity e) {
 		e.slow = 1;
 	}
-
+	@Override
+	public int speedIndice() {
+		return 10;
+	}
 }

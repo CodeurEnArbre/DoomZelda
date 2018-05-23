@@ -29,5 +29,4 @@ public class tileIce extends TileGround{
 		e.delAction(FunctionBank.MoveIceRightAND);
 		e.slow = 1;
 	}
-
 }
