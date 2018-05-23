@@ -399,7 +399,6 @@ public class MenuControler implements Initializable{
 	}
 	private void affichageEntity(ImageView i,Entity e) {
 		i = new ImageView();
-		System.out.println(e+" added");
 		listEntityView.put(e,i);
 		i.setId(""+e.primaryKey);
 		i.setFitWidth(32);

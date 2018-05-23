@@ -50,6 +50,7 @@ public class WorldData {
 		
 		dijkstra = new HashMap<>();
 		Graph();
+	
 	}
 
 	public void newWorld(String zoneName, int width, int height, boolean outside, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {
@@ -164,7 +165,7 @@ public class WorldData {
 		Graph g = new Graph(width, height);
 		for(int x = 0; x < width;x++)
 			for(int y = 0; y < height ; y++) {
-				if( x < 0 || y < 0 || x > width || y > height || getTile(x, y).solid())continue;
+				if( getTile(x, y).solid())continue;
 				
 				if(x + 1 < height && !getTile(x + 1, y).solid())
 					g.addLinks(x, y,x+1,y,
@@ -172,20 +173,20 @@ public class WorldData {
 				
 				if(x - 1 > 0 && !getTile(x - 1, y).solid())
 					g.addLinks(x, y,x - 1,y,
-							(getTileTerrain(x + 1, y).speedIndice() + getTileTerrain(x, y).speedIndice()) / 2);
+							(getTileTerrain(x - 1, y).speedIndice() + getTileTerrain(x, y).speedIndice()) / 2);
 				
 				if(y + 1< width && !getTile(x, y + 1).solid())
 					g.addLinks(x, y,x,y + 1,
-							(getTileTerrain(x + 1, y).speedIndice() + getTileTerrain(x, y).speedIndice()) / 2);
-				
+							(getTileTerrain(x , y + 1).speedIndice() + getTileTerrain(x, y).speedIndice()) / 2);
 				
 				if(y - 1 > 0 && !getTile(x, y - 1).solid())
 					g.addLinks(x, y,x,y - 1,
-							(getTileTerrain(x + 1, y).speedIndice() + getTileTerrain(x, y).speedIndice()) / 2);
+							(getTileTerrain(x, y - 1).speedIndice() + getTileTerrain(x, y).speedIndice()) / 2);
 				
 				
 				
 			}
+		
 		
 		
 	}
