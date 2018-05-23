@@ -2,14 +2,13 @@ package game.modele.world;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
-import com.sun.java.swing.plaf.windows.resources.windows;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
 
 import game.modele.entity.Entity;
-import game.modele.entity.tileEntity.TileEntity;
 import game.modele.tile.Tile;
+import game.modele.utils.graph.Graph;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,14 +23,12 @@ public class WorldData {
 	private Tile[][] tiles;
 	private Tile[][] tilesTop;
 	private IntegerProperty[][] luminosity;
-
+	
+	private Map<SimpleEntry<Integer,Integer>, Stack<SimpleEntry<Integer,Integer>>> dijkstra;
 
 	public ObservableList<Entity> entity;
 	private int width,height;
 	private boolean outSide;
-
-
-
 
 	public WorldData(String zoneName, int width, int height, boolean outside, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {
 		this.zoneName.setValue(zoneName);
@@ -50,7 +47,9 @@ public class WorldData {
 		for(int x = 0 ; x < width ; x++)
 			for(int y = 0; y < height ; y++)
 				luminosity[x][y] = new SimpleIntegerProperty(0);
-
+		
+		dijkstra = new HashMap<>();
+		Graph();
 	}
 
 	public void newWorld(String zoneName, int width, int height, boolean outside, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {
@@ -73,6 +72,8 @@ public class WorldData {
 			}
 
 		this.zoneName.setValue(zoneName);
+		dijkstra = new HashMap<>();
+		Graph();
 	}
 
 	public String getName() {
@@ -159,9 +160,34 @@ public class WorldData {
 		addLight(tmp, current, i - pas, pas);
 	}
 
-
-
-	public void DelLight(int x,int y,int i) {
-
+	public void Graph() {
+		Graph g = new Graph(width, height);
+		for(int x = 0; x < width;x++)
+			for(int y = 0; y < height ; y++) {
+				if( x < 0 || y < 0 || x > width || y > height || getTile(x, y).solid())continue;
+				
+				if(x + 1 < height && !getTile(x + 1, y).solid())
+					g.addLinks(x, y,x+1,y,
+							(getTileTerrain(x + 1, y).speedIndice() + getTileTerrain(x, y).speedIndice()) / 2);
+				
+				if(x - 1 > 0 && !getTile(x - 1, y).solid())
+					g.addLinks(x, y,x - 1,y,
+							(getTileTerrain(x + 1, y).speedIndice() + getTileTerrain(x, y).speedIndice()) / 2);
+				
+				if(y + 1< width && !getTile(x, y + 1).solid())
+					g.addLinks(x, y,x,y + 1,
+							(getTileTerrain(x + 1, y).speedIndice() + getTileTerrain(x, y).speedIndice()) / 2);
+				
+				
+				if(y - 1 > 0 && !getTile(x, y - 1).solid())
+					g.addLinks(x, y,x,y - 1,
+							(getTileTerrain(x + 1, y).speedIndice() + getTileTerrain(x, y).speedIndice()) / 2);
+				
+				
+				
+			}
+		
+		
 	}
+	
 }

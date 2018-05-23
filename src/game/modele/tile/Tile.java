@@ -25,6 +25,10 @@ public abstract class Tile {
 		return true;
 	}
 	
+	public int speedIndice() {
+		return 1;
+	}
+	
 	//Quand on l'update
 	public void onUpdate() {/*Nothing*/}
 
