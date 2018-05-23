@@ -31,26 +31,7 @@ public class WorldData {
 	private boolean outSide;
 
 	public WorldData(String zoneName, int width, int height, boolean outside, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {
-		this.zoneName.setValue(zoneName);
-		this.width=width;
-		this.height=height;
-		this.outSide=outside;
-		this.tileGround=ground;
-		this.tiles=tiles;
-		this.tilesTop=tilesTop;
-		this.entity= FXCollections.observableArrayList();
-		for(Entity e : entitys) {
-			this.entity.add(e);
-			World.addKeyGameLoop(y -> e.update());
-		}
-		this.luminosity = new SimpleIntegerProperty[width][height];
-		for(int x = 0 ; x < width ; x++)
-			for(int y = 0; y < height ; y++)
-				luminosity[x][y] = new SimpleIntegerProperty(0);
-		
-		dijkstra = new HashMap<>();
-		Graph();
-	
+		newWorld(zoneName, width, height, outside, ground, tiles, tilesTop, entitys);
 	}
 
 	public void newWorld(String zoneName, int width, int height, boolean outside, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {

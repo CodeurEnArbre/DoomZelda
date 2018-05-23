@@ -1,4 +1,4 @@
-package game;
+package game.modele.menu;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
