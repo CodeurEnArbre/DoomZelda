@@ -13,6 +13,7 @@ import game.modele.tile.Tile;
 import game.modele.tile.TileFactory;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
+import game.modele.utils.graph.Graph;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
@@ -33,6 +34,10 @@ public class World {
 
 	
 	public static void loadGameLoop() {
+
+		currentMap.g.init();
+		World.currentMap.g.Dijkstra((int)World.player.coordonnes.getY(),(int)World.player.coordonnes.getX());
+		
 		GameLoop.setCycleCount(Timeline.INDEFINITE);
 		GameLoop.play();
 	}
@@ -55,7 +60,7 @@ public class World {
 	public static void loadPlayer() {
 		player = new Player(null,new Coordonnees(14,10),new Direction(5));
 		addEntity(player);
-		addKeyGameLoop(p -> currentMap.g.Dijkstra((int)player.coordonnes.getX(),(int)player.coordonnes.getY()));
+		
 	}
 
 	public static void addEntity(Entity e) {

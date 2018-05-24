@@ -59,7 +59,7 @@ public class WorldData {
 		this.zoneName.setValue(zoneName);
 		dijkstra = new HashMap<>();
 		g = new Graph(width, height);
-		Graph();
+	
 	}
 
 	public String getName() {
@@ -145,34 +145,4 @@ public class WorldData {
 
 		addLight(tmp, current, i - pas, pas);
 	}
-
-	public void Graph() {
-		for(int x = 0; x < width;x++)
-			for(int y = 0; y < height ; y++) {
-				if(getTile(x, y).solid())continue;
-				
-				if(x + 1 < height && !getTile(x + 1, y).solid())
-					g.addLinks(x, y,x+1,y,
-							(getTileTerrain(x + 1, y).speedIndice() + getTileTerrain(x, y).speedIndice()) / 2);
-				
-				if(x - 1 >= 0 && !getTile(x - 1, y).solid())
-					g.addLinks(x, y,x - 1,y,
-							(getTileTerrain(x - 1, y).speedIndice() + getTileTerrain(x, y).speedIndice()) / 2);
-				
-				if(y + 1 < width && !getTile(x, y + 1).solid())
-					g.addLinks(x, y,x,y + 1,
-							(getTileTerrain(x , y + 1).speedIndice() + getTileTerrain(x, y).speedIndice()) / 2);
-				
-				if(y - 1 >= 0 && !getTile(x, y - 1).solid())
-					g.addLinks(x, y,x,y - 1,
-							(getTileTerrain(x, y - 1).speedIndice() + getTileTerrain(x, y).speedIndice()) / 2);
-				
-				
-				
-			}
-		
-		
-		
-	}
-	
 }

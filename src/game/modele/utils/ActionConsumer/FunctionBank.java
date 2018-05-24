@@ -1,14 +1,6 @@
 package game.modele.utils.ActionConsumer;
-
-import java.util.AbstractMap.SimpleEntry;
 import java.util.function.Consumer;
-
 import game.modele.entity.Entity;
-import game.modele.tile.Tile;
-import game.modele.utils.Coordonnees;
-import game.modele.utils.graph.Link;
-import game.modele.utils.graph.Node;
-import game.modele.world.World;
 
 /* Cette Class r�f�rence toutes les fonctions applicables sur les entit�es
  *
