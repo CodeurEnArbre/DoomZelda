@@ -9,15 +9,22 @@ import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.FunctionBank;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
+import javafx.beans.property.IntegerProperty;
 
 public class Player extends EntityLiving{
 
 	
-	private ArrayList<Item> inventory;
+	public ArrayList<Item> usables;
+	public ArrayList<Item> weapons;
+	public ArrayList<Item> loots;
+	public ArrayList<Item> specials;
 	
-	public Player(ArrayList<Item> inventory, Coordonnees position, Direction direction) {
+	private int maxRuby=100;
+	private IntegerProperty ruby; //ARGENT!!!
+	
+	public Player(ArrayList<Item> loots, Coordonnees position, Direction direction) {
 		super("Player",position,direction);
-		this.inventory=inventory;
+		this.loots=loots;
 		this.speed = baseSpeed;
 		this.slow =	1;
 		
@@ -25,18 +32,25 @@ public class Player extends EntityLiving{
 		addAction(new InfiniteActionConsumer(FunctionBank.SimpleMovement));
 		
 	}
-
-	//Recuperer le nombre d'item dans l'inventaire
-	public int getInventorySize() {
-		return this.inventory.size();
+	
+	public int getRuby() {
+		return this.ruby.get();
 	}
-
-	public Item getInventoryItem(int index){
-		return this.inventory.get(index);
+	
+	public boolean removeRuby(int quantity) {
+		if(ruby.get()>=quantity) {
+			this.ruby.set(this.ruby.get()-quantity);
+			return true;
+		}else
+			return false;
 	}
-
-	public void addInventoryItem(Item item) {
-		this.inventory.add(item);
+	
+	public void addRuby(int quantity) {
+		if((ruby.get()+quantity)>maxRuby) {
+			this.ruby.set(ruby.get()+quantity);
+		}else {
+			this.ruby.set(maxRuby);
+		}
 	}
 	
 	@Override
