@@ -63,7 +63,7 @@ public class Menu {
 			}
 		}
 	}
-	
+
 	public static void selectUp() {
 		if(currentMenu.get() != NoMenuID) {
 			if(selectedButton.get()>0)

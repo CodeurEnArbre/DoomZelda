@@ -31,13 +31,6 @@ public class World {
 
 	private static Timeline GameLoop = new Timeline();
 
-	public static void reset() {
-		
-		onPause.set(false);
-		isWorldLoaded.set(false);
-		player=null;
-		currentMap=null;
-	}
 	
 	public static void loadGameLoop() {
 		GameLoop.setCycleCount(Timeline.INDEFINITE);

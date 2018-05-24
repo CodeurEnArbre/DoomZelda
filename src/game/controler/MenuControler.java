@@ -132,6 +132,7 @@ public class MenuControler implements Initializable{
 		//chargement des options
 		loadOptions();
 		
+		//Listener si un monde est charger
 		World.isWorldLoaded.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -150,7 +151,6 @@ public class MenuControler implements Initializable{
 					PlayerPane.getChildren().clear();
 					PaneHUD.getChildren().clear();
 					coeurs.clear();
-					World.reset();
 					homeMenu.setOpacity(1);
 					Menu.currentMenu.set(Menu.MainMenuID);
 				}
