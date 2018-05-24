@@ -12,8 +12,8 @@ public class Zombie extends EntityMonster{
 		super("Zombie",c,d);
 		this.speed = 0.03;
 		this.acce = 0;
-		this.baseSpeed = 0.03;
-		this.maxSpeed = 0.03;		
+		this.baseSpeed = 0.08;
+		this.maxSpeed = 0.08;		
 		addAction(new InfiniteActionConsumer(FunctionBank.SimpleMove));
 		addAction(new InfiniteActionConsumer(FunctionBank.IAMove));
 	}

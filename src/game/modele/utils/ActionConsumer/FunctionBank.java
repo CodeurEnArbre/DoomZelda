@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 import game.modele.entity.Entity;
 import game.modele.tile.Tile;
 import game.modele.utils.Coordonnees;
+import game.modele.utils.graph.Link;
 import game.modele.utils.graph.Node;
 import game.modele.world.World;
 
@@ -27,6 +28,10 @@ public enum FunctionBank {
 	SimpleMove(e-> {
 		if(!e.moveDown.active && !e.moveUP.active && !e.moveLeft.active && !e.moveRight.active) {
 			e.speed = e.baseSpeed;
+			
+		}else {
+			//World.currentMap.g.Dijkstra((int)e.coordonnes.getX(),(int)e.coordonnes.getY());
+			
 		}
 		if(e.moveDown.active) {
 			if(e.moveLeft.active ^ e.moveRight.active) {
@@ -77,8 +82,9 @@ public enum FunctionBank {
 		}
 	}),
 	SimpleMovement(e -> {
-		if(e.moveDown.active || e.moveUP.active || e.moveLeft.active || e.moveRight.active)
+		if(e.moveDown.active || e.moveUP.active || e.moveLeft.active || e.moveRight.active) {
 			e.incAnim();
+		}
 		if(!e.moveDown.active && !e.moveUP.active && !e.moveLeft.active && !e.moveRight.active) {
 			e.resetAnim();
 		}}),
@@ -123,14 +129,7 @@ public enum FunctionBank {
 			}
 		}}),
 	IAMove(e -> {
-
-		while(!World.currentMap.g.getPath((int)e.coordonnes.getX(),(int)e.coordonnes.getY()).isEmpty()) {
-			
-			
-			Node n = World.currentMap.g.getPath((int)e.coordonnes.getX(),(int)e.coordonnes.getY()).pop().getNodeDepart();
-			System.out.println(n.coord.getKey() + "  " + n.coord.getValue());
-
-		}
+	
 
 	});
 
