@@ -1,5 +1,7 @@
 package game.modele.menu;
 
+import game.modele.world.World;
+
 public class InGameMenu {
 
 	public static void Save(String name) {
@@ -19,7 +21,7 @@ public class InGameMenu {
 			break;
 			
 		case 2:
-			
+			World.isWorldLoaded.set(false);
 			break;
 		}
 		

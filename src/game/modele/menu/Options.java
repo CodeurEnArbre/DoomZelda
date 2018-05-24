@@ -1,5 +1,9 @@
 package game.modele.menu;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 import game.controler.Interaction;
@@ -59,7 +63,7 @@ public class Options {
 			break;
 		 
 		}
-		
+		SaveKeyBinding();
 	}
 	
 	private static void defaultReset() {
@@ -71,6 +75,7 @@ public class Options {
 		rightKey.setValue(KeyCode.D.getName());
 		Interaction.GAUCHE = KeyCode.Q;
 		leftKey.setValue(KeyCode.Q.getName());
+		SaveKeyBinding();
 	}
 	
 	private static boolean verifBind(KeyCode k) {
@@ -78,15 +83,20 @@ public class Options {
 			k.toString().equals(downKey.getValue()) ||
 			k.toString().equals(rightKey.getValue()) ||
 			k.toString().equals(leftKey.getValue())) {
-				System.out.println("La touche est deja assignee");
 				return false;		
 		}else {
 			return true;
 		}
 	}
 	
-	public static void Save(String name) {
-		//TODO
+	public static void SaveKeyBinding() {
+		try {
+			BufferedWriter optionsFile = new BufferedWriter(new FileWriter(new File("ressources/saves/options.txt").getAbsolutePath()));
+			optionsFile.write(Interaction.AVANCER+","+Interaction.RECULER+","+Interaction.DROITE+","+Interaction.GAUCHE);
+			optionsFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void validate() {

@@ -1,10 +1,16 @@
 package game.controler;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 import game.modele.entity.Entity;
 import game.modele.entity.living.EntityLiving;
@@ -27,6 +33,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
 @SuppressWarnings("unlikely-arg-type")
@@ -122,19 +129,30 @@ public class MenuControler implements Initializable{
 		//chagement des menus
 		loadMenus();
 		
-		//Bind des valeurs d'assignation de touches
-		KeyName1.textProperty().bind(Options.upKey);
-		KeyName2.textProperty().bind(Options.downKey);
-		KeyName3.textProperty().bind(Options.rightKey);
-		KeyName4.textProperty().bind(Options.leftKey);
+		//chargement des options
+		loadOptions();
 		
 		World.isWorldLoaded.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				homeMenu.setOpacity(0);
+				
 				if(newValue) {
+					homeMenu.setOpacity(0);
 					System.out.println("Loading save");
-					loadMapTexture();				
+					loadMapTexture();
+					
+				}else {
+					System.out.println("Return to menu");
+					PaneGround.getChildren().clear();
+					PaneSolid.getChildren().clear();
+					PaneTop.getChildren().clear();
+					EntityPane.getChildren().clear();
+					PlayerPane.getChildren().clear();
+					PaneHUD.getChildren().clear();
+					coeurs.clear();
+					World.reset();
+					homeMenu.setOpacity(1);
+					Menu.currentMenu.set(Menu.MainMenuID);
 				}
 			}});
 		
@@ -169,6 +187,7 @@ public class MenuControler implements Initializable{
 				
 			}});
 
+		
 
 		//Listener de changement de menu
 		Menu.currentMenu.addListener(new ChangeListener<Number>() {
@@ -215,6 +234,30 @@ public class MenuControler implements Initializable{
 			}});
 	}
 
+	private void loadOptions() {
+		
+		try {
+			BufferedReader optionsData = new BufferedReader(new FileReader(new File("ressources/saves/options.txt").getAbsolutePath()));
+			Pattern pat = Pattern.compile(",");
+			String[] optionLine;
+			optionLine = pat.split(optionsData.readLine());
+			for(int option=0; option < optionLine.length ;option++) {
+				Menu.selectedButton.set(option);
+				Options.setBind(KeyCode.valueOf(optionLine[option]));
+			}
+			Menu.selectedButton.set(0);
+			optionsData.close();
+		} catch (IOException e) {
+			Options.SaveKeyBinding();
+		}
+		
+		//Bind des valeurs d'assignation des touches
+		KeyName1.textProperty().bind(Options.upKey);
+		KeyName2.textProperty().bind(Options.downKey);
+		KeyName3.textProperty().bind(Options.rightKey);
+		KeyName4.textProperty().bind(Options.leftKey);
+	}
+	
 	public void loadMapTexture() {
 		
 		//Affichage de toutes les couches de la map
