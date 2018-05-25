@@ -10,7 +10,7 @@ public class InGameMenu {
 
 
 	public static void validate() {
-		switch(Menu.selectedButton.get()) {
+		switch(Menu.selectedButtonY.get()) {
 		
 		case 0:
 			Menu.lastMenu=Menu.InGameMenuID;

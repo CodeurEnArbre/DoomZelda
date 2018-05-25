@@ -2,7 +2,6 @@ package game.controler;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -17,7 +16,7 @@ import game.modele.entity.living.EntityLiving;
 import game.modele.entity.tileEntity.EntityLight;
 import game.modele.entity.tileEntity.TileEntity;
 import game.modele.menu.Menu;
-import game.modele.menu.Options;
+import game.modele.menu.OptionsMenu;
 import game.modele.utils.Direction;
 import game.modele.world.World;
 import game.vue.EntityLivingTexture;
@@ -75,6 +74,9 @@ public class MenuControler implements Initializable{
 
 	@FXML
 	private Pane PaneOptions;
+	
+	@FXML
+	private Pane inventoryMenu;
 	
 	@FXML
 	private Pane homeMenu;
@@ -161,9 +163,21 @@ public class MenuControler implements Initializable{
 	}
 	
 	public void loadMenus() {
+		//Listener de la selection des boutons des Menus en x
+		Menu.selectedButtonX.addListener(new ChangeListener<Number>() {
 
-		//Listener de la selection des boutons des Menus
-		Menu.selectedButton.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				if( Menu.currentMenu.get() == Menu.InventoryMenuID ) {
+					//TODO
+				}
+				
+			}
+			
+		});
+		
+		//Listener de la selection des boutons des Menus en y
+		Menu.selectedButtonY.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				switch (Menu.currentMenu.get()) {
@@ -195,10 +209,10 @@ public class MenuControler implements Initializable{
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				
-				Menu.selectedButton.set(0);
-				selectorMain.relocate(playImg.getLayoutX(), playImg.getLayoutY()+120*Menu.selectedButton.intValue());
-				selectorPauseInGame.relocate(optionInGameImg.getLayoutX(), optionInGameImg.getLayoutY()+120*Menu.selectedButton.intValue());
-				selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*Menu.selectedButton.intValue());
+				Menu.selectedButtonY.set(0);
+				selectorMain.relocate(playImg.getLayoutX(), playImg.getLayoutY()+120*Menu.selectedButtonY.intValue());
+				selectorPauseInGame.relocate(optionInGameImg.getLayoutX(), optionInGameImg.getLayoutY()+120*Menu.selectedButtonY.intValue());
+				selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*Menu.selectedButtonY.intValue());
 				
 				switch(newValue.intValue()) {
 				case Menu.OptionsMenuID:
@@ -211,9 +225,14 @@ public class MenuControler implements Initializable{
 					PaneMenu.setOpacity(1);
 					break;
 				
+				case Menu.InventoryMenuID:
+					inventoryMenu.setOpacity(1);
+					break;
+					
 				default :
 					PaneOptions.setOpacity(0);
 					PaneMenu.setOpacity(0);
+					inventoryMenu.setOpacity(0);
 					break;
 				
 				}
@@ -221,7 +240,7 @@ public class MenuControler implements Initializable{
 			}});	
 		
 		//Listener du temoin graphique d'assignation des touches
-		Options.enterOption.addListener(new ChangeListener<Boolean>() {
+		OptionsMenu.enterOption.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if(newValue) {
@@ -242,20 +261,20 @@ public class MenuControler implements Initializable{
 			String[] optionLine;
 			optionLine = pat.split(optionsData.readLine());
 			for(int option=0; option < optionLine.length ;option++) {
-				Menu.selectedButton.set(option);
-				Options.setBind(KeyCode.valueOf(optionLine[option]));
+				Menu.selectedButtonY.set(option);
+				OptionsMenu.setBind(KeyCode.valueOf(optionLine[option]));
 			}
-			Menu.selectedButton.set(0);
+			Menu.selectedButtonY.set(0);
 			optionsData.close();
 		} catch (IOException e) {
-			Options.SaveKeyBinding();
+			OptionsMenu.SaveKeyBinding();
 		}
 		
 		//Bind des valeurs d'assignation des touches
-		KeyName1.textProperty().bind(Options.upKey);
-		KeyName2.textProperty().bind(Options.downKey);
-		KeyName3.textProperty().bind(Options.rightKey);
-		KeyName4.textProperty().bind(Options.leftKey);
+		KeyName1.textProperty().bind(OptionsMenu.upKey);
+		KeyName2.textProperty().bind(OptionsMenu.downKey);
+		KeyName3.textProperty().bind(OptionsMenu.rightKey);
+		KeyName4.textProperty().bind(OptionsMenu.leftKey);
 	}
 	
 	public void loadMapTexture() {

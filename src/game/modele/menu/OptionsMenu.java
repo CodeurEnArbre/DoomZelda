@@ -13,7 +13,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.input.KeyCode;
 
-public class Options {
+public class OptionsMenu {
 	
 	public static StringProperty upKey = new SimpleStringProperty("Z");
 	public static StringProperty downKey = new SimpleStringProperty("S");
@@ -33,7 +33,7 @@ public class Options {
 	}
 
 	public static void setBind(KeyCode k) {
-		switch(Menu.selectedButton.get()) {
+		switch(Menu.selectedButtonY.get()) {
 			case 0: 
 				if(verifBind(k)) {
 					Interaction.AVANCER = k;
@@ -100,7 +100,7 @@ public class Options {
 	}
 
 	public static void validate() {
-		if(Menu.selectedButton.get() == 4) {
+		if(Menu.selectedButtonY.get() == 4) {
 			defaultReset();
 		}else {
 			enterOption.set(true);
