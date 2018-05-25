@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
+
 import game.modele.entity.Entity;
 import game.modele.entity.living.EntityLiving;
 import game.modele.entity.tileEntity.EntityLight;
@@ -86,6 +88,8 @@ public class MenuControler implements Initializable{
 
 	@FXML
 	private ImageView selectorMain;
+	
+	private ImageView inventorySelector;
 
 	@FXML
 	private ImageView playImg;
@@ -119,6 +123,10 @@ public class MenuControler implements Initializable{
     private Label KeyName3;
     @FXML
     private Label KeyName4;
+    
+    private Image inventorySelector1;
+    private Image inventorySelector2;
+    private Image inventorySelector3;
     
 	@FXML
 	private Button buttonReprendre;
@@ -163,42 +171,21 @@ public class MenuControler implements Initializable{
 	}
 	
 	public void loadMenus() {
+		inventorySelector= new ImageView();
+		inventoryMenu.getChildren().add(inventorySelector);
+		
 		//Listener de la selection des boutons des Menus en x
 		Menu.selectedButtonX.addListener(new ChangeListener<Number>() {
-
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				if( Menu.currentMenu.get() == Menu.InventoryMenuID ) {
-					//TODO
-				}
-				
-			}
-			
-		});
+				menuSelection();
+			}});
 		
 		//Listener de la selection des boutons des Menus en y
 		Menu.selectedButtonY.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				switch (Menu.currentMenu.get()) {
-				
-				case Menu.MainMenuID:
-					selectorMain.relocate(playImg.getLayoutX(), playImg.getLayoutY()+120*newValue.intValue());
-					break;
-					
-				case Menu.InGameMenuID:
-					selectorPauseInGame.relocate(optionInGameImg.getLayoutX(), optionInGameImg.getLayoutY()+120*newValue.intValue());
-					break;
-					
-				case Menu.OptionsMenuID:
-					if(newValue.intValue() == 4) {
-						selectorInOption.relocate(resetDefaultImg.getLayoutX(), resetDefaultImg.getLayoutY()+10);
-					}else {
-						selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*newValue.intValue());
-					}
-					break;
-				}
-				
+				menuSelection();	
 			}});
 
 		
@@ -209,23 +196,26 @@ public class MenuControler implements Initializable{
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				
-				Menu.selectedButtonY.set(0);
 				selectorMain.relocate(playImg.getLayoutX(), playImg.getLayoutY()+120*Menu.selectedButtonY.intValue());
-				selectorPauseInGame.relocate(optionInGameImg.getLayoutX(), optionInGameImg.getLayoutY()+120*Menu.selectedButtonY.intValue());
-				selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*Menu.selectedButtonY.intValue());
 				
 				switch(newValue.intValue()) {
 				case Menu.OptionsMenuID:
+					selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*Menu.selectedButtonY.intValue());
+					Menu.selectedButtonY.set(0);
 					PaneOptions.setOpacity(1);
 					PaneMenu.setOpacity(0);
 					break;
 					
 				case Menu.InGameMenuID:
+					selectorPauseInGame.relocate(optionInGameImg.getLayoutX(), optionInGameImg.getLayoutY()+120*Menu.selectedButtonY.intValue());
+					Menu.selectedButtonY.set(0);
 					PaneOptions.setOpacity(0);
 					PaneMenu.setOpacity(1);
 					break;
 				
 				case Menu.InventoryMenuID:
+					inventorySelector.setImage(inventorySelector2);
+					inventorySelector.relocate(652, 382);
 					inventoryMenu.setOpacity(1);
 					break;
 					
@@ -243,14 +233,55 @@ public class MenuControler implements Initializable{
 		OptionsMenu.enterOption.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if(newValue) {
-					
+				if(newValue)			
 					temoinAssignation.setOpacity(1);
-				}else {
+				else
 					temoinAssignation.setOpacity(0);
-				}
+				
 				
 			}});
+	}
+	
+	private void menuSelection() {
+		int x = Menu.selectedButtonX.intValue();
+		int y = Menu.selectedButtonY.intValue();
+		
+		switch (Menu.currentMenu.get()) {
+		
+		case Menu.MainMenuID:
+			selectorMain.relocate(playImg.getLayoutX(), playImg.getLayoutY()+120*y);
+			break;
+			
+		case Menu.InGameMenuID:
+			selectorPauseInGame.relocate(optionInGameImg.getLayoutX(), optionInGameImg.getLayoutY()+120*y);
+			break;
+			
+		case Menu.OptionsMenuID:
+			if(y == 4) {
+				selectorInOption.relocate(resetDefaultImg.getLayoutX(), resetDefaultImg.getLayoutY()+10);
+			}else {
+				selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*y);
+			}
+			break;
+			
+		case Menu.InventoryMenuID:
+			System.out.println(x+" "+y);
+			if(x+y==0) {
+				inventorySelector.setImage(inventorySelector3);
+				inventorySelector.relocate(75, 75);
+			}else if(x == 8) {
+				inventorySelector.setImage(inventorySelector2);
+				inventorySelector.relocate(652, 382+70*(y-2));
+			}else if(y<2) {
+				inventorySelector.setImage(inventorySelector1);
+				inventorySelector.relocate(349+76*(x-4), 130+76*y);
+			}else if(x<8) {
+				inventorySelector.setImage(inventorySelector1);
+				inventorySelector.relocate(60+73*(x), 365+73*(y-2));
+			}
+			
+			break;
+		}
 	}
 
 	private void loadOptions() {
@@ -365,6 +396,7 @@ public class MenuControler implements Initializable{
 	}
 	
 	private void textureLoading() {
+		try {
 		dicoImageTileTextureMap = new HashMap<>();
 		dicoImageItemTextureMap = new HashMap<>();
 		dicoImageAnimationPlayer = new HashMap<>();
@@ -377,13 +409,19 @@ public class MenuControler implements Initializable{
 		
 		coeurs = new ArrayList<>();
 		
+		inventorySelector1 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventorySelector1.png").toURI().toURL()), null);
+		inventorySelector2 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventorySelector2.png").toURI().toURL()), null);
+		inventorySelector3 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventorySelector3.png").toURI().toURL()), null);
+		
 		for(int i = 0; i < 16;i++)
 		
 		dicoShadow.put(i,SwingFXUtils.toFXImage(
 				EntityLivingTexture.getEntityTexture("darkness",32,32,i,0).getTexture(), null));
 		
 		
-		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void LoadDicoMap(Map<Integer,Image> dico,int imageWidthPixels, int imageHeightPixels, int imageWidth, int imageHeight, String textureMapName) {
