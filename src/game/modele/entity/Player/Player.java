@@ -7,8 +7,9 @@ import game.modele.entity.living.EntityLiving;
 import game.modele.item.Item;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
-import game.modele.utils.ActionConsumer.FunctionBank;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
+import game.modele.utils.ActionConsumer.Function.FunctionMove;
+import game.modele.utils.ActionConsumer.Function.FunctionMovement;
 import javafx.beans.property.IntegerProperty;
 
 public class Player extends EntityLiving{
@@ -28,8 +29,8 @@ public class Player extends EntityLiving{
 		this.speed = baseSpeed;
 		this.slow =	1;
 		
-		addAction(new InfiniteActionConsumer(FunctionBank.SimpleMove));
-		addAction(new InfiniteActionConsumer(FunctionBank.SimpleMovement));
+		addAction(new InfiniteActionConsumer(new FunctionMove()));
+		addAction(new InfiniteActionConsumer(new FunctionMovement()));
 		
 	}
 	

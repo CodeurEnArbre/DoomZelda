@@ -5,8 +5,8 @@ import game.modele.tile.tileGround.tileVoid;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.ConsumerAction;
-import game.modele.utils.ActionConsumer.FunctionBank;
 import game.modele.utils.ActionConsumer.ListConsumerAction;
+import game.modele.utils.ActionConsumer.Function.Function;
 import game.modele.world.World;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -65,8 +65,8 @@ public abstract class Entity {
 		ce.add(c);
 	}
 	
-	public void delAction(FunctionBank c) {
-		ce.del(c);
+	public void delAction(Function d) {
+		ce.del(d);
 	}
 	
 	public void addX(double x){

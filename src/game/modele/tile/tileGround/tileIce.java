@@ -1,8 +1,8 @@
 package game.modele.tile.tileGround;
 
 import game.modele.entity.Entity;
-import game.modele.utils.ActionConsumer.FunctionBank;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
+import game.modele.utils.ActionConsumer.Function.FunctionMoveIce;
 
 public class tileIce extends TileGround{
 
@@ -13,20 +13,12 @@ public class tileIce extends TileGround{
 	@Override
 	public void onEntityOver(Entity e) {
 		e.slow = 0.4;
-		e.addAction(new InfiniteActionConsumer(FunctionBank.IceMove));
+		e.addAction(new InfiniteActionConsumer(new FunctionMoveIce()));
 	}
 
 	@Override
 	public void leaveEntity(Entity e) {
-		e.delAction(FunctionBank.IceMove);
-		e.delAction(FunctionBank.MoveIceDown);
-		e.delAction(FunctionBank.MoveIceDownAND);
-		e.delAction(FunctionBank.MoveIceUp);
-		e.delAction(FunctionBank.MoveIceUpAND);
-		e.delAction(FunctionBank.MoveIceLeft);
-		e.delAction(FunctionBank.MoveIceLeftAND);
-		e.delAction(FunctionBank.MoveIceRight);
-		e.delAction(FunctionBank.MoveIceRightAND);
+		e.delAction(new FunctionMoveIce());
 		e.slow = 1;
 	}
 	
