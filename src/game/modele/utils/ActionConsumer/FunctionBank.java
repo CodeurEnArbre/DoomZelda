@@ -22,9 +22,6 @@ public enum FunctionBank {
 		if(!e.moveDown.active && !e.moveUP.active && !e.moveLeft.active && !e.moveRight.active) {
 			e.speed = e.baseSpeed;
 			
-		}else {
-			//World.currentMap.g.Dijkstra((int)e.coordonnes.getX(),(int)e.coordonnes.getY());
-			
 		}
 		if(e.moveDown.active) {
 			if(e.moveLeft.active ^ e.moveRight.active) {
@@ -125,21 +122,19 @@ public enum FunctionBank {
 		int x = (int)e.coordonnes.getY();
 		int y = (int)e.coordonnes.getX();
 		try {
-		if(World.currentMap.g.direction[x][y].getValue() == Graph.right) {
+		if(World.currentMap.g.direction[x][y].getValue() == Graph.left) {
 			e.moveLeft.active = true;
 			e.moveRight.active = false;
-		}else if(World.currentMap.g.direction[x][y].getValue() == Graph.left) {
+		}else if(World.currentMap.g.direction[x][y].getValue() == Graph.right) {
 			e.moveLeft.active = false;
 			e.moveRight.active = true;
-		}else if(World.currentMap.g.direction[x][y].getValue() == Graph.top) {
+		}else if(World.currentMap.g.direction[x][y].getValue() == Graph.bot) {
 			e.moveUP.active = true;
 			e.moveDown.active = false;
-		}else if(World.currentMap.g.direction[x][y].getValue() == Graph.bot) {
+		}else if(World.currentMap.g.direction[x][y].getValue() == Graph.top) {
 			e.moveDown.active = true;
 			e.moveUP.active = false;
 		}
-		
-		
 		
 		}catch(NullPointerException n) {}
 	});

@@ -59,7 +59,6 @@ public class WorldData {
 		this.zoneName.setValue(zoneName);
 		dijkstra = new HashMap<>();
 		g = new Graph(width, height);
-	
 	}
 
 	public String getName() {

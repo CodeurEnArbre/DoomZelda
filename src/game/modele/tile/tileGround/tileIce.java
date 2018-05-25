@@ -29,4 +29,10 @@ public class tileIce extends TileGround{
 		e.delAction(FunctionBank.MoveIceRightAND);
 		e.slow = 1;
 	}
+	
+	@Override
+	public int speedIndice() {
+		return 100;
+	}
+	
 }

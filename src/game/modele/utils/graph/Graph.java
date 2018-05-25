@@ -8,16 +8,14 @@ import game.modele.world.World;
 
 public class Graph {
 
-	public static final int[] left = new int[] {-1,0};
-	public static final int[] right = new int[] {1,0};
-	public static final int[] top = new int[] {0,-1};
-	public static final int[] bot = new int[] {0,1};
-	
+	public static final int[] top = new int[] {-1,0};
+	public static final int[] bot = new int[] {1,0};
+	public static final int[] right = new int[] {0,-1};
+	public static final int[] left = new int[] {0,1};
 	
 	public int[][] node;
 	public SimpleEntry<Integer,int[]>[][] direction;
 	public LinkedList<Point> queue;
-
 
 	private int width;
 	private int height;
@@ -40,7 +38,7 @@ public class Graph {
 
 	public void Dijkstra(int x,int y){
 		direction = new SimpleEntry[width][height];
-		queue = new LinkedList();
+		queue = new LinkedList<Point>();
 		push(x,y,new int[]{0,0},0);
 		queue.addLast(new Point(x,y));
 		Dijcalcul(0);	
