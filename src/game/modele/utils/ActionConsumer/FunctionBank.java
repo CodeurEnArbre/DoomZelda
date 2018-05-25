@@ -121,6 +121,17 @@ public enum FunctionBank {
 	IAMove(e -> {
 		int x = (int)e.coordonnes.getY();
 		int y = (int)e.coordonnes.getX();
+		
+		if(x  == (int)World.player.coordonnes.getY()
+				&& y == (int)World.player.coordonnes.getX()) {
+			e.moveLeft.active = false;
+			e.moveRight.active = false;
+			e.moveDown.active = false;
+			e.moveUP.active = false;
+		}
+		
+		
+		
 		try {
 		if(World.currentMap.g.direction[x][y].getValue() == Graph.left) {
 			e.moveLeft.active = true;
