@@ -374,7 +374,7 @@ public class MenuControler implements Initializable{
 		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
 		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
 		loadAnimationPlayer(dicoImageAnimationPlayer, 28, 4);
-
+		
 		coeurs = new ArrayList<>();
 		
 		for(int i = 0; i < 16;i++)

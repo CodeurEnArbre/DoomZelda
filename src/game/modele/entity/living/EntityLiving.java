@@ -29,9 +29,11 @@ public abstract class EntityLiving extends Entity{
 		this.direction=direction;
 	}
 	
-	public void perdrePV() {
-		if(PV.getValue()>0)
-			PV.set(PV.get()-1);
+	public void perdrePV(int degats) {
+		if(PV.getValue() > degats)
+			PV.set(PV.get() - degats);
+		else
+			PV.set(0);
 	}
 	
 	public void gagnerPV() {
