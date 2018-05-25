@@ -2,15 +2,9 @@ package game.modele.utils.graph;
 
 import java.awt.Point;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 import game.modele.world.World;
-import javafx.beans.property.SimpleIntegerProperty;
 
 public class Graph {
 

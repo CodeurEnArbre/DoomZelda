@@ -1,7 +1,8 @@
 package game.modele.utils.ActionConsumer;
 import java.util.function.Consumer;
 import game.modele.entity.Entity;
-
+import game.modele.utils.graph.Graph;
+import game.modele.world.World;
 /* Cette Class r�f�rence toutes les fonctions applicables sur les entit�es
  *
  */
@@ -121,8 +122,26 @@ public enum FunctionBank {
 			}
 		}}),
 	IAMove(e -> {
-	
-
+		int x = (int)e.coordonnes.getY();
+		int y = (int)e.coordonnes.getX();
+		try {
+		if(World.currentMap.g.direction[x][y].getValue() == Graph.right) {
+			e.moveLeft.active = true;
+			e.moveRight.active = false;
+		}else if(World.currentMap.g.direction[x][y].getValue() == Graph.left) {
+			e.moveLeft.active = false;
+			e.moveRight.active = true;
+		}else if(World.currentMap.g.direction[x][y].getValue() == Graph.top) {
+			e.moveUP.active = true;
+			e.moveDown.active = false;
+		}else if(World.currentMap.g.direction[x][y].getValue() == Graph.bot) {
+			e.moveDown.active = true;
+			e.moveUP.active = false;
+		}
+		
+		
+		
+		}catch(NullPointerException n) {}
 	});
 
 	public Consumer<Entity> element;
