@@ -101,6 +101,14 @@ public class WorldData {
 	public ObservableList<Entity> getEntity(){
 		return this.entity;
 	}
+	
+	public void deleteEntity(int primaryKey) {
+		for(int i = 0; i < entity.size(); i++) {
+			if(entity.get(i).primaryKey == primaryKey) {
+				entity.remove(i);
+			}
+		}
+	}
 
 	public Entity[] entityHere(double x,double y) {
 		return this.entity.stream().filter(a -> a.coordonnes.isSameTile(x, y)).toArray(Entity[]::new);
