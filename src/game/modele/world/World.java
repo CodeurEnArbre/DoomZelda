@@ -32,14 +32,15 @@ public class World {
 
 	private static Timeline GameLoop = new Timeline();
 
+	private static Timeline GameLoopDijk = new Timeline();
 	
 	public static void loadGameLoop() {
 
-		currentMap.g.init();
-		World.currentMap.g.Dijkstra((int)World.player.coordonnes.getY(),(int)World.player.coordonnes.getX());
-		
+		currentMap.g.init();		
 		GameLoop.setCycleCount(Timeline.INDEFINITE);
 		GameLoop.play();
+		GameLoopDijk.setCycleCount(Timeline.INDEFINITE);
+		GameLoopDijk.play();
 	}
 
 	//Ajoute des fonctions qui seront execute dans la gameloop
@@ -55,12 +56,15 @@ public class World {
 
 	public static void playGameLoop() {
 		GameLoop.play();
+		GameLoopDijk.play();
 	}
 
 	public static void loadPlayer() {
 		player = new Player(null,new Coordonnees(14,10),new Direction(5));
 		addEntity(player);
-		
+		GameLoopDijk.getKeyFrames().add(new KeyFrame(Duration.seconds(0.1), e ->{
+			World.currentMap.g.Dijkstra((int)World.player.coordonnes.getY(),(int)World.player.coordonnes.getX());
+		}));
 	}
 
 	public static void addEntity(Entity e) {
