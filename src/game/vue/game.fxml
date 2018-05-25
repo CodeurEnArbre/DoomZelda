@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
@@ -7,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="paneWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="864.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controler.MenuControler">
+<Pane fx:id="paneWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="864.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controler.MenuControler">
    <children>
       <Pane fx:id="paneGame" prefHeight="640.0" prefWidth="864.0" style="-fx-background-color: black;">
          <children>
@@ -24,26 +30,26 @@
          <children>
             <ImageView fx:id="menuImageFont" fitHeight="640.0" fitWidth="864.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/background.png" />
+                  <Image url="@../../../ressources/textures/gui/background.png" />
                </image></ImageView>
             <ImageView fx:id="playImg" fitHeight="72.0" fitWidth="445.0" layoutX="230.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/Playsingameimg.png" />
+                  <Image url="@../../../ressources/textures/gui/Playsingameimg.png" />
                </image>
                <effect>
                   <Blend />
                </effect></ImageView>
             <ImageView fx:id="optionImg" fitHeight="72.0" fitWidth="445.0" layoutX="230.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/Optionsingameimg.png" />
+                  <Image url="@../../../ressources/textures/gui/Optionsingameimg.png" />
                </image></ImageView>
             <ImageView fx:id="exitImg" fitHeight="72.0" fitWidth="445.0" layoutX="230.0" layoutY="365.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/Quitsingameimg.png" />
+                  <Image url="@../../../ressources/textures/gui/Quitsingameimg.png" />
                </image></ImageView>
             <ImageView fx:id="selectorMain" fitHeight="72.0" fitWidth="416.0" layoutX="230.0" layoutY="125.0" pickOnBounds="true">
                <image>
-                  <Image url="@../../../ressources/textures/optionsImg/selectorinoption.png" />
+                  <Image url="@../../../ressources/textures/gui/optionsImg/selectorinoption.png" />
                </image>
             </ImageView>
          </children>
@@ -52,29 +58,38 @@
          <children>
             <ImageView fx:id="optionInGameImg" fitHeight="72.0" fitWidth="445.0" layoutX="220" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/Optionsingameimg.png" />
+                  <Image url="@../../../ressources/textures/gui/Optionsingameimg.png" />
                </image>
             </ImageView>
             <ImageView fx:id="saveInGameImg" fitHeight="72.0" fitWidth="445.0" layoutX="220" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/Saveingameimg.png" />
+                  <Image url="@../../../ressources/textures/gui/Saveingameimg.png" />
                </image>
             </ImageView>
             <ImageView fx:id="quitInGameImg" fitHeight="72.0" fitWidth="445.0" layoutX="220" layoutY="410.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/Quitsingameimg.png" />
+                  <Image url="@../../../ressources/textures/gui/Quitsingameimg.png" />
                </image>
             </ImageView>
             <ImageView fx:id="selectorPauseInGame" fitHeight="72.0" fitWidth="445.0" layoutX="220" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/selectoringameimg.png" />
+                  <Image url="@../../../ressources/textures/gui/selectoringameimg.png" />
                </image></ImageView>
          </children></Pane>
+      <Pane fx:id="inventoryMenu" opacity="0.0" prefHeight="640.0" prefWidth="864.0">
+      <children>
+            <ImageView fitHeight="640.0" fitWidth="864.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../ressources/textures/gui/Inventaire.png" />
+        	   </image>
+        	</ImageView>
+      </children>
+      </Pane>
       <Pane fx:id="PaneOptions" opacity="0.0" prefHeight="640.0" prefWidth="864.0" style="-fx-background-color: black;">
          <children>
             <ImageView fx:id="temoinAssignation" fitHeight="150.0" fitWidth="864.0" layoutX="135.0" layoutY="200.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/optionsImg/affichagebind.png" />
+                  <Image url="@../../../ressources/textures/gui/optionsImg/affichagebind.png" />
                </image>
             </ImageView>
             <Label fx:id="KeyName1" layoutX="500.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="100.0" style="-fx-font-weight: bold;" text="Z" textFill="WHITE">
@@ -99,37 +114,37 @@
             </Label>
             <ImageView fx:id="selectorInOption" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/optionsImg/selectorinoption.png" />
+                  <Image url="@../../../ressources/textures/gui/optionsImg/selectorinoption.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="optionsImg" fitHeight="125.0" fitWidth="864.0" layoutX="154.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="125.0" fitWidth="864.0" layoutX="154.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/optionsImg/optionImg.png" />
+                  <Image url="@../../../ressources/textures/gui/optionsImg/optionImg.png" />
                </image>
             </ImageView>
             <ImageView fx:id="fowardImg" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/optionsImg/forwardImg.png" />
+                  <Image url="@../../../ressources/textures/gui/optionsImg/forwardImg.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="backwarImg" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/optionsImg/backwardImg.png" />
+                  <Image url="@../../../ressources/textures/gui/optionsImg/backwardImg.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="righImg" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/optionsImg/rightImg.png" />
+                  <Image url="@../../../ressources/textures/gui/optionsImg/rightImg.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="leftImg" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="380.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="380.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/optionsImg/leftImg.png" />
+                  <Image url="@../../../ressources/textures/gui/optionsImg/leftImg.png" />
                </image>
             </ImageView>
             <ImageView fx:id="resetDefaultImg" fitHeight="72.0" fitWidth="200.0" layoutX="640.0" layoutY="543.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/optionsImg/resetDefaultImg.png" />
+                  <Image url="@../../../ressources/textures/gui/optionsImg/resetDefaultImg.png" />
                </image>
             </ImageView>
          </children>

@@ -1,7 +1,7 @@
 package game.controler;
 
 import game.modele.menu.Menu;
-import game.modele.menu.Options;
+import game.modele.menu.OptionsMenu;
 import game.modele.utils.Direction;
 import game.modele.world.World;
 import javafx.scene.input.KeyCode;
@@ -11,10 +11,14 @@ public class Interaction {
 	 * Assignation des booleans de direction � l'enfoncement de la touche
 	 * */
 	
+	//Direction
 	public static KeyCode AVANCER = KeyCode.Z;
 	public static KeyCode RECULER = KeyCode.S;
 	public static KeyCode GAUCHE = KeyCode.Q;
 	public static KeyCode DROITE = KeyCode.D;
+	
+	//Inventaire
+	public static KeyCode INVENTAIRE = KeyCode.E;
 	
 	public static void KeyInteractDown(KeyCode k) {
 		
@@ -25,6 +29,10 @@ public class Interaction {
 
 		if(k == KeyCode.ESCAPE) {
 			Menu.escape();
+		}
+		
+		if(k == INVENTAIRE) {
+			Menu.inventory();
 		}
 
 		if(k == AVANCER) {
@@ -52,7 +60,8 @@ public class Interaction {
 				setDirection(Direction.South);
 			}
 		}
-		if(k == GAUCHE && !Options.enterOption.get()) {
+		if(k == GAUCHE && !OptionsMenu.enterOption.get()) {
+			Menu.selectLeft();
 			if(World.isWorldLoaded.get()) {
 				World.player.moveLeft.attente = false;
 				World.player.moveLeft.active = true;
@@ -63,7 +72,8 @@ public class Interaction {
 
 				setDirection(Direction.East);
 			}
-		}else if(k == DROITE && !Options.enterOption.get()) {
+		}else if(k == DROITE && !OptionsMenu.enterOption.get()) {
+			Menu.selectRight();
 			if(World.isWorldLoaded.get()) {
 				World.player.moveRight.attente = false;
 				World.player.moveRight.active = true;
@@ -75,9 +85,9 @@ public class Interaction {
 			}
 
 		}else if(k != KeyCode.ENTER) {
-			if(Options.enterOption.get()) {
-				Options.setBind(k);
-				Options.enterOption.set(false);
+			if(OptionsMenu.enterOption.get()) {
+				OptionsMenu.setBind(k);
+				OptionsMenu.enterOption.set(false);
 			}
 		}
 	}

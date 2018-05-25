@@ -5,9 +5,10 @@ import game.modele.world.World;
 public class MainMenu {
 	
 	public static void validate() {
-		switch(Menu.selectedButton.get()) {
+		switch(Menu.selectedButtonY.get()) {
 		case 0 : 
 			World.loadWorld("TinyMap",null);
+			Menu.currentMenu.set(Menu.NoMenuID);
 			break;
 		case 1 :
 			Menu.lastMenu=Menu.MainMenuID;
