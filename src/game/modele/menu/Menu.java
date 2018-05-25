@@ -13,13 +13,16 @@ public class Menu {
 	public static final int OptionsMenuID = 2 ;
 	public static final int InventoryMenuID = 100 ;
 	
+	public static IntegerProperty selectedButtonX = new SimpleIntegerProperty(0);
 	public static IntegerProperty selectedButtonY = new SimpleIntegerProperty(0);
-	public static IntegerProperty selectedButtonX = new SimpleIntegerProperty(8);
 	public static IntegerProperty currentMenu = new SimpleIntegerProperty(MainMenuID);
 	public static int lastMenu;
 	
 	public static void inventory() {
 		if(Menu.currentMenu.get() == Menu.NoMenuID) {
+			selectedButtonX.set(8);
+			selectedButtonY.set(2);
+			System.out.println(selectedButtonX+" "+selectedButtonY);
 			Menu.currentMenu.set(Menu.InventoryMenuID);
 			World.pauseGameLoop();
 			World.onPause.set(true);
@@ -89,10 +92,10 @@ public class Menu {
 
 	public static void selectUp() {
 		if(currentMenu.get() != NoMenuID) {
-			if(selectedButtonY.get()>0)
+			if(currentMenu.get() == InventoryMenuID){
+				InventoryMenu.selectUp();
+			}else if(selectedButtonY.get()>0)
 				selectedButtonY.set(selectedButtonY.get()-1);
-		}else if(currentMenu.get() == InventoryMenuID){
-			InventoryMenu.selectUp();
 		}
 	}
 	
@@ -122,13 +125,13 @@ public class Menu {
 	
 	public static void selectLeft() {
 		if(currentMenu.get() == InventoryMenuID){
-			InventoryMenu.selectDown();
+			InventoryMenu.selectLeft();
 		}
 	}
 	
 	public static void selectRight() {
 		if(currentMenu.get() == InventoryMenuID){
-			InventoryMenu.selectDown();
+			InventoryMenu.selectRight();
 		}
 	}
 }
