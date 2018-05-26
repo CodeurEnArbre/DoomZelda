@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
@@ -13,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="paneWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="864.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controler.MenuControler">
+<Pane fx:id="paneWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="864.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controler.MenuControler">
    <children>
       <Pane fx:id="paneGame" prefHeight="640.0" prefWidth="864.0" style="-fx-background-color: black;">
          <children>
@@ -112,6 +106,11 @@
                   <Font name="Impact" size="22.0" />
                </font>
             </Label>
+            <Label fx:id="KeyName5" layoutX="500.0" layoutY="450.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="100.0" style="-fx-font-weight: bold;" text="E" textFill="WHITE">
+               <font>
+                  <Font name="Impact" size="22.0" />
+               </font>
+            </Label>
             <ImageView fx:id="selectorInOption" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../ressources/textures/gui/optionsImg/selectorinoption.png" />
@@ -140,6 +139,11 @@
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="380.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../ressources/textures/gui/optionsImg/leftImg.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../ressources/textures/gui/optionsImg/inventoryImg.png" />
                </image>
             </ImageView>
             <ImageView fx:id="resetDefaultImg" fitHeight="72.0" fitWidth="200.0" layoutX="640.0" layoutY="543.0" pickOnBounds="true" preserveRatio="true">

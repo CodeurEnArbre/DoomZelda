@@ -123,6 +123,8 @@ public class MenuControler implements Initializable{
     private Label KeyName3;
     @FXML
     private Label KeyName4;
+    @FXML
+    private Label KeyName5;  
     
     private Image inventorySelector1;
     private Image inventorySelector2;
@@ -241,6 +243,7 @@ public class MenuControler implements Initializable{
 				
 			}});
 	}
+		
 	
 	private void menuSelection() {
 		int x = Menu.selectedButtonX.intValue();
@@ -257,7 +260,7 @@ public class MenuControler implements Initializable{
 			break;
 			
 		case Menu.OptionsMenuID:
-			if(y == 4) {
+			if(y == 5) {
 				selectorInOption.relocate(resetDefaultImg.getLayoutX(), resetDefaultImg.getLayoutY()+10);
 			}else {
 				selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*y);
@@ -306,6 +309,7 @@ public class MenuControler implements Initializable{
 		KeyName2.textProperty().bind(OptionsMenu.downKey);
 		KeyName3.textProperty().bind(OptionsMenu.rightKey);
 		KeyName4.textProperty().bind(OptionsMenu.leftKey);
+		KeyName5.textProperty().bind(OptionsMenu.inventoryKey);
 	}
 	
 	public void loadMapTexture() {

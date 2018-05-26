@@ -19,6 +19,7 @@ public class OptionsMenu {
 	public static StringProperty downKey = new SimpleStringProperty("S");
 	public static StringProperty rightKey = new SimpleStringProperty("D");
 	public static StringProperty leftKey = new SimpleStringProperty("Q");
+	public static StringProperty inventoryKey = new SimpleStringProperty("E");
 	
 	public static BooleanProperty enterOption=new SimpleBooleanProperty(false);
 	
@@ -61,6 +62,13 @@ public class OptionsMenu {
 					leftKey.setValue(k.toString());
 				}
 			break;
+			
+			case 4: 
+				if(verifBind(k)) {
+					Interaction.INVENTAIRE = k;
+					inventoryKey.setValue(k.toString());
+				}
+			break;
 		 
 		}
 		SaveKeyBinding();
@@ -100,7 +108,7 @@ public class OptionsMenu {
 	}
 
 	public static void validate() {
-		if(Menu.selectedButtonY.get() == 4) {
+		if(Menu.selectedButtonY.get() == 5) {
 			defaultReset();
 		}else {
 			enterOption.set(true);

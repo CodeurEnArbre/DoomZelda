@@ -9,11 +9,11 @@ import java.util.regex.Pattern;
 import game.modele.entity.Entity;
 import game.modele.entity.EntityFactory;
 import game.modele.entity.Player.Player;
+import game.modele.item.weapon.swords.basicSword;
 import game.modele.tile.Tile;
 import game.modele.tile.TileFactory;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
-import game.modele.utils.graph.Graph;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.BooleanProperty;
@@ -56,6 +56,7 @@ public class World {
 
 	public static void loadPlayer() {
 		player = new Player(null,new Coordonnees(14,10),new Direction(5));
+		player.giveItemWeapon(new basicSword());
 		addEntity(player);
 		GameLoop.getKeyFrames().add(new KeyFrame(Duration.seconds(0.017), e ->{
 			World.currentMap.g.Dijkstra((int)World.player.coordonnes.getY(),(int)World.player.coordonnes.getX());

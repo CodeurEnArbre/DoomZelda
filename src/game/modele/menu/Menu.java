@@ -110,7 +110,7 @@ public class Menu {
 				min=3;
 				break;
 			case OptionsMenuID:
-				min=5;
+				min=6;
 				break;
 			}
 			min--;
