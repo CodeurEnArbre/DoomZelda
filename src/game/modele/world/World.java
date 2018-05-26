@@ -76,7 +76,6 @@ public class World {
 		playGameLoop();
 		onPause.set(false);
 		
-		player.giveItemWeapon(new basicSword());
 	}
 
 	public static void addEntity(Entity e) {

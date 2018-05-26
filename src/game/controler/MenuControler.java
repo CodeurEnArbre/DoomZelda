@@ -17,6 +17,7 @@ import game.modele.entity.Entity;
 import game.modele.entity.living.EntityLiving;
 import game.modele.entity.tileEntity.EntityLight;
 import game.modele.entity.tileEntity.TileEntity;
+import game.modele.menu.InventoryMenu;
 import game.modele.menu.Menu;
 import game.modele.menu.OptionsMenu;
 import game.modele.utils.Direction;
@@ -83,7 +84,15 @@ public class MenuControler implements Initializable{
 	private Pane inventoryMenu;
 	
 	@FXML
-	private Pane homeMenu;
+	private Pane homeMenu;	
+	
+    @FXML
+    private Pane PaneConsomables;
+    @FXML
+    private Pane PaneItems;
+    @FXML
+    private Pane PaneWeapons = new Pane();
+	
 
 	@FXML
 	private ImageView menuImageFont;
@@ -275,6 +284,47 @@ public class MenuControler implements Initializable{
 					temoinAssignation.setOpacity(0);
 				
 				
+			}});
+		
+		//Listener de l'ajout d'un item
+		InventoryMenu.newItem.addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				System.out.println(InventoryMenu.lastItemAdded);
+				if(newValue)			
+					switch(InventoryMenu.lastItemAdded.get()) {
+						case 2:	
+							PaneWeapons.getChildren().add(createItemView(World.player.weapons.get(World.player.weapons.size()-1).getItemName(), 200, 200));
+							System.out.println(PaneWeapons.getChildren());
+							InventoryMenu.newItem.set(false);
+						break;
+					}						
+				}});
+
+		
+		//Listener changement de de pane dans le menu item
+		InventoryMenu.InventoryZone.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				switch(InventoryMenu.InventoryZone.get()) {
+					case 0:
+						PaneConsomables.setOpacity(1);
+						PaneWeapons.setOpacity(0);
+						PaneItems.setOpacity(0);
+					break;
+					
+					case 1:
+						PaneConsomables.setOpacity(0);
+						PaneWeapons.setOpacity(0);
+						PaneItems.setOpacity(1);
+					break;
+					
+					case 2:
+						PaneConsomables.setOpacity(0);
+						PaneWeapons.setOpacity(1);
+						PaneItems.setOpacity(0);
+					break;
+				}
 			}});
 	}
 	
@@ -671,5 +721,16 @@ public class MenuControler implements Initializable{
 			}
 		});
 	}
+	
+	public ImageView createItemView(String name, int layoutX, int layoutY) {
+		ImageView v = new ImageView();
+		switch(name) {
+		case "Wooden Sworden" :
+			v.setImage(dicoImageItemTextureMap.get(2));
+			v.relocate(layoutX, layoutY);
+			break;
+		}
+		return v;
+	}	
 
 }

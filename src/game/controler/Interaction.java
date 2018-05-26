@@ -1,5 +1,6 @@
 package game.controler;
 
+import game.modele.item.weapon.swords.basicSword;
 import game.modele.menu.Menu;
 import game.modele.menu.OptionsMenu;
 import game.modele.utils.Direction;
@@ -24,7 +25,6 @@ public class Interaction {
 		
 		if(k == KeyCode.ENTER) {
 			Menu.validate();
-				
 		}
 
 		if(k == KeyCode.ESCAPE) {
@@ -33,6 +33,7 @@ public class Interaction {
 		
 		if(k == INVENTAIRE) {
 			Menu.inventory();
+			World.player.giveItemWeapon(new basicSword());
 		}
 
 		if(k == AVANCER) {

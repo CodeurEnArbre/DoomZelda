@@ -1,16 +1,20 @@
 package game.modele.menu;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class InventoryMenu {
 	
 	
-	public static IntegerProperty InventoryZone = new SimpleIntegerProperty(0); // 0=SelectionType, 1=ItemsZone, 2=special
+	public static IntegerProperty InventoryZone = new SimpleIntegerProperty(0); //0= consomables, 1 = items, 2 = armes
+	public static BooleanProperty newItem= new SimpleBooleanProperty(false);
+	public static IntegerProperty lastItemAdded = new SimpleIntegerProperty();
 
 	public static void validate() {
-		if(Menu.selectedButtonX.get()==8)
-			InventoryZone.set(Menu.selectedButtonY.get()-2);
+		if(Menu.selectedButtonX.get()==8) 
+			InventoryZone.set(Menu.selectedButtonY.get()-2);	
 		else if(InventoryZone.get() == 0){
 			//Use Consomable
 		}

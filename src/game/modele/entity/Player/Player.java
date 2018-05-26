@@ -8,6 +8,7 @@ import game.modele.item.loot.Loot;
 import game.modele.item.special.Special;
 import game.modele.item.usable.Usable;
 import game.modele.item.weapon.Weapon;
+import game.modele.menu.InventoryMenu;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
@@ -26,6 +27,7 @@ public class Player extends EntityLiving{
 	
 	private int maxRuby=100;
 	private IntegerProperty ruby; //ARGENT!!!
+	
 	
 	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials) {
 		super("Player",position,direction);
@@ -77,17 +79,25 @@ public class Player extends EntityLiving{
 	
 	public void giveItemUsable(Usable i) {
 		usables.add(i);
+		InventoryMenu.lastItemAdded.set(1);
+		InventoryMenu.newItem.set(true);
 	}
 	
 	public void giveItemWeapon(Weapon i) {
 		weapons.add(i);
+		InventoryMenu.lastItemAdded.set(2);
+		InventoryMenu.newItem.set(true);
 	}
 	
 	public void giveItemLoot(Loot i) {
 		loots.add(i);
+		InventoryMenu.lastItemAdded.set(3);
+		InventoryMenu.newItem.set(true);
 	}
 	
 	public void giveItemSpecial(Special i) {
 		specials.add(i);
+		InventoryMenu.lastItemAdded.set(4);
+		InventoryMenu.newItem.set(true);
 	}
 }
