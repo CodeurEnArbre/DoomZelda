@@ -99,7 +99,7 @@ public class OptionsMenu {
 	
 	public static void SaveKeyBinding() {
 		try {
-			BufferedWriter optionsFile = new BufferedWriter(new FileWriter(new File("ressources/saves/options.txt").getAbsolutePath()));
+			BufferedWriter optionsFile = new BufferedWriter(new FileWriter(new File("ressources/saves/options.cfg").getAbsolutePath()));
 			optionsFile.write(Interaction.AVANCER+","+Interaction.RECULER+","+Interaction.DROITE+","+Interaction.GAUCHE+","+Interaction.INVENTAIRE);
 			optionsFile.close();
 		} catch (IOException e) {

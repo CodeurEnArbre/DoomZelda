@@ -324,7 +324,7 @@ public class MenuControler implements Initializable{
 	private void loadOptions() {
 		
 		try {
-			BufferedReader optionsData = new BufferedReader(new FileReader(new File("ressources/saves/options.txt").getAbsolutePath()));
+			BufferedReader optionsData = new BufferedReader(new FileReader(new File("ressources/saves/options.cfg").getAbsolutePath()));
 			Pattern pat = Pattern.compile(",");
 			String[] optionLine;
 			optionLine = pat.split(optionsData.readLine());
