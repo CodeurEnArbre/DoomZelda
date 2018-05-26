@@ -36,6 +36,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 
 @SuppressWarnings("unlikely-arg-type")
 public class MenuControler implements Initializable{
@@ -115,16 +117,8 @@ public class MenuControler implements Initializable{
     private ImageView temoinAssignation;
     @FXML
     private ImageView resetDefaultImg;
-    @FXML
-    private Label KeyName1;
-    @FXML
-    private Label KeyName2;
-    @FXML
-    private Label KeyName3;
-    @FXML
-    private Label KeyName4;
-    @FXML
-    private Label KeyName5;  
+    
+    private Label[] KeyName = new Label[5];
     
     private Image inventorySelector1;
     private Image inventorySelector2;
@@ -138,11 +132,11 @@ public class MenuControler implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//chagement des menus
-		loadMenus();
-		
 		//chargement des options
 		loadOptions();
+		
+		//chagement des menus
+		loadMenus();
 		
 		//Listener si un monde est charger
 		World.isWorldLoaded.addListener(new ChangeListener<Boolean>() {
@@ -176,6 +170,20 @@ public class MenuControler implements Initializable{
 		inventorySelector= new ImageView();
 		inventoryMenu.getChildren().add(inventorySelector);
 		
+		//Creation et binding des Labels des touches
+		for(int key=0; key < KeyName.length;key++) {
+			KeyName[key] = new Label();
+			KeyName[key].relocate(500, 170+(key*70));
+			KeyName[key].setMinWidth(150);
+			KeyName[key].setMinHeight(50);
+			KeyName[key].setText(OptionsMenu.keyName[key].get());
+			KeyName[key].setStyle("-fx-font-weight: bold;");
+			KeyName[key].setTextFill(Paint.valueOf("WHITE"));
+			KeyName[key].setFont(Font.font("Impact",22));
+			KeyName[key].textProperty().bind(OptionsMenu.keyName[key]);
+			PaneOptions.getChildren().add(KeyName[key]);
+		}
+		
 		//Listener de la selection des boutons des Menus en x
 		Menu.selectedButtonX.addListener(new ChangeListener<Number>() {
 			@Override
@@ -201,6 +209,12 @@ public class MenuControler implements Initializable{
 				selectorMain.relocate(playImg.getLayoutX(), playImg.getLayoutY()+120*Menu.selectedButtonY.intValue());
 				
 				switch(newValue.intValue()) {
+				
+				case Menu.MainMenuID:
+					Menu.selectedButtonY.set(0);
+					PaneOptions.setOpacity(0);
+					break;
+				
 				case Menu.OptionsMenuID:
 					selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*Menu.selectedButtonY.intValue());
 					Menu.selectedButtonY.set(0);
@@ -243,7 +257,6 @@ public class MenuControler implements Initializable{
 				
 			}});
 	}
-		
 	
 	private void menuSelection() {
 		int x = Menu.selectedButtonX.intValue();
@@ -304,12 +317,6 @@ public class MenuControler implements Initializable{
 			OptionsMenu.SaveKeyBinding();
 		}
 		
-		//Bind des valeurs d'assignation des touches
-		KeyName1.textProperty().bind(OptionsMenu.upKey);
-		KeyName2.textProperty().bind(OptionsMenu.downKey);
-		KeyName3.textProperty().bind(OptionsMenu.rightKey);
-		KeyName4.textProperty().bind(OptionsMenu.leftKey);
-		KeyName5.textProperty().bind(OptionsMenu.inventoryKey);
 	}
 	
 	public void loadMapTexture() {
