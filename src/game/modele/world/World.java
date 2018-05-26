@@ -9,6 +9,10 @@ import java.util.regex.Pattern;
 import game.modele.entity.Entity;
 import game.modele.entity.EntityFactory;
 import game.modele.entity.Player.Player;
+import game.modele.item.loot.Loot;
+import game.modele.item.special.Special;
+import game.modele.item.usable.Usable;
+import game.modele.item.weapon.Weapon;
 import game.modele.item.weapon.swords.basicSword;
 import game.modele.tile.Tile;
 import game.modele.tile.TileFactory;
@@ -54,13 +58,25 @@ public class World {
 		GameLoop.play();
 	}
 
-	public static void loadPlayer() {
-		player = new Player(null,new Coordonnees(14,10),new Direction(5));
-		player.giveItemWeapon(new basicSword());
+	public static void initWorldSave(String world, Coordonnees coord, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials) {
+		
+		player = new Player(coord,direction,maxPv,pv,ruby,loots,usables,weapons,specials);
+		
+		loadWorld(world,null);
+		
 		addEntity(player);
 		GameLoop.getKeyFrames().add(new KeyFrame(Duration.seconds(0.017), e ->{
 			World.currentMap.g.Dijkstra((int)World.player.coordonnes.getY(),(int)World.player.coordonnes.getX());
 		}));
+		
+		isWorldLoaded.setValue(true);
+		
+		//Demarage des la gameloop
+		loadGameLoop();
+		playGameLoop();
+		onPause.set(false);
+		
+		player.giveItemWeapon(new basicSword());
 	}
 
 	public static void addEntity(Entity e) {
@@ -98,7 +114,6 @@ public class World {
 				currentMap.newWorld(worldName, width, height, outside, tileGround, tileSolid, tileTop, entitys);
 			}
 
-			isWorldLoaded.setValue(true);
 		}catch(IOException e) {
 			System.out.println("Impossible de charger la map");
 			e.printStackTrace();
@@ -108,7 +123,7 @@ public class World {
 
 	public static ArrayList<Entity> loadEntity(String world) throws IOException{
 		ArrayList<Entity> entity= new ArrayList<Entity>();
-		BufferedReader entityData = new BufferedReader(new FileReader(new File("ressources/map/"+world+".entity")));
+		BufferedReader entityData = new BufferedReader(new FileReader(new File("saves/"+Save.saveName+"/data/"+world+".entity")));
 
 		String nextLine = entityData.readLine();
 		while(nextLine != null && nextLine.length()> 1) {

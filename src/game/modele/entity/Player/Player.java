@@ -14,30 +14,33 @@ import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
 import game.modele.utils.ActionConsumer.Function.FunctionMove;
 import game.modele.utils.ActionConsumer.Function.FunctionMovement;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class Player extends EntityLiving{
 
 	
+	public ArrayList<Loot> loots;
 	public ArrayList<Usable> usables;
 	public ArrayList<Weapon> weapons;
-	public ArrayList<Loot> loots;
 	public ArrayList<Special> specials;
 	
 	private int maxRuby=100;
 	private IntegerProperty ruby; //ARGENT!!!
 	
-	public Player(ArrayList<Loot> loots, Coordonnees position, Direction direction) {
+	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials) {
 		super("Player",position,direction);
-		this.loots=loots;
 		this.speed = baseSpeed;
 		this.slow =	1;
+		super.maxPv.set(maxPv);
+		super.PV.set(pv);
+		this.ruby = new SimpleIntegerProperty(ruby);
+		this.usables = usables;
+		this.weapons = weapons;
+		this.loots=loots;
+		this.specials = specials;
 		
 		addAction(new InfiniteActionConsumer(new FunctionMove()));
 		addAction(new InfiniteActionConsumer(new FunctionMovement()));
-		
-		usables = new ArrayList<Usable>();
-		weapons = new ArrayList<Weapon>();
-		specials = new ArrayList<Special>();
 	}
 	
 	public int getRuby() {

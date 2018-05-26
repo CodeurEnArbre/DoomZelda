@@ -38,7 +38,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import jdk.nashorn.internal.runtime.options.Options;
 
 @SuppressWarnings("unlikely-arg-type")
 public class MenuControler implements Initializable{
@@ -160,6 +159,7 @@ public class MenuControler implements Initializable{
 					PaneHUD.getChildren().clear();
 					coeurs.clear();
 					homeMenu.setOpacity(1);
+					PaneMenu.setOpacity(0);
 					Menu.currentMenu.set(Menu.MainMenuID);
 				}
 			}});
@@ -192,13 +192,13 @@ public class MenuControler implements Initializable{
 			KeyFonctionName[keyName].setText(name);
 			KeyFonctionName[keyName].setMinWidth(200);
 			KeyFonctionName[keyName].setMinHeight(50);
-			KeyFonctionName[keyName].setStyle("-fx-font-weight: bold;");
 			KeyFonctionName[keyName].setTextFill(Paint.valueOf("WHITE"));
 			
 			if(OptionsMenu.keyFunctionName[keyName].equals("Reinitializer")) {
-				KeyFonctionName[keyName].setFont(Font.font("Code",22));
+				KeyFonctionName[keyName].setFont(Font.font("Impact",22));
 				KeyFonctionName[keyName].relocate(690, 553);
 			}else {
+				KeyFonctionName[keyName].setStyle("-fx-font-weight: bold;");
 				KeyFonctionName[keyName].setFont(Font.font("Impact",22));
 				KeyFonctionName[keyName].relocate(250, 170+(keyName*70));
 			}
@@ -223,7 +223,6 @@ public class MenuControler implements Initializable{
 
 		//Listener de changement de menu
 		Menu.currentMenu.addListener(new ChangeListener<Number>() {
-
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				
@@ -324,7 +323,7 @@ public class MenuControler implements Initializable{
 	private void loadOptions() {
 		
 		try {
-			BufferedReader optionsData = new BufferedReader(new FileReader(new File("ressources/saves/options.cfg").getAbsolutePath()));
+			BufferedReader optionsData = new BufferedReader(new FileReader(new File("saves/options.cfg").getAbsolutePath()));
 			Pattern pat = Pattern.compile(",");
 			String[] optionLine;
 			optionLine = pat.split(optionsData.readLine());
@@ -346,7 +345,7 @@ public class MenuControler implements Initializable{
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
 
 		//Chargement du joueur
-		World.loadPlayer();
+	//	World.loadPlayer();
 		
 		//Chargement des ImageView des entites
 		affichageEntitys();
@@ -374,9 +373,6 @@ public class MenuControler implements Initializable{
 				affichageOmbres();
 			}
 		});
-
-		//Demarage des la gameloop
-		World.loadGameLoop();
 	}
 
 	
@@ -589,14 +585,14 @@ public class MenuControler implements Initializable{
 		//Supprime tout les imageview d'entites inutilisee
 		for(ImageView img : listEntityView.values()) {
 			boolean found = false;
+			
 			for(Entity entity : World.currentMap.getEntity()) {
 				if(img.getId().equals(entity.primaryKey)) {
 					found=true;
 					break;
 				}
 			}
-			if(!found) {
-				
+			if(!found) {	
 				listEntityView.remove(img);
 			}
 			
