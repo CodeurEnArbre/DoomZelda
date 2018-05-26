@@ -86,31 +86,6 @@
                   <Image url="@../../../ressources/textures/gui/optionsImg/affichagebind.png" />
                </image>
             </ImageView>
-            <Label fx:id="KeyName1" layoutX="500.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="100.0" style="-fx-font-weight: bold;" text="Z" textFill="WHITE">
-               <font>
-                  <Font name="Impact" size="22.0" />
-               </font>
-            </Label>
-            <Label fx:id="KeyName2" layoutX="500.0" layoutY="240.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="100.0" style="-fx-font-weight: bold;" text="S" textFill="WHITE">
-               <font>
-                  <Font name="Impact" size="22.0" />
-               </font>
-            </Label>
-            <Label fx:id="KeyName3" layoutX="500.0" layoutY="310.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="100.0" style="-fx-font-weight: bold;" text="D" textFill="WHITE">
-               <font>
-                  <Font name="Impact" size="22.0" />
-               </font>
-            </Label>
-            <Label fx:id="KeyName4" layoutX="500.0" layoutY="380.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="100.0" style="-fx-font-weight: bold;" text="Q" textFill="WHITE">
-               <font>
-                  <Font name="Impact" size="22.0" />
-               </font>
-            </Label>
-            <Label fx:id="KeyName5" layoutX="500.0" layoutY="450.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="100.0" style="-fx-font-weight: bold;" text="E" textFill="WHITE">
-               <font>
-                  <Font name="Impact" size="22.0" />
-               </font>
-            </Label>
             <ImageView fx:id="selectorInOption" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../ressources/textures/gui/optionsImg/selectorinoption.png" />
@@ -119,36 +94,6 @@
             <ImageView fitHeight="125.0" fitWidth="864.0" layoutX="154.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../ressources/textures/gui/optionsImg/optionImg.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="fowardImg" fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../ressources/textures/gui/optionsImg/forwardImg.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../ressources/textures/gui/optionsImg/backwardImg.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../ressources/textures/gui/optionsImg/rightImg.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="380.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../ressources/textures/gui/optionsImg/leftImg.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../ressources/textures/gui/optionsImg/inventoryImg.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="resetDefaultImg" fitHeight="72.0" fitWidth="200.0" layoutX="640.0" layoutY="543.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../ressources/textures/gui/optionsImg/resetDefaultImg.png" />
                </image>
             </ImageView>
          </children>

@@ -15,7 +15,7 @@ import javafx.scene.input.KeyCode;
 
 public class OptionsMenu {
 	
-	public static String[] keyFunctionName = {"Avancer","Bas","Droite","Gauche","Inventaire"};
+	public static String[] keyFunctionName = {"Avancer","Bas","Droite","Gauche","Inventaire","Reinitializer"};
 	public static StringProperty[] keyName = {new SimpleStringProperty("Z"),new SimpleStringProperty("S"),new SimpleStringProperty("D"),new SimpleStringProperty("Q"),new SimpleStringProperty("E")};
 	
 	public static BooleanProperty enterOption=new SimpleBooleanProperty(false);

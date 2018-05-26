@@ -38,6 +38,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import jdk.nashorn.internal.runtime.options.Options;
 
 @SuppressWarnings("unlikely-arg-type")
 public class MenuControler implements Initializable{
@@ -118,7 +119,8 @@ public class MenuControler implements Initializable{
     @FXML
     private ImageView resetDefaultImg;
     
-    private Label[] KeyName = new Label[5];
+    private Label[] KeyName = new Label[OptionsMenu.keyName.length];
+    private Label[] KeyFonctionName = new Label[OptionsMenu.keyFunctionName.length];
     
     private Image inventorySelector1;
     private Image inventorySelector2;
@@ -176,12 +178,31 @@ public class MenuControler implements Initializable{
 			KeyName[key].relocate(500, 170+(key*70));
 			KeyName[key].setMinWidth(150);
 			KeyName[key].setMinHeight(50);
-			KeyName[key].setText(OptionsMenu.keyName[key].get());
 			KeyName[key].setStyle("-fx-font-weight: bold;");
 			KeyName[key].setTextFill(Paint.valueOf("WHITE"));
 			KeyName[key].setFont(Font.font("Impact",22));
 			KeyName[key].textProperty().bind(OptionsMenu.keyName[key]);
 			PaneOptions.getChildren().add(KeyName[key]);
+		}
+		
+		//Creation des Labels des noms des touches
+		for(int keyName=0; keyName < KeyFonctionName.length;keyName++) {
+			KeyFonctionName[keyName] = new Label();
+			String name = OptionsMenu.keyFunctionName[keyName];
+			KeyFonctionName[keyName].setText(name);
+			KeyFonctionName[keyName].setMinWidth(200);
+			KeyFonctionName[keyName].setMinHeight(50);
+			KeyFonctionName[keyName].setStyle("-fx-font-weight: bold;");
+			KeyFonctionName[keyName].setTextFill(Paint.valueOf("WHITE"));
+			
+			if(OptionsMenu.keyFunctionName[keyName].equals("Reinitializer")) {
+				KeyFonctionName[keyName].setFont(Font.font("Code",22));
+				KeyFonctionName[keyName].relocate(690, 553);
+			}else {
+				KeyFonctionName[keyName].setFont(Font.font("Impact",22));
+				KeyFonctionName[keyName].relocate(250, 170+(keyName*70));
+			}
+			PaneOptions.getChildren().add(KeyFonctionName[keyName]);
 		}
 		
 		//Listener de la selection des boutons des Menus en x
@@ -216,7 +237,7 @@ public class MenuControler implements Initializable{
 					break;
 				
 				case Menu.OptionsMenuID:
-					selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*Menu.selectedButtonY.intValue());
+					selectorInOption.relocate(200, 150+70*Menu.selectedButtonY.intValue());
 					Menu.selectedButtonY.set(0);
 					PaneOptions.setOpacity(1);
 					PaneMenu.setOpacity(0);
@@ -273,10 +294,10 @@ public class MenuControler implements Initializable{
 			break;
 			
 		case Menu.OptionsMenuID:
-			if(y == 5) {
-				selectorInOption.relocate(resetDefaultImg.getLayoutX(), resetDefaultImg.getLayoutY()+10);
+			if(y == OptionsMenu.keyFunctionName.length-1) {
+				selectorInOption.relocate(640, 553);
 			}else {
-				selectorInOption.relocate(fowardImg.getLayoutX(), fowardImg.getLayoutY()+70*y);
+				selectorInOption.relocate(200, 170+70*y);
 			}
 			break;
 			
