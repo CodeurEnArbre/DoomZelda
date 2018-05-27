@@ -69,8 +69,7 @@ public class Menu {
 	}
 	
 	public static void validate() {
-		System.out.println("gg");
-		if(currentMenu.get() != NoMenuID && currentMenu.get()<100) {
+		if(currentMenu.get() != NoMenuID) {
 			switch (currentMenu.get()) {
 			case MainMenuID:
 				MainMenu.validate();

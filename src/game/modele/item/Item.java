@@ -6,16 +6,20 @@ public class Item {
 	private int quantity; //ca quantite, le nombre de cette item
 	public static int key = 0;
 	public int primaryKey;
+	private boolean stackable; // si l'item est empilable
 	
 	public Item(String name) {
 		this.name=name;
 		this.quantity=1;
 		this.primaryKey = key++;
+		stackable=false;
 	}
 	
 	public Item(String name, int quantity) {
 		this.name=name;
 		this.quantity=quantity;
+		this.primaryKey = key++;
+		stackable=true;
 	}
 	
 	public String getItemName() {
@@ -26,8 +30,12 @@ public class Item {
 		return this.quantity;
 	}
 	
-	public void addItem(int num) {
-		this.quantity+=num;
+	public boolean addItem(int num) {
+		if(stackable) {
+			this.quantity+=num;
+			return true;
+		}else
+			return false;
 	}
 	
 	//Enleve 1 item, returne true si possible, et false si <=0
@@ -41,5 +49,9 @@ public class Item {
 	
 	public int getPrimaryKey() {
 		return this.primaryKey;
+	}
+	
+	public String toString() {
+		return primaryKey+" "+name+" "+quantity;
 	}
 }

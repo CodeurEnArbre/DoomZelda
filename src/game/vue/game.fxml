@@ -12,7 +12,7 @@
             <Pane fx:id="PaneGround" prefHeight="418.0" prefWidth="616.0" />
             <Pane fx:id="PaneSolid" prefHeight="418.0" prefWidth="616.0" />
             <Pane fx:id="EntityPane" prefHeight="418.0" prefWidth="616.0" />
-            <Pane fx:id="ArmePane" prefHeight="640.0" prefWidth="864.0" />
+            <Pane fx:id="ArmePane" prefHeight="418.0" prefWidth="616.0" />
 			<Pane fx:id="PlayerPane" prefHeight="418.0" prefWidth="616.0" />
             <Pane fx:id="PaneTop" prefHeight="418.0" prefWidth="616.0" />
             <Pane fx:id="shadowTopPane" prefHeight="418.0" prefWidth="616.0" />
@@ -73,7 +73,7 @@
       <children>
             <ImageView fitHeight="640.0" fitWidth="864.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../ressources/textures/gui/Inventaire.png" />
+                  <Image url="@../../../ressources/textures/gui/inventory/background.png" />
         	   </image>
         	</ImageView>
             <Pane fx:id="PaneConsomables" layoutX="61.0" layoutY="366.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.0" prefHeight="216.0" prefWidth="581.0" />

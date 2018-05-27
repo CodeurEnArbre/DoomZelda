@@ -26,7 +26,7 @@ public class Player extends EntityLiving{
 	public ArrayList<Special> specials;
 	
 	private int maxRuby=100;
-	private IntegerProperty ruby; //ARGENT!!!	
+	public static IntegerProperty ruby; //ARGENT!!!	
 	
 	
 	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials) {
@@ -35,7 +35,7 @@ public class Player extends EntityLiving{
 		this.slow =	1;
 		super.maxPv.set(maxPv);
 		super.PV.set(pv);
-		this.ruby = new SimpleIntegerProperty(ruby);
+		Player.ruby = new SimpleIntegerProperty(ruby);
 		this.usables = usables;
 		this.weapons = weapons;
 		this.loots=loots;
@@ -47,12 +47,12 @@ public class Player extends EntityLiving{
 	}
 	
 	public int getRuby() {
-		return this.ruby.get();
+		return Player.ruby.get();
 	}
 	
 	public boolean removeRuby(int quantity) {
 		if(ruby.get()>=quantity) {
-			this.ruby.set(this.ruby.get()-quantity);
+			Player.ruby.set(Player.ruby.get()-quantity);
 			return true;
 		}else
 			return false;
@@ -60,9 +60,9 @@ public class Player extends EntityLiving{
 	
 	public void addRuby(int quantity) {
 		if((ruby.get()+quantity)>maxRuby) {
-			this.ruby.set(ruby.get()+quantity);
+			Player.ruby.set(ruby.get()+quantity);
 		}else {
-			this.ruby.set(maxRuby);
+			Player.ruby.set(maxRuby);
 		}
 	}
 	

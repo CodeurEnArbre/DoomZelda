@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 
 import game.modele.entity.Entity;
+import game.modele.entity.Player.Player;
 import game.modele.entity.living.EntityLiving;
 import game.modele.entity.tileEntity.EntityLight;
 import game.modele.entity.tileEntity.TileEntity;
@@ -87,22 +88,12 @@ public class MenuControler implements Initializable{
 
 	@FXML
 	private Pane homeMenu;	
-
-	@FXML
-	private Pane PaneConsomables;
-	@FXML
-	private Pane PaneItems;
-	@FXML
-	private Pane PaneWeapons = new Pane();
-
-
+	
 	@FXML
 	private ImageView menuImageFont;
 
 	@FXML
 	private ImageView selectorMain;
-
-	private ImageView inventorySelector;
 
 	@FXML
 	private ImageView playImg;
@@ -131,10 +122,26 @@ public class MenuControler implements Initializable{
 
 	private Label[] KeyName = new Label[OptionsMenu.keyName.length];
 	private Label[] KeyFonctionName = new Label[OptionsMenu.keyFunctionName.length];
-
+	
+	private Label rubys = new Label();
+	private ImageView ruby = new ImageView();
+	
+	//Inventory
+	private ImageView inventorySelector= new ImageView();
 	private Image inventorySelector1;
 	private Image inventorySelector2;
 	private Image inventorySelector3;
+	private ImageView inventoryTypeSelector = new ImageView();
+	private Label selectedName = new Label();
+	
+	private ImageView pickupItem = new ImageView();
+	
+	@FXML
+	private Pane PaneConsomables;
+	@FXML
+	private Pane PaneItems;
+	@FXML
+	private Pane PaneWeapons;
 
 	@FXML
 	private Button buttonReprendre;
@@ -150,6 +157,9 @@ public class MenuControler implements Initializable{
 		//chagement des menus
 		loadMenus();
 
+		//Chargement dans la memoire de toutes les textures
+		textureLoading();	
+				
 		//Listener si un monde est charger
 		World.isWorldLoaded.addListener(new ChangeListener<Boolean>() {
 			@Override
@@ -174,15 +184,19 @@ public class MenuControler implements Initializable{
 					PaneMenu.setOpacity(0);
 					Menu.currentMenu.set(Menu.MainMenuID);
 				}
-			}});
-
-		//Chargement dans la memoire de toutes les textures
-		textureLoading();		
+			}});	
 	}
 
 	public void loadMenus() {
-		inventorySelector= new ImageView();
+		inventoryTypeSelector.relocate(652, 382);
+		
+		selectedName.relocate(550, 298);
+		selectedName.setFont(Font.font("Impact",25));
+		selectedName.setStyle("-fx-font-weight: bold;");
+		
 		inventoryMenu.getChildren().add(inventorySelector);
+		inventoryMenu.getChildren().add(inventoryTypeSelector);
+		inventoryMenu.getChildren().add(selectedName);
 
 		//Creation et binding des Labels des touches
 		for(int key=0; key < KeyName.length;key++) {
@@ -324,23 +338,22 @@ public class MenuControler implements Initializable{
 		InventoryMenu.InventoryZone.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				switch(InventoryMenu.InventoryZone.get()) {
-				case 0:
-					PaneConsomables.setOpacity(1);
-					PaneWeapons.setOpacity(0);
-					PaneItems.setOpacity(0);
+				PaneWeapons.setOpacity(0);
+				PaneItems.setOpacity(0);
+				PaneConsomables.setOpacity(0);
+				inventoryTypeSelector.relocate(652, 382+70*newValue.intValue());
+				
+				switch(newValue.intValue()) {
+					case 0:
+						PaneConsomables.setOpacity(1);
 					break;
-
-				case 1:
-					PaneConsomables.setOpacity(0);
-					PaneWeapons.setOpacity(0);
-					PaneItems.setOpacity(1);
+					
+					case 1:
+						PaneItems.setOpacity(1);
 					break;
-
-				case 2:
-					PaneConsomables.setOpacity(0);
-					PaneWeapons.setOpacity(1);
-					PaneItems.setOpacity(0);
+					
+					case 2:
+						PaneWeapons.setOpacity(1);
 					break;
 				}
 			}});
@@ -390,7 +403,7 @@ public class MenuControler implements Initializable{
 			break;
 
 		case Menu.InventoryMenuID:
-			System.out.println(x+" "+y);
+			selectedName.setText("");
 			if(x+y==0) {
 				inventorySelector.setImage(inventorySelector3);
 				inventorySelector.relocate(75, 75);
@@ -403,8 +416,18 @@ public class MenuControler implements Initializable{
 			}else if(x<8) {
 				inventorySelector.setImage(inventorySelector1);
 				inventorySelector.relocate(60+73*(x), 365+73*(y-2));
+				
+				if(y>=2) {
+					System.out.println(x+8*(y-2));
+					if(InventoryMenu.InventoryZone.get() == 0)
+						selectedName.setText(World.player.usables.size()>(x)+8*(y-2)?World.player.usables.get((x)+8*(y-2)).getItemName():"");
+					else if(InventoryMenu.InventoryZone.get() == 1)
+						selectedName.setText(World.player.loots.size()>(x)+8*(y-2)?World.player.loots.get((x)+8*(y-2)).getItemName():"");
+					else
+						selectedName.setText(World.player.weapons.size()>(x)+8*(y-2)?World.player.weapons.get((x)+8*(y-2)).getItemName():"");
+				}
 			}
-
+			
 			break;
 		}
 	}
@@ -432,9 +455,6 @@ public class MenuControler implements Initializable{
 
 		//Affichage de toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
-
-		//Chargement du joueur
-		//	World.loadPlayer();
 
 		//Chargement des ImageView des entites
 		affichageEntitys();
@@ -466,6 +486,17 @@ public class MenuControler implements Initializable{
 
 
 	private void hudLoading() {
+		//Rubys
+		rubys.textProperty().bind(Player.ruby.asString());
+		rubys.setFont(Font.font("Impact",20));
+		rubys.setTextFill(Paint.valueOf("WHITE"));
+		rubys.setStyle("-fx-font-weight: bold;");
+		rubys.relocate(800, 615);
+		ruby.relocate(765, 610);
+		PaneHUD.getChildren().add(rubys);
+		PaneHUD.getChildren().add(ruby);
+		
+		//Coeurs
 		for(int numCoeur=World.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
 			coeurs.add(new ImageView(dicoImageItemTextureMap.get(2)));
 		}
@@ -525,11 +556,13 @@ public class MenuControler implements Initializable{
 			loadAnimationPlayer(dicoImageAnimationPlayer, 28, 4);
 
 			coeurs = new ArrayList<>();
-
-			inventorySelector1 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventorySelector1.png").toURI().toURL()), null);
-			inventorySelector2 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventorySelector2.png").toURI().toURL()), null);
-			inventorySelector3 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventorySelector3.png").toURI().toURL()), null);
-
+			
+			inventorySelector1 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventory/Selector1.png").toURI().toURL()), null);
+			inventorySelector2 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventory/Selector2.png").toURI().toURL()), null);
+			inventorySelector3 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventory/Selector3.png").toURI().toURL()), null);
+			inventoryTypeSelector.setImage(SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventory/selectorInventoryType.png").toURI().toURL()), null));
+			ruby.setImage(dicoImageItemTextureMap.get(7));
+			
 			for(int i = 0; i < 16;i++)
 
 				dicoShadow.put(i,SwingFXUtils.toFXImage(
@@ -711,19 +744,17 @@ public class MenuControler implements Initializable{
 		}
 
 		World.currentMap.entity.addListener(new ListChangeListener<Entity>(){
-
 			@Override
 			public void onChanged(Change<? extends Entity> c) {
+				
 				while (c.next()) {
-
 					for (Entity addEntity : c.getAddedSubList()) {
 
 						if(!addEntity.getId().equals("Player")){
 
 							affichageEntity(listEntityView.get(addEntity),addEntity);
-							addEntity.etatDeplacement.addListener(
-									new ChangeListener<Number>() {
-
+						
+							addEntity.etatDeplacement.addListener( new ChangeListener<Number>() {
 										@Override
 										public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
 
@@ -763,6 +794,7 @@ public class MenuControler implements Initializable{
 
 	public ImageView createItemView(String name, int layoutX, int layoutY) {
 		ImageView v = new ImageView();
+		v.setId(name);
 		switch(name) {
 		case "Sword : Wooden Sworden" :
 			v.setImage(dicoImageItemTextureMap.get(17));

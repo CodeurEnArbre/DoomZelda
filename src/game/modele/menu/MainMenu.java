@@ -7,7 +7,6 @@ public class MainMenu {
 	public static void validate() {
 		switch(Menu.selectedButtonY.get()) {
 		case 0 : 
-			//World.loadWorld("TinyMap",null);
 			Menu.currentMenu.set(Menu.NoMenuID);
 			Save.deleteSave("default");
 			Save.createSave("default");
