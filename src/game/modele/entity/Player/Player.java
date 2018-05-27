@@ -26,7 +26,7 @@ public class Player extends EntityLiving{
 	public ArrayList<Special> specials;
 	
 	private int maxRuby=100;
-	private IntegerProperty ruby; //ARGENT!!!
+	private IntegerProperty ruby; //ARGENT!!!	
 	
 	
 	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials) {
@@ -40,6 +40,7 @@ public class Player extends EntityLiving{
 		this.weapons = weapons;
 		this.loots=loots;
 		this.specials = specials;
+
 		
 		addAction(new InfiniteActionConsumer(new FunctionMove()));
 		addAction(new InfiniteActionConsumer(new FunctionMovement()));

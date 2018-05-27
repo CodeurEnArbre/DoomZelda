@@ -12,6 +12,7 @@
             <Pane fx:id="PaneGround" prefHeight="418.0" prefWidth="616.0" />
             <Pane fx:id="PaneSolid" prefHeight="418.0" prefWidth="616.0" />
             <Pane fx:id="EntityPane" prefHeight="418.0" prefWidth="616.0" />
+            <Pane fx:id="ArmePane" prefHeight="640.0" prefWidth="864.0" />
 			<Pane fx:id="PlayerPane" prefHeight="418.0" prefWidth="616.0" />
             <Pane fx:id="PaneTop" prefHeight="418.0" prefWidth="616.0" />
             <Pane fx:id="shadowTopPane" prefHeight="418.0" prefWidth="616.0" />

@@ -4,10 +4,13 @@ public class Item {
 	
 	private String name; //Nom de l'item
 	private int quantity; //ca quantite, le nombre de cette item
+	public static int key = 0;
+	public int primaryKey;
 	
 	public Item(String name) {
 		this.name=name;
 		this.quantity=1;
+		this.primaryKey = key++;
 	}
 	
 	public Item(String name, int quantity) {
@@ -34,5 +37,9 @@ public class Item {
 			return true;
 		}else
 			return false;
+	}
+	
+	public int getPrimaryKey() {
+		return this.primaryKey;
 	}
 }

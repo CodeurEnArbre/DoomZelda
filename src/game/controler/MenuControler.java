@@ -49,8 +49,8 @@ public class MenuControler implements Initializable{
 	Map<Integer,Image[]> dicoImageAnimationEntity; 
 	Map<Entity,ImageView> listEntityView = new HashMap<>();
 	Map<Integer,Image> dicoShadow;
-	
-	
+
+
 	ArrayList<ImageView> coeurs;
 	Image shadowImg;
 
@@ -68,38 +68,40 @@ public class MenuControler implements Initializable{
 	@FXML
 	private Pane EntityPane;
 	@FXML
+	private Pane ArmePane;
+	@FXML
 	private Pane PlayerPane;
 	@FXML
 	private Pane PaneTop;
 	@FXML
-    private Pane shadowTopPane;
+	private Pane shadowTopPane;
 
 	@FXML
 	private Pane PaneMenu;
 
 	@FXML
 	private Pane PaneOptions;
-	
+
 	@FXML
 	private Pane inventoryMenu;
-	
+
 	@FXML
 	private Pane homeMenu;	
-	
-    @FXML
-    private Pane PaneConsomables;
-    @FXML
-    private Pane PaneItems;
-    @FXML
-    private Pane PaneWeapons = new Pane();
-	
+
+	@FXML
+	private Pane PaneConsomables;
+	@FXML
+	private Pane PaneItems;
+	@FXML
+	private Pane PaneWeapons = new Pane();
+
 
 	@FXML
 	private ImageView menuImageFont;
 
 	@FXML
 	private ImageView selectorMain;
-	
+
 	private ImageView inventorySelector;
 
 	@FXML
@@ -108,35 +110,35 @@ public class MenuControler implements Initializable{
 	private ImageView optionImg;
 	@FXML
 	private ImageView exitImg;
-	
+
 	@FXML
 	private ImageView selectorPauseInGame;
-    @FXML
-    private ImageView optionInGameImg;
-    @FXML
-    private ImageView saveInGameImg;
-    @FXML
-    private ImageView quitInGameImg;
-    
-    @FXML
-    private ImageView selectorInOption;
-    @FXML
-    private ImageView fowardImg;
-    @FXML
-    private ImageView temoinAssignation;
-    @FXML
-    private ImageView resetDefaultImg;
-    
-    private Label[] KeyName = new Label[OptionsMenu.keyName.length];
-    private Label[] KeyFonctionName = new Label[OptionsMenu.keyFunctionName.length];
-    
-    private Image inventorySelector1;
-    private Image inventorySelector2;
-    private Image inventorySelector3;
-    
+	@FXML
+	private ImageView optionInGameImg;
+	@FXML
+	private ImageView saveInGameImg;
+	@FXML
+	private ImageView quitInGameImg;
+
+	@FXML
+	private ImageView selectorInOption;
+	@FXML
+	private ImageView fowardImg;
+	@FXML
+	private ImageView temoinAssignation;
+	@FXML
+	private ImageView resetDefaultImg;
+
+	private Label[] KeyName = new Label[OptionsMenu.keyName.length];
+	private Label[] KeyFonctionName = new Label[OptionsMenu.keyFunctionName.length];
+
+	private Image inventorySelector1;
+	private Image inventorySelector2;
+	private Image inventorySelector3;
+
 	@FXML
 	private Button buttonReprendre;
-	
+
 	@FXML
 	private ImageView player;
 
@@ -144,26 +146,27 @@ public class MenuControler implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		//chargement des options
 		loadOptions();
-		
+
 		//chagement des menus
 		loadMenus();
-		
+
 		//Listener si un monde est charger
 		World.isWorldLoaded.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				
+
 				if(newValue) {
 					homeMenu.setOpacity(0);
 					System.out.println("Loading save");
 					loadMapTexture();
-					
+
 				}else {
 					System.out.println("Return to menu");
 					PaneGround.getChildren().clear();
 					PaneSolid.getChildren().clear();
 					PaneTop.getChildren().clear();
 					EntityPane.getChildren().clear();
+					ArmePane.getChildren().clear();
 					PlayerPane.getChildren().clear();
 					PaneHUD.getChildren().clear();
 					coeurs.clear();
@@ -172,15 +175,15 @@ public class MenuControler implements Initializable{
 					Menu.currentMenu.set(Menu.MainMenuID);
 				}
 			}});
-		
+
 		//Chargement dans la memoire de toutes les textures
 		textureLoading();		
 	}
-	
+
 	public void loadMenus() {
 		inventorySelector= new ImageView();
 		inventoryMenu.getChildren().add(inventorySelector);
-		
+
 		//Creation et binding des Labels des touches
 		for(int key=0; key < KeyName.length;key++) {
 			KeyName[key] = new Label();
@@ -193,7 +196,7 @@ public class MenuControler implements Initializable{
 			KeyName[key].textProperty().bind(OptionsMenu.keyName[key]);
 			PaneOptions.getChildren().add(KeyName[key]);
 		}
-		
+
 		//Creation des Labels des noms des touches
 		for(int keyName=0; keyName < KeyFonctionName.length;keyName++) {
 			KeyFonctionName[keyName] = new Label();
@@ -202,7 +205,7 @@ public class MenuControler implements Initializable{
 			KeyFonctionName[keyName].setMinWidth(200);
 			KeyFonctionName[keyName].setMinHeight(50);
 			KeyFonctionName[keyName].setTextFill(Paint.valueOf("WHITE"));
-			
+
 			if(OptionsMenu.keyFunctionName[keyName].equals("Reinitializer")) {
 				KeyFonctionName[keyName].setFont(Font.font("Impact",22));
 				KeyFonctionName[keyName].relocate(690, 553);
@@ -213,14 +216,14 @@ public class MenuControler implements Initializable{
 			}
 			PaneOptions.getChildren().add(KeyFonctionName[keyName]);
 		}
-		
+
 		//Listener de la selection des boutons des Menus en x
 		Menu.selectedButtonX.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				menuSelection();
 			}});
-		
+
 		//Listener de la selection des boutons des Menus en y
 		Menu.selectedButtonY.addListener(new ChangeListener<Number>() {
 			@Override
@@ -228,52 +231,52 @@ public class MenuControler implements Initializable{
 				menuSelection();	
 			}});
 
-		
+
 
 		//Listener de changement de menu
 		Menu.currentMenu.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				
+
 				selectorMain.relocate(playImg.getLayoutX(), playImg.getLayoutY()+120*Menu.selectedButtonY.intValue());
-				
+
 				switch(newValue.intValue()) {
-				
+
 				case Menu.MainMenuID:
 					Menu.selectedButtonY.set(0);
 					PaneOptions.setOpacity(0);
 					break;
-				
+
 				case Menu.OptionsMenuID:
 					selectorInOption.relocate(200, 150+70*Menu.selectedButtonY.intValue());
 					Menu.selectedButtonY.set(0);
 					PaneOptions.setOpacity(1);
 					PaneMenu.setOpacity(0);
 					break;
-					
+
 				case Menu.InGameMenuID:
 					selectorPauseInGame.relocate(optionInGameImg.getLayoutX(), optionInGameImg.getLayoutY()+120*Menu.selectedButtonY.intValue());
 					Menu.selectedButtonY.set(0);
 					PaneOptions.setOpacity(0);
 					PaneMenu.setOpacity(1);
 					break;
-				
+
 				case Menu.InventoryMenuID:
 					inventorySelector.setImage(inventorySelector2);
 					inventorySelector.relocate(652, 382);
 					inventoryMenu.setOpacity(1);
 					break;
-					
+
 				default :
 					PaneOptions.setOpacity(0);
 					PaneMenu.setOpacity(0);
 					inventoryMenu.setOpacity(0);
 					break;
-				
+
 				}
 
 			}});	
-		
+
 		//Listener du temoin graphique d'assignation des touches
 		OptionsMenu.enterOption.addListener(new ChangeListener<Boolean>() {
 			@Override
@@ -282,10 +285,10 @@ public class MenuControler implements Initializable{
 					temoinAssignation.setOpacity(1);
 				else
 					temoinAssignation.setOpacity(0);
-				
-				
+
+
 			}});
-		
+
 		//Listener de l'ajout d'un item
 		InventoryMenu.newItem.addListener(new ChangeListener<Boolean>() {
 			@Override
@@ -293,70 +296,91 @@ public class MenuControler implements Initializable{
 				System.out.println(InventoryMenu.lastItemAdded);
 				if(newValue)			
 					switch(InventoryMenu.lastItemAdded.get()) {
-						case 1:	
-							for(int i = 0; i < World.player.usables.size(); i++) {
-								PaneWeapons.getChildren().add(createItemView(World.player.usables.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8)));
-								InventoryMenu.newItem.set(false);
-							}
+					case 1:	
+						for(int i = 0; i < World.player.usables.size(); i++) {
+							PaneWeapons.getChildren().add(createItemView(World.player.usables.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8)));
+							InventoryMenu.newItem.set(false);
+						}
 						break;
-						
-						case 2:	
-							for(int i = 0; i < World.player.weapons.size(); i++) {
-								PaneWeapons.getChildren().add(createItemView(World.player.weapons.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8)));
-								InventoryMenu.newItem.set(false);
-							}
+
+					case 2:	
+						for(int i = 0; i < World.player.weapons.size(); i++) {
+							PaneWeapons.getChildren().add(createItemView(World.player.weapons.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8)));
+							InventoryMenu.newItem.set(false);
+						}
 						break;
-						
-						case 3:	
-							for(int i = 0; i < World.player.specials.size(); i++) {
-								PaneWeapons.getChildren().add(createItemView(World.player.specials.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8)));
-								InventoryMenu.newItem.set(false);
-							}
+
+					case 3:	
+						for(int i = 0; i < World.player.specials.size(); i++) {
+							PaneWeapons.getChildren().add(createItemView(World.player.specials.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8)));
+							InventoryMenu.newItem.set(false);
+						}
 						break;
 					}						
-				}});
+			}});
 
-		
+
 		//Listener changement de de pane dans le menu item
 		InventoryMenu.InventoryZone.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				switch(InventoryMenu.InventoryZone.get()) {
-					case 0:
-						PaneConsomables.setOpacity(1);
-						PaneWeapons.setOpacity(0);
-						PaneItems.setOpacity(0);
+				case 0:
+					PaneConsomables.setOpacity(1);
+					PaneWeapons.setOpacity(0);
+					PaneItems.setOpacity(0);
 					break;
-					
-					case 1:
-						PaneConsomables.setOpacity(0);
-						PaneWeapons.setOpacity(0);
-						PaneItems.setOpacity(1);
+
+				case 1:
+					PaneConsomables.setOpacity(0);
+					PaneWeapons.setOpacity(0);
+					PaneItems.setOpacity(1);
 					break;
-					
-					case 2:
-						PaneConsomables.setOpacity(0);
-						PaneWeapons.setOpacity(1);
-						PaneItems.setOpacity(0);
+
+				case 2:
+					PaneConsomables.setOpacity(0);
+					PaneWeapons.setOpacity(1);
+					PaneItems.setOpacity(0);
 					break;
 				}
 			}});
+
+		//Listener changement de de pane dans le menu item
+		InventoryMenu.itemEnMain.addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				System.out.println(InventoryMenu.typeItemEnMain.get());
+				switch(InventoryMenu.typeItemEnMain.get()) {
+					case 1:
+						ArmePane.getChildren().add(createItemView(World.player.weapons.get(InventoryMenu.itemEnMain.get()).getItemName(), 200, 200));	
+					break;
+					case 2:
+						ArmePane.getChildren().add(createItemView(World.player.specials.get(InventoryMenu.itemEnMain.get()).getItemName(), 200, 200));	
+					break;
+					case 3:
+						ArmePane.getChildren().add(createItemView(World.player.usables.get(InventoryMenu.itemEnMain.get()).getItemName(), 200, 200));	
+					break;
+					case 4:
+						ArmePane.getChildren().add(createItemView(World.player.loots.get(InventoryMenu.itemEnMain.get()).getItemName(), 200, 200));	
+					break;
+				}
+			}});	
 	}
-	
+
 	private void menuSelection() {
 		int x = Menu.selectedButtonX.intValue();
 		int y = Menu.selectedButtonY.intValue();
-		
+
 		switch (Menu.currentMenu.get()) {
-		
+
 		case Menu.MainMenuID:
 			selectorMain.relocate(playImg.getLayoutX(), playImg.getLayoutY()+120*y);
 			break;
-			
+
 		case Menu.InGameMenuID:
 			selectorPauseInGame.relocate(optionInGameImg.getLayoutX(), optionInGameImg.getLayoutY()+120*y);
 			break;
-			
+
 		case Menu.OptionsMenuID:
 			if(y == OptionsMenu.keyFunctionName.length-1) {
 				selectorInOption.relocate(640, 553);
@@ -364,7 +388,7 @@ public class MenuControler implements Initializable{
 				selectorInOption.relocate(200, 170+70*y);
 			}
 			break;
-			
+
 		case Menu.InventoryMenuID:
 			System.out.println(x+" "+y);
 			if(x+y==0) {
@@ -380,13 +404,13 @@ public class MenuControler implements Initializable{
 				inventorySelector.setImage(inventorySelector1);
 				inventorySelector.relocate(60+73*(x), 365+73*(y-2));
 			}
-			
+
 			break;
 		}
 	}
 
 	private void loadOptions() {
-		
+
 		try {
 			BufferedReader optionsData = new BufferedReader(new FileReader(new File("saves/options.cfg").getAbsolutePath()));
 			Pattern pat = Pattern.compile(",");
@@ -401,26 +425,26 @@ public class MenuControler implements Initializable{
 		} catch (IOException e) {
 			OptionsMenu.SaveKeyBinding();
 		}
-		
+
 	}
-	
+
 	public void loadMapTexture() {
-		
+
 		//Affichage de toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
 
 		//Chargement du joueur
-	//	World.loadPlayer();
-		
+		//	World.loadPlayer();
+
 		//Chargement des ImageView des entites
 		affichageEntitys();
-		
+
 		//Chargement de l'HUD
 		hudLoading();
-		
+
 		//Ajout de l'affichage des ombres si la map est a l'interieur
 		affichageOmbres();
-		
+
 		//Ajout d'un Listener si la map change
 		World.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
 			@Override
@@ -440,7 +464,7 @@ public class MenuControler implements Initializable{
 		});
 	}
 
-	
+
 	private void hudLoading() {
 		for(int numCoeur=World.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
 			coeurs.add(new ImageView(dicoImageItemTextureMap.get(2)));
@@ -459,17 +483,17 @@ public class MenuControler implements Initializable{
 			}
 		});
 	}
-	
+
 	private void affichageOmbres() {
 		shadowTopPane.getChildren().clear();
 		if(!World.currentMap.isOutside())
-		for(int x=0; x < World.currentMap.getWidth() ;x++) {
-			for(int y=0; y < World.currentMap.getHeight() ;y++) {
+			for(int x=0; x < World.currentMap.getWidth() ;x++) {
+				for(int y=0; y < World.currentMap.getHeight() ;y++) {
 					createShadow(shadowTopPane, World.currentMap.getShadow(x, y),x,y);
 				}
-		}
+			}
 	}
-	
+
 	private void createShadow(Pane pane, IntegerProperty shadow, int x, int y) {
 		ImageView i = new ImageView();
 		i.relocate(x * 32, y * 32);
@@ -484,60 +508,60 @@ public class MenuControler implements Initializable{
 				i.setImage(dicoShadow.get(observable.getValue().intValue() <= 15 ? observable.getValue() : 15));
 			}
 		});		
-		
+
 		pane.getChildren().add(i);
 	}
-	
+
 	private void textureLoading() {
 		try {
-		dicoImageTileTextureMap = new HashMap<>();
-		dicoImageItemTextureMap = new HashMap<>();
-		dicoImageAnimationPlayer = new HashMap<>();
-		dicoImageAnimationEntity = new HashMap<>();
-		dicoShadow = new HashMap<>();
-		
-		LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
-		LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
-		loadAnimationPlayer(dicoImageAnimationPlayer, 28, 4);
-		
-		coeurs = new ArrayList<>();
-		
-		inventorySelector1 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventorySelector1.png").toURI().toURL()), null);
-		inventorySelector2 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventorySelector2.png").toURI().toURL()), null);
-		inventorySelector3 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventorySelector3.png").toURI().toURL()), null);
-		
-		for(int i = 0; i < 16;i++)
-		
-		dicoShadow.put(i,SwingFXUtils.toFXImage(
-				EntityLivingTexture.getEntityTexture("darkness",32,32,i,0).getTexture(), null));
-		
-		
+			dicoImageTileTextureMap = new HashMap<>();
+			dicoImageItemTextureMap = new HashMap<>();
+			dicoImageAnimationPlayer = new HashMap<>();
+			dicoImageAnimationEntity = new HashMap<>();
+			dicoShadow = new HashMap<>();
+
+			LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
+			LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
+			loadAnimationPlayer(dicoImageAnimationPlayer, 28, 4);
+
+			coeurs = new ArrayList<>();
+
+			inventorySelector1 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventorySelector1.png").toURI().toURL()), null);
+			inventorySelector2 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventorySelector2.png").toURI().toURL()), null);
+			inventorySelector3 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventorySelector3.png").toURI().toURL()), null);
+
+			for(int i = 0; i < 16;i++)
+
+				dicoShadow.put(i,SwingFXUtils.toFXImage(
+						EntityLivingTexture.getEntityTexture("darkness",32,32,i,0).getTexture(), null));
+
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void LoadDicoMap(Map<Integer,Image> dico,int imageWidthPixels, int imageHeightPixels, int imageWidth, int imageHeight, String textureMapName) {
 		for(int x = 0; x < imageWidth*imageHeight; x++) {
 			dico.put(x + 1,SwingFXUtils.toFXImage(TextureLoader.getTextureMapImage(textureMapName,imageWidthPixels,imageHeightPixels,imageWidth,imageHeight,x).getTexture(), null));
-			}
+		}
 	}
-	
+
 	private void loadAnimationPlayer(Map<Integer,Image> dico, int frame, int animation) {
 		for(int x = 0;x < frame;x++)
 			for(int y = 0;y < animation;y++)
 				dico.put(x + frame * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("Player", 24, 32, x, y).getTexture(), null));		
 	}
-	
-//	private void loadAnimation(Map<Integer,Image[]> dico, int frame, int animation) {
-//		for(int entity=0;entity<3;entity++) {
-//			Image[] imgs=new Image[frame*animation];
-//			for(int x = 0;x < frame;x++)
-//				for(int y = 0;y < animation;y++)
-//					imgs[x + frame * y]=SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("Zombie", 32, 48, x, y).getTexture(), null);	
-//			dico.put(entity,imgs);
-//		}
-//	}
+
+	//	private void loadAnimation(Map<Integer,Image[]> dico, int frame, int animation) {
+	//		for(int entity=0;entity<3;entity++) {
+	//			Image[] imgs=new Image[frame*animation];
+	//			for(int x = 0;x < frame;x++)
+	//				for(int y = 0;y < animation;y++)
+	//					imgs[x + frame * y]=SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("Zombie", 32, 48, x, y).getTexture(), null);	
+	//			dico.put(entity,imgs);
+	//		}
+	//	}
 
 	//Permet d'afficher dans dans chaque pane toute les textures de chaque couches de la map
 	private void printCalqueTile(Pane pane,Pane paneTile,Pane paneTop) {
@@ -594,10 +618,10 @@ public class MenuControler implements Initializable{
 		i.setFitHeight(64);
 		i.setX(World.player.coordonnes.getX());
 		i.setY(World.player.coordonnes.getY());
-		
+
 		i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
 		i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));
-		
+
 		if(e.getId().equals("Player")) {
 			i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 24, 32, 0, 2).getTexture(), null));
 			paneGame.layoutXProperty().bind(e.coordonnes.getXpro().multiply(-32).add(432));
@@ -635,14 +659,14 @@ public class MenuControler implements Initializable{
 		}
 
 	}
-	
+
 	private ImageView getEntityImageView(Entity e) {
 		ImageView img = null;
 		for(ImageView imageView:listEntityView.values())
 			if(imageView.getId().equals(e.getId())) {
 				return imageView;
 			}
-		
+
 		return img;
 	}
 
@@ -650,7 +674,7 @@ public class MenuControler implements Initializable{
 		//Supprime tout les imageview d'entites inutilisee
 		for(ImageView img : listEntityView.values()) {
 			boolean found = false;
-			
+
 			for(Entity entity : World.currentMap.getEntity()) {
 				if(img.getId().equals(entity.primaryKey)) {
 					found=true;
@@ -660,9 +684,9 @@ public class MenuControler implements Initializable{
 			if(!found) {	
 				listEntityView.remove(img);
 			}
-			
+
 		}
-		
+
 		//Cree les imageviews des entites
 		for(Entity entity:World.currentMap.getEntity()) {
 			if(entity != null) {
@@ -676,26 +700,26 @@ public class MenuControler implements Initializable{
 							ImageView entityImg = getEntityImageView(entity);
 							if(((TileEntity) entity).getEtat() && entityImg != null)
 								entityImg.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(entity.getId(), 32, 112, 1, 0).getTexture(), null));
-					//		else
-					//Bug			entityImg.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(entity.getId(), 32, 112, 0, 0).getTexture(), null));
-							
+							//		else
+							//Bug			entityImg.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(entity.getId(), 32, 112, 0, 0).getTexture(), null));
+
 						}
-						
+
 					});
 				}
 			}
 		}
-		
+
 		World.currentMap.entity.addListener(new ListChangeListener<Entity>(){
 
 			@Override
 			public void onChanged(Change<? extends Entity> c) {
 				while (c.next()) {
-					
+
 					for (Entity addEntity : c.getAddedSubList()) {
 
 						if(!addEntity.getId().equals("Player")){
-						
+
 							affichageEntity(listEntityView.get(addEntity),addEntity);
 							addEntity.etatDeplacement.addListener(
 									new ChangeListener<Number>() {
@@ -729,22 +753,22 @@ public class MenuControler implements Initializable{
 														[observable.getValue().intValue() / 3 + 84]);
 												break;
 											}
-											
-								}});
+
+										}});
 						}}}
 
 			}
 		});
 	}
-	
+
 	public ImageView createItemView(String name, int layoutX, int layoutY) {
 		ImageView v = new ImageView();
 		switch(name) {
-			case "Sword : Wooden Sworden" :
-				v.setImage(dicoImageItemTextureMap.get(17));
+		case "Sword : Wooden Sworden" :
+			v.setImage(dicoImageItemTextureMap.get(17));
 			break;
-			case "Axe : Basic Axe" :
-				v.setImage(dicoImageItemTextureMap.get(18));
+		case "Axe : Basic Axe" :
+			v.setImage(dicoImageItemTextureMap.get(18));
 			break;
 		}
 		v.relocate(layoutX, layoutY);

@@ -2,6 +2,7 @@ package game.controler;
 
 import game.modele.item.weapon.Axe.BasicAxe;
 import game.modele.item.weapon.swords.BasicSword;
+import game.modele.menu.InventoryMenu;
 import game.modele.menu.Menu;
 import game.modele.menu.OptionsMenu;
 import game.modele.utils.Direction;
@@ -34,8 +35,10 @@ public class Interaction {
 		
 		if(k == INVENTAIRE) {
 			Menu.inventory();
-			World.player.giveItemWeapon(new BasicSword());
+			BasicSword s = new BasicSword();
+			World.player.giveItemWeapon(s);
 			World.player.giveItemWeapon(new BasicAxe());
+			InventoryMenu.setWeaponEnMain(s);
 		}
 
 		if(k == AVANCER) {

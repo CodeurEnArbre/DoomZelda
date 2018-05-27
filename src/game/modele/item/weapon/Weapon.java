@@ -17,5 +17,5 @@ public class Weapon extends Item{
 	
 	public void attaquer(EntityLiving e) {
 		e.perdrePV(this.pa);
-	}
+	}	
 }
