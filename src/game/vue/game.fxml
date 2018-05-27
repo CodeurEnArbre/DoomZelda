@@ -70,14 +70,14 @@
          </children></Pane>
       <Pane fx:id="inventoryMenu" opacity="0.0" prefHeight="640.0" prefWidth="864.0">
       <children>
-            <Pane fx:id="PaneConsomables" layoutX="61.0" layoutY="366.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="216.0" prefWidth="581.0" />
-            <Pane fx:id="PaneItems" layoutX="61.0" layoutY="366.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.0" prefHeight="216.0" prefWidth="581.0" />
-            <Pane fx:id="PaneArmes" layoutX="61.0" layoutY="366.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.0" prefHeight="216.0" prefWidth="581.0" />
             <ImageView fitHeight="640.0" fitWidth="864.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../ressources/textures/gui/Inventaire.png" />
         	   </image>
         	</ImageView>
+            <Pane fx:id="PaneConsomables" layoutX="61.0" layoutY="366.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.0" prefHeight="216.0" prefWidth="581.0" />
+            <Pane fx:id="PaneItems" layoutX="61.0" layoutY="366.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.0" prefHeight="216.0" prefWidth="581.0" />
+            <Pane fx:id="PaneWeapons" layoutX="61.0" layoutY="366.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="216.0" prefWidth="581.0" />
       </children>
       </Pane>
       <Pane fx:id="PaneOptions" opacity="0.0" prefHeight="640.0" prefWidth="864.0" style="-fx-background-color: black;">

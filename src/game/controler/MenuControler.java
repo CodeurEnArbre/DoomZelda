@@ -293,10 +293,25 @@ public class MenuControler implements Initializable{
 				System.out.println(InventoryMenu.lastItemAdded);
 				if(newValue)			
 					switch(InventoryMenu.lastItemAdded.get()) {
+						case 1:	
+							for(int i = 0; i < World.player.usables.size(); i++) {
+								PaneWeapons.getChildren().add(createItemView(World.player.usables.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8)));
+								InventoryMenu.newItem.set(false);
+							}
+						break;
+						
 						case 2:	
-							PaneWeapons.getChildren().add(createItemView(World.player.weapons.get(World.player.weapons.size()-1).getItemName(), 200, 200));
-							System.out.println(PaneWeapons.getChildren());
-							InventoryMenu.newItem.set(false);
+							for(int i = 0; i < World.player.weapons.size(); i++) {
+								PaneWeapons.getChildren().add(createItemView(World.player.weapons.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8)));
+								InventoryMenu.newItem.set(false);
+							}
+						break;
+						
+						case 3:	
+							for(int i = 0; i < World.player.specials.size(); i++) {
+								PaneWeapons.getChildren().add(createItemView(World.player.specials.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8)));
+								InventoryMenu.newItem.set(false);
+							}
 						break;
 					}						
 				}});
@@ -726,8 +741,10 @@ public class MenuControler implements Initializable{
 		ImageView v = new ImageView();
 		switch(name) {
 		case "Wooden Sworden" :
-			v.setImage(dicoImageItemTextureMap.get(2));
+			v.setImage(dicoImageItemTextureMap.get(17));
 			v.relocate(layoutX, layoutY);
+			v.setFitHeight(50);
+			v.setFitWidth(50);
 			break;
 		}
 		return v;
