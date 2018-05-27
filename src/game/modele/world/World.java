@@ -13,7 +13,7 @@ import game.modele.item.loot.Loot;
 import game.modele.item.special.Special;
 import game.modele.item.usable.Usable;
 import game.modele.item.weapon.Weapon;
-import game.modele.item.weapon.swords.basicSword;
+import game.modele.item.weapon.swords.BasicSword;
 import game.modele.tile.Tile;
 import game.modele.tile.TileFactory;
 import game.modele.utils.Coordonnees;

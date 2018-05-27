@@ -4,8 +4,8 @@ import game.modele.item.weapon.Weapon;
 
 public class Sword extends Weapon{
 
-	public Sword(String name) {
-		super(name, 1);
+	public Sword(String name, int pa) {
+		super("Sword : " + name, pa);
 		
 	}	
 }

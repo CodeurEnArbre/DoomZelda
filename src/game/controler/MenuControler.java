@@ -740,13 +740,16 @@ public class MenuControler implements Initializable{
 	public ImageView createItemView(String name, int layoutX, int layoutY) {
 		ImageView v = new ImageView();
 		switch(name) {
-		case "Wooden Sworden" :
-			v.setImage(dicoImageItemTextureMap.get(17));
-			v.relocate(layoutX, layoutY);
-			v.setFitHeight(50);
-			v.setFitWidth(50);
+			case "Sword : Wooden Sworden" :
+				v.setImage(dicoImageItemTextureMap.get(17));
+			break;
+			case "Axe : Basic Axe" :
+				v.setImage(dicoImageItemTextureMap.get(18));
 			break;
 		}
+		v.relocate(layoutX, layoutY);
+		v.setFitHeight(50);
+		v.setFitWidth(50);
 		return v;
 	}	
 
