@@ -35,14 +35,14 @@ public class World {
 	public static Player player;
 	public static BooleanProperty isWorldLoaded = new SimpleBooleanProperty(false);
 
+	private static Timeline GameLoop;
 
-	private static Timeline GameLoop = new Timeline();
-	
 	public static void loadGameLoop() {
-
-		currentMap.g.init();		
+		if(GameLoop != null)
+			GameLoop.stop();
+		
+		GameLoop = new Timeline();
 		GameLoop.setCycleCount(Timeline.INDEFINITE);
-		GameLoop.play();
 	}
 
 	//Ajoute des fonctions qui seront execute dans la gameloop
@@ -61,29 +61,32 @@ public class World {
 	}
 
 	public static void initWorldSave(String world, Coordonnees coord, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials) {
+
+		loadGameLoop();
 		
 		player = new Player(coord,direction,maxPv,pv,ruby,loots,usables,weapons,specials);
-		
+
 		loadWorld(world,null);
-		
+
 		addEntity(player);
 		GameLoop.getKeyFrames().add(new KeyFrame(Duration.seconds(0.017), e ->{
 			World.currentMap.g.Dijkstra((int)World.player.coordonnes.getY(),(int)World.player.coordonnes.getX());
 		}));
-		
+
 		isWorldLoaded.setValue(true);
+
+		currentMap.g.init();		
 		
 		//Demarage des la gameloop
-		loadGameLoop();
 		playGameLoop();
 		onPause.set(false);
-		
-		
+
+
 		BasicSword s = new BasicSword();
 		World.player.giveItemWeapon(s);
 		World.player.giveItemWeapon(new BasicAxe());
 		InventoryMenu.setWeaponEnMain(s);
-		
+
 	}
 
 	public static void addEntity(Entity e) {
@@ -96,7 +99,14 @@ public class World {
 	 * Chargement de la map : creation du tableau utilisee par l'affichage
 	 * */
 	public static void loadWorld(String file, String worldName) {
-
+		if(currentMap != null)
+			for(Entity e : currentMap.entity) {
+				if(!e.getId().equals("Player"))
+					e.dispose();
+			}
+		
+		
+		
 		TileFactory.load();
 		try {
 			//Chargement des tiles
@@ -115,6 +125,7 @@ public class World {
 
 			tilesData.close();
 			ArrayList<Entity> entitys = loadEntity(file);
+			
 			if(worldName==null)
 				currentMap=new WorldData(name, width, height, outside, tileGround, tileSolid, tileTop, entitys);
 			else {

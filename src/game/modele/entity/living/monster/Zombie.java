@@ -19,7 +19,11 @@ public class Zombie extends EntityMonster{
 		addAction(new InfiniteActionConsumer(new FunctionIA()));
 	}
 
-
+	@Override
+	public void dispose() {
+		delAction(FunctionMove.class.getName());
+		delAction(FunctionIA.class.getName());
+	}
 	@Override
 	public void active(Entity e) {
 

@@ -157,6 +157,10 @@ public abstract class Entity {
 		this.etatDeplacement.set(0);
 	}
 	
+	public void dispose() {
+		
+	}
+	
 	public String toString() {
 		return id;
 	}

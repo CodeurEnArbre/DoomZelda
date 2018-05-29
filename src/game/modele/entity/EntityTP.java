@@ -3,6 +3,7 @@ package game.modele.entity;
 import game.modele.entity.tileEntity.TileEntity;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
+import game.modele.world.Save;
 import game.modele.world.World;
 
 public class EntityTP extends TileEntity{

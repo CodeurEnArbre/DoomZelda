@@ -46,6 +46,13 @@ public class Player extends EntityLiving{
 		addAction(new InfiniteActionConsumer(new FunctionMovement()));
 	}
 	
+	@Override
+	public void dispose() {
+		delAction(FunctionMove.class.getName());
+		delAction(FunctionMovement.class.getName());
+	}
+	
+	
 	public int getRuby() {
 		return Player.ruby.get();
 	}
