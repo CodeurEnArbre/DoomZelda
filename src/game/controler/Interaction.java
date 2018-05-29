@@ -35,10 +35,6 @@ public class Interaction {
 		
 		if(k == INVENTAIRE) {
 			Menu.inventory();
-			BasicSword s = new BasicSword();
-			World.player.giveItemWeapon(s);
-			World.player.giveItemWeapon(new BasicAxe());
-			InventoryMenu.setWeaponEnMain(s);
 		}
 
 		if(k == AVANCER) {

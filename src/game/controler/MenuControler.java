@@ -796,10 +796,10 @@ public class MenuControler implements Initializable{
 		ImageView v = new ImageView();
 		v.setId(name);
 		switch(name) {
-		case "Sword : Wooden Sworden" :
+		case "Wooden Sworden" :
 			v.setImage(dicoImageItemTextureMap.get(17));
 			break;
-		case "Axe : Basic Axe" :
+		case "Basic Axe" :
 			v.setImage(dicoImageItemTextureMap.get(18));
 			break;
 		}

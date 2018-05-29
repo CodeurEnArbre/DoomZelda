@@ -13,6 +13,9 @@ import game.modele.item.loot.Loot;
 import game.modele.item.special.Special;
 import game.modele.item.usable.Usable;
 import game.modele.item.weapon.Weapon;
+import game.modele.item.weapon.Axe.BasicAxe;
+import game.modele.item.weapon.swords.BasicSword;
+import game.modele.menu.InventoryMenu;
 import game.modele.tile.Tile;
 import game.modele.tile.TileFactory;
 import game.modele.utils.Coordonnees;
@@ -74,6 +77,12 @@ public class World {
 		loadGameLoop();
 		playGameLoop();
 		onPause.set(false);
+		
+		
+		BasicSword s = new BasicSword();
+		World.player.giveItemWeapon(s);
+		World.player.giveItemWeapon(new BasicAxe());
+		InventoryMenu.setWeaponEnMain(s);
 		
 	}
 
