@@ -3,7 +3,6 @@ package game.modele.utils.ActionConsumer;
 import java.util.ArrayList;
 
 import game.modele.entity.Entity;
-import game.modele.utils.ActionConsumer.Function.Function;
 
 public class ListConsumerAction{
 	private ArrayList<ConsumerAction> list;

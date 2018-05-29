@@ -13,7 +13,6 @@ public class tileCactus extends TileGround{
 	public void Action(Entity e) {
 		if(e instanceof EntityLiving) {
 			((EntityLiving) e).perdrePV(1);
-			System.out.println(((EntityLiving) e).getPV().doubleValue());	
 		}
 	}
 }

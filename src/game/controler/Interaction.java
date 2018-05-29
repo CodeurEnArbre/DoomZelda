@@ -1,8 +1,5 @@
 package game.controler;
 
-import game.modele.item.weapon.Axe.BasicAxe;
-import game.modele.item.weapon.swords.BasicSword;
-import game.modele.menu.InventoryMenu;
 import game.modele.menu.Menu;
 import game.modele.menu.OptionsMenu;
 import game.modele.utils.Direction;

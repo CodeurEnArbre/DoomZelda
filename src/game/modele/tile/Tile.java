@@ -1,8 +1,6 @@
 package game.modele.tile;
 
 import game.modele.entity.Entity;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Tile {
 

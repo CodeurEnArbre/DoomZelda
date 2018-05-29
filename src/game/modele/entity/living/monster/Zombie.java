@@ -6,6 +6,7 @@ import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
 import game.modele.utils.ActionConsumer.Function.FunctionIA;
 import game.modele.utils.ActionConsumer.Function.FunctionMove;
+import game.modele.utils.ActionConsumer.Function.FunctionMovement;
 
 public class Zombie extends EntityMonster{
 
@@ -17,6 +18,7 @@ public class Zombie extends EntityMonster{
 		this.maxSpeed = 0.05;		
 		addAction(new InfiniteActionConsumer(new FunctionMove()));
 		addAction(new InfiniteActionConsumer(new FunctionIA()));
+		addAction(new InfiniteActionConsumer(new FunctionMovement()));
 	}
 
 	@Override
