@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import game.modele.entity.Entity;
 import game.modele.entity.EntityFactory;
 import game.modele.entity.Player.Player;
+import game.modele.entity.living.EntityLiving;
 import game.modele.item.loot.Loot;
 import game.modele.item.special.Special;
 import game.modele.item.usable.Usable;
@@ -85,7 +86,7 @@ public class World {
 		BasicSword s = new BasicSword();
 		World.player.giveItemWeapon(s);
 		World.player.giveItemWeapon(new BasicAxe());
-		InventoryMenu.setWeaponEnMain(s);
+		player.setWeaponEnMain(s);
 
 	}
 

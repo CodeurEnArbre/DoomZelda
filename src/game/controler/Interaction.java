@@ -1,7 +1,9 @@
 package game.controler;
 
+import game.modele.entity.living.monster.Zombie;
 import game.modele.menu.Menu;
 import game.modele.menu.OptionsMenu;
+import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.world.World;
 import javafx.scene.input.KeyCode;

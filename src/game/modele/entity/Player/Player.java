@@ -28,6 +28,8 @@ public class Player extends EntityLiving{
 	private int maxRuby=100;
 	public static IntegerProperty ruby; //ARGENT!!!	
 	public Entity CarriedEntity;
+
+
 	
 	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials) {
 		super("Player",position,direction);

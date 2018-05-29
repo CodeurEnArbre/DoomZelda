@@ -1,12 +1,5 @@
 package game.modele.menu;
 
-import game.controler.MenuControler;
-import game.modele.item.Item;
-import game.modele.item.loot.Loot;
-import game.modele.item.special.Special;
-import game.modele.item.usable.Usable;
-import game.modele.item.weapon.Weapon;
-import game.modele.world.World;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -18,8 +11,8 @@ public class InventoryMenu {
 	public static IntegerProperty InventoryZone = new SimpleIntegerProperty(0); //0= consomables, 1 = items, 2 = armes
 	public static BooleanProperty newItem= new SimpleBooleanProperty(false);
 	public static IntegerProperty lastItemAdded = new SimpleIntegerProperty();
-	
-	public static Item itemEnMain = new Item("itemEnMain");
+
+
 	
 	public static void validate() {
 		if(Menu.selectedButtonX.get()==8) 
@@ -86,40 +79,4 @@ public class InventoryMenu {
 		}
 	}
 	
-	public static void setWeaponEnMain(Weapon w) {
-		int i = 0;
-		while(World.player.weapons.get(i).getPrimaryKey() != w.getPrimaryKey()){
-			i++;
-		}
-		itemEnMain = w;
-		MenuControler.updateItemEnMain();
-	}
-	
-	public void setUsableEnMain(Usable u) {
-		int i = 0;
-		while(World.player.usables.get(i).getPrimaryKey() != u.getPrimaryKey()) {
-			i++;
-		}
-		itemEnMain = u;
-	}
-	
-	public void setLootEnMain(Loot l) {
-		int i = 0;
-		while(World.player.loots.get(i).getPrimaryKey() != l.getPrimaryKey()){
-			i++;
-		}
-		itemEnMain = l;
-	}
-	
-	public void setSpecialnEnMain(Special s) {
-		int i = 0;
-		while(World.player.specials.get(i).getPrimaryKey() != s.getPrimaryKey()){
-			i++;
-		}
-		itemEnMain = s;
-	}
-	
-	public void setAucunItemEnMain() {
-		itemEnMain = null;
-	}
 }

@@ -18,6 +18,7 @@ import game.modele.entity.Player.Player;
 import game.modele.entity.living.EntityLiving;
 import game.modele.entity.tileEntity.EntityLight;
 import game.modele.entity.tileEntity.TileEntity;
+import game.modele.item.Item;
 import game.modele.menu.InventoryMenu;
 import game.modele.menu.Menu;
 import game.modele.menu.OptionsMenu;
@@ -313,21 +314,21 @@ public class MenuControler implements Initializable{
 					switch(InventoryMenu.lastItemAdded.get()) {
 					case 1:	
 						for(int i = 0; i < World.player.usables.size(); i++) {
-							PaneWeapons.getChildren().add(createItemView(World.player.usables.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8)));
+							PaneWeapons.getChildren().add(createItemView(World.player.usables.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
 							InventoryMenu.newItem.set(false);
 						}
 						break;
 
 					case 2:	
 						for(int i = 0; i < World.player.weapons.size(); i++) {
-							PaneWeapons.getChildren().add(createItemView(World.player.weapons.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8)));
+							PaneWeapons.getChildren().add(createItemView(World.player.weapons.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
 							InventoryMenu.newItem.set(false);
 						}
 						break;
 
 					case 3:	
 						for(int i = 0; i < World.player.specials.size(); i++) {
-							PaneWeapons.getChildren().add(createItemView(World.player.specials.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8)));
+							PaneWeapons.getChildren().add(createItemView(World.player.specials.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
 							InventoryMenu.newItem.set(false);
 						}
 						break;
@@ -335,7 +336,7 @@ public class MenuControler implements Initializable{
 			}});
 
 
-		//Listener changement de de pane dans le menu item
+		//Listener changement de pane dans le menu item
 		InventoryMenu.InventoryZone.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -430,18 +431,9 @@ public class MenuControler implements Initializable{
 		}
 
 	}
-
-	public static void updateItemEnMain() {
-		
-	}
 	
-	public void loadMapTexture() {	
-		ImageView itemEnMainView = new ImageView();
-		ArmePane.getChildren().add(itemEnMainView);
-		itemEnMainView.setImage(inventorySelector1);
-		itemEnMainView.xProperty().bind((World.player.coordonnes.getXpro()));
-		itemEnMainView.yProperty().bind((World.player.coordonnes.getYpro()));
-
+	public void loadMapTexture() {				
+		intialiseAnimItemEnMain();	
 		//Affichage de toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
 
@@ -726,13 +718,24 @@ public class MenuControler implements Initializable{
 			@Override
 			public void onChanged(Change<? extends Entity> c) {
 				
+				System.out.println("gg");
 				while (c.next()) {
 					for (Entity addEntity : c.getAddedSubList()) {
+						if(addEntity instanceof EntityLiving) {
+							EntityLiving addEntityLiving = (EntityLiving)addEntity;
+							//AJOUT DU LISTENER POUR LANIMATION DE LITEM EN MAIN
+							addEntityLiving.itemsEnMain.addListener(new ListChangeListener<Item>(){
+
+							@Override
+							public void onChanged(Change<? extends Item> c) {
+								intialiseAnimItemEnMain();			
+						}});}
 
 						if(!addEntity.getId().equals("Player")){
 
 							affichageEntity(listEntityView.get(addEntity),addEntity);
-						
+							
+							//AJOUT DU LISTENER POUR L'ANIMATION DE L'ENTITE
 							addEntity.etatDeplacement.addListener( new ChangeListener<Number>() {
 										@Override
 										public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
@@ -764,14 +767,14 @@ public class MenuControler implements Initializable{
 												break;
 											}
 
-										}});
-						}}}
-
+										}});									
+								}}}
 			}
 		});
 	}
+	
 
-	public ImageView createItemView(String name, int layoutX, int layoutY) {
+	public ImageView createItemView(String name, int layoutX, int layoutY, int width, int height) {
 		ImageView v = new ImageView();
 		v.setId(name);
 		switch(name) {
@@ -783,9 +786,15 @@ public class MenuControler implements Initializable{
 			break;
 		}
 		v.relocate(layoutX, layoutY);
-		v.setFitHeight(50);
-		v.setFitWidth(50);
+		v.setFitHeight(height);
+		v.setFitWidth(width);
 		return v;
 	}	
-
+	
+	private void intialiseAnimItemEnMain() {
+		ImageView itemEnMainView = createItemView("Wooden Sworden", 11, 14, 30 ,30);
+		ArmePane.getChildren().add(itemEnMainView);
+		itemEnMainView.xProperty().bind((World.player.coordonnes.getXpro().multiply(32).subtract(12)));
+		itemEnMainView.yProperty().bind((World.player.coordonnes.getYpro().multiply(32).subtract(42)));
+	}
 }

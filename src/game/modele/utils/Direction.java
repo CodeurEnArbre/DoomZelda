@@ -15,6 +15,11 @@ public class Direction {
 		direction.setValue(value);
 	}
 	
+	public Direction() {
+		this(0);
+	}
+	
+	
 	public IntegerProperty getDirectionProperty() {
 		return this.direction;
 	}
