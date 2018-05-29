@@ -40,6 +40,9 @@ public class EntityTP extends TileEntity{
 	public void incAnim() {
 		// NONE
 	}
+
+	@Override
+	public void onHit(Entity entity) {/*Nothing*/}
 	
 	
 	

@@ -25,4 +25,6 @@ public abstract class TileEntity extends Entity {
 	public void setEtat(boolean etat) {
 		this.etat.set(etat);
 	}
+	
+	public abstract void onHit(Entity entity);
 }
