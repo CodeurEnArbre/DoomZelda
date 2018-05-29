@@ -1,5 +1,7 @@
 package game.modele.menu;
 
+import game.controler.MenuControler;
+import game.modele.item.Item;
 import game.modele.item.loot.Loot;
 import game.modele.item.special.Special;
 import game.modele.item.usable.Usable;
@@ -16,9 +18,9 @@ public class InventoryMenu {
 	public static IntegerProperty InventoryZone = new SimpleIntegerProperty(0); //0= consomables, 1 = items, 2 = armes
 	public static BooleanProperty newItem= new SimpleBooleanProperty(false);
 	public static IntegerProperty lastItemAdded = new SimpleIntegerProperty();
-	public static IntegerProperty itemEnMain = new SimpleIntegerProperty(-1);
-	public static IntegerProperty typeItemEnMain = new SimpleIntegerProperty(0); //0 = aucun item, 1 = arme, 2 = special, 3 = usable, 4 = loots
-
+	
+	public static Item itemEnMain = new Item("itemEnMain");
+	
 	public static void validate() {
 		if(Menu.selectedButtonX.get()==8) 
 			InventoryZone.set(Menu.selectedButtonY.get()-2);	
@@ -89,8 +91,8 @@ public class InventoryMenu {
 		while(World.player.weapons.get(i).getPrimaryKey() != w.getPrimaryKey()){
 			i++;
 		}
-		itemEnMain.set(i);
-		typeItemEnMain.set(1);
+		itemEnMain = w;
+		MenuControler.updateItemEnMain();
 	}
 	
 	public void setUsableEnMain(Usable u) {
@@ -98,8 +100,7 @@ public class InventoryMenu {
 		while(World.player.usables.get(i).getPrimaryKey() != u.getPrimaryKey()) {
 			i++;
 		}
-		itemEnMain.set(i);
-		typeItemEnMain.set(3);
+		itemEnMain = u;
 	}
 	
 	public void setLootEnMain(Loot l) {
@@ -107,8 +108,7 @@ public class InventoryMenu {
 		while(World.player.loots.get(i).getPrimaryKey() != l.getPrimaryKey()){
 			i++;
 		}
-		itemEnMain.set(i);
-		typeItemEnMain.set(4);
+		itemEnMain = l;
 	}
 	
 	public void setSpecialnEnMain(Special s) {
@@ -116,11 +116,10 @@ public class InventoryMenu {
 		while(World.player.specials.get(i).getPrimaryKey() != s.getPrimaryKey()){
 			i++;
 		}
-		itemEnMain.set(i);
-		typeItemEnMain.set(2);
+		itemEnMain = s;
 	}
 	
 	public void setAucunItemEnMain() {
-		itemEnMain.set(-1);
+		itemEnMain = null;
 	}
 }

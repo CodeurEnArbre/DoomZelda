@@ -149,8 +149,9 @@ public class MenuControler implements Initializable{
 	@FXML
 	private ImageView player;
 
+
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initialize(URL location, ResourceBundle resources) {	
 		//chargement des options
 		loadOptions();
 
@@ -357,27 +358,6 @@ public class MenuControler implements Initializable{
 					break;
 				}
 			}});
-
-		//Listener changement de de pane dans le menu item
-		InventoryMenu.itemEnMain.addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				System.out.println(InventoryMenu.typeItemEnMain.get());
-				switch(InventoryMenu.typeItemEnMain.get()) {
-					case 1:
-						ArmePane.getChildren().add(createItemView(World.player.weapons.get(InventoryMenu.itemEnMain.get()).getItemName(), 200, 200));	
-					break;
-					case 2:
-						ArmePane.getChildren().add(createItemView(World.player.specials.get(InventoryMenu.itemEnMain.get()).getItemName(), 200, 200));	
-					break;
-					case 3:
-						ArmePane.getChildren().add(createItemView(World.player.usables.get(InventoryMenu.itemEnMain.get()).getItemName(), 200, 200));	
-					break;
-					case 4:
-						ArmePane.getChildren().add(createItemView(World.player.loots.get(InventoryMenu.itemEnMain.get()).getItemName(), 200, 200));	
-					break;
-				}
-			}});	
 	}
 
 	private void menuSelection() {
@@ -451,7 +431,15 @@ public class MenuControler implements Initializable{
 
 	}
 
-	public void loadMapTexture() {
+	public static void updateItemEnMain() {
+		
+	}
+	
+	public void loadMapTexture() {	
+		ImageView itemEnMainView = new ImageView();
+		ArmePane.getChildren().add(itemEnMainView);
+		itemEnMainView.setX(World.player.coordonnes.getX());
+		itemEnMainView.setY(World.player.coordonnes.getY());
 
 		//Affichage de toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
@@ -524,6 +512,7 @@ public class MenuControler implements Initializable{
 				}
 			}
 	}
+	
 
 	private void createShadow(Pane pane, IntegerProperty shadow, int x, int y) {
 		ImageView i = new ImageView();
