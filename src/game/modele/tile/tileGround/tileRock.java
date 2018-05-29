@@ -28,7 +28,6 @@ public class tileRock extends TileGround{
 		
 	}
 	
-	
 	public tileRock() {
 		super(23);
 	}
