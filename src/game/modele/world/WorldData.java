@@ -23,7 +23,7 @@ public class WorldData {
 	private Tile[][] tiles;
 	private Tile[][] tilesTop;
 	private IntegerProperty[][] luminosity;
-	
+
 	private Map<SimpleEntry<Integer,Integer>, Stack<SimpleEntry<Integer,Integer>>> dijkstra;
 
 	public ObservableList<Entity> entity ;
@@ -100,7 +100,7 @@ public class WorldData {
 	public ObservableList<Entity> getEntity(){
 		return this.entity;
 	}
-	
+
 	public void deleteEntity(int primaryKey) {
 		for(int i = 0; i < entity.size(); i++) {
 			if(entity.get(i).primaryKey == primaryKey) {
@@ -127,25 +127,33 @@ public class WorldData {
 		int lenght = tmp.size();
 		for(int p = current; p < lenght;p++) {			
 			SimpleEntry<Integer,Integer> si = tmp.get(p);
-			if(!tmp.contains(new SimpleEntry<Integer, Integer>(si.getKey() + 1,si.getValue())))
-				tmp.add(new SimpleEntry<Integer, Integer>(si.getKey() + 1,si.getValue()));
 
-			if(!tmp.contains(new SimpleEntry<Integer, Integer>(si.getKey(),si.getValue() + 1)))
-				tmp.add(new SimpleEntry<Integer, Integer>(si.getKey(),si.getValue() + 1));
+			int x = si.getKey();
+			int y = si.getValue();
 
-			if(!tmp.contains(new SimpleEntry<Integer, Integer>(si.getKey() - 1,si.getValue())))
-				tmp.add(new SimpleEntry<Integer, Integer>(si.getKey() - 1,si.getValue()));
+			if(x < this.getHeight() && x >= 0  &&  y < this.getWidth()  && y >= 0) {
+				if(!tiles[y][x].solid()) //remplacer par test TYLEENTITY
+				World.currentMap.luminosity[x][y].set(World.currentMap.luminosity[x][y].get() + i);
+				else {
+					current++;
+					continue;
+				}
 
-			if(!tmp.contains(new SimpleEntry<Integer, Integer>(si.getKey(),si.getValue() - 1)))
-				tmp.add(new SimpleEntry<Integer, Integer>(si.getKey(),si.getValue() - 1));
-
-			if(si.getKey().intValue() < this.getHeight() 
-					&& si.getKey().intValue() >= 0 
-					&& si.getValue().intValue() < this.getWidth() 
-					&& si.getValue().intValue() >= 0) {
-				World.currentMap.luminosity[si.getKey()][si.getValue()]
-						.set(World.currentMap.luminosity[si.getKey()][si.getValue()].get() + i);
 			}
+
+			if(!tmp.contains(new SimpleEntry<Integer, Integer>(x + 1,y)))
+				tmp.add(new SimpleEntry<Integer, Integer>(x + 1,y));
+
+			if(!tmp.contains(new SimpleEntry<Integer, Integer>(x,y + 1)))
+				tmp.add(new SimpleEntry<Integer, Integer>(x,y + 1));
+
+			if(!tmp.contains(new SimpleEntry<Integer, Integer>(x - 1,y)))
+				tmp.add(new SimpleEntry<Integer, Integer>(x - 1,y));
+
+			if(!tmp.contains(new SimpleEntry<Integer, Integer>(x,y - 1)))
+				tmp.add(new SimpleEntry<Integer, Integer>(x,y - 1));
+
+
 
 			current++;
 		}
