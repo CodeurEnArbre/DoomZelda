@@ -40,7 +40,7 @@ public class Save {
 			entitysData.write("TinyMap,14,10,2,16,13,23");
 			entitysData.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("No options found");
 		}
 		return true;
 	}

@@ -262,7 +262,7 @@ public class MenuControler implements Initializable{
 					break;
 
 				case Menu.OptionsMenuID:
-					selectorInOption.relocate(200, 150+70*Menu.selectedButtonY.intValue());
+					selectorInOption.relocate(200, 170+70*Menu.selectedButtonY.intValue());
 					Menu.selectedButtonY.set(0);
 					PaneOptions.setOpacity(1);
 					PaneMenu.setOpacity(0);
@@ -491,8 +491,8 @@ public class MenuControler implements Initializable{
 		rubys.setFont(Font.font("Impact",20));
 		rubys.setTextFill(Paint.valueOf("WHITE"));
 		rubys.setStyle("-fx-font-weight: bold;");
-		rubys.relocate(800, 615);
-		ruby.relocate(765, 610);
+		rubys.relocate(800, 605);
+		ruby.relocate(765, 600);
 		PaneHUD.getChildren().add(rubys);
 		PaneHUD.getChildren().add(ruby);
 		
