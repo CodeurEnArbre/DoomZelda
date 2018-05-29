@@ -33,6 +33,6 @@ public class Zombie extends EntityMonster{
 
 	@Override
 	public void incAnim() {
-
+	
 	}
 }

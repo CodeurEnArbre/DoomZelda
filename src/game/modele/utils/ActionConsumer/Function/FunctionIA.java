@@ -7,8 +7,8 @@ import game.modele.world.World;
 public class FunctionIA  extends Function{
 	@Override
 	public void Action(Entity e) {
-		int x = (int)e.coordonnes.getY();
-		int y = (int)e.coordonnes.getX();
+		int x = (int)(e.coordonnes.getY());
+		int y = (int)(e.coordonnes.getX());
 
 		if(x  == (int)World.player.coordonnes.getY()
 				&& y == (int)World.player.coordonnes.getX()) {
