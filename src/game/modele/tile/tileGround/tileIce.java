@@ -18,7 +18,7 @@ public class tileIce extends TileGround{
 
 	@Override
 	public void leaveEntity(Entity e) {
-		e.delAction(new FunctionMoveIce());
+		e.delAction(FunctionMoveIce.class.getName());
 		e.slow = 1;
 	}
 	

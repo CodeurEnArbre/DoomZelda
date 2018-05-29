@@ -10,7 +10,7 @@ public class InfiniteActionConsumer implements ConsumerAction{
 		ce = c;
 	}
 	
-	public Function getEnum() {
+	public Function getFunction() {
 		return ce;
 	}
 	

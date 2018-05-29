@@ -15,9 +15,10 @@ public class ListConsumerAction{
 	{
 		list.add(ce);
 	}
-	public void del(Function ce) {
+	public void del(String name,Entity e) {
 		for(int i = 0; i < list.size();i++) {
-			if(list.get(i).toString().equals(ce.toString())) {
+			if(list.get(i).getFunction().toString().equals(name)) {
+				list.get(i).getFunction().Reset(e);
 				list.remove(i);
 				i--;
 			}

@@ -11,7 +11,7 @@ public class CountActionConsumer implements ConsumerAction {
 		count = nb;	
 		ce = f;
 	}
-	public Function getEnum() 
+	public Function getFunction() 
 	{
 		return ce;
 	}

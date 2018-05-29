@@ -46,13 +46,15 @@ public class FunctionMoveIce extends Function {
 		}
 	}
 
-	@Override
 	public void Reset(Entity e) {
-		
-		
-		
-		
-		
+		e.delAction(MoveIceDown.class.getName());
+		e.delAction(MoveIceDownAND.class.getName());
+		e.delAction(MoveIceUp.class.getName());
+		e.delAction(MoveIceUpAND.class.getName());
+		e.delAction(MoveIceLeft.class.getName());
+		e.delAction(MoveIceLeftAND.class.getName());
+		e.delAction(MoveIceRight.class.getName());
+		e.delAction(MoveIceRightAND.class.getName());		
 	}
 	
 	private class MoveIceDownAND extends Function{
