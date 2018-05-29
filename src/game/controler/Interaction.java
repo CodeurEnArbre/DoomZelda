@@ -33,6 +33,7 @@ public class Interaction {
 		}
 		
 		if(k == INVENTAIRE) {
+			World.addEntity(new Zombie(new Coordonnees(3, 3), new Direction()));
 			Menu.inventory();
 		}
 
