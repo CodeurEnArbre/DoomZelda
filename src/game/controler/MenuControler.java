@@ -438,8 +438,9 @@ public class MenuControler implements Initializable{
 	public void loadMapTexture() {	
 		ImageView itemEnMainView = new ImageView();
 		ArmePane.getChildren().add(itemEnMainView);
-		itemEnMainView.setX(World.player.coordonnes.getX());
-		itemEnMainView.setY(World.player.coordonnes.getY());
+		itemEnMainView.setImage(inventorySelector1);
+		itemEnMainView.xProperty().bind((World.player.coordonnes.getXpro()));
+		itemEnMainView.yProperty().bind((World.player.coordonnes.getYpro()));
 
 		//Affichage de toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
