@@ -762,19 +762,19 @@ public class MenuControler implements Initializable{
 											switch(addEntity.direction.getDirection()) {
 											case Direction.North:
 												listEntityView.get(addEntity).setImage(
-													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 20));
+													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 12));
 												break;
 											case Direction.West:
 												listEntityView.get(addEntity).setImage(
-													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 20 + 4));
+													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 4));
 												break;
 											case Direction.South:
 												listEntityView.get(addEntity).setImage(
-													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 20 + 8));
+													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 0));
 												break;
 											case Direction.East:
 												listEntityView.get(addEntity).setImage(
-													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 20 + 12));
+													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 8));
 												break;
 											}
 
