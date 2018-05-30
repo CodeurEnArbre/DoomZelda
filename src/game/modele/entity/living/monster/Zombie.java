@@ -9,6 +9,8 @@ import game.modele.utils.ActionConsumer.Function.FunctionMove;
 import game.modele.utils.ActionConsumer.Function.FunctionMovement;
 
 public class Zombie extends EntityMonster{
+	
+	
 
 	public Zombie(Coordonnees c,Direction d) {
 		super("Zombie",c,d);
@@ -19,6 +21,7 @@ public class Zombie extends EntityMonster{
 		addAction(new InfiniteActionConsumer(new FunctionMove()));
 		addAction(new InfiniteActionConsumer(new FunctionIA()));
 		addAction(new InfiniteActionConsumer(new FunctionMovement()));
+		this.nbFrameAnimation = 4;
 	}
 
 	@Override

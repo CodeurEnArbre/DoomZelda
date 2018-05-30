@@ -20,6 +20,7 @@ public abstract class EntityLiving extends Entity{
 	protected IntegerProperty PV;
 	protected IntegerProperty maxPv;
 	public ObservableList<Item> itemsEnMain;
+	public short nbFrameAnimation;
 	
 	public EntityLiving(String id,Coordonnees position, Direction direction) {
 		super(id,position,direction);
@@ -99,5 +100,9 @@ public abstract class EntityLiving extends Entity{
 		itemsEnMain.clear();
 	}
 	
+	public short getNbFrameAnim() {
+		return this.nbFrameAnimation;
+	}
+
 	//deplacement
 }

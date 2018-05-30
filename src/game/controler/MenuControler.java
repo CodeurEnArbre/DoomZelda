@@ -48,7 +48,7 @@ public class MenuControler implements Initializable{
 	Map<Integer,Image> dicoImageTileTextureMap;
 	Map<Integer,Image> dicoImageItemTextureMap;
 	Map<Integer,Image> dicoImageAnimationPlayer;
-	Map<Integer,Image[]> dicoImageAnimationEntity; 
+	Map<String,ArrayList <Image>> dicoImageAnimationEntity; 
 	Map<Entity,ImageView> listEntityView = new HashMap<>();
 	Map<Integer,Image> dicoShadow;
 
@@ -432,7 +432,7 @@ public class MenuControler implements Initializable{
 
 	}
 	
-	public void loadMapTexture() {				
+	public void loadMapTexture() {			
 		intialiseAnimItemEnMain();	
 		//Affichage de toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
@@ -454,6 +454,7 @@ public class MenuControler implements Initializable{
 				PaneSolid.getChildren().clear();
 				PaneTop.getChildren().clear();
 				EntityPane.getChildren().clear();
+				loadAnimationEntity(dicoImageAnimationEntity);
 				for(ImageView entity:listEntityView.values()) {
 					if(entity.getId()!="Player")
 						listEntityView.remove(entity);
@@ -536,6 +537,8 @@ public class MenuControler implements Initializable{
 			LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
 			LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
 			loadAnimationPlayer(dicoImageAnimationPlayer, 28, 4);
+			
+			
 
 			coeurs = new ArrayList<>();
 			
@@ -567,6 +570,21 @@ public class MenuControler implements Initializable{
 			for(int y = 0;y < animation;y++)
 				dico.put(x + frame * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("Player", 24, 32, x, y).getTexture(), null));		
 	}
+	
+	private void loadAnimationEntity(Map<String,ArrayList<Image>> dico) {
+		for(Entity e : World.currentMap.entity) {
+			if(e instanceof EntityLiving) {
+				ArrayList<Image> a = new ArrayList<>();
+				for(int animation = 0; animation < 4; animation++) {
+					for(int frame = 0; frame < ((EntityLiving) e).getNbFrameAnim(); frame++) {
+						a.add(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 32, 48, frame, animation).getTexture(), null));
+					}	
+				}
+				dico.put(e.getId() ,a);
+			}
+		}
+	}
+	
 	//Permet d'afficher dans dans chaque pane toute les textures de chaque couches de la map
 	private void printCalqueTile(Pane pane,Pane paneTile,Pane paneTop) {
 
@@ -733,37 +751,31 @@ public class MenuControler implements Initializable{
 						if(!addEntity.getId().equals("Player")){
 
 							affichageEntity(listEntityView.get(addEntity),addEntity);
+							System.out.println("gg");
+							loadAnimationEntity(dicoImageAnimationEntity);
 							
 							//AJOUT DU LISTENER POUR L'ANIMATION DE L'ENTITE
 							addEntity.etatDeplacement.addListener( new ChangeListener<Number>() {
 										@Override
 										public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
-											System.out.println("gg");
 
 											switch(addEntity.direction.getDirection()) {
 											case Direction.North:
+												System.out.println(observable.getValue().intValue());
 												listEntityView.get(addEntity).setImage(
-														dicoImageAnimationEntity.get(
-																addEntity.getId())
-														[observable.getValue().intValue() / 3]);
+													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 20));
 												break;
 											case Direction.West:
 												listEntityView.get(addEntity).setImage(
-														dicoImageAnimationEntity.get(
-																addEntity.getId())
-														[observable.getValue().intValue() / 3 + 28]);
+													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 20 + 4));
 												break;
 											case Direction.South:
 												listEntityView.get(addEntity).setImage(
-														dicoImageAnimationEntity.get(
-																addEntity.getId())
-														[observable.getValue().intValue() / 3 + 56]);
+													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 20 + 8));
 												break;
 											case Direction.East:
 												listEntityView.get(addEntity).setImage(
-														dicoImageAnimationEntity.get(
-																addEntity.getId())
-														[observable.getValue().intValue() / 3 + 84]);
+													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 20 + 12));
 												break;
 											}
 
