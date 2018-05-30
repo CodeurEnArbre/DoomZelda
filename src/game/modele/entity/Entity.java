@@ -64,8 +64,8 @@ public abstract class Entity {
 		ce.add(c);
 	}
 	
-	public void delAction(String name) {
-		ce.del(name,this);
+	public void delAction(ConsumerAction c) {
+		ce.del(c,this);
 	}
 	
 	public void addX(double x){

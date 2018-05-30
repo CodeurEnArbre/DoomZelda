@@ -6,55 +6,46 @@ import game.modele.utils.ActionConsumer.CountActionConsumer;
 public class FunctionMoveIce extends Function {
 	@Override
 	public void Action(Entity e) {
-		if(!e.moveDown.active && !e.moveUP.active && !e.moveLeft.active && !e.moveRight.active) {
-			e.speed = e.baseSpeed;
-		}
+
 		if(e.moveDown.active) {
 			if(e.moveLeft.active ^ e.moveRight.active) {
-				e.addAction(new CountActionConsumer(60, new MoveIceDownAND()));
+				ce.add(new CountActionConsumer(60, new MoveIceDownAND()));
 			}
 			else {
-				e.addAction(new CountActionConsumer(60,new MoveIceDown()));
+				ce.add(new CountActionConsumer(60,new MoveIceDown()));
 			}
 		}
-		if(e.moveUP.active) {
+		else if(e.moveUP.active) {
 			if(e.moveLeft.active ^ e.moveRight.active)
 			{	
-				e.addAction(new CountActionConsumer(60,new MoveIceUpAND()));
+				ce.add(new CountActionConsumer(60,new MoveIceUpAND()));
 			}else
 			{
-				e.addAction(new CountActionConsumer(60,new MoveIceUp()));
+				ce.add(new CountActionConsumer(60,new MoveIceUp()));
 			}
 		}
-		if(e.moveLeft.active) {
+		else if(e.moveLeft.active) {
 			if(e.moveUP.active ^ e.moveDown.active)
 			{
-				e.addAction(new CountActionConsumer(60,new MoveIceLeftAND()));
+				ce.add(new CountActionConsumer(60,new MoveIceLeftAND()));
 			}		else
 			{	
-				e.addAction(new CountActionConsumer(60,new MoveIceLeft()));
+				ce.add(new CountActionConsumer(60,new MoveIceLeft()));
 			}
 		}
-		if(e.moveRight.active) {
+		else if(e.moveRight.active) {
 			if(e.moveUP.active ^ e.moveDown.active)
 			{
-				e.addAction(new CountActionConsumer(60,new MoveIceRightAND()));
+				ce.add(new CountActionConsumer(60,new MoveIceRightAND()));
 			}else
 			{
-				e.addAction(new CountActionConsumer(60,new MoveIceRight()));
+				ce.add(new CountActionConsumer(60,new MoveIceRight()));
 			}
 		}
 	}
 
 	public void Reset(Entity e) {
-		e.delAction(MoveIceDown.class.getName());
-		e.delAction(MoveIceDownAND.class.getName());
-		e.delAction(MoveIceUp.class.getName());
-		e.delAction(MoveIceUpAND.class.getName());
-		e.delAction(MoveIceLeft.class.getName());
-		e.delAction(MoveIceLeftAND.class.getName());
-		e.delAction(MoveIceRight.class.getName());
-		e.delAction(MoveIceRightAND.class.getName());		
+		ce.reset();
 	}
 	
 	private class MoveIceDownAND extends Function{

@@ -1,13 +1,19 @@
 package game.modele.utils.ActionConsumer.Function;
 
 import game.modele.entity.Entity;
+import game.modele.utils.ActionConsumer.ListConsumerAction;
 
 public abstract class Function {
-	public abstract void Action(Entity e);
-	public void Reset(Entity e) {
-		
+	ListConsumerAction ce = new ListConsumerAction();
+	
+	public void Start(Entity e) {
+		ce.act(e);
+		Action(e);
 	}
-	public String toString() {
-		return this.getClass().getName();
+	
+	protected abstract void Action(Entity e);
+	
+	public void Reset(Entity e) {
+		ce.reset();
 	}
 }

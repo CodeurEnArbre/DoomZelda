@@ -17,7 +17,7 @@ public class CountActionConsumer implements ConsumerAction {
 	}
 	public boolean act(Entity e) 
 	{
-		ce.Action(e);
+		ce.Start(e);
 		count--;
 		return count > 0;
 	}
