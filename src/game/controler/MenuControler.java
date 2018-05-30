@@ -570,7 +570,7 @@ public class MenuControler implements Initializable{
 			for(int y = 0;y < animation;y++)
 				dico.put(x + frame * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("Player", 24, 32, x, y).getTexture(), null));		
 	}
-	
+	//
 	private void loadAnimationEntity(Map<String,ArrayList<Image>> dico) {
 		for(Entity e : World.currentMap.entity) {
 			if(e instanceof EntityLiving) {
