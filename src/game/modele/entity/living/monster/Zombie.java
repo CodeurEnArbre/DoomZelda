@@ -3,7 +3,6 @@ package game.modele.entity.living.monster;
 import game.modele.entity.Entity;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
-import game.modele.utils.ActionConsumer.ConsumerAction;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
 import game.modele.utils.ActionConsumer.Function.FunctionIA;
 import game.modele.utils.ActionConsumer.Function.FunctionMove;
@@ -13,34 +12,22 @@ public class Zombie extends EntityMonster{
 	
 	
 
-	ConsumerAction deplacement = new InfiniteActionConsumer(new FunctionMove());
-	ConsumerAction mouvement = new InfiniteActionConsumer(new FunctionMovement());
-	ConsumerAction ia = new InfiniteActionConsumer(new FunctionIA());
-	
-	
 	public Zombie(Coordonnees c,Direction d) {
 		super("Zombie",c,d);
 		this.speed = 0.02;
 		this.acce = 0;
 		this.baseSpeed = 0.05;
 		this.maxSpeed = 0.05;		
-<<<<<<< HEAD
 		addAction(new InfiniteActionConsumer(new FunctionMove()));
 		addAction(new InfiniteActionConsumer(new FunctionIA()));
 		addAction(new InfiniteActionConsumer(new FunctionMovement()));
 		this.nbFrameAnimation = 4;
-=======
-		addAction(deplacement);
-		addAction(mouvement);
-		addAction(ia);
->>>>>>> branch 'master' of https://github.com/CodeurEnArbre/DoomZelda
 	}
 
 	@Override
 	public void dispose() {
-		delAction(deplacement);
-		delAction(mouvement);
-		delAction(ia);
+		delAction(FunctionMove.class.getName());
+		delAction(FunctionIA.class.getName());
 	}
 	@Override
 	public void active(Entity e) {
