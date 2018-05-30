@@ -11,6 +11,7 @@ import game.modele.item.weapon.Weapon;
 import game.modele.menu.InventoryMenu;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
+import game.modele.utils.ActionConsumer.ConsumerAction;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
 import game.modele.utils.ActionConsumer.Function.FunctionMove;
 import game.modele.utils.ActionConsumer.Function.FunctionMovement;
@@ -19,6 +20,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Player extends EntityLiving{
 
+	ConsumerAction deplacement = new InfiniteActionConsumer(new FunctionMove());
+	ConsumerAction mouvement = new InfiniteActionConsumer(new FunctionMovement());
 	
 	public ArrayList<Loot> loots;
 	public ArrayList<Usable> usables;
@@ -44,14 +47,14 @@ public class Player extends EntityLiving{
 		this.specials = specials;
 
 		
-		addAction(new InfiniteActionConsumer(new FunctionMove()));
-		addAction(new InfiniteActionConsumer(new FunctionMovement()));
+		addAction(deplacement);
+		addAction(mouvement);
 	}
 	
 	@Override
 	public void dispose() {
-		delAction(FunctionMove.class.getName());
-		delAction(FunctionMovement.class.getName());
+		delAction(deplacement);
+		delAction(mouvement);
 	}
 	
 	

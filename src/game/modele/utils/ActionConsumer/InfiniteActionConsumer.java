@@ -16,7 +16,7 @@ public class InfiniteActionConsumer implements ConsumerAction{
 	
 	@Override
 	public boolean act(Entity e) {
-		ce.Action(e);
+		ce.Start(e);
 		return true;
 	}
 }

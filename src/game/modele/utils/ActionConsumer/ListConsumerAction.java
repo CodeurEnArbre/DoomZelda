@@ -14,9 +14,9 @@ public class ListConsumerAction{
 	{
 		list.add(ce);
 	}
-	public void del(String name,Entity e) {
+	public void del(ConsumerAction c,Entity e) {
 		for(int i = 0; i < list.size();i++) {
-			if(list.get(i).getFunction().toString().equals(name)) {
+			if(list.get(i) == c) {
 				list.get(i).getFunction().Reset(e);
 				list.remove(i);
 				i--;
@@ -29,5 +29,8 @@ public class ListConsumerAction{
 			if(!list.get(i).act(e))
 				list.remove(i);
 		}
+	}
+	public void reset() {
+		list.clear();
 	}
 }

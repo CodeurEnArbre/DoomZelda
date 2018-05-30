@@ -5,11 +5,10 @@ import game.modele.entity.Entity;
 public class FunctionMovement extends Function {
 	@Override
 	public void Action(Entity e) {
-		if(e.moveDown.active || e.moveUP.active || e.moveLeft.active || e.moveRight.active) {
-			e.incAnim();
-		}
-		if(!e.moveDown.active && !e.moveUP.active && !e.moveLeft.active && !e.moveRight.active) {
+		if(FunctionMove.isNotWalking(e)) {
 			e.resetAnim();
+		}else {
+			e.incAnim();
 		}
 	}
 }
