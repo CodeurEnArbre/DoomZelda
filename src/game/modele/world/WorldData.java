@@ -4,6 +4,8 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Stack;
 
 import game.modele.entity.Entity;
@@ -112,7 +114,27 @@ public class WorldData {
 	public Entity[] entityHere(double x,double y) {
 		return this.entity.stream().filter(a -> a.coordonnes.isSameTile(x, y)).toArray(Entity[]::new);
 	}
-
+	
+	public void AddDirectionnalTorch(int x,int y,int i,int pas,int d) {
+		ArrayList<SimpleEntry<Integer,Integer>> q = new ArrayList<>();
+		q.add(new SimpleEntry<Integer, Integer>(x, y));
+		
+	}
+	
+	private void directionnalLight(ArrayList<SimpleEntry<Integer,Integer>> q,int i,int pas,int d) {
+		while(q.size() > 0) {
+			//etape 1
+			for(int x = 0; x < q.size();x++) {
+				
+				
+				
+			}
+			//etape 2
+			
+			
+		}
+	}
+	
 	public void AddTorch(int x,int y,int i,int pas) {
 		ArrayList<SimpleEntry<Integer,Integer>> tmp = new ArrayList<>();
 		tmp.add(new SimpleEntry<Integer, Integer>(x,y));
