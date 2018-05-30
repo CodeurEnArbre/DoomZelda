@@ -309,7 +309,6 @@ public class MenuControler implements Initializable{
 		InventoryMenu.newItem.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				System.out.println(InventoryMenu.lastItemAdded);
 				if(newValue)			
 					switch(InventoryMenu.lastItemAdded.get()) {
 					case 1:	
@@ -751,9 +750,8 @@ public class MenuControler implements Initializable{
 						if(!addEntity.getId().equals("Player")){
 
 							affichageEntity(listEntityView.get(addEntity),addEntity);
-							System.out.println("gg");
-							loadAnimationEntity(dicoImageAnimationEntity);
-							
+
+							loadAnimationEntity(dicoImageAnimationEntity);						
 							//AJOUT DU LISTENER POUR L'ANIMATION DE L'ENTITE
 							addEntity.etatDeplacement.addListener( new ChangeListener<Number>() {
 										@Override
