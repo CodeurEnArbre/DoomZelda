@@ -1,5 +1,6 @@
 package game.controler;
 
+import game.modele.entity.living.friendly.sheeps.WhiteSheep;
 import game.modele.entity.living.monster.Zombie;
 import game.modele.menu.Menu;
 import game.modele.menu.OptionsMenu;
@@ -33,6 +34,7 @@ public class Interaction {
 		}
 		
 		if(k == INVENTAIRE) {
+			World.addEntity(new WhiteSheep(new Coordonnees(6, 3), new Direction()));
 			World.addEntity(new Zombie(new Coordonnees(3, 3), new Direction()));
 			Menu.inventory();
 		}

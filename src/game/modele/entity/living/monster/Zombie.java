@@ -26,6 +26,8 @@ public class Zombie extends EntityMonster{
 		addAction(mouvement);
 		addAction(ia);
 		nbFrameAnimation = 4;
+		this.textureHeight = 48;
+		this.textureWidth = 32;
 	}
 
 	@Override
@@ -37,12 +39,5 @@ public class Zombie extends EntityMonster{
 	@Override
 	public void active(Entity e) {
 
-	}
-
-	@Override
-	public void incAnim() {
-		this.etatDeplacement.set(
-				this.etatDeplacement.get()
-				+ (this.etatDeplacement.get() < 83 ? 1 : -83));
 	}
 }

@@ -674,7 +674,7 @@ public class MenuControler implements Initializable{
 			PlayerPane.getChildren().add(i);
 		}else {
 			if(e instanceof EntityLiving)
-				i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 32, 48, 0, 0).getTexture(), null));
+				i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), ((EntityLiving) e).gettextureWidth(), ((EntityLiving) e).gettextureHeight(), 0, 0).getTexture(), null));
 			else if(e instanceof EntityLight)
 				i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 32, 112, 1, 0).getTexture(), null));
 			EntityPane.getChildren().add(i);

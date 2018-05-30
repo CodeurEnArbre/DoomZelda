@@ -21,6 +21,7 @@ public abstract class EntityLiving extends Entity{
 	protected IntegerProperty maxPv;
 	public ObservableList<Item> itemsEnMain;
 	public short nbFrameAnimation;
+	public int textureWidth, textureHeight;
 	
 	public EntityLiving(String id,Coordonnees position, Direction direction) {
 		super(id,position,direction);
@@ -104,5 +105,18 @@ public abstract class EntityLiving extends Entity{
 		return this.nbFrameAnimation;
 	}
 
-	//deplacement
+	@Override
+	public void incAnim() {
+		this.etatDeplacement.set(
+				this.etatDeplacement.get()
+				+ (this.etatDeplacement.get() < 83 ? 1 : -83));
+	}
+	
+	public int gettextureWidth() {
+		return this.textureWidth;
+	}
+	
+	public int gettextureHeight() {
+		return this.textureHeight;
+	}
 }
