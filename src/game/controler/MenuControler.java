@@ -761,7 +761,6 @@ public class MenuControler implements Initializable{
 
 											switch(addEntity.direction.getDirection()) {
 											case Direction.North:
-												System.out.println(observable.getValue().intValue());
 												listEntityView.get(addEntity).setImage(
 													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 20));
 												break;
