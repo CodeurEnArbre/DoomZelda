@@ -718,7 +718,6 @@ public class MenuControler implements Initializable{
 			@Override
 			public void onChanged(Change<? extends Entity> c) {
 				
-				System.out.println("gg");
 				while (c.next()) {
 					for (Entity addEntity : c.getAddedSubList()) {
 						if(addEntity instanceof EntityLiving) {
@@ -739,6 +738,7 @@ public class MenuControler implements Initializable{
 							addEntity.etatDeplacement.addListener( new ChangeListener<Number>() {
 										@Override
 										public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
+											System.out.println("gg");
 
 											switch(addEntity.direction.getDirection()) {
 											case Direction.North:
