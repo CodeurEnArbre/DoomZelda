@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import game.modele.entity.Entity;
 import game.modele.entity.living.EntityLiving;
+import game.modele.entity.tileEntity.CarriableEntity;
 import game.modele.item.loot.Loot;
 import game.modele.item.special.Special;
 import game.modele.item.usable.Usable;
@@ -15,7 +16,10 @@ import game.modele.utils.ActionConsumer.ConsumerAction;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
 import game.modele.utils.ActionConsumer.Function.FunctionMove;
 import game.modele.utils.ActionConsumer.Function.FunctionMovement;
+import game.modele.world.World;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Player extends EntityLiving{
@@ -30,7 +34,8 @@ public class Player extends EntityLiving{
 	
 	private int maxRuby=100;
 	public static IntegerProperty ruby; //ARGENT!!!	
-	public Entity CarriedEntity;
+	public CarriableEntity carriedEntity;
+	public BooleanProperty isCarriedSomething = new SimpleBooleanProperty();
 
 
 	
@@ -112,5 +117,28 @@ public class Player extends EntityLiving{
 		specials.add(i);
 		InventoryMenu.lastItemAdded.set(4);
 		InventoryMenu.newItem.set(true);
+	}
+	
+	public boolean grabEntity(CarriableEntity entity) {
+		return entity.pickupEntity(this);
+	}
+	
+	public boolean placeEntity(CarriableEntity entity) {
+		return entity.placeEntity(this);
+	}
+	
+	public void interact() {
+		if(carriedEntity == null) {
+			for(Entity entity:World.currentMap.getEntity()) {
+				if(entity instanceof CarriableEntity && 
+						(int)entity.coordonnes.getX() == (super.direction.getDirection()==Direction.South?(int)super.coordonnes.getX()+1:(int)entity.coordonnes.getX()-1) &&
+						(int)entity.coordonnes.getY() == (entity.direction.getDirection()==Direction.North?(int)entity.coordonnes.getY()-1:(int)entity.coordonnes.getY()+1)) {
+					grabEntity((CarriableEntity)entity);
+				}
+			}
+			
+		}else {
+			placeEntity(this.carriedEntity);
+		}
 	}
 }

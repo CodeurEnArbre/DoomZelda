@@ -23,17 +23,24 @@ public class CarriableEntity extends TileEntity{
 		World.currentMap.entity.remove(this);
 	}
 	
-	public void pickupEntity(Entity entity) {
+	public boolean pickupEntity(Entity entity) {
 		super.etat.set(true);
-		World.player.CarriedEntity=this;
+		World.player.carriedEntity=this;
 		World.currentMap.entity.remove(this);
+		World.player.isCarriedSomething.set(true);
+		return true;
 	}
 	
-	public void placeEntity(Entity entity) {
+	public boolean placeEntity(Entity entity) {
 		super.etat.set(false);
-		super.coordonnes.setCoordoner((entity.direction.getDirection()==Direction.South?(int)entity.coordonnes.getX()+1:(int)entity.coordonnes.getX()-1),
-										(entity.direction.getDirection()==Direction.North?(int)entity.coordonnes.getY()-1:(int)entity.coordonnes.getY()+1));
-		
+		int x = (entity.direction.getDirection()==Direction.South?(int)entity.coordonnes.getX()+1:(int)entity.coordonnes.getX()-1);
+		int y = (entity.direction.getDirection()==Direction.North?(int)entity.coordonnes.getY()-1:(int)entity.coordonnes.getY()+1);
+		if(World.currentMap.getTileTerrain(x, y) != null) {
+			return false;
+		}
+		super.coordonnes.setCoordoner(x,y);
+		World.player.isCarriedSomething.set(false);
+		return true;
 	}
 	
 	public void throwEntity(Entity entity) {
