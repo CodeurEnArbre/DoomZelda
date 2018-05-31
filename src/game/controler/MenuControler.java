@@ -711,7 +711,8 @@ public class MenuControler implements Initializable{
 		//Cree les imageviews des entites
 		for(Entity entity:World.currentMap.getEntity()) {
 			if(entity != null) {
-				affichageEntity(new ImageView(), entity);
+				//affichageEntity(new ImageView(), entity);
+				loadAnimationEntity(new ImageView(), entity);
 				if(entity instanceof TileEntity) {
 					((TileEntity) entity).getEtatProperty().addListener(new ChangeListener<Boolean>() {
 
@@ -734,52 +735,53 @@ public class MenuControler implements Initializable{
 		World.currentMap.entity.addListener(new ListChangeListener<Entity>(){
 			@Override
 			public void onChanged(Change<? extends Entity> c) {
+				loadAnimationEntity(new ImageView(), c.getList().get(c.getList().size()-1));
 				
-				while (c.next()) {
-					for (Entity addEntity : c.getAddedSubList()) {
-						if(addEntity instanceof EntityLiving) {
-							EntityLiving addEntityLiving = (EntityLiving)addEntity;
-							//AJOUT DU LISTENER POUR LANIMATION DE LITEM EN MAIN
-							addEntityLiving.itemsEnMain.addListener(new ListChangeListener<Item>(){
-
-							@Override
-							public void onChanged(Change<? extends Item> c) {
-								intialiseAnimItemEnMain();			
-						}});}
-
-						if(!addEntity.getId().equals("Player")){
-
-							affichageEntity(listEntityView.get(addEntity),addEntity);
-
-							loadAnimationEntity(dicoImageAnimationEntity);						
-							//AJOUT DU LISTENER POUR L'ANIMATION DE L'ENTITE
-							addEntity.etatDeplacement.addListener( new ChangeListener<Number>() {
-										@Override
-										public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
-
-											switch(addEntity.direction.getDirection()) {
-											case Direction.North:
-												listEntityView.get(addEntity).setImage(
-													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 12));
-												break;
-											case Direction.West:
-												listEntityView.get(addEntity).setImage(
-													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 4));
-												break;
-											case Direction.South:
-												listEntityView.get(addEntity).setImage(
-													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 0));
-												break;
-											case Direction.East:
-												listEntityView.get(addEntity).setImage(
-													dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 8));
-												break;
-											}
-
-										}});									
-								}}}
 			}
 		});
+	}
+	
+	public void loadAnimationEntity(ImageView img, Entity addEntity) {
+				if(addEntity instanceof EntityLiving) {
+					EntityLiving addEntityLiving = (EntityLiving)addEntity;
+					//AJOUT DU LISTENER POUR LANIMATION DE LITEM EN MAIN
+					addEntityLiving.itemsEnMain.addListener(new ListChangeListener<Item>(){
+
+					@Override
+					public void onChanged(Change<? extends Item> c) {
+						intialiseAnimItemEnMain();			
+				}});}
+				affichageEntity(listEntityView.get(addEntity),addEntity);
+				
+				if(!addEntity.getId().equals("Player")){
+
+					loadAnimationEntity(dicoImageAnimationEntity);						
+					//AJOUT DU LISTENER POUR L'ANIMATION DE L'ENTITE
+					addEntity.etatDeplacement.addListener( new ChangeListener<Number>() {
+								@Override
+								public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
+
+									switch(addEntity.direction.getDirection()) {
+									case Direction.North:
+										listEntityView.get(addEntity).setImage(
+											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 12));
+										break;
+									case Direction.West:
+										listEntityView.get(addEntity).setImage(
+											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 4));
+										break;
+									case Direction.South:
+										listEntityView.get(addEntity).setImage(
+											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 0));
+										break;
+									case Direction.East:
+										listEntityView.get(addEntity).setImage(
+											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 8));
+										break;
+									}
+
+								}});									
+						}
 	}
 	
 
