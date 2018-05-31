@@ -639,7 +639,6 @@ public class MenuControler implements Initializable{
 		i.setFitHeight(64);
 		i.setX(World.player.coordonnes.getX());
 		i.setY(World.player.coordonnes.getY());
-
 		i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
 		i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));
 

@@ -23,7 +23,25 @@ public class Interaction {
 	//Inventaire
 	public static KeyCode INVENTAIRE = KeyCode.E;
 	
+	//Action
+	public static KeyCode INTERACT = KeyCode.I;
+	public static KeyCode UseLeftItem = KeyCode.O;
+	public static KeyCode UseRightItem = KeyCode.P;
+	
 	public static void KeyInteractDown(KeyCode k) {
+		
+		if(k == INTERACT) {
+			if(World.player != null)
+				World.player.interact();
+		}
+		
+		if(k == UseLeftItem) {
+			
+		}
+		
+		if(k == UseRightItem) {
+			
+		}
 		
 		if(k == KeyCode.ENTER) {
 			Menu.validate();
