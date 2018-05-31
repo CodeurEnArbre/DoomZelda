@@ -25,6 +25,7 @@ public abstract class Entity {
 	public double hitBoxX=0;//W.I.P
 	public double hitBoxY=0;//W.I.P
 	
+	public boolean isSolidEntity=false;
 	//represente l'etat d'une direction
 	public class infoDeplacement{
 		//la touche est enfonce
@@ -122,8 +123,13 @@ public abstract class Entity {
 				currentTop = top;
 			}
 			
-			
+			Entity entity = World.currentMap.getEntity((int)coordonnees.getX(), (int)coordonnees.getY());
+			boolean canPassEntity=true;
+			if(entity!=null && entity.isSolidEntity)
+				canPassEntity=false;
+				
 			if(!World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).solid() &&
+					canPassEntity &&
 					!World.currentMap.getTile((int)(coordonnees.getY()+ hitBoxY), (int)(coordonnees.getX()+ hitBoxX)).solid() &&
 					coordonnees.getX() >= 0 && coordonnees.getY() >= 0 &&
 					(coordonnees.getX() + speed + hitBoxX) < World.currentMap.getWidth() &&
@@ -147,7 +153,7 @@ public abstract class Entity {
 	public String getId() {
 		return this.id;
 	}
-	public final void update() { 
+	public final void update() {
 		ce.act(this);
 	}
 	public abstract void active(Entity e);

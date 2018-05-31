@@ -7,6 +7,7 @@ public class Bush extends CarriableEntity{
 
 	public Bush(Coordonnees coordoner, Direction direction) {
 		super("Bush", coordoner, direction);
+		super.isSolidEntity=true;
 	}
 
 }

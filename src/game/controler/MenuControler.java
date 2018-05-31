@@ -47,6 +47,7 @@ public class MenuControler implements Initializable{
 
 	Map<Integer,Image> dicoImageTileTextureMap;
 	Map<Integer,Image> dicoImageItemTextureMap;
+	Map<Integer,Image> dicoImageTileEntityMap;
 	Map<Integer,Image> dicoImageAnimationPlayer;
 	Map<String,ArrayList <Image>> dicoImageAnimationEntity; 
 	Map<Entity,ImageView> listEntityView = new HashMap<>();
@@ -435,7 +436,7 @@ public class MenuControler implements Initializable{
 		intialiseAnimItemEnMain();	
 		//Affichage de toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
-
+		
 		//Chargement des ImageView des entites
 		affichageEntitys();
 
@@ -529,12 +530,14 @@ public class MenuControler implements Initializable{
 		try {
 			dicoImageTileTextureMap = new HashMap<>();
 			dicoImageItemTextureMap = new HashMap<>();
+			dicoImageTileEntityMap = new HashMap<>();
 			dicoImageAnimationPlayer = new HashMap<>();
 			dicoImageAnimationEntity = new HashMap<>();
 			dicoShadow = new HashMap<>();
 
 			LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
 			LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
+			LoadDicoMap(dicoImageTileEntityMap,32,32,16,16,"TileEntityTextureMap");
 			loadAnimationPlayer(dicoImageAnimationPlayer, 28, 4);
 			
 			
@@ -635,14 +638,14 @@ public class MenuControler implements Initializable{
 		i = new ImageView();
 		listEntityView.put(e,i);
 		i.setId(""+e.primaryKey);
-		i.setFitWidth(32);
-		i.setFitHeight(64);
 		i.setX(World.player.coordonnes.getX());
 		i.setY(World.player.coordonnes.getY());
-		i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
-		i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));
 
 		if(e.getId().equals("Player")) {
+			i.setFitWidth(32);
+			i.setFitHeight(64);
+			i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
+			i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));
 			i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 24, 32, 0, 2).getTexture(), null));
 			paneGame.layoutXProperty().bind(e.coordonnes.getXpro().multiply(-32).add(432));
 			paneGame.layoutYProperty().bind(e.coordonnes.getYpro().multiply(-32).add(320));
@@ -671,10 +674,26 @@ public class MenuControler implements Initializable{
 					);
 			PlayerPane.getChildren().add(i);
 		}else {
-			if(e instanceof EntityLiving)
+			if(e instanceof EntityLiving) {
+				i.setFitWidth(32);
+				i.setFitHeight(64);
+				i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
+				i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));
 				i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), ((EntityLiving) e).gettextureWidth(), ((EntityLiving) e).gettextureHeight(), 0, 0).getTexture(), null));
-			else if(e instanceof EntityLight)
+			}else if(e instanceof EntityLight) {
+				i.setFitWidth(32);
+				i.setFitHeight(64);
+				i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
+				i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));
 				i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 32, 112, 1, 0).getTexture(), null));
+			}else if(e instanceof TileEntity) {
+				i.setFitWidth(32);
+				i.setFitHeight(32);
+				i.xProperty().bind(e.coordonnes.getXpro().multiply(32));
+				
+				i.yProperty().bind(e.coordonnes.getYpro().multiply(32));
+				i.setImage( dicoImageTileEntityMap.get(EntityImageValue.getEntityNum(e.getId())) );
+			}
 			EntityPane.getChildren().add(i);
 		}
 
@@ -716,8 +735,7 @@ public class MenuControler implements Initializable{
 					((TileEntity) entity).getEtatProperty().addListener(new ChangeListener<Boolean>() {
 
 						@Override
-						public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
-								Boolean newValue) {			
+						public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {		
 							ImageView entityImg = getEntityImageView(entity);
 							if(((TileEntity) entity).getEtat() && entityImg != null)
 								entityImg.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(entity.getId(), 32, 112, 1, 0).getTexture(), null));

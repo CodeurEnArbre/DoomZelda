@@ -104,6 +104,14 @@ public class WorldData {
 	public ObservableList<Entity> getEntity(){
 		return this.entity;
 	}
+	
+	public Entity getEntity(int x, int y){
+		for(Entity entity:entity) {
+			if((int)entity.coordonnes.getX() == x && (int)entity.coordonnes.getY() == y)
+				return entity;
+		}
+		return null;
+	}
 
 	public void deleteEntity(int primaryKey) {
 		for(int i = 0; i < entity.size(); i++) {

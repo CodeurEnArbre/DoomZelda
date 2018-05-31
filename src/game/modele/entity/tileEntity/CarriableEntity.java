@@ -13,7 +13,8 @@ public class CarriableEntity extends TileEntity{
 	}
 
 	@Override
-	public void active(Entity e) {}
+	public void active(Entity e) {
+	}
 
 	@Override
 	public void incAnim() {}
@@ -33,13 +34,17 @@ public class CarriableEntity extends TileEntity{
 	
 	public boolean placeEntity(Entity entity) {
 		super.etat.set(false);
-		int x = (entity.direction.getDirection()==Direction.South?(int)entity.coordonnes.getX()+1:(int)entity.coordonnes.getX()-1);
-		int y = (entity.direction.getDirection()==Direction.North?(int)entity.coordonnes.getY()-1:(int)entity.coordonnes.getY()+1);
-		if(World.currentMap.getTileTerrain(x, y) != null) {
+		int dir = entity.direction.getDirection();
+		int x = (dir==Direction.East?(int)entity.coordonnes.getX()-1:dir==Direction.West?(int)entity.coordonnes.getX()+1:(int)entity.coordonnes.getX());
+		int y = (dir==Direction.South?(int)entity.coordonnes.getY()+1:dir==Direction.North?(int)entity.coordonnes.getY()-1:(int)entity.coordonnes.getY());
+		if(World.currentMap.getTile(x, y).getId() != 0) {
 			return false;
 		}
+		System.out.println(World.currentMap.getTile(x, y).getId());
 		super.coordonnes.setCoordoner(x,y);
+		World.currentMap.entity.add(this);
 		World.player.isCarriedSomething.set(false);
+		World.player.carriedEntity=null;
 		return true;
 	}
 	

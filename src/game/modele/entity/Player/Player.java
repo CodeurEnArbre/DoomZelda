@@ -50,7 +50,7 @@ public class Player extends EntityLiving{
 		this.weapons = weapons;
 		this.loots=loots;
 		this.specials = specials;
-
+		this.carriedEntity=null;
 		
 		addAction(deplacement);
 		addAction(mouvement);
@@ -129,14 +129,16 @@ public class Player extends EntityLiving{
 	
 	public void interact() {
 		if(carriedEntity == null) {
-			for(Entity entity:World.currentMap.getEntity()) {
-				if(entity instanceof CarriableEntity && 
-						(int)entity.coordonnes.getX() == (super.direction.getDirection()==Direction.South?(int)super.coordonnes.getX()+1:(int)entity.coordonnes.getX()-1) &&
-						(int)entity.coordonnes.getY() == (entity.direction.getDirection()==Direction.North?(int)entity.coordonnes.getY()-1:(int)entity.coordonnes.getY()+1)) {
-					grabEntity((CarriableEntity)entity);
-				}
-			}
 			
+			int dir = super.direction.getDirection();
+			int x = (dir==Direction.East?(int)super.coordonnes.getX()-1:dir==Direction.West?(int)super.coordonnes.getX()+1:(int)super.coordonnes.getX());
+			int y = (dir==Direction.South?(int)super.coordonnes.getY()+1:dir==Direction.North?(int)super.coordonnes.getY()-1:(int)super.coordonnes.getY());
+			System.out.println("Interact "+x+" "+y);
+			Entity e = World.currentMap.getEntity(x,y);
+			if(e != null && e instanceof CarriableEntity) {	
+				grabEntity((CarriableEntity)e);
+				System.out.println(e.getId());
+			}
 		}else {
 			placeEntity(this.carriedEntity);
 		}

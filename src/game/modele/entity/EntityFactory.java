@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import game.modele.entity.Player.Player;
 import game.modele.entity.living.friendly.sheeps.WhiteSheep;
 import game.modele.entity.living.monster.Zombie;
+import game.modele.entity.tileEntity.Bush;
 import game.modele.entity.tileEntity.TikiTorchSmall;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
@@ -27,6 +28,10 @@ public class EntityFactory {
 			case "TikiTorchSmall":
 				e = (TikiTorchSmall) TikiTorchSmall.class.getConstructors()[0]
 						.newInstance(castParams(TikiTorchSmall.class.getConstructors()[0],params));
+				break;
+			case "Bush":
+				e = (Bush) Bush.class.getConstructors()[0]
+						.newInstance(castParams(Bush.class.getConstructors()[0],params));
 				break;
 			case "Zombie":
 				e = (Entity) Zombie.class.getConstructors()[0]
