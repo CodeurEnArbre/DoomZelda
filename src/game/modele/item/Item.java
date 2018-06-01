@@ -2,7 +2,7 @@ package game.modele.item;
 
 public class Item {
 	
-	private String name; //Nom de l'item
+	public String name; //Nom de l'item
 	private int quantity; //ca quantite, le nombre de cette item
 	public static int key = 0;
 	public int primaryKey;

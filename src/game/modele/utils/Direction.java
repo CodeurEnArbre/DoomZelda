@@ -5,8 +5,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Direction {
 	public static final int North = 0;
 	public static final int South = 1;
-	public static final int East = 2;
-	public static final int West = 3;
+	public static final int West = 2;
+	public static final int East = 3;
 	
 	private IntegerProperty direction;
 	

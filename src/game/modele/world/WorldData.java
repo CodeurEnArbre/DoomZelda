@@ -146,10 +146,10 @@ public class WorldData {
 				case Direction.South:
 					canProgress = LightProgressing(value, 0, -1,pas);
 					break;
-				case Direction.East:
+				case Direction.West:
 					canProgress = LightProgressing(value, 1,0,pas);
 					break;
-				case Direction.West:
+				case Direction.East:
 					canProgress = LightProgressing(value, -1,0,pas);
 					break;
 				default:
@@ -176,8 +176,8 @@ public class WorldData {
 					nvalue1 = LightDiffuse(value,-1,0,pas);
 					nvalue2 = LightDiffuse(value,1,0,pas);
 					break;
-				case Direction.East:
 				case Direction.West:
+				case Direction.East:
 					nvalue1 = LightDiffuse(value,0,1,pas);
 					nvalue2 = LightDiffuse(value, 0,-1,pas);
 					break;

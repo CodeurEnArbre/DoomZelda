@@ -131,7 +131,7 @@ public class Player extends EntityLiving{
 		if(carriedEntity == null) {
 			
 			int dir = super.direction.getDirection();
-			int x = (dir==Direction.East?(int)super.coordonnes.getX()-1:dir==Direction.West?(int)super.coordonnes.getX()+1:(int)super.coordonnes.getX());
+			int x = (dir==Direction.West?(int)super.coordonnes.getX()-1:dir==Direction.East?(int)super.coordonnes.getX()+1:(int)super.coordonnes.getX());
 			int y = (dir==Direction.South?(int)super.coordonnes.getY()+1:dir==Direction.North?(int)super.coordonnes.getY()-1:(int)super.coordonnes.getY());
 			System.out.println("Interact "+x+" "+y);
 			Entity e = World.currentMap.getEntity(x,y);

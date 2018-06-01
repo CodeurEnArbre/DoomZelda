@@ -432,8 +432,7 @@ public class MenuControler implements Initializable{
 
 	}
 	
-	public void loadMapTexture() {			
-		intialiseAnimItemEnMain();	
+	public void loadMapTexture() {				
 		//Affichage de toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
 		
@@ -658,15 +657,19 @@ public class MenuControler implements Initializable{
 							switch(e.direction.getDirection()) {
 							case Direction.North:
 								listEntityView.get(e).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)));
+								changeImageViewItemDirection(new Direction(Direction.North), (EntityLiving)World.player);
 								break;
-							case Direction.West:
+							case Direction.East:
 								listEntityView.get(e).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+28));
+								changeImageViewItemDirection(new Direction(Direction.East), (EntityLiving)World.player);
 								break;
 							case Direction.South:
 								listEntityView.get(e).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+56));
+								changeImageViewItemDirection(new Direction(Direction.South), (EntityLiving)World.player);
 								break;
-							case Direction.East:
+							case Direction.West:
 								listEntityView.get(e).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+84));
+								changeImageViewItemDirection(new Direction(Direction.West), (EntityLiving)World.player);
 								break;
 							}
 						}
@@ -766,7 +769,7 @@ public class MenuControler implements Initializable{
 
 					@Override
 					public void onChanged(Change<? extends Item> c) {
-						intialiseAnimItemEnMain();			
+						initialiseAnimItemEnMain(addEntityLiving);			
 				}});}
 				affichageEntity(listEntityView.get(addEntity),addEntity);
 				
@@ -783,7 +786,7 @@ public class MenuControler implements Initializable{
 										listEntityView.get(addEntity).setImage(
 											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 12));
 										break;
-									case Direction.West:
+									case Direction.East:
 										listEntityView.get(addEntity).setImage(
 											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 4));
 										break;
@@ -791,7 +794,7 @@ public class MenuControler implements Initializable{
 										listEntityView.get(addEntity).setImage(
 											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 0));
 										break;
-									case Direction.East:
+									case Direction.West:
 										listEntityView.get(addEntity).setImage(
 											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 8));
 										break;
@@ -819,10 +822,54 @@ public class MenuControler implements Initializable{
 		return v;
 	}	
 	
-	private void intialiseAnimItemEnMain() {
-		ImageView itemEnMainView = createItemView("Wooden Sworden", 11, 14, 30 ,30);
+	private void initialiseAnimItemEnMain(EntityLiving e) {
+		ImageView itemEnMainView = createItemView(e.itemsEnMain.get(0).name, 11, 14, 30 ,30);
+		System.out.println(e.itemsEnMain.get(0));
+		itemEnMainView.setId(e.primaryKey+ "");
+		System.out.println(itemEnMainView.getId());
 		ArmePane.getChildren().add(itemEnMainView);
-		itemEnMainView.xProperty().bind((World.player.coordonnes.getXpro().multiply(32).subtract(12)));
-		itemEnMainView.yProperty().bind((World.player.coordonnes.getYpro().multiply(32).subtract(42)));
+		itemEnMainView.xProperty().bind((e.coordonnes.getXpro().multiply(32).subtract(17)));
+		itemEnMainView.yProperty().bind((e.coordonnes.getYpro().multiply(32).subtract(38)));
+	}
+	
+	private void changeImageViewItemDirection(Direction d, EntityLiving el) {
+		
+		for(int j = 0; j < ArmePane.getChildren().size() ; j++){
+			if(ArmePane.getChildren().get(j).getId().equals(""+el.primaryKey)) {
+				ImageView i = (ImageView)ArmePane.getChildren().get(j);
+				switch(d.getDirection()) {
+				case Direction.North :
+					i.setRotate(-45);
+				break;
+				
+				case Direction.South :
+					i.setRotate(135);
+				break;
+				
+				case (Direction.West) :
+					
+					if(el.getId() == "Player") {
+						System.out.println("Player "+PlayerPane.getLayoutX()+" ,Game "+paneGame.getLayoutX());
+						i.setLayoutX(-10);
+						
+				}else {
+						//i.setLayoutX(playImg.layoutYProperty().getValue()-1);
+				}
+					i.setRotate(-90);
+				break;
+				
+				case (Direction.East) :
+					i.setRotate(0);
+					if(el.getId() == "Player") {
+						i.setLayoutX(30);
+					}
+					else
+						//i.setLayoutX(playImg.layoutYProperty().getValue()+60);
+				break;
+				
+				}
+				return;
+			}
+		}
 	}
 }

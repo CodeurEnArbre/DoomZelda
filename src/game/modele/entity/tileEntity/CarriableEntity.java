@@ -35,7 +35,7 @@ public class CarriableEntity extends TileEntity{
 	public boolean placeEntity(Entity entity) {
 		super.etat.set(false);
 		int dir = entity.direction.getDirection();
-		int x = (dir==Direction.East?(int)entity.coordonnes.getX()-1:dir==Direction.West?(int)entity.coordonnes.getX()+1:(int)entity.coordonnes.getX());
+		int x = (dir==Direction.West?(int)entity.coordonnes.getX()-1:dir==Direction.East?(int)entity.coordonnes.getX()+1:(int)entity.coordonnes.getX());
 		int y = (dir==Direction.South?(int)entity.coordonnes.getY()+1:dir==Direction.North?(int)entity.coordonnes.getY()-1:(int)entity.coordonnes.getY());
 		if(World.currentMap.getTile(x, y).getId() != 0) {
 			return false;

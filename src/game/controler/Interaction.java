@@ -92,7 +92,7 @@ public class Interaction {
 
 				World.player.moveRight.active = false;
 
-				setDirection(Direction.East);
+				setDirection(Direction.West);
 			}
 		}else if(k == DROITE ) {
 			Menu.selectRight();
@@ -103,7 +103,7 @@ public class Interaction {
 					World.player.moveLeft.attente = true;
 				World.player.moveLeft.active = false;
 
-				setDirection(Direction.West);
+				setDirection(Direction.East);
 			}
 
 		}else if(k != KeyCode.ENTER) {
@@ -136,10 +136,10 @@ public class Interaction {
 					World.player.moveDown.attente = false;
 				}else {
 					if(World.player.moveLeft.active)
-						setDirection(Direction.East);
+						setDirection(Direction.West);
 
 					if(World.player.moveRight.active)
-						setDirection(Direction.West);
+						setDirection(Direction.East);
 
 				}
 			}
@@ -154,10 +154,10 @@ public class Interaction {
 					World.player.moveUP.attente = false;
 				}else {
 					if(World.player.moveLeft.active)
-						setDirection(Direction.East);
+						setDirection(Direction.West);
 
 					if(World.player.moveRight.active)
-						setDirection(Direction.West);
+						setDirection(Direction.East);
 				}
 			}
 		}else if(k == GAUCHE) {
@@ -166,7 +166,7 @@ public class Interaction {
 				World.player.moveLeft.attente = false;
 				if(World.player.moveRight.attente) {
 					World.player.moveRight.active = World.player.moveRight.attente;
-					setDirection(Direction.West);
+					setDirection(Direction.East);
 					World.player.moveRight.attente = false;
 				}else {
 					if(World.player.moveUP.active)
@@ -182,7 +182,7 @@ public class Interaction {
 				World.player.moveRight.attente = false;
 				if(World.player.moveLeft.attente) {
 					World.player.moveLeft.active = World.player.moveLeft.attente;
-					setDirection(Direction.East);
+					setDirection(Direction.West);
 					World.player.moveLeft.attente = false;
 				}else {
 					if(World.player.moveUP.active)
