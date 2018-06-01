@@ -270,5 +270,7 @@ public class WorldData {
 		World.currentMap.luminosity[x][y]
 				.set(World.currentMap.luminosity[x][y]
 						.get() - value);
+		if(World.currentMap.luminosity[x][y].get() < 0)
+			World.currentMap.luminosity[x][y].set(0);
 	}
 }

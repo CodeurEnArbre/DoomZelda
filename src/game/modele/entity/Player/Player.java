@@ -14,6 +14,7 @@ import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.ConsumerAction;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
+import game.modele.utils.ActionConsumer.Function.FunctionLampe;
 import game.modele.utils.ActionConsumer.Function.FunctionMove;
 import game.modele.utils.ActionConsumer.Function.FunctionMovement;
 import game.modele.world.World;
@@ -26,6 +27,7 @@ public class Player extends EntityLiving{
 
 	ConsumerAction deplacement = new InfiniteActionConsumer(new FunctionMove());
 	ConsumerAction mouvement = new InfiniteActionConsumer(new FunctionMovement());
+	ConsumerAction lampe = new InfiniteActionConsumer(new FunctionLampe());
 	
 	public ArrayList<Loot> loots;
 	public ArrayList<Usable> usables;
@@ -54,6 +56,7 @@ public class Player extends EntityLiving{
 		
 		addAction(deplacement);
 		addAction(mouvement);
+		addAction(lampe);
 	}
 	
 	@Override

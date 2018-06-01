@@ -30,14 +30,7 @@ public abstract class EntityLight extends TileEntity{
 
 	@Override
 	public void active(Entity e) {
-		if(f) {
-			World.currentMap.DirectionnalTorch((int)this.coordonnes.getX(), (int)this.coordonnes.getY(),9,1,Direction.South,true);
-			
-		}else
-		{
-			World.currentMap.DirectionnalTorch((int)this.coordonnes.getX(), (int)this.coordonnes.getY(),9,1,Direction.South,false);
-		}
-			f = !f;
+			World.currentMap.DirectionnalTorch((int)this.coordonnes.getX(), (int)this.coordonnes.getY(),9,1,Direction.South,f);
 	}
 
 }
