@@ -849,7 +849,6 @@ public class MenuControler implements Initializable{
 				case (Direction.West) :
 					
 					if(el.getId() == "Player") {
-						System.out.println("Player "+PlayerPane.getLayoutX()+" ,Game "+paneGame.getLayoutX());
 						i.setLayoutX(-10);
 						
 				}else {
@@ -861,7 +860,7 @@ public class MenuControler implements Initializable{
 				case (Direction.East) :
 					i.setRotate(0);
 					if(el.getId() == "Player") {
-						i.setLayoutX(30);
+						i.setLayoutX(20);
 					}
 					else
 						//i.setLayoutX(playImg.layoutYProperty().getValue()+60);
