@@ -104,7 +104,7 @@ public class WorldData {
 	public ObservableList<Entity> getEntity(){
 		return this.entity;
 	}
-	
+
 	public Entity getEntity(int x, int y){
 		for(Entity entity:entity) {
 			if((int)entity.coordonnes.getX() == x && (int)entity.coordonnes.getY() == y)
@@ -125,35 +125,37 @@ public class WorldData {
 		return this.entity.stream().filter(a -> a.coordonnes.isSameTile(x, y)).toArray(Entity[]::new);
 	}
 
-	public void AddDirectionnalTorch(int x,int y,int i,int pas,int d) {
+	public void DirectionnalTorch(int x,int y,int intensity,int pas,int direction,boolean allumage) {
 		ArrayList<SimpleEntry<Point,Integer>> q = new ArrayList<>(); //coord + intensity
-		q.add(new SimpleEntry<Point, Integer>(new Point(x,y), i));
-		addLight(x, y, i);
-		directionnalLight(q, i, pas, d);
+		q.add(new SimpleEntry<Point, Integer>(new Point(x,y), intensity));
+		if(allumage)
+			addLight(x, y, intensity);
+		else
+			delLight(x, y, intensity);
+		directionnalLight(q, intensity, pas, direction,allumage);
 	}
 
-	private void directionnalLight(ArrayList<SimpleEntry<Point,Integer>> q,int i,int pas,int d) {
+	private void directionnalLight(ArrayList<SimpleEntry<Point,Integer>> q,int intensity,int pas,int direction,boolean allumage) {
 		while(q.size() > 0) {
 			//etape 1
 			for(int x = 0; x < q.size();x++) {
-				SimpleEntry<Point,Integer> value = q.get(x);
+				SimpleEntry<Point,Integer> value = q.get(x);	
 				boolean canProgress = true;
-				switch(d)
+				switch(direction)
 				{
 				case Direction.North:
-					canProgress = LightProgressing(value, 0, 1,pas);
+					canProgress = LightProgressing(value, 0, 1,pas,allumage);
 					break;
 				case Direction.South:
-					canProgress = LightProgressing(value, 0, -1,pas);
-					break;
-				case Direction.West:
-					canProgress = LightProgressing(value, 1,0,pas);
+					canProgress = LightProgressing(value, 0, -1,pas,allumage);
 					break;
 				case Direction.East:
-					canProgress = LightProgressing(value, -1,0,pas);
+					canProgress = LightProgressing(value, -1,0,pas,allumage);
+					break;
+				case Direction.West:
+					canProgress = LightProgressing(value, 1,0,pas,allumage);
 					break;
 				default:
-					//valeur incorrecte
 					break;
 				}
 				if(!canProgress)
@@ -169,44 +171,58 @@ public class WorldData {
 				SimpleEntry<Point,Integer> nvalue1 = null;
 				SimpleEntry<Point,Integer> nvalue2 = null;
 
-				switch(d)
+				switch(direction)
 				{
 				case Direction.North:
 				case Direction.South:
 					nvalue1 = LightDiffuse(value,-1,0,pas);
 					nvalue2 = LightDiffuse(value,1,0,pas);
 					break;
-				case Direction.West:
 				case Direction.East:
-					nvalue1 = LightDiffuse(value,0,1,pas);
-					nvalue2 = LightDiffuse(value, 0,-1,pas);
+				case Direction.West:
+					nvalue2 = LightDiffuse(value,0,-1,pas);
+					nvalue1 = LightDiffuse(value, 0,1,pas);
 					break;
 				default:
-					//valeur incorrecte
 					break;
 				}
-				if(nvalue1 != null && !q.contains(nvalue1))
-				{
-					addLight(nvalue1.getKey().x, nvalue1.getKey().y, nvalue1.getValue());
-					q.add(nvalue1);
-				}
-				if(nvalue2 != null && !q.contains(nvalue2))
-				{
-					addLight(nvalue2.getKey().x, nvalue2.getKey().y, nvalue2.getValue());
-					q.add(nvalue2);
-				}
+				AddElement(q, nvalue1,allumage);
+				AddElement(q, nvalue2,allumage);
 			}
 		}
 	}
 
-	private boolean LightProgressing(SimpleEntry<Point,Integer> value,int vx,int vy,int pas) {
+	private void AddElement(ArrayList<SimpleEntry<Point,Integer>> q,SimpleEntry<Point,Integer> e,boolean add) {
+		if(e != null && !containPoint(q,e.getKey()))
+		{
+			if(add)
+				addLight(e.getKey().x,e.getKey().y, e.getValue());
+			else
+				delLight(e.getKey().x,e.getKey().y, e.getValue());
+			q.add(e);
+		}
+	}
+
+	private boolean containPoint(ArrayList<SimpleEntry<Point,Integer>> q, Point p) {
+		for(SimpleEntry<Point,Integer> e : q)
+			if(e.getKey().equals(p))
+				return true;
+
+		return false;
+	}
+
+	private boolean LightProgressing(SimpleEntry<Point,Integer> value,int vx,int vy,int pas,boolean add) {
 		int nx = value.getKey().x + vx;
 		int ny = value.getKey().y + vy;
 
-		if(value.getValue() - pas >= 0 && nx > 0 && ny > 0 && nx < height && ny < width && !tiles[ny][nx].solid() ) {
+		if(value.getValue() - pas >= 0 && nx >= 0 && ny >= 0 && nx < height && ny < width) {
 			value.getKey().translate(vx,vy);
 			value.setValue(value.getValue() - pas);
-			addLight(nx,ny, value.getValue());
+			if(add) {
+				addLight(nx,ny, value.getValue());
+			}
+			else
+				delLight(nx,ny, value.getValue());
 		}
 		else
 		{
@@ -219,12 +235,28 @@ public class WorldData {
 		int nx = value.getKey().x + vx;
 		int ny = value.getKey().y + vy;
 
-		if(value.getValue() - pas >= 0 && nx > 0 && ny > 0 && nx < height && ny < width && !tiles[ny][nx].solid() ) {
+		if(value.getValue() - pas >= 0 && nx >= 0 && ny >= 0 && nx < height && ny < width) {
 			return new SimpleEntry<Point, Integer>(new Point(nx,ny),value.getValue() - pas);
 		}
 		else
 		{
 			return null; 
+		}
+	}
+
+	public void MultiDirectionnalTorch(int x,int y,int i,int pas,boolean add) {
+
+		ArrayList<SimpleEntry<Point,Integer>> allLight = new ArrayList<>(); 
+		allLight.add(new SimpleEntry<Point, Integer>(new Point(x,y), i));
+
+		while(allLight.size() > 0) {
+			for(int[] vector : new int[][] {{0,1},{0,-1},{1,0},{-1 , 0}}) {
+
+			}
+
+
+
+
 		}
 	}
 
@@ -234,51 +266,9 @@ public class WorldData {
 						.get() + value);
 	}
 
-	public void AddTorch(int x,int y,int i,int pas) {
-		ArrayList<SimpleEntry<Integer,Integer>> tmp = new ArrayList<>();
-		tmp.add(new SimpleEntry<Integer, Integer>(x,y));
-		int current = 0;
-		addLight(tmp, current, i, pas);
-
-	}
-
-	public void addLight(ArrayList<SimpleEntry<Integer,Integer>> tmp, int current , int i , int pas) {
-		if(i == 0) return;
-
-		int lenght = tmp.size();
-		for(int p = current; p < lenght;p++) {			
-			SimpleEntry<Integer,Integer> si = tmp.get(p);
-
-			int x = si.getKey();
-			int y = si.getValue();
-
-			if(x < this.getHeight() && x >= 0  &&  y < this.getWidth()  && y >= 0) {
-				if(!tiles[y][x].solid()) //remplacer par test TYLEENTITY
-					World.currentMap.luminosity[x][y].set(World.currentMap.luminosity[x][y].get() + i);
-				else {
-					current++;
-					continue;
-				}
-
-			}
-
-			if(!tmp.contains(new SimpleEntry<Integer, Integer>(x + 1,y)))
-				tmp.add(new SimpleEntry<Integer, Integer>(x + 1,y));
-
-			if(!tmp.contains(new SimpleEntry<Integer, Integer>(x,y + 1)))
-				tmp.add(new SimpleEntry<Integer, Integer>(x,y + 1));
-
-			if(!tmp.contains(new SimpleEntry<Integer, Integer>(x - 1,y)))
-				tmp.add(new SimpleEntry<Integer, Integer>(x - 1,y));
-
-			if(!tmp.contains(new SimpleEntry<Integer, Integer>(x,y - 1)))
-				tmp.add(new SimpleEntry<Integer, Integer>(x,y - 1));
-
-
-
-			current++;
-		}
-
-		addLight(tmp, current, i - pas, pas);
+	private void delLight(int x,int y,int value) {
+		World.currentMap.luminosity[x][y]
+				.set(World.currentMap.luminosity[x][y]
+						.get() - value);
 	}
 }
