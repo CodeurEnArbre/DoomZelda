@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import game.modele.entity.Entity;
 import game.modele.entity.Player.Player;
 import game.modele.entity.living.EntityLiving;
+import game.modele.entity.tileEntity.CarriableEntity;
 import game.modele.entity.tileEntity.EntityLight;
 import game.modele.entity.tileEntity.TileEntity;
 import game.modele.item.Item;
@@ -33,6 +34,7 @@ import javafx.collections.ListChangeListener;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -705,7 +707,7 @@ public class MenuControler implements Initializable{
 	private ImageView getEntityImageView(Entity e) {
 		ImageView img = null;
 		for(ImageView imageView:listEntityView.values())
-			if(imageView.getId().equals(e.getId())) {
+			if(imageView.getId().equals(""+e.primaryKey)) {
 				return imageView;
 			}
 
@@ -738,13 +740,14 @@ public class MenuControler implements Initializable{
 					((TileEntity) entity).getEtatProperty().addListener(new ChangeListener<Boolean>() {
 
 						@Override
-						public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {		
+						public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 							ImageView entityImg = getEntityImageView(entity);
-							if(((TileEntity) entity).getEtat() && entityImg != null)
-								entityImg.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(entity.getId(), 32, 112, 1, 0).getTexture(), null));
-							//		else
-							//Bug			entityImg.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(entity.getId(), 32, 112, 0, 0).getTexture(), null));
-
+							if(((TileEntity) entity).getEtat() && entityImg != null) {
+								if(entity instanceof CarriableEntity)
+									entityImg.setImage(dicoImageTileEntityMap.get(EntityImageValue.getEntityNum(entity.getId())));
+								else
+									entityImg.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(entity.getId(), 32, 112, 1, 0).getTexture(), null));
+							}
 						}
 
 					});
@@ -755,7 +758,23 @@ public class MenuControler implements Initializable{
 		World.currentMap.entity.addListener(new ListChangeListener<Entity>(){
 			@Override
 			public void onChanged(Change<? extends Entity> c) {
-				loadAnimationEntity(new ImageView(), c.getList().get(c.getList().size()-1));
+				ArrayList<ImageView> toRemove = new ArrayList<>();
+				
+				c.next();
+				for(Entity entity:c.getRemoved())
+					for(Node img:EntityPane.getChildren())
+						if(img instanceof ImageView)
+							if(((ImageView) img).getId().equals(""+entity.primaryKey))
+								toRemove.add((ImageView)img);			
+				
+				for(ImageView img:toRemove) {
+					EntityPane.getChildren().remove(img);
+				}
+				
+				toRemove.clear();
+				
+				for(Entity entity:c.getAddedSubList())
+					loadAnimationEntity(new ImageView(), entity);
 				
 			}
 		});
@@ -824,9 +843,7 @@ public class MenuControler implements Initializable{
 	
 	private void initialiseAnimItemEnMain(EntityLiving e) {
 		ImageView itemEnMainView = createItemView(e.itemsEnMain.get(0).name, 11, 14, 30 ,30);
-		System.out.println(e.itemsEnMain.get(0));
-		itemEnMainView.setId(e.primaryKey+ "");
-		System.out.println(itemEnMainView.getId());
+		itemEnMainView.setId(e.primaryKey+"");
 		ArmePane.getChildren().add(itemEnMainView);
 		itemEnMainView.xProperty().bind((e.coordonnes.getXpro().multiply(32).subtract(17)));
 		itemEnMainView.yProperty().bind((e.coordonnes.getYpro().multiply(32).subtract(38)));
