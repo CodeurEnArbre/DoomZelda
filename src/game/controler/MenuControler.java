@@ -783,13 +783,26 @@ public class MenuControler implements Initializable{
 	public void loadAnimationEntity(ImageView img, Entity addEntity) {
 				if(addEntity instanceof EntityLiving) {
 					EntityLiving addEntityLiving = (EntityLiving)addEntity;
+					
+					addEntityLiving.action.addListener(new ChangeListener<String>() {
+						@Override
+						public void changed(ObservableValue<? extends String> observable, String oldValue,
+								String newValue) {
+							if(newValue.equals("raise")) {
+							//do animation to imageview ->	getEntityImageView(addEntityLiving);
+								System.out.println("Do animation");
+							}
+							
+						}
+					});
+					
 					//AJOUT DU LISTENER POUR LANIMATION DE LITEM EN MAIN
 					addEntityLiving.itemsEnMain.addListener(new ListChangeListener<Item>(){
-
 					@Override
 					public void onChanged(Change<? extends Item> c) {
 						initialiseAnimItemEnMain(addEntityLiving);			
 				}});}
+				
 				affichageEntity(listEntityView.get(addEntity),addEntity);
 				
 				if(!addEntity.getId().equals("Player")){
