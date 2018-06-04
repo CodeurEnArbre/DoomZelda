@@ -37,9 +37,7 @@ public class Player extends EntityLiving{
 	private int maxRuby=100;
 	public static IntegerProperty ruby; //ARGENT!!!	
 	public CarriableEntity carriedEntity;
-	public BooleanProperty isCarriedSomething = new SimpleBooleanProperty();
-
-
+	public BooleanProperty isCarriedSomething;
 	
 	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials) {
 		super("Player",position,direction);
@@ -48,6 +46,7 @@ public class Player extends EntityLiving{
 		super.maxPv.set(maxPv);
 		super.PV.set(pv);
 		Player.ruby = new SimpleIntegerProperty(ruby);
+		isCarriedSomething = new SimpleBooleanProperty();
 		this.usables = usables;
 		this.weapons = weapons;
 		this.loots=loots;

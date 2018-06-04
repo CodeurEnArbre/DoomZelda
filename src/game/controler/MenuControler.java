@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 
 import game.modele.entity.Entity;
 import game.modele.entity.Player.Player;
+import game.modele.entity.living.Actions;
 import game.modele.entity.living.EntityLiving;
 import game.modele.entity.tileEntity.CarriableEntity;
 import game.modele.entity.tileEntity.EntityLight;
@@ -54,6 +55,7 @@ public class MenuControler implements Initializable{
 	Map<String,ArrayList <Image>> dicoImageAnimationEntity; 
 	Map<Entity,ImageView> listEntityView = new HashMap<>();
 	Map<Integer,Image> dicoShadow;
+	int playerAnimationImg=0;
 
 
 	ArrayList<ImageView> coeurs;
@@ -784,17 +786,37 @@ public class MenuControler implements Initializable{
 				if(addEntity instanceof EntityLiving) {
 					EntityLiving addEntityLiving = (EntityLiving)addEntity;
 					
-					addEntityLiving.action.addListener(new ChangeListener<String>() {
+					addEntityLiving.action.addListener(new ChangeListener<Number>() {
+
 						@Override
-						public void changed(ObservableValue<? extends String> observable, String oldValue,
-								String newValue) {
-							if(newValue.equals("raise")) {
-							//do animation to imageview ->	getEntityImageView(addEntityLiving);
-								System.out.println("Do animation");
-							}
+						public void changed(ObservableValue<? extends Number> observable, Number oldValue,
+								Number newValue) {
+							switch(newValue.intValue()) {
 							
-						}
-					});
+							case Actions.raise:
+								if(addEntityLiving instanceof Player) {
+									//Player theplayer = (Player) addEntityLiving ;
+									//do animation to imageview ->getEntityImageView(theplayer);
+									//getEntityImageView(theplayer.carriedEntity);
+								}
+								
+								break;
+								
+							case Actions.push:
+								//do animation to imageview ->	getEntityImageView(addEntityLiving);
+								break;
+								
+							case Actions.useLeftItem:
+								//do animation to imageview ->	getEntityImageView(addEntityLiving);
+								break;
+								
+							case Actions.useRightItem:
+								//do animation to imageview ->	getEntityImageView(addEntityLiving);
+								break;
+								
+								
+							}
+						}});
 					
 					//AJOUT DU LISTENER POUR LANIMATION DE LITEM EN MAIN
 					addEntityLiving.itemsEnMain.addListener(new ListChangeListener<Item>(){
