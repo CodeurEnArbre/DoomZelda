@@ -7,15 +7,18 @@ import java.net.MalformedURLException;
 
 import javax.imageio.ImageIO;
 
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+
 public class ItemTexture {
 	
-	public static Texture getItemTexture(int id) {
+	public static Image getItemTexture(int id) {
 		BufferedImage tileMap;
-		Texture tileTexture=null;
+		Image tileTexture=null;
 		try {
 			tileMap = ImageIO.read(new File("ressources/textures/ItemTextureMap.png").toURI().toURL());
 			
-			tileTexture= new Texture(tileMap, 32, 32, id%16, id/16);
+			tileTexture = SwingFXUtils.toFXImage(tileMap.getSubimage(32, 32, id%16, id/16), null);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 

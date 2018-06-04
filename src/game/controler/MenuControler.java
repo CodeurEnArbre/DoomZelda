@@ -52,7 +52,8 @@ public class MenuControler implements Initializable{
 	Map<Integer,Image> dicoImageItemTextureMap;
 	Map<Integer,Image> dicoImageTileEntityMap;
 	Map<Integer,Image> dicoImageAnimationPlayer;
-	Map<String,ArrayList <Image>> dicoImageAnimationEntity; 
+	Map<String,Map<Integer,Image>> dicoImageAnimationEntity;
+	//Map<String,ArrayList <Image>> dicoImageAnimationEntity; 
 	Map<Entity,ImageView> listEntityView = new HashMap<>();
 	Map<Integer,Image> dicoShadow;
 	int playerAnimationImg=0;
@@ -457,7 +458,7 @@ public class MenuControler implements Initializable{
 				PaneSolid.getChildren().clear();
 				PaneTop.getChildren().clear();
 				EntityPane.getChildren().clear();
-				loadAnimationEntity(dicoImageAnimationEntity);
+				
 				for(ImageView entity:listEntityView.values()) {
 					if(entity.getId()!="Player")
 						listEntityView.remove(entity);
@@ -536,11 +537,14 @@ public class MenuControler implements Initializable{
 			dicoImageTileEntityMap = new HashMap<>();
 			dicoImageAnimationPlayer = new HashMap<>();
 			dicoImageAnimationEntity = new HashMap<>();
+			dicoImageAnimationEntity = new HashMap<>();
 			dicoShadow = new HashMap<>();
-
+			
 			LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
 			LoadDicoMap(dicoImageItemTextureMap,32,32,16,16,"ItemTextureMap");
 			LoadDicoMap(dicoImageTileEntityMap,32,32,16,16,"TileEntityTextureMap");
+			
+			loadEntityAnimation();
 			loadAnimationPlayer(dicoImageAnimationPlayer, 28, 4);
 			
 			
@@ -555,8 +559,8 @@ public class MenuControler implements Initializable{
 			
 			for(int i = 0; i < 16;i++)
 
-				dicoShadow.put(i,SwingFXUtils.toFXImage(
-						EntityLivingTexture.getEntityTexture("darkness",32,32,i,0).getTexture(), null));
+				dicoShadow.put(i,
+						EntityLivingTexture.getEntityTexture("darkness",32,32,i,0));
 
 
 		} catch (IOException e) {
@@ -565,30 +569,31 @@ public class MenuControler implements Initializable{
 	}
 
 	private void LoadDicoMap(Map<Integer,Image> dico,int imageWidthPixels, int imageHeightPixels, int imageWidth, int imageHeight, String textureMapName) {
-		for(int x = 0; x < imageWidth*imageHeight; x++) {
-			dico.put(x + 1,SwingFXUtils.toFXImage(TextureLoader.getTextureMapImage(textureMapName,imageWidthPixels,imageHeightPixels,imageWidth,imageHeight,x).getTexture(), null));
-		}
+		for(int y = 0; y < imageHeight; y++)
+			for(int x = 0; x < imageWidth; x++)
+				dico.put(x+y*imageWidth+1,TextureLoader.getTextureMapImage(textureMapName,imageWidthPixels,imageHeightPixels,x,y));
+	}
+	
+	private Map<Integer,Image> LoadDicoMapAnimation(int imageWidthPixels, int imageHeightPixels, int imageWidth, int imageHeight, String textureMapName) {
+		Map<Integer,Image> images = new HashMap<>();
+		for(int y = 0; y < imageHeight; y++)
+			for(int x = 0; x < imageWidth; x++)
+				images.put(x+y*imageWidth+1,TextureLoader.getTextureMapImage(textureMapName,imageWidthPixels,imageHeightPixels,x,y));
+		return images;
 	}
 
 	private void loadAnimationPlayer(Map<Integer,Image> dico, int frame, int animation) {
 		for(int x = 0;x < frame;x++)
 			for(int y = 0;y < animation;y++)
-				dico.put(x + frame * y,SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture("Player", 24, 32, x, y).getTexture(), null));		
+				dico.put(x + frame * y,EntityLivingTexture.getEntityTexture("Player", 24, 32, x, y));		
 	}
-	//
-	private void loadAnimationEntity(Map<String,ArrayList<Image>> dico) {
-		for(Entity e : World.currentMap.entity) {
-			if(e instanceof EntityLiving) {
-				ArrayList<Image> a = new ArrayList<>();
-				for(int animation = 0; animation < 4; animation++) {
-					for(int frame = 0; frame < ((EntityLiving) e).getNbFrameAnim(); frame++) {
-						a.add(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 32, 48, frame, animation).getTexture(), null));
-					}	
-				}
-				dico.put(e.getId() ,a);
-			}
-		}
+	
+	private void loadEntityAnimation() {
+		dicoImageAnimationEntity.put("TikiTorchSmall", LoadDicoMapAnimation(32,112,5,1,"TikiTorchSmall"));
+		dicoImageAnimationEntity.put("Zombie", LoadDicoMapAnimation(32,48,4,4,"Zombie"));
+		dicoImageAnimationEntity.put("White Sheep", LoadDicoMapAnimation(48,48,3,4,"White Sheep"));
 	}
+	
 	
 	//Permet d'afficher dans dans chaque pane toute les textures de chaque couches de la map
 	private void printCalqueTile(Pane pane,Pane paneTile,Pane paneTop) {
@@ -649,7 +654,7 @@ public class MenuControler implements Initializable{
 			i.setFitHeight(64);
 			i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
 			i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));
-			i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 24, 32, 0, 2).getTexture(), null));
+			i.setImage(EntityLivingTexture.getEntityTexture(e.getId(), 24, 32, 0, 2));
 			paneGame.layoutXProperty().bind(e.coordonnes.getXpro().multiply(-32).add(432));
 			paneGame.layoutYProperty().bind(e.coordonnes.getYpro().multiply(-32).add(320));
 			e.etatDeplacement.addListener(
@@ -686,13 +691,13 @@ public class MenuControler implements Initializable{
 				i.setFitHeight(64);
 				i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
 				i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));
-				i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), ((EntityLiving) e).gettextureWidth(), ((EntityLiving) e).gettextureHeight(), 0, 0).getTexture(), null));
+				i.setImage(dicoImageAnimationEntity.get(e.getId()).get(0));
 			}else if(e instanceof EntityLight) {
 				i.setFitWidth(32);
 				i.setFitHeight(64);
 				i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
 				i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));
-				i.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(e.getId(), 32, 112, 1, 0).getTexture(), null));
+				i.setImage(dicoImageAnimationEntity.get(e.getId()).get(( (TileEntity) e).getEtat()?1:0));
 			}else if(e instanceof TileEntity) {
 				i.setFitWidth(32);
 				i.setFitHeight(32);
@@ -748,7 +753,7 @@ public class MenuControler implements Initializable{
 								if(entity instanceof CarriableEntity)
 									entityImg.setImage(dicoImageTileEntityMap.get(EntityImageValue.getEntityNum(entity.getId())));
 								else
-									entityImg.setImage(SwingFXUtils.toFXImage(EntityLivingTexture.getEntityTexture(entity.getId(), 32, 112, 1, 0).getTexture(), null));
+									entityImg.setImage(EntityLivingTexture.getEntityTexture(entity.getId(), 32, 112, 1, 0));
 							}
 						}
 
@@ -828,8 +833,7 @@ public class MenuControler implements Initializable{
 				affichageEntity(listEntityView.get(addEntity),addEntity);
 				
 				if(!addEntity.getId().equals("Player")){
-
-					loadAnimationEntity(dicoImageAnimationEntity);						
+						
 					//AJOUT DU LISTENER POUR L'ANIMATION DE L'ENTITE
 					addEntity.etatDeplacement.addListener( new ChangeListener<Number>() {
 								@Override
@@ -838,7 +842,7 @@ public class MenuControler implements Initializable{
 									switch(addEntity.direction.getDirection()) {
 									case Direction.North:
 										listEntityView.get(addEntity).setImage(
-											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 12));
+											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 0));
 										break;
 									case Direction.East:
 										listEntityView.get(addEntity).setImage(
@@ -846,7 +850,7 @@ public class MenuControler implements Initializable{
 										break;
 									case Direction.South:
 										listEntityView.get(addEntity).setImage(
-											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 0));
+											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 12));
 										break;
 									case Direction.West:
 										listEntityView.get(addEntity).setImage(
