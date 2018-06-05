@@ -497,6 +497,7 @@ public class MenuControler implements Initializable{
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				updateHearts();
+				
 			}
 		});
 	}
@@ -649,6 +650,20 @@ public class MenuControler implements Initializable{
 		i.setX(World.player.coordonnes.getX());
 		i.setY(World.player.coordonnes.getY());
 
+		if(e instanceof EntityLiving) {
+			((EntityLiving)e).isDamaged.addListener(new ChangeListener<Boolean>() {
+
+				@Override
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					if(newValue)
+						PlayerPane.setStyle("");
+					else
+						PlayerPane.setStyle("");
+				}
+				
+			});
+		}
+		
 		if(e.getId().equals("Player")) {
 			Player player = (Player)e;
 			i.setFitWidth(32);
@@ -721,6 +736,7 @@ public class MenuControler implements Initializable{
 						}
 					}
 					);
+			
 			PlayerPane.getChildren().add(i);
 		}else {
 			if(e instanceof EntityLiving) {
