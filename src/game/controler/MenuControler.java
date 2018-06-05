@@ -834,11 +834,14 @@ public class MenuControler implements Initializable{
 						public void changed(ObservableValue<? extends Boolean> observable,
 								Boolean oldValue, Boolean newValue) {
 							if(addEntityLiving instanceof Player) {
-								Player playerEntity = (Player)addEntityLiving;
-							
-							if(!newValue.booleanValue() && addEntityLiving.action.get() == Actions.raise) {
-								//PlayerPane.getChildren().add(playerEntity.);
-							}
+
+								if(!newValue.booleanValue() && addEntityLiving.action.get() == Actions.raise) {
+									ImageView caribouEntity = getEntityImageView(World.player.carriedEntity);
+									caribouEntity.setId("CarriableEntity");
+									PlayerPane.getChildren().add(caribouEntity);
+									caribouEntity.xProperty().bind(World.player.coordonnes.getXpro().multiply(32).subtract(16));
+									caribouEntity.yProperty().bind(World.player.coordonnes.getYpro().multiply(32).subtract(48));
+								}
 							}
 						}
 					});
@@ -848,6 +851,17 @@ public class MenuControler implements Initializable{
 						@Override
 						public void changed(ObservableValue<? extends Number> observable, Number oldValue,
 								Number newValue) {
+							
+							if(newValue.intValue() != Actions.raise){
+								
+								for(Node n:PlayerPane.getChildren()) {
+									if(n.getId().equals("CarriableEntity")) {
+										PlayerPane.getChildren().remove(n);
+										return;
+									}
+								}
+							}
+							
 							switch(newValue.intValue()) {
 							
 							case Actions.raise:
@@ -855,7 +869,6 @@ public class MenuControler implements Initializable{
 									//Player theplayer = (Player) addEntityLiving ;
 									//do animation to imageview ->getEntityImageView(theplayer);
 									//getEntityImageView(theplayer.carriedEntity);
-									
 									
 									
 								}

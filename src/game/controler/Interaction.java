@@ -112,6 +112,20 @@ public class Interaction {
 				OptionsMenu.enterOption.set(false);
 			}
 		}
+		
+		if(World.player.isMovementLock.get()) {
+			
+			World.player.moveRight.active = false;
+			World.player.moveLeft.active = false;
+			World.player.moveUP.active = false;
+			World.player.moveDown.active = false;
+			
+			World.player.moveRight.attente = false;
+			World.player.moveLeft.attente = false;
+			World.player.moveUP.attente = false;
+			World.player.moveDown.attente = false;
+		}
+		
 	}
 
 

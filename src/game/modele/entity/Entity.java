@@ -1,5 +1,6 @@
 package game.modele.entity;
 
+import game.modele.entity.Player.Player;
 import game.modele.tile.Tile;
 import game.modele.tile.tileGround.tileVoid;
 import game.modele.utils.Coordonnees;
@@ -127,12 +128,18 @@ public abstract class Entity {
 			
 			if(entity!=null && entity.isSolidEntity && entity != this)
 				return false;
-				
+			
+			Player thisPlayer = null;
+			
+			if(this.getId().equals("Player"))
+				thisPlayer = (Player)this;
+			
 			if(!World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).solid() &&
 					!World.currentMap.getTile((int)(coordonnees.getY()+ hitBoxY), (int)(coordonnees.getX()+ hitBoxX)).solid() &&
 					coordonnees.getX() >= 0 && coordonnees.getY() >= 0 &&
 					(coordonnees.getX() + speed + hitBoxX) < World.currentMap.getWidth() &&
-					(coordonnees.getY() + speed + hitBoxY) < World.currentMap.getHeight() )
+					(coordonnees.getY() + speed + hitBoxY) < World.currentMap.getHeight() &&
+			!(this.getId().equals("Player") && thisPlayer.isMovementLock.get()))
 			{
 				if(this.currentTile != tile) {
 					if(currentTile != null)
