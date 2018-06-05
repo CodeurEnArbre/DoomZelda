@@ -58,7 +58,6 @@ public class Player extends EntityLiving{
 		
 		addAction(deplacement);
 		addAction(mouvement);
-		addAction(lampe);
 	}
 	
 	@Override
