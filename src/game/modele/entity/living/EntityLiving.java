@@ -9,7 +9,9 @@ import game.modele.item.weapon.Weapon;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.world.World;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +25,7 @@ public abstract class EntityLiving extends Entity{
 	public short nbFrameAnimation;
 	public int textureWidth, textureHeight;
 	public IntegerProperty action;
+	public BooleanProperty isMovementLock = new SimpleBooleanProperty(false);
 	
 	public EntityLiving(String id,Coordonnees position, Direction direction) {
 		super(id,position,direction);

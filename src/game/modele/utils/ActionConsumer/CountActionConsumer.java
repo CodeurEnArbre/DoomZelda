@@ -6,6 +6,7 @@ import game.modele.utils.ActionConsumer.Function.Function;
 public class CountActionConsumer implements ConsumerAction {
 	private int count;
 	private Function ce;
+	
 	public CountActionConsumer(int nb,Function f) 
 	{
 		count = nb;	

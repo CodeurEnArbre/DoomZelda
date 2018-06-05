@@ -16,4 +16,6 @@ public abstract class Function {
 	public void Reset(Entity e) {
 		ce.reset();
 	}
+
+	public void finishAction(Entity e) {}
 }

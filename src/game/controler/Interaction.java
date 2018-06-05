@@ -30,16 +30,16 @@ public class Interaction {
 	
 	public static void KeyInteractDown(KeyCode k) {
 		
-		if(k == INTERACT) {
+		if(k == INTERACT && !World.player.isMovementLock) {
 			if(World.player != null)
 				World.player.interact();
 		}
 		
-		if(k == UseLeftItem) {
+		if(k == UseLeftItem && !World.player.isMovementLock) {
 			
 		}
 		
-		if(k == UseRightItem) {
+		if(k == UseRightItem && !World.player.isMovementLock) {
 			
 		}
 		
@@ -59,7 +59,7 @@ public class Interaction {
 
 		if(k == AVANCER) {
 			Menu.selectUp();
-			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID) {
+			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock) {
 					World.player.moveUP.attente = false;
 					World.player.moveUP.active = true;
 					if(World.player.moveDown.active) {
@@ -72,7 +72,7 @@ public class Interaction {
 
 		}else if(k == RECULER){
 			Menu.selectDown();
-			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID) {
+			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock) {
 					World.player.moveDown.attente = false;
 					World.player.moveDown.active = true;
 					if(World.player.moveUP.active)
@@ -84,7 +84,7 @@ public class Interaction {
 		}
 		if(k == GAUCHE) {
 			Menu.selectLeft();
-			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID) {
+			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock) {
 				World.player.moveLeft.attente = false;
 				World.player.moveLeft.active = true;
 				if(World.player.moveRight.active)
@@ -96,7 +96,7 @@ public class Interaction {
 			}
 		}else if(k == DROITE ) {
 			Menu.selectRight();
-			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID) {
+			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock) {
 				World.player.moveRight.attente = false;
 				World.player.moveRight.active = true;
 				if(World.player.moveLeft.active)
