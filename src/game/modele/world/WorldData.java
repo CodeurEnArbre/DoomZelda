@@ -5,8 +5,6 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Stack;
 
 import game.modele.entity.Entity;
@@ -56,9 +54,9 @@ public class WorldData {
 		}
 		this.luminosity = new SimpleIntegerProperty[width][height];
 		for(int x = 0 ; x < width ; x++)
-			for(int y = 0; y < height ; y++) {
+			for(int y = 0; y < height ; y++) 
 				luminosity[x][y] = new SimpleIntegerProperty(0);
-			}
+			
 
 		this.zoneName.setValue(zoneName);
 		dijkstra = new HashMap<>();
@@ -265,19 +263,24 @@ public class WorldData {
 			,int i,int pas,boolean add) {
 
 		if(i == 0)return;
-		
+
 		int current_size = allLight.size(); 
 		for(int p = 0;p < current_size;p++) {
+			
+			int x = allLight.get(p).getKey().x;
+			int y = allLight.get(p).getKey().y;
+			
+			if(!canDifuseHere(x,y)) {
+				continue;
+			} 
+			
 			for(int[] vector : new int[][] {{0,1},{0,-1},{1,0},{-1 , 0}}) {
-				int nx = allLight.get(p).getKey().x + vector[0];
-				int ny = allLight.get(p).getKey().y + vector[1];
+				int nx = x + vector[0];
+				int ny = y + vector[1];
 
 				if(next(nx,ny)) {
 					AddElement(allLight,
 							new SimpleEntry<Point, Integer>(new Point(nx,ny),i), add);
-				}else
-				{
-					
 				}
 			}
 		}
@@ -285,7 +288,7 @@ public class WorldData {
 	}
 
 	private boolean next(int x,int y) {
-		return x >= 0 && x < height && y >= 0 && y < width && canDifuseHere(x, y);
+		return x >= 0 && x < height && y >= 0 && y < width;
 	}
 
 	private void addLight(int x,int y,int value) {
@@ -300,5 +303,11 @@ public class WorldData {
 						.get() - value);
 		if(World.currentMap.luminosity[x][y].get() < 0)
 			World.currentMap.luminosity[x][y].set(0);
+	}
+	
+	public void resetLight() {
+		for(int x = 0 ; x < width ; x++)
+			for(int y = 0; y < height ; y++) 
+				luminosity[x][y] = new SimpleIntegerProperty(0);
 	}
 }
