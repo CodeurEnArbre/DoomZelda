@@ -3,34 +3,29 @@ package game.modele.entity.tileEntity;
 import game.modele.entity.Entity;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
-import game.modele.world.World;
-
+import game.modele.utils.ActionConsumer.ConsumerAction;
+import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
+import game.modele.utils.ActionConsumer.Function.FunctionLampe;
 public abstract class EntityLight extends TileEntity{
 
+	ConsumerAction cl = new InfiniteActionConsumer(new FunctionLampe());
 	protected int lightLvl;
-	private boolean f = true;
 	public EntityLight(String id, Coordonnees coordoner, Direction direction, boolean etat, int lightLvl) {
 		super(id, coordoner, direction, etat);
 		this.lightLvl = lightLvl;
-		
-		
-				
-		
-		
+		addAction(cl);
 	}
-
-	
 	
 	
 	@Override
-	public void incAnim() {
+	public void active(Entity e) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void active(Entity e) {
-			World.currentMap.DirectionnalTorch((int)this.coordonnes.getX(), (int)this.coordonnes.getY(),9,1,Direction.South,f);
+	public void incAnim() {
+		// TODO Auto-generated method stub
+		
 	}
-
 }
