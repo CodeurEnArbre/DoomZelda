@@ -1,6 +1,8 @@
 package game.modele.entity;
 
 import game.modele.entity.Player.Player;
+import game.modele.entity.living.EntityLiving;
+import game.modele.entity.living.monster.EntityMonster;
 import game.modele.tile.Tile;
 import game.modele.tile.tileGround.tileVoid;
 import game.modele.utils.Coordonnees;
@@ -97,6 +99,7 @@ public abstract class Entity {
 	
 	public boolean setCoordoner(Coordonnees coordonnees) {
 		for(Entity e : World.currentMap.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
+			
 			if(e != this && currentE != e) {
 				currentE = e;
 				e.active(this);
@@ -161,6 +164,14 @@ public abstract class Entity {
 	}
 	public final void update() {
 		ce.act(this);
+
+		for(Entity e : World.currentMap.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
+
+			if(e != this && e instanceof EntityMonster && this.id.equals("Player")) {
+				this.active(e);
+			}
+		}
+
 	}
 	public abstract void active(Entity e);
 	public abstract void incAnim();

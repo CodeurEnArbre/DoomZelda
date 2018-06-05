@@ -22,7 +22,6 @@ public class Menu {
 		if(Menu.currentMenu.get() == Menu.NoMenuID) {
 			selectedButtonX.set(8);
 			selectedButtonY.set(2);
-			System.out.println(selectedButtonX+" "+selectedButtonY);
 			Menu.currentMenu.set(Menu.InventoryMenuID);
 			World.pauseGameLoop();
 			World.onPause.set(true);

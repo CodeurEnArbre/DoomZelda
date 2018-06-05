@@ -97,9 +97,7 @@ public class Player extends EntityLiving{
 	
 	@Override
 	public void active(Entity e) {
-		System.out.print("Touch ");
 		if(e instanceof EntityMonster) {
-			System.out.println("Hit player");
 			perdrePV(1);
 		}
 	}
