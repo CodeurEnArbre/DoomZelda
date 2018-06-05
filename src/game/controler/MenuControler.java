@@ -838,6 +838,7 @@ public class MenuControler implements Initializable{
 								if(!newValue.booleanValue() && addEntityLiving.action.get() == Actions.raise) {
 									ImageView caribouEntity = getEntityImageView(World.player.carriedEntity);
 									caribouEntity.setId("CarriableEntity");
+									PlayerPane.getChildren().remove(caribouEntity);
 									PlayerPane.getChildren().add(caribouEntity);
 									caribouEntity.xProperty().bind(World.player.coordonnes.getXpro().multiply(32).subtract(16));
 									caribouEntity.yProperty().bind(World.player.coordonnes.getYpro().multiply(32).subtract(48));
