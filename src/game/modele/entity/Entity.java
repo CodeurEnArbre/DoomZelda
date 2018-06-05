@@ -1,7 +1,6 @@
 package game.modele.entity;
 
 import game.modele.entity.Player.Player;
-import game.modele.entity.living.EntityLiving;
 import game.modele.entity.living.monster.EntityMonster;
 import game.modele.tile.Tile;
 import game.modele.tile.tileGround.tileVoid;

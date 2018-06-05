@@ -9,7 +9,6 @@ import game.modele.item.weapon.Weapon;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.CountActionConsumer;
-import game.modele.utils.ActionConsumer.Function.ConsumerActionDelay;
 import game.modele.utils.ActionConsumer.Function.FunctionIntouchable;
 import game.modele.world.World;
 import javafx.beans.property.BooleanProperty;

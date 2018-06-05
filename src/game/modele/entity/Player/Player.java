@@ -16,7 +16,6 @@ import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.ConsumerAction;
 import game.modele.utils.ActionConsumer.CountActionConsumer;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
-import game.modele.utils.ActionConsumer.Function.ConsumerActionDelay;
 import game.modele.utils.ActionConsumer.Function.FunctionCantMove;
 import game.modele.utils.ActionConsumer.Function.FunctionLampe;
 import game.modele.utils.ActionConsumer.Function.FunctionMove;

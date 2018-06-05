@@ -5,7 +5,6 @@ import game.modele.entity.living.friendly.EntityFriendly;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.ConsumerAction;
-import game.modele.utils.ActionConsumer.CountActionConsumer;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
 import game.modele.utils.ActionConsumer.Function.FunctionMove;
 
