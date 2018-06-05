@@ -69,15 +69,14 @@ public class World {
 		loadWorld(world,null);
 
 		addEntity(player);
+	
 		GameLoop.getKeyFrames().add(new KeyFrame(Duration.seconds(0.017), e ->{
 			World.currentMap.g.Dijkstra((int)World.player.coordonnes.getY(),(int)World.player.coordonnes.getX());
 		}));
-
-		
 		
 		isWorldLoaded.setValue(true);
 
-		currentMap.g.init();		
+		currentMap.g.init();	
 		
 		//Demarage des la gameloop
 		playGameLoop();
