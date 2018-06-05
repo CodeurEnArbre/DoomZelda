@@ -9,7 +9,7 @@ import game.modele.utils.ActionConsumer.Function.FunctionLampe;
 public abstract class EntityLight extends TileEntity{
 
 	ConsumerAction cl = new InfiniteActionConsumer(new FunctionLampe());
-	protected int lightLvl;
+	public int lightLvl;
 	public EntityLight(String id, Coordonnees coordoner, Direction direction, boolean etat, int lightLvl) {
 		super(id, coordoner, direction, etat);
 		this.lightLvl = lightLvl;

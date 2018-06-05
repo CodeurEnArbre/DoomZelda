@@ -1,20 +1,22 @@
 package game.modele.utils.ActionConsumer.Function;
 
 import game.modele.entity.Entity;
-import game.modele.utils.Direction;
+import game.modele.entity.tileEntity.EntityLight;
 import game.modele.world.World;
 
 public class FunctionLampe extends Function{
+	//Work for EntityLight ONLY
 	@Override
 	protected void Action(Entity e) {		
-
-		World.currentMap.MultiDirectionnalTorch(
-				(int)e.coordonnes.getX(), (int)e.coordonnes.getY(),9,1,false);
+		EntityLight l = (EntityLight)e;
 		
 		World.currentMap.MultiDirectionnalTorch(
-				(int)e.coordonnes.getX(), (int)e.coordonnes.getY(),8,1,true);
+				(int)l.coordonnes.getX(), (int)l.coordonnes.getY()
+				,l.lightLvl + 1,1,false);
 		
+		World.currentMap.MultiDirectionnalTorch(
+				(int)l.coordonnes.getX(), (int)l.coordonnes.getY()
+				,l.lightLvl,1,true);
 		
 	}
-
 }

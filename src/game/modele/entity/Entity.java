@@ -23,7 +23,7 @@ public abstract class Entity {
 	public double slow = 1;
 	public double speed;
 	
-	public double hitBoxX=0;//W.I.P
+	public double hitBoxX=0;//W.I.P16
 	public double hitBoxY=0;//W.I.P
 	
 	public boolean isSolidEntity = false;

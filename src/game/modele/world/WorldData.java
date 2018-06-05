@@ -56,7 +56,7 @@ public class WorldData {
 		for(int x = 0 ; x < width ; x++)
 			for(int y = 0; y < height ; y++) 
 				luminosity[x][y] = new SimpleIntegerProperty(0);
-			
+
 
 		this.zoneName.setValue(zoneName);
 		dijkstra = new HashMap<>();
@@ -221,8 +221,11 @@ public class WorldData {
 	private boolean LightProgressing(SimpleEntry<Point,Integer> value,int vx,int vy,int pas,boolean add) {
 		int nx = value.getKey().x + vx;
 		int ny = value.getKey().y + vy;
-
-		if(value.getValue() - pas >= 0 && next(nx,ny)) {
+		
+		if(!canDifuseHere(nx,ny) || !canDifuseHere(value.getKey().x,value.getKey().y)) {
+			return false;
+		} 
+		else if(value.getValue() - pas >= 0 && next(nx,ny)) {
 			value.getKey().translate(vx,vy);
 			value.setValue(value.getValue() - pas);
 			if(add) {
@@ -241,8 +244,11 @@ public class WorldData {
 	private SimpleEntry<Point,Integer> LightDiffuse(SimpleEntry<Point,Integer> value,int vx,int vy,int pas) {		
 		int nx = value.getKey().x + vx;
 		int ny = value.getKey().y + vy;
-
-		if(value.getValue() - pas >= 0 && next(nx,ny)) {
+		
+		if(!canDifuseHere(nx,ny) || !canDifuseHere(value.getKey().x,value.getKey().y)) {
+			return null;
+		} 
+		else if(value.getValue() - pas >= 0 && next(nx,ny)) {
 			return new SimpleEntry<Point, Integer>(new Point(nx,ny),value.getValue() - pas);
 		}
 		else
@@ -266,14 +272,14 @@ public class WorldData {
 
 		int current_size = allLight.size(); 
 		for(int p = 0;p < current_size;p++) {
-			
+
 			int x = allLight.get(p).getKey().x;
 			int y = allLight.get(p).getKey().y;
-			
+
 			if(!canDifuseHere(x,y)) {
 				continue;
 			} 
-			
+
 			for(int[] vector : new int[][] {{0,1},{0,-1},{1,0},{-1 , 0}}) {
 				int nx = x + vector[0];
 				int ny = y + vector[1];
@@ -304,7 +310,7 @@ public class WorldData {
 		if(World.currentMap.luminosity[x][y].get() < 0)
 			World.currentMap.luminosity[x][y].set(0);
 	}
-	
+
 	public void resetLight() {
 		for(int x = 0 ; x < width ; x++)
 			for(int y = 0; y < height ; y++) 
