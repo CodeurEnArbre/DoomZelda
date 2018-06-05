@@ -37,7 +37,7 @@ public abstract class EntityLiving extends Entity{
 		PV=new SimpleIntegerProperty(12);
 		maxPv=new SimpleIntegerProperty(12);
 		itemsEnMain = FXCollections.observableArrayList();
-		action = new SimpleIntegerProperty();
+		action = new SimpleIntegerProperty(Actions.rien);
 	}
 	
 	public EntityLiving(String id,Coordonnees position, Direction direction, int pv) {
@@ -52,13 +52,14 @@ public abstract class EntityLiving extends Entity{
 	
 	public void perdrePV(int degats) {
 		
-		if(!isInvulnerable.get() || !isDamaged.get()) {
+		if(!isInvulnerable.get() && !isDamaged.get()) {
 			addAction(new CountActionConsumer(20,new FunctionDamage()));
 			if(PV.getValue() > degats)
 				PV.set(PV.get() - degats);
 			else
 				PV.set(0);
-			isDamaged.set(true);
+			if(!isDamaged.get())
+				isDamaged.set(true);
 		}
 	}
 	

@@ -8,7 +8,8 @@ public class FunctionDamage extends Function{
 	@Override
 	protected void Action(Entity e) {
 		EntityLiving entity = (EntityLiving)e;
-		entity.isDamaged.set(true);
+		if(!entity.isDamaged.get())
+			entity.isDamaged.set(true);
 		ce.act(e);
 	}
 

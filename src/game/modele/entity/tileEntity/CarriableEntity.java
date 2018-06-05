@@ -29,8 +29,8 @@ public class CarriableEntity extends TileEntity{
 		super.etat.set(true);
 		World.player.carriedEntity=this;
 		World.currentMap.entity.remove(this);
-		World.player.isCarriedSomething.set(true);
 		World.player.action.set(Actions.raise);
+		World.player.isCarriedSomething.set(true);
 		return true;
 	}
 	
