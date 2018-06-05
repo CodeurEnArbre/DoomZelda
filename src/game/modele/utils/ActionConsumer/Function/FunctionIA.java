@@ -13,10 +13,28 @@ public class FunctionIA  extends Function{
 
 		if(x  == (int)World.player.coordonnes.getY()
 				&& y == (int)World.player.coordonnes.getX()) {
-			e.moveLeft.active = false;
-			e.moveRight.active = false;
-			e.moveDown.active = false;
-			e.moveUP.active = false;
+			double dx = (e.coordonnes.getY());
+			double dy = (e.coordonnes.getX());
+			if(dx > World.player.coordonnes.getY()) {
+				e.moveUP.active = true;
+				e.moveDown.active = false;
+				e.direction.getDirectionProperty().set(Direction.North);
+			}else {
+				e.moveDown.active = true;
+				e.moveUP.active = false;
+				e.direction.getDirectionProperty().set(Direction.South);
+			}
+
+			if(dy > World.player.coordonnes.getX()) {
+				e.moveLeft.active = true;
+				e.moveRight.active = false;
+				e.direction.getDirectionProperty().set(Direction.East);
+			}else {
+				e.moveLeft.active = false;
+				e.moveRight.active = true;
+				e.direction.getDirectionProperty().set(Direction.West);
+			}
+
 		}
 
 		try {
@@ -39,6 +57,6 @@ public class FunctionIA  extends Function{
 			}
 		}catch(NullPointerException n) {}	
 	}
-	
-	
+
+
 }
