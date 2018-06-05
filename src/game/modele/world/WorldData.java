@@ -125,6 +125,15 @@ public class WorldData {
 		return this.entity.stream().filter(a -> a.coordonnes.isSameTile(x, y)).toArray(Entity[]::new);
 	}
 
+	public boolean canDifuseHere(double x,double y) {
+		for(Entity e : entityHere(x, y)) {
+			if(e.isSolidEntity) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public void DirectionnalTorch(int x,int y,int intensity,int pas,int direction,boolean allumage) {
 		ArrayList<SimpleEntry<Point,Integer>> q = new ArrayList<>(); //coord + intensity
 		q.add(new SimpleEntry<Point, Integer>(new Point(x,y), intensity));
@@ -215,7 +224,7 @@ public class WorldData {
 		int nx = value.getKey().x + vx;
 		int ny = value.getKey().y + vy;
 
-		if(value.getValue() - pas >= 0 && nx >= 0 && ny >= 0 && nx < height && ny < width) {
+		if(value.getValue() - pas >= 0 && next(nx,ny)) {
 			value.getKey().translate(vx,vy);
 			value.setValue(value.getValue() - pas);
 			if(add) {
@@ -231,11 +240,11 @@ public class WorldData {
 		return true;
 	}
 
-	private SimpleEntry<Point,Integer> LightDiffuse(SimpleEntry<Point,Integer> value,int vx,int vy,int pas) {
+	private SimpleEntry<Point,Integer> LightDiffuse(SimpleEntry<Point,Integer> value,int vx,int vy,int pas) {		
 		int nx = value.getKey().x + vx;
 		int ny = value.getKey().y + vy;
 
-		if(value.getValue() - pas >= 0 && nx >= 0 && ny >= 0 && nx < height && ny < width) {
+		if(value.getValue() - pas >= 0 && next(nx,ny)) {
 			return new SimpleEntry<Point, Integer>(new Point(nx,ny),value.getValue() - pas);
 		}
 		else
@@ -247,17 +256,36 @@ public class WorldData {
 	public void MultiDirectionnalTorch(int x,int y,int i,int pas,boolean add) {
 
 		ArrayList<SimpleEntry<Point,Integer>> allLight = new ArrayList<>(); 
-		allLight.add(new SimpleEntry<Point, Integer>(new Point(x,y), i));
+		AddElement(allLight,
+				new SimpleEntry<Point, Integer>(new Point(x,y),i), add);
+		MultiTorch(allLight,i - pas, pas, add);
+	}
 
-		while(allLight.size() > 0) {
+	private void MultiTorch(ArrayList<SimpleEntry<Point,Integer>> allLight
+			,int i,int pas,boolean add) {
+
+		if(i == 0)return;
+		
+		int current_size = allLight.size(); 
+		for(int p = 0;p < current_size;p++) {
 			for(int[] vector : new int[][] {{0,1},{0,-1},{1,0},{-1 , 0}}) {
+				int nx = allLight.get(p).getKey().x + vector[0];
+				int ny = allLight.get(p).getKey().y + vector[1];
 
+				if(next(nx,ny)) {
+					AddElement(allLight,
+							new SimpleEntry<Point, Integer>(new Point(nx,ny),i), add);
+				}else
+				{
+					
+				}
 			}
-
-
-
-
 		}
+		MultiTorch(allLight,i - pas, pas, add);
+	}
+
+	private boolean next(int x,int y) {
+		return x >= 0 && x < height && y >= 0 && y < width && canDifuseHere(x, y);
 	}
 
 	private void addLight(int x,int y,int value) {
