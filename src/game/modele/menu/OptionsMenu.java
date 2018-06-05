@@ -15,8 +15,8 @@ import javafx.scene.input.KeyCode;
 
 public class OptionsMenu {
 	
-	public static String[] keyFunctionName = {"Avancer","Bas","Droite","Gauche","Inventaire","Reinitializer"};
-	public static StringProperty[] keyName = {new SimpleStringProperty("Z"),new SimpleStringProperty("S"),new SimpleStringProperty("D"),new SimpleStringProperty("Q"),new SimpleStringProperty("E")};
+	public static String[] keyFunctionName = {"Avancer","Bas","Droite","Gauche","Inventaire","Reinitializer","Interaction","Utiliser Gauche","Utiliser Droite"};
+	public static StringProperty[] keyName = {new SimpleStringProperty("Z"),new SimpleStringProperty("S"),new SimpleStringProperty("D"),new SimpleStringProperty("Q"),new SimpleStringProperty("E"),new SimpleStringProperty("I"),new SimpleStringProperty("O"),new SimpleStringProperty("P")};
 	
 	public static BooleanProperty enterOption=new SimpleBooleanProperty(false);
 	
@@ -66,6 +66,27 @@ public class OptionsMenu {
 					keyName[Menu.selectedButtonY.get()].setValue(k.toString());
 				}
 			break;
+			
+			case 5: 
+				if(verifBind(k)) {
+					Interaction.INTERACT = k;
+					keyName[Menu.selectedButtonY.get()].setValue(k.toString());
+				}
+			break;
+			
+			case 6: 
+				if(verifBind(k)) {
+					Interaction.UseLeftItem = k;
+					keyName[Menu.selectedButtonY.get()].setValue(k.toString());
+				}
+			break;
+			
+			case 7: 
+				if(verifBind(k)) {
+					Interaction.UseRightItem = k;
+					keyName[Menu.selectedButtonY.get()].setValue(k.toString());
+				}
+			break;
 		 
 		}
 		SaveKeyBinding();
@@ -82,6 +103,12 @@ public class OptionsMenu {
 		keyName[3].setValue(KeyCode.Q.getName());
 		Interaction.INVENTAIRE = KeyCode.E;
 		keyName[4].setValue(KeyCode.E.getName());
+		Interaction.INTERACT = KeyCode.I;
+		keyName[5].setValue(KeyCode.I.getName());
+		Interaction.UseLeftItem = KeyCode.O;
+		keyName[6].setValue(KeyCode.O.getName());
+		Interaction.UseRightItem = KeyCode.P;
+		keyName[7].setValue(KeyCode.P.getName());
 		SaveKeyBinding();
 	}
 	
@@ -90,7 +117,11 @@ public class OptionsMenu {
 			k.toString().equals(keyName[1].getValue()) ||
 			k.toString().equals(keyName[2].getValue()) ||
 			k.toString().equals(keyName[3].getValue()) ||
-			k.toString().equals(keyName[4].getValue()) ){
+			k.toString().equals(keyName[4].getValue()) ||
+			k.toString().equals(keyName[5].getValue()) ||
+			k.toString().equals(keyName[6].getValue()) ||
+			k.toString().equals(keyName[7].getValue()) 
+			){
 				return false;		
 		}else {
 			return true;
@@ -100,7 +131,15 @@ public class OptionsMenu {
 	public static void SaveKeyBinding() {
 		try {
 			BufferedWriter optionsFile = new BufferedWriter(new FileWriter(new File("saves/options.cfg").getAbsolutePath()));
-			optionsFile.write(Interaction.AVANCER+","+Interaction.RECULER+","+Interaction.DROITE+","+Interaction.GAUCHE+","+Interaction.INVENTAIRE);
+			optionsFile.write(Interaction.AVANCER+
+						","+Interaction.RECULER+
+						","+Interaction.DROITE+
+						","+Interaction.GAUCHE+
+						","+Interaction.INVENTAIRE+
+						","+Interaction.INTERACT+
+						","+Interaction.UseLeftItem+
+						","+Interaction.UseRightItem
+					);
 			optionsFile.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -108,7 +147,7 @@ public class OptionsMenu {
 	}
 
 	public static void validate() {
-		if(Menu.selectedButtonY.get() == 5) {
+		if(Menu.selectedButtonY.get() == keyFunctionName.length) {
 			defaultReset();
 		}else {
 			enterOption.set(true);

@@ -35,12 +35,12 @@ public class Interaction {
 				World.player.interact();
 		}
 		
-		if(k == UseLeftItem && !World.player.isMovementLock.get()) {
-			
+		if(World.isWorldLoaded.get() && k == UseLeftItem && !World.player.isMovementLock.get()) {
+			World.player.useLeftItem();
 		}
 		
-		if(k == UseRightItem && !World.player.isMovementLock.get()) {
-			
+		if(World.isWorldLoaded.get() && k == UseRightItem && !World.player.isMovementLock.get()) {
+			World.player.useRightItem();
 		}
 		
 		if(k == KeyCode.ENTER) {
@@ -113,7 +113,7 @@ public class Interaction {
 			}
 		}
 		
-		if(World.player.isMovementLock.get()) {
+		if(World.isWorldLoaded.get() && World.player.isMovementLock.get()) {
 			
 			World.player.moveRight.active = false;
 			World.player.moveLeft.active = false;

@@ -40,4 +40,13 @@ public class Zombie extends EntityMonster{
 	public void active(Entity e) {
 
 	}
+	
+	@Override
+	public void incAnim() {
+		this.etatDeplacement.set(
+				this.etatDeplacement.get()
+				+ (this.etatDeplacement.get() < 83 ? 1 : -83));
+	}
+	
+	
 }

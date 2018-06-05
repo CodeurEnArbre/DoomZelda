@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import game.modele.entity.Entity;
 import game.modele.entity.living.EntityLiving;
+import game.modele.entity.living.monster.EntityMonster;
 import game.modele.entity.tileEntity.CarriableEntity;
 import game.modele.item.loot.Loot;
 import game.modele.item.special.Special;
@@ -13,7 +14,6 @@ import game.modele.menu.InventoryMenu;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.ConsumerAction;
-import game.modele.utils.ActionConsumer.CountActionConsumer;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
 import game.modele.utils.ActionConsumer.Function.ConsumerActionDelay;
 import game.modele.utils.ActionConsumer.Function.FunctionCantMove;
@@ -96,7 +96,11 @@ public class Player extends EntityLiving{
 	
 	@Override
 	public void active(Entity e) {
-
+		System.out.print("Touch ");
+		if(e instanceof EntityMonster) {
+			System.out.println("Hit player");
+			perdrePV(1);
+		}
 	}
 	
 	public void giveItemUsable(Usable i) {
@@ -121,6 +125,14 @@ public class Player extends EntityLiving{
 		specials.add(i);
 		InventoryMenu.lastItemAdded.set(4);
 		InventoryMenu.newItem.set(true);
+	}
+	
+	public void useLeftItem() {
+	
+	}
+	
+	public void useRightItem() {
+		
 	}
 	
 	public boolean grabEntity(CarriableEntity entity) {

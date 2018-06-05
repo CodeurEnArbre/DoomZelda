@@ -1,6 +1,7 @@
 package game.modele.entity.living.monster;
 
 
+import game.modele.entity.Entity;
 import game.modele.entity.living.EntityLiving;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
@@ -11,6 +12,9 @@ public abstract class EntityMonster extends EntityLiving {
 		super(id,position, direction);
 	}
 
-
+	@Override
+	public void active(Entity e) {
+		
+	}
 	
 }

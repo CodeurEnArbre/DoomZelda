@@ -578,7 +578,7 @@ public class MenuControler implements Initializable{
 		Map<Integer,Image> images = new HashMap<>();
 		for(int y = 0; y < imageHeight; y++)
 			for(int x = 0; x < imageWidth; x++)
-				images.put(x+y*imageWidth+1,TextureLoader.getTextureMapImage(textureMapName,imageWidthPixels,imageHeightPixels,x,y));
+				images.put(x+y*imageWidth,TextureLoader.getTextureMapImage(textureMapName,imageWidthPixels,imageHeightPixels,x,y));
 		return images;
 	}
 
@@ -907,23 +907,23 @@ public class MenuControler implements Initializable{
 					addEntity.etatDeplacement.addListener( new ChangeListener<Number>() {
 								@Override
 								public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue) {
-
+										
 									switch(addEntity.direction.getDirection()) {
 									case Direction.North:
 										listEntityView.get(addEntity).setImage(
-											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 0));
+											dicoImageAnimationEntity.get(addEntity.getId()).get((int)(observable.getValue().intValue() / 21 + 12)));
 										break;
 									case Direction.East:
 										listEntityView.get(addEntity).setImage(
-											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 4));
+											dicoImageAnimationEntity.get(addEntity.getId()).get((int)(observable.getValue().intValue() / 21 + 4)));
 										break;
 									case Direction.South:
 										listEntityView.get(addEntity).setImage(
-											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 12));
+											dicoImageAnimationEntity.get(addEntity.getId()).get((int)(observable.getValue().intValue() / 21 + 0)));
 										break;
 									case Direction.West:
 										listEntityView.get(addEntity).setImage(
-											dicoImageAnimationEntity.get(addEntity.getId()).get(observable.getValue().intValue() / 21 + 8));
+											dicoImageAnimationEntity.get(addEntity.getId()).get((int)(observable.getValue().intValue() / 21 + 8)));
 										break;
 									}
 
