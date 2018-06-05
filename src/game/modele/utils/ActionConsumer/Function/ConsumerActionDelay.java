@@ -4,24 +4,24 @@ import game.modele.entity.Entity;
 import game.modele.utils.ActionConsumer.ConsumerAction;
 
 public class ConsumerActionDelay  implements ConsumerAction {
-	private int count;
-	private Function ce;
-	
-	public ConsumerActionDelay(int nb,Function f) 
+	private int delay;
+	private ConsumerAction c;
+
+	public ConsumerActionDelay(int delay,ConsumerAction f) 
 	{
-		count = nb;	
-		ce = f;
+		this.delay = delay;	
+		c = f;
 	}
 	public Function getFunction() 
 	{
-		return ce;
+		return c.getFunction();
 	}
 	public boolean act(Entity e) 
 	{
-		ce.Start(e);
-		count--;
-		if(count <= 0)
-			ce.finishAction(e);
-		return count > 0;
+		if(delay-- > 0) {
+			return true;
+		}else {
+			return c.act(e);
+		}
 	}
 }

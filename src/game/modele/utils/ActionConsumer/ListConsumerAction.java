@@ -27,7 +27,10 @@ public class ListConsumerAction{
 		for(int i = 0; i < list.size(); i++)
 		{
 			if(!list.get(i).act(e))
+			{
+				list.get(i).getFunction().finishAction(e);
 				list.remove(i);
+			}
 		}
 	}
 	public void reset() {

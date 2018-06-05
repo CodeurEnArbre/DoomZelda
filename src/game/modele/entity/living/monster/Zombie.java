@@ -26,8 +26,6 @@ public class Zombie extends EntityMonster{
 		addAction(mouvement);
 		addAction(ia);
 		nbFrameAnimation = 4;
-		this.textureHeight = 48;
-		this.textureWidth = 32;
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import game.modele.menu.InventoryMenu;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.ConsumerAction;
+import game.modele.utils.ActionConsumer.CountActionConsumer;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
 import game.modele.utils.ActionConsumer.Function.ConsumerActionDelay;
 import game.modele.utils.ActionConsumer.Function.FunctionCantMove;
@@ -152,7 +153,7 @@ public class Player extends EntityLiving{
 			Entity e = World.currentMap.getEntity(x,y);
 			if(e != null && e instanceof CarriableEntity) {	
 				grabEntity((CarriableEntity)e);
-				addAction(new ConsumerActionDelay(60,new FunctionCantMove()));
+				addAction(new CountActionConsumer(30,new FunctionCantMove()));
 			}
 		}else {
 			placeEntity(this.carriedEntity);
