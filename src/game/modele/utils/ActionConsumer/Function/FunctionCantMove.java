@@ -9,7 +9,7 @@ public class FunctionCantMove extends Function{
 	public void Action(Entity e) {
 		if(e instanceof EntityLiving) {
 			EntityLiving entity = (EntityLiving)e;
-			entity.isMovementLock=true;
+			entity.isMovementLock.set(true);
 		}
 		ce.act(e);
 	}
@@ -18,7 +18,7 @@ public class FunctionCantMove extends Function{
 	public void finishAction(Entity e) {
 		if(e instanceof EntityLiving) {
 			EntityLiving entity = (EntityLiving)e;
-			entity.isMovementLock=false;
+			entity.isMovementLock.set(false);
 		}
 	}
 

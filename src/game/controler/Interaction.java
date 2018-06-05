@@ -30,16 +30,16 @@ public class Interaction {
 	
 	public static void KeyInteractDown(KeyCode k) {
 		
-		if(k == INTERACT && !World.player.isMovementLock) {
+		if(k == INTERACT && !World.player.isMovementLock.get()) {
 			if(World.player != null)
 				World.player.interact();
 		}
 		
-		if(k == UseLeftItem && !World.player.isMovementLock) {
+		if(k == UseLeftItem && !World.player.isMovementLock.get()) {
 			
 		}
 		
-		if(k == UseRightItem && !World.player.isMovementLock) {
+		if(k == UseRightItem && !World.player.isMovementLock.get()) {
 			
 		}
 		
@@ -59,7 +59,7 @@ public class Interaction {
 
 		if(k == AVANCER) {
 			Menu.selectUp();
-			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock) {
+			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock.get()) {
 					World.player.moveUP.attente = false;
 					World.player.moveUP.active = true;
 					if(World.player.moveDown.active) {
@@ -72,7 +72,7 @@ public class Interaction {
 
 		}else if(k == RECULER){
 			Menu.selectDown();
-			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock) {
+			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock.get()) {
 					World.player.moveDown.attente = false;
 					World.player.moveDown.active = true;
 					if(World.player.moveUP.active)
@@ -84,7 +84,7 @@ public class Interaction {
 		}
 		if(k == GAUCHE) {
 			Menu.selectLeft();
-			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock) {
+			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock.get()) {
 				World.player.moveLeft.attente = false;
 				World.player.moveLeft.active = true;
 				if(World.player.moveRight.active)
@@ -96,7 +96,7 @@ public class Interaction {
 			}
 		}else if(k == DROITE ) {
 			Menu.selectRight();
-			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock) {
+			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock.get()) {
 				World.player.moveRight.attente = false;
 				World.player.moveRight.active = true;
 				if(World.player.moveLeft.active)

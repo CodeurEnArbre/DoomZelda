@@ -834,12 +834,12 @@ public class MenuControler implements Initializable{
 						public void changed(ObservableValue<? extends Boolean> observable,
 								Boolean oldValue, Boolean newValue) {
 							if(addEntityLiving instanceof Player) {
-								Player player = (Player)addEntityLiving;
-							}
-							if(!newValue.booleanValue() && addEntityLiving.action.get() == Actions.raise) {
-							//	PlayerPane.getChildren().add(player.)
-							}
+								Player playerEntity = (Player)addEntityLiving;
 							
+							if(!newValue.booleanValue() && addEntityLiving.action.get() == Actions.raise) {
+								//PlayerPane.getChildren().add(playerEntity.);
+							}
+							}
 						}
 					});
 					
