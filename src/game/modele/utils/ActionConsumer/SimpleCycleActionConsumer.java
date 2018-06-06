@@ -9,7 +9,9 @@ public class SimpleCycleActionConsumer extends SimpleListActionConsumer{
 	public void Next(Entity e) {
 		list.get(currentID).getFunction().Reset(e);
 		currentID++;
-		if(currentID > list.size()) currentID = 0;
+		if(!Valid()) currentID = 0;
 	}
-
+	public boolean Valid() {
+		return currentID < list.size();
+	}
 }

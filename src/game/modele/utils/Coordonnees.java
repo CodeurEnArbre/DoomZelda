@@ -49,4 +49,13 @@ public class Coordonnees {
 	public String toString() {
 		return ("x:"+this.x.doubleValue()+", y:"+this.y.doubleValue());
 	}
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Coordonnees) {
+			Coordonnees c = ((Coordonnees)obj);
+			return (int)c.getX() == (int)this.getX()
+					&& (int)c.getY() == (int)this.getY();
+		}else
+			return false;
+	}
 }

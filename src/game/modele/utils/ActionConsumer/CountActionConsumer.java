@@ -4,13 +4,18 @@ import game.modele.entity.Entity;
 import game.modele.utils.ActionConsumer.Function.Function;
 
 public class CountActionConsumer implements ConsumerAction {
+	private int value;
 	private int count;
 	private Function ce;
 	
 	public CountActionConsumer(int nb,Function f) 
 	{
-		count = nb;	
+		value = nb;
+		count = nb;
 		ce = f;
+	}
+	public void renew() {
+		count = value;
 	}
 	public Function getFunction() 
 	{

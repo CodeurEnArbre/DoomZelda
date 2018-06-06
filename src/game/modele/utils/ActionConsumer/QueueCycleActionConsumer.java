@@ -7,9 +7,12 @@ public class QueueCycleActionConsumer extends SimpleCycleActionConsumer implemen
 
 	@Override
 	public boolean act(Entity e) {
-		if(!(currentID < list.size()))currentID = 0;
+		if(!(currentID < list.size()))
+			currentID = 0;
+		
 		if(!list.get(currentID).act(e)) {
 			list.get(currentID).getFunction().finishAction(e);
+			list.get(currentID).getFunction().Reset(e);
 			list.remove(currentID);
 		}
 		return (list.size() > 0);
@@ -17,7 +20,10 @@ public class QueueCycleActionConsumer extends SimpleCycleActionConsumer implemen
 
 	@Override
 	public Function getFunction() {
-		return list.get(currentID).getFunction();
+		if(currentID < list.size())
+			return list.get(currentID).getFunction();
+		else
+			return null;
 	}
 
 }
