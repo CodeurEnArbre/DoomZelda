@@ -6,6 +6,7 @@ import game.modele.entity.Entity;
 import game.modele.entity.living.EntityLiving;
 import game.modele.entity.living.monster.EntityMonster;
 import game.modele.entity.tileEntity.CarriableEntity;
+import game.modele.entity.tileEntity.Chest;
 import game.modele.item.loot.Loot;
 import game.modele.item.special.Special;
 import game.modele.item.usable.Usable;
@@ -148,9 +149,13 @@ public class Player extends EntityLiving{
 			int x = (dir==Direction.West?(int)super.coordonnes.getX()-1:dir==Direction.East?(int)super.coordonnes.getX()+1:(int)super.coordonnes.getX());
 			int y = (dir==Direction.South?(int)super.coordonnes.getY()+1:dir==Direction.North?(int)super.coordonnes.getY()-1:(int)super.coordonnes.getY());
 			Entity e = World.currentMap.getEntity(x,y);
-			if(e != null && e instanceof CarriableEntity) {	
-				grabEntity((CarriableEntity)e);
-				addAction(new CountActionConsumer(30,new FunctionCantMove()));
+			if(e != null) {
+				if(e instanceof CarriableEntity) {	
+					grabEntity((CarriableEntity)e);
+					addAction(new CountActionConsumer(30,new FunctionCantMove()));
+				}else if(e instanceof Chest) {
+					
+				}
 			}
 		}else {
 			placeEntity(this.carriedEntity);

@@ -53,7 +53,6 @@ public class Interaction {
 		
 		if(k == INVENTAIRE) {
 			World.addEntity(new WhiteSheep(new Coordonnees(6, 3), new Direction()));
-			World.addEntity(new Zombie(new Coordonnees(3, 3), new Direction()));
 			Menu.inventory();
 		}
 

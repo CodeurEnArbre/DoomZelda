@@ -181,6 +181,8 @@ public abstract class Entity {
 		
 	}
 	
+	public abstract void interact();
+	
 	public String toString() {
 		return id;
 	}
