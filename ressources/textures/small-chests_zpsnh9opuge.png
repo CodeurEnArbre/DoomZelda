@@ -776,7 +776,7 @@ Pb.InitEventQueue.addToDomReady(function() {
       </script>
     </div>
     <div class="testimonialContainer hideInWidget">
-      <p>"I just wanted to say thank you! Amazing products."</p>
+      <p>"...the prints have made many people so happy that they cried when they received them. Thank you!!"</p>
     </div>
     <div class="siteLinks copy hideInWidget">
       <ul class="unstyled">
@@ -862,7 +862,7 @@ Pb.InitEventQueue.addToDomReady(function() {
         Pb.Data.add('ga', {"url":"\/\/www.google-analytics.com\/analytics.js","debug":"","UA-245455-1":{"gaName":"photobucket","sampleRate":100},"UA-245455-10":{"gaName":"mphotobucket","sampleRate":100},"UA-245455-36":{"gaName":"printio","sampleRate":100},"active":"photobucket"});
 </script>
 <noscript>
-    <img style="display:none;" height="0" width="0" src="http://www.google-analytics.com/collect?payload_data=v%3D1%26tid%3DUA-245455-10%26t%3Dpageview%26cid%3D152827321797471804801257%26dh%3Ds242.photobucket.com%26dp%3D%2Fuser%2Flunarea_album%2Fmedia%2FResources%2FRMVX-Ace%2FRequests%2Fsmall-chests_zpsnh9opuge.png.html%26dt%3Dfeaturephone&z=1528273241" />
+    <img style="display:none;" height="0" width="0" src="http://www.google-analytics.com/collect?payload_data=v%3D1%26tid%3DUA-245455-10%26t%3Dpageview%26cid%3D152827321797471804801257%26dh%3Ds242.photobucket.com%26dp%3D%2Fuser%2Flunarea_album%2Fmedia%2FResources%2FRMVX-Ace%2FRequests%2Fsmall-chests_zpsnh9opuge.png.html%26dt%3Dfeaturephone&z=1528274220" />
 </noscript>
 <script type="text/javascript">
     (function()

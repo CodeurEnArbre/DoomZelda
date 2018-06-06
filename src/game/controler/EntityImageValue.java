@@ -8,6 +8,12 @@ public class EntityImageValue {
 			return 2;
 		case "StoneBlock":
 			return 3;
+		case "Gold Chest":
+			return 4;
+		case "Wood Chest":
+			return 5;
+		case "Iron Chest":
+			return 6;
 		}
 		return 0;
 	}

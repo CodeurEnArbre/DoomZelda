@@ -5,15 +5,16 @@ import game.modele.item.Item;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.CountActionConsumer;
-import game.modele.utils.ActionConsumer.Function.FunctionItemDiscovered;
+//import game.modele.utils.ActionConsumer.Function.FunctionItemDiscovered;
 
 public class Chest extends TileEntity{
 	
 	Item insideItem;
 
-	public Chest(Coordonnees coordoner, Direction direction, Item insideItem) {
-		super("Chest", coordoner, direction, false);
+	public Chest(String id, Coordonnees coordoner, Direction direction, Item insideItem) {
+		super(id, coordoner, direction, false);
 		this.insideItem = insideItem;
+		super.isSolidEntity = true;
 	}
 
 	@Override
@@ -36,7 +37,7 @@ public class Chest extends TileEntity{
 	
 	@Override
 	public void interact() {
-		addAction(new CountActionConsumer(30,new FunctionItemDiscovered()));		
+	//	addAction(new CountActionConsumer(30,new FunctionItemDiscovered()));		
 	}
 	
 }
