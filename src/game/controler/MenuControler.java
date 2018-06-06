@@ -20,7 +20,6 @@ import game.modele.entity.living.EntityLiving;
 import game.modele.entity.tileEntity.CarriableEntity;
 import game.modele.entity.tileEntity.EntityLight;
 import game.modele.entity.tileEntity.TileEntity;
-import game.modele.item.Item;
 import game.modele.menu.InventoryMenu;
 import game.modele.menu.Menu;
 import game.modele.menu.OptionsMenu;
@@ -61,6 +60,8 @@ public class MenuControler implements Initializable{
 	
 	ArrayList<ImageView> coeurs;
 	Image shadowImg;
+	
+	ImageView carriableEntity = new ImageView();
 
 	//Utils
 	public IntegerProperty clignotement = new SimpleIntegerProperty(0);
@@ -69,6 +70,7 @@ public class MenuControler implements Initializable{
 	public static int animationFrame = 0;
 	public static int maxAnimationFrame = 0;
 	public static boolean animationDone = true;
+	public static String animation=null;
 	
 	@FXML
 	private Pane paneWindow;//Main avec tout les autres pane dedans
@@ -591,8 +593,10 @@ public class MenuControler implements Initializable{
 		if(!animationDone) {
 			playPlayerAnimation();
 			animationFrame++;
-			if(animationFrame >= maxAnimationFrame)
+			if(animationFrame >= maxAnimationFrame) {
 				animationDone=true;
+				playerAnimation();
+			}
 		}
 		
 	}
@@ -680,7 +684,6 @@ public class MenuControler implements Initializable{
 
 		if(e instanceof EntityLiving) {
 			((EntityLiving)e).isDamaged.addListener(new ChangeListener<Boolean>() {
-
 				@Override
 				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 					ColorAdjust  color = new ColorAdjust();
@@ -761,9 +764,12 @@ public class MenuControler implements Initializable{
 								changeImageViewItemDirection(new Direction(Direction.West), (EntityLiving)World.player);
 								break;
 						}
+							
 		}});
 			MenuControler.player = i;
 			PlayerPane.getChildren().add(i);
+			carriableEntity.setId("CarriableEntity");
+			PlayerPane.getChildren().add(carriableEntity);
 		}else {
 			if(e instanceof EntityLiving) {
 				i.setFitWidth(32);
@@ -790,12 +796,38 @@ public class MenuControler implements Initializable{
 
 	}
 
+	public static void playerAnimation() {
+		Player player = World.player;
+		switch(player.direction.getDirection()) {
+		
+		case Direction.North:
+			if(player.action.get() == Actions.rien)
+				listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((player.etatDeplacement.getValue().intValue() / 3)));
+			
+			break;
+			
+		case Direction.East:
+			if(player.action.get() == Actions.rien)
+				listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((player.etatDeplacement.getValue().intValue() / 3)+28));
+			break;
+			
+		case Direction.South:
+			if(player.action.get() == Actions.rien)
+				listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((player.etatDeplacement.getValue().intValue() / 3)+56));
+			break;
+			
+		case Direction.West:
+			if(player.action.get() == Actions.rien)
+				listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((player.etatDeplacement.getValue().intValue() / 3)+84));
+			break;
+	}
+	}
+	
 	private ImageView getEntityImageView(Entity e) {
 		ImageView img = null;
 		
 		if(e.getId().equals("Player")) {
 			img = player;
-			
 		}else {
 			for(ImageView imageView:listEntityView.values())
 				if(imageView.getId().equals(""+e.primaryKey))
@@ -871,48 +903,38 @@ public class MenuControler implements Initializable{
 	}
 	
 	public void loadAnimationEntity(ImageView img, Entity addEntity) {
-				if(addEntity instanceof Player) {
-					Player addEntityLiving = (Player)addEntity;
-					
-					addEntityLiving.isCarriedSomething.addListener(new ChangeListener<Boolean>() {
-						@Override
-						public void changed(ObservableValue<? extends Boolean> observable,
-								Boolean oldValue, Boolean newValue) {
-								if(newValue.booleanValue() && addEntityLiving.action.get() == Actions.raise) {
-									ImageView caribouEntity = getEntityImageView(World.player.carriedEntity);
-									caribouEntity.setId("CarriableEntity");
-									for(Node img:PlayerPane.getChildren()) {
-										if(img.getId().equals("CarriableEntity")) {
-											PlayerPane.getChildren().remove(caribouEntity);
-											break;
-										}
-									}
-									PlayerPane.getChildren().add(caribouEntity);
-									caribouEntity.xProperty().bind(World.player.coordonnes.getXpro().multiply(32).subtract(16));
-									caribouEntity.yProperty().bind(World.player.coordonnes.getYpro().multiply(32).subtract(48));
-								}
-						}
-					});
-					
+
+		if(addEntity instanceof Player) {
+			Player addEntityLiving = (Player)addEntity;
+			addEntityLiving.isCarriedSomething.addListener(new ChangeListener<Boolean>() {
+				@Override
+				public void changed(ObservableValue<? extends Boolean> observable,
+						Boolean oldValue, Boolean newValue) {
+					if(newValue.booleanValue()) {
+						carriableEntity.setImage( getEntityImageView(World.player.carriedEntity).getImage());
+						carriableEntity.setOpacity(1);
+						carriableEntity.xProperty().bind(World.player.coordonnes.getXpro().multiply(32).subtract(16));
+						carriableEntity.yProperty().bind(World.player.coordonnes.getYpro().multiply(32).subtract(48));
+
+					}else if(!newValue.booleanValue()) {
+						
+						carriableEntity.setOpacity(0);
+						carriableEntity.xProperty().unbind();
+						carriableEntity.yProperty().unbind();
+					}
+				}
+			});
+
 					addEntityLiving.action.addListener(new ChangeListener<Number>() {
 						@Override
 						public void changed(ObservableValue<? extends Number> observable, Number oldValue,
 								Number newValue) {
 							
-							if(newValue.intValue() != Actions.raise){
-								
-								for(Node n:PlayerPane.getChildren()) {
-									if(n.getId().equals("CarriableEntity")) {
-										PlayerPane.getChildren().remove(n);
-										return;
-									}
-								}
-							}
-							
 							switch(newValue.intValue()) {
 							
 							case Actions.raise:
 								if(addEntityLiving instanceof Player) {
+									animation="raise";
 									animationDone=false;
 									animationFrame=0;
 									maxAnimationFrame=12*3;
@@ -932,16 +954,38 @@ public class MenuControler implements Initializable{
 								//do animation to imageview ->	getEntityImageView(addEntityLiving);
 								break;
 								
+							case Actions.rien:
+								switch(oldValue.intValue()) {
 								
+								case Actions.raise:
+									if(addEntityLiving instanceof Player) {
+										animation="raise";
+										animationDone=false;
+										animationFrame=22*3;
+										maxAnimationFrame=28*3;
+									}
+									
+									break;
+									
+								case Actions.push:
+									//do animation to imageview ->	getEntityImageView(addEntityLiving);
+									break;
+									
+								case Actions.useLeftItem:
+									//do animation to imageview ->	getEntityImageView(addEntityLiving);
+									break;
+									
+								case Actions.useRightItem:
+									//do animation to imageview ->	getEntityImageView(addEntityLiving);
+									break;
+									
+									
+								}
+								break;			
 							}
 						}});
 					
-					//AJOUT DU LISTENER POUR LANIMATION DE LITEM EN MAIN
-					addEntityLiving.itemsEnMain.addListener(new ListChangeListener<Item>(){
-					@Override
-					public void onChanged(Change<? extends Item> c) {
-						initialiseAnimItemEnMain(addEntityLiving);			
-				}});}
+					}
 				
 				affichageEntity(listEntityView.get(addEntity),addEntity);
 				
@@ -980,27 +1024,30 @@ public class MenuControler implements Initializable{
 		Player thePlayer = World.player;
 		switch(thePlayer.direction.getDirection()) {
 		case Direction.North:
-			if(thePlayer.action.get() == Actions.raise){
+			if(animation.equals("raise")){
 				player.setImage(dicoImageAnimationPlayer.get((animationFrame/animDivideur)+28*9));
 			}
 			break;
 			
 		case Direction.East:
-			if(thePlayer.action.get() == Actions.raise){
+			if(animation.equals("raise")){
 				player.setImage(dicoImageAnimationPlayer.get((animationFrame/animDivideur)+28*10));
 			}
 			break;
 			
 		case Direction.South:
-			if(thePlayer.action.get() == Actions.raise){
+			if(animation.equals("raise")){
 				player.setImage(dicoImageAnimationPlayer.get((animationFrame/animDivideur)+28*11));
 			}
 			break;
 			
 		case Direction.West:
-			if(thePlayer.action.get() == Actions.raise){
+			if(animation.equals("raise"))
 					player.setImage(dicoImageAnimationPlayer.get((animationFrame/animDivideur)+28*12));
+			else if(animation.equals("place")) {
+				
 			}
+				
 			break;
 		}
 	}
