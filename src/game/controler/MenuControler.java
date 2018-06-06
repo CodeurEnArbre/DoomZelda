@@ -219,7 +219,10 @@ public class MenuControler implements Initializable{
 		//Creation et binding des Labels des touches
 		for(int key=0; key < KeyName.length;key++) {
 			KeyName[key] = new Label();
-			KeyName[key].relocate(500, 170+(key*70));
+			if(key<4)
+				KeyName[key].relocate(350, 170+(key*70));
+			else
+				KeyName[key].relocate(650, 170+((key-4)*70));
 			KeyName[key].setMinWidth(150);
 			KeyName[key].setMinHeight(50);
 			KeyName[key].setStyle("-fx-font-weight: bold;");
@@ -244,7 +247,10 @@ public class MenuControler implements Initializable{
 			}else {
 				KeyFonctionName[keyName].setStyle("-fx-font-weight: bold;");
 				KeyFonctionName[keyName].setFont(Font.font("Impact",22));
-				KeyFonctionName[keyName].relocate(250, 170+(keyName*70));
+				if(keyName<4)
+					KeyFonctionName[keyName].relocate(100, 170+(keyName*70));
+				else
+					KeyFonctionName[keyName].relocate(450, 170+((keyName-4)*70));
 			}
 			PaneOptions.getChildren().add(KeyFonctionName[keyName]);
 		}
