@@ -7,7 +7,6 @@ public class WhiteSheep extends Sheep{
 
 	public WhiteSheep(Coordonnees position, Direction direction) {
 		super("White Sheep", position, direction);
-		// TODO Auto-generated constructor stub
 	}
 
 }

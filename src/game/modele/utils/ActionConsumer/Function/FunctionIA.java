@@ -10,53 +10,54 @@ public class FunctionIA  extends Function{
 	public void Action(Entity e) {
 		int x = (int)(e.coordonnes.getY());
 		int y = (int)(e.coordonnes.getX());
-
+		
 		if(x  == (int)World.player.coordonnes.getY()
 				&& y == (int)World.player.coordonnes.getX()) {
-			double dx = (e.coordonnes.getY());
-			double dy = (e.coordonnes.getX());
+			double dx = e.coordonnes.getY();
+			double dy = e.coordonnes.getX();
 			if(dx > World.player.coordonnes.getY()) {
-				e.moveUP.active = true;
-				e.moveDown.active = false;
-				e.direction.getDirectionProperty().set(Direction.North);
+				dirigerNorth(e);
 			}else {
-				e.moveDown.active = true;
-				e.moveUP.active = false;
-				e.direction.getDirectionProperty().set(Direction.South);
+				dirigerSouth(e);
 			}
 
 			if(dy > World.player.coordonnes.getX()) {
-				e.moveLeft.active = true;
-				e.moveRight.active = false;
-				e.direction.getDirectionProperty().set(Direction.East);
+				dirigerEast(e);
 			}else {
-				e.moveLeft.active = false;
-				e.moveRight.active = true;
-				e.direction.getDirectionProperty().set(Direction.West);
+				dirigerWest(e);
 			}
 
 		}
 
-		try {
-			if(World.currentMap.g.direction[x][y].getValue() == Graph.left) {
-				e.moveLeft.active = true;
-				e.moveRight.active = false;
-				e.direction.getDirectionProperty().set(Direction.East);
-			}else if(World.currentMap.g.direction[x][y].getValue() == Graph.right) {
-				e.moveLeft.active = false;
-				e.moveRight.active = true;
-				e.direction.getDirectionProperty().set(Direction.West);
-			}else if(World.currentMap.g.direction[x][y].getValue() == Graph.bot) {
-				e.moveUP.active = true;
-				e.moveDown.active = false;
-				e.direction.getDirectionProperty().set(Direction.North);
-			}else if(World.currentMap.g.direction[x][y].getValue() == Graph.top) {
-				e.moveDown.active = true;
-				e.moveUP.active = false;
-				e.direction.getDirectionProperty().set(Direction.South);
-			}
-		}catch(NullPointerException n) {}	
+		if(World.currentMap.g.direction[x][y].getValue() == Graph.left) {
+			dirigerEast(e);
+		}else if(World.currentMap.g.direction[x][y].getValue() == Graph.right) {
+			dirigerWest(e);
+		}else if(World.currentMap.g.direction[x][y].getValue() == Graph.bot) {
+			dirigerNorth(e);
+		}else if(World.currentMap.g.direction[x][y].getValue() == Graph.top) {
+			dirigerSouth(e);
+		}
 	}
 
-
+	private void dirigerSouth(Entity e) {
+		e.moveDown.active = true;
+		e.moveUP.active = false;
+		e.direction.getDirectionProperty().set(Direction.South);
+	}
+	private void dirigerNorth(Entity e) {
+		e.moveUP.active = true;
+		e.moveDown.active = false;
+		e.direction.getDirectionProperty().set(Direction.North);
+	}
+	private void dirigerEast(Entity e) {
+		e.moveLeft.active = true;
+		e.moveRight.active = false;
+		e.direction.getDirectionProperty().set(Direction.East);
+	}
+	private void dirigerWest(Entity e) {
+		e.moveLeft.active = false;
+		e.moveRight.active = true;
+		e.direction.getDirectionProperty().set(Direction.West);
+	}
 }

@@ -3,7 +3,9 @@ package game.modele.utils.graph;
 import java.awt.Point;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 import game.modele.world.World;
 
@@ -20,7 +22,7 @@ public class Graph {
 	public SimpleEntry<Integer,int[]>[][] direction;//indique la direction à prendre calculer par dijkstra
 	public LinkedList<Point> queue;
 
-	public ArrayList<SimpleEntry<Point, int[]>> ligneDroite;
+	public Map<Point, int[]> ligneDroite;
 
 	private int width;
 	private int height;
@@ -29,7 +31,7 @@ public class Graph {
 		this.width = width;
 		this.height = height;
 		node = new int[width][height];
-		ligneDroite = new ArrayList<>();
+		ligneDroite = new HashMap<>();
 	}
 
 	public void init() {
@@ -110,7 +112,7 @@ public class Graph {
 		x += direction[0];
 		y += direction[1];
 		while(x >= 0 && y >= 0 && x < width && y < height && !World.currentMap.getTile(x, y).solid()) {
-			ligneDroite.add(new SimpleEntry<Point, int[]>(new Point(x,y), direction));
+			ligneDroite.put(new Point(x,y), direction);
 			x += direction[0];
 			y += direction[1];
 		}

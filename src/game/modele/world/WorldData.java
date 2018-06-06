@@ -315,5 +315,5 @@ public class WorldData {
 		for(int x = 0 ; x < width ; x++)
 			for(int y = 0; y < height ; y++) 
 				luminosity[x][y] = new SimpleIntegerProperty(0);
-	}
+	}	
 }

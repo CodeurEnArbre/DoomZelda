@@ -29,5 +29,4 @@ public class OptimizedActionConsumer implements ConsumerAction{
 	public Function getFunction() {
 		return c.getFunction();
 	}
-
 }

@@ -73,6 +73,10 @@ public class World {
 			World.currentMap.g.Dijkstra((int)World.player.coordonnes.getY(),(int)World.player.coordonnes.getX());
 		}));
 		
+		GameLoop.getKeyFrames().add(new KeyFrame(Duration.seconds(0.017), e ->{
+			World.currentMap.g.AlgoLigneDroite((int)World.player.coordonnes.getY(),(int)World.player.coordonnes.getX());
+		}));
+		
 		isWorldLoaded.setValue(true);
 
 		currentMap.g.init();
