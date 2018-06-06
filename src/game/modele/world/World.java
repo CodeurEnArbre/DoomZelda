@@ -81,8 +81,8 @@ public class World {
 
 		currentMap.g.init();
 		
-		Chest c = new Chest("Gold Chest", new Coordonnees(5, 6), new Direction(0), new Item("Wooden Sworden"));
-		currentMap.entity.add(c);
+		//Chest c = new Chest("Gold Chest", new Coordonnees(5, 6), new Direction(0), new Item("Wooden Sworden"));
+		//addEntity(c);
 		
 		//Demarage des la gameloop
 		playGameLoop();

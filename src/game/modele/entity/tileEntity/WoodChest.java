@@ -6,7 +6,7 @@ import game.modele.utils.Direction;
 
 public class WoodChest extends Chest{
 
-	public WoodChest(String id, Coordonnees coordoner, Direction direction, Item insideItem) {
+	public WoodChest(Coordonnees coordoner, Direction direction, Item insideItem) {
 		super("Wood Chest", coordoner, direction, insideItem);
 		// TODO Auto-generated constructor stub
 	}

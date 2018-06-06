@@ -7,7 +7,11 @@ import game.modele.entity.Player.Player;
 import game.modele.entity.living.friendly.sheeps.WhiteSheep;
 import game.modele.entity.living.monster.Zombie;
 import game.modele.entity.tileEntity.Bush;
+import game.modele.entity.tileEntity.GoldChest;
+import game.modele.entity.tileEntity.IronChest;
 import game.modele.entity.tileEntity.TikiTorchSmall;
+import game.modele.entity.tileEntity.WoodChest;
+import game.modele.item.Item;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 
@@ -39,7 +43,19 @@ public class EntityFactory {
 				break;
 			case "White Sheep":
 				e = (Entity) WhiteSheep.class.getConstructors()[0]
-						.newInstance(castParams(Zombie.class.getConstructors()[0],params));
+						.newInstance(castParams(WhiteSheep.class.getConstructors()[0],params));
+				break;
+			case "Gold Chest":
+				e = (Entity) GoldChest.class.getConstructors()[0]
+						.newInstance(castParams(GoldChest.class.getConstructors()[0],params));
+				break;
+			case "Iron Chest":
+				e = (Entity) IronChest.class.getConstructors()[0]
+						.newInstance(castParams(IronChest.class.getConstructors()[0],params));
+				break;
+			case "Wood Chest":
+				e = (Entity) WoodChest.class.getConstructors()[0]
+						.newInstance(castParams(WoodChest.class.getConstructors()[0],params));
 				break;
 			default :
 
@@ -76,8 +92,9 @@ public class EntityFactory {
 				os[i] = params[nb++]; 
 			}else if(o.getName().equals(int.class.getName())) {
 				os[i] = Integer.parseInt(params[nb++]);
+			}else if(o.getName().equals(Item.class.getName())) {
+				os[i] = new Item(params[nb++]);
 			}
-
 		}
 		return os;
 
