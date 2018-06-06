@@ -40,24 +40,40 @@ public class FunctionIA  extends Function{
 		}
 	}
 
-	private void dirigerSouth(Entity e) {
+	@Override
+	public void Reset(Entity e) {
+		e.moveDown.active = false;
+		e.moveUP.active = false;
+		e.moveLeft.active = false;
+		e.moveRight.active = false;
+	}
+	
+	public static void dirigerSouth(Entity e) {
 		e.moveDown.active = true;
 		e.moveUP.active = false;
+		e.moveLeft.active = false;
+		e.moveRight.active = false;
 		e.direction.getDirectionProperty().set(Direction.South);
 	}
-	private void dirigerNorth(Entity e) {
+	public static void dirigerNorth(Entity e) {
 		e.moveUP.active = true;
 		e.moveDown.active = false;
+		e.moveLeft.active = false;
+		e.moveRight.active = false;
 		e.direction.getDirectionProperty().set(Direction.North);
 	}
-	private void dirigerEast(Entity e) {
+	public static void dirigerEast(Entity e) {
 		e.moveLeft.active = true;
 		e.moveRight.active = false;
+		e.moveUP.active = false;
+		e.moveDown.active = false;
 		e.direction.getDirectionProperty().set(Direction.East);
 	}
-	private void dirigerWest(Entity e) {
+	public static void dirigerWest(Entity e) {
 		e.moveLeft.active = false;
 		e.moveRight.active = true;
+		e.moveUP.active = false;
+		e.moveDown.active = false;
 		e.direction.getDirectionProperty().set(Direction.West);
 	}
 }

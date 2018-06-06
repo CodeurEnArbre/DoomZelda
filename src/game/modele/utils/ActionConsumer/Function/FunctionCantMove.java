@@ -5,6 +5,10 @@ import game.modele.entity.living.EntityLiving;
 
 public class FunctionCantMove extends Function{
 
+	public FunctionCantMove() {
+		super();
+	}
+	
 	@Override
 	public void Action(Entity e) {
 		if(e instanceof EntityLiving) {

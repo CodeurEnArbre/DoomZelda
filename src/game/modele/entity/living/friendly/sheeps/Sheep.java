@@ -17,6 +17,9 @@ public class Sheep extends EntityFriendly{
 	
 	public Sheep(String id, Coordonnees position, Direction direction) {
 		super(id, position, direction);
+		this.speed = 0.04;
+		this.baseSpeed = 0.04;
+		this.acce = 0.0;
 		addAction(move);
 		addAction(IA);
 

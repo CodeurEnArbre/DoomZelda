@@ -1,29 +1,11 @@
 package game.modele.utils.ActionConsumer;
-
-import java.util.ArrayList;
-
 import game.modele.entity.Entity;
+import game.modele.utils.ActionConsumer.Function.Function;
+import game.modele.utils.ActionConsumer.Function.SimpleListActionConsumer;
 
-public class ListConsumerAction{
-	private ArrayList<ConsumerAction> list;
-	public ListConsumerAction() 
-	{
-		list = new ArrayList<>();
-	}
-	public void add(ConsumerAction ce) 
-	{
-		list.add(ce);
-	}
-	public void del(ConsumerAction c,Entity e) {
-		for(int i = 0; i < list.size();i++) {
-			if(list.get(i) == c) {
-				list.get(i).getFunction().Reset(e);
-				list.remove(i);
-				i--;
-			}
-		}
-	}
-	public void act(Entity e) {
+public class ListConsumerAction extends SimpleListActionConsumer implements ConsumerAction{
+
+	public boolean act(Entity e) {
 		for(int i = 0; i < list.size(); i++)
 		{
 			if(!list.get(i).act(e))
@@ -32,8 +14,13 @@ public class ListConsumerAction{
 				list.remove(i);
 			}
 		}
+		return list.size() > 0;
 	}
 	public void reset() {
 		list.clear();
+	}
+
+	public Function getFunction() {
+		return list.get(0).getFunction();
 	}
 }

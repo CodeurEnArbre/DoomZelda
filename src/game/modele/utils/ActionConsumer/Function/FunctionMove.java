@@ -3,6 +3,11 @@ package game.modele.utils.ActionConsumer.Function;
 import game.modele.entity.Entity;
 
 public class FunctionMove extends Function {
+	
+	public FunctionMove() {
+		super();
+	}
+	
 	@Override
 	public void Action(Entity e) {
 

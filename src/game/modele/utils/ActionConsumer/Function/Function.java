@@ -4,7 +4,11 @@ import game.modele.entity.Entity;
 import game.modele.utils.ActionConsumer.ListConsumerAction;
 
 public abstract class Function {
-	ListConsumerAction ce = new ListConsumerAction();
+	ListConsumerAction ce;
+	
+	public Function() {
+		ce = new ListConsumerAction();
+	}
 	
 	public void Start(Entity e) {
 		ce.act(e);
