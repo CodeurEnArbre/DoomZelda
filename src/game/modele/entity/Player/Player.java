@@ -6,7 +6,8 @@ import game.modele.entity.Entity;
 import game.modele.entity.living.EntityLiving;
 import game.modele.entity.living.monster.EntityMonster;
 import game.modele.entity.tileEntity.CarriableEntity;
-import game.modele.entity.tileEntity.Chest;
+import game.modele.entity.tileEntity.chest.Chest;
+import game.modele.item.Item;
 import game.modele.item.loot.Loot;
 import game.modele.item.special.Special;
 import game.modele.item.usable.Usable;
@@ -102,28 +103,32 @@ public class Player extends EntityLiving{
 		}
 	}
 	
-	public void giveItemUsable(Usable i) {
-		usables.add(i);
-		InventoryMenu.lastItemAdded.set(1);
-		InventoryMenu.newItem.set(true);
-	}
-	
-	public void giveItemWeapon(Weapon i) {
-		weapons.add(i);
-		InventoryMenu.lastItemAdded.set(2);
-		InventoryMenu.newItem.set(true);
-	}
-	
-	public void giveItemLoot(Loot i) {
-		loots.add(i);
-		InventoryMenu.lastItemAdded.set(3);
-		InventoryMenu.newItem.set(true);
-	}
-	
-	public void giveItemSpecial(Special i) {
-		specials.add(i);
-		InventoryMenu.lastItemAdded.set(4);
-		InventoryMenu.newItem.set(true);
+	public Item takeItem(Item item) {
+		Item returnItem = null;
+		if(item instanceof Usable) {
+			usables.add((Usable)item);
+			InventoryMenu.lastItemAdded.set(1);
+			InventoryMenu.newItem.set(true);
+			
+		}else if(item instanceof Weapon) {
+			weapons.add((Weapon)item);
+			InventoryMenu.lastItemAdded.set(2);
+			InventoryMenu.newItem.set(true);
+		}else if(item instanceof Loot) {
+			loots.add((Loot)item);
+			InventoryMenu.lastItemAdded.set(3);
+			InventoryMenu.newItem.set(true);
+			
+		}else if(item instanceof Special) {
+			specials.add((Special)item);
+			InventoryMenu.lastItemAdded.set(4);
+			InventoryMenu.newItem.set(true);
+			
+		}else {
+			System.out.println("C'est quoi ca ???? : "+item);
+		}
+		
+		return returnItem;
 	}
 	
 	public void useLeftItem() {

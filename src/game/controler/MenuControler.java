@@ -18,9 +18,9 @@ import game.modele.entity.Player.Player;
 import game.modele.entity.living.Actions;
 import game.modele.entity.living.EntityLiving;
 import game.modele.entity.tileEntity.CarriableEntity;
-import game.modele.entity.tileEntity.Chest;
 import game.modele.entity.tileEntity.EntityLight;
 import game.modele.entity.tileEntity.TileEntity;
+import game.modele.entity.tileEntity.chest.Chest;
 import game.modele.menu.InventoryMenu;
 import game.modele.menu.Menu;
 import game.modele.menu.OptionsMenu;
@@ -1027,12 +1027,19 @@ public class MenuControler implements Initializable{
 			if(addEntity instanceof Chest) {
 				Chest c = (Chest)addEntity;
 				c.etatAnim.addListener(new ChangeListener<Number>() {
+					String containItemName = c.itemInside.getItemName();
 					ImageView item;
 					@Override
 					public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-						getEntityImageView(c).setImage(dicoImageAnimationEntity.get("Chest").get((observable.getValue().intValue() / 15)));
+						
+						int chestType = 0;
+						if(c.getId().equals("Wood Chest"))
+							chestType=1;
+						else if(c.getId().equals("Iron Chest"))
+							chestType=2;
+						getEntityImageView(c).setImage(dicoImageAnimationEntity.get("Chest").get((observable.getValue().intValue() / 15)+3*chestType));
 						if(observable.getValue().intValue() == 1) {							
-							item = createItemView("Wooden Sworden", (int)c.coordonnes.getX()*32, (int)c.coordonnes.getY()*32, 32, 32);
+							item = createItemView(containItemName, (int)c.coordonnes.getX()*32, (int)c.coordonnes.getY()*32, 32, 32);
 							ArmePane.getChildren().add(item);
 						}else {
 							item.setY(item.getY()-observable.getValue().intValue()/10);

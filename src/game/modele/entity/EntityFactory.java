@@ -7,11 +7,12 @@ import game.modele.entity.Player.Player;
 import game.modele.entity.living.friendly.sheeps.WhiteSheep;
 import game.modele.entity.living.monster.Zombie;
 import game.modele.entity.tileEntity.Bush;
-import game.modele.entity.tileEntity.GoldChest;
-import game.modele.entity.tileEntity.IronChest;
 import game.modele.entity.tileEntity.TikiTorchSmall;
-import game.modele.entity.tileEntity.WoodChest;
+import game.modele.entity.tileEntity.chest.GoldChest;
+import game.modele.entity.tileEntity.chest.IronChest;
+import game.modele.entity.tileEntity.chest.WoodChest;
 import game.modele.item.Item;
+import game.modele.item.ItemFactory;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 
@@ -93,7 +94,7 @@ public class EntityFactory {
 			}else if(o.getName().equals(int.class.getName())) {
 				os[i] = Integer.parseInt(params[nb++]);
 			}else if(o.getName().equals(Item.class.getName())) {
-				os[i] = new Item(params[nb++]);
+				os[i] = ItemFactory.getItem(params[nb++]);
 			}
 		}
 		return os;

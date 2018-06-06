@@ -1,4 +1,4 @@
-package game.modele.entity.tileEntity;
+package game.modele.entity.tileEntity.chest;
 
 import game.modele.item.Item;
 import game.modele.utils.Coordonnees;

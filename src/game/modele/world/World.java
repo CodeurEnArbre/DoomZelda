@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import game.modele.entity.Entity;
 import game.modele.entity.EntityFactory;
 import game.modele.entity.Player.Player;
-import game.modele.entity.tileEntity.Chest;
+import game.modele.entity.tileEntity.chest.Chest;
 import game.modele.item.Item;
 import game.modele.item.loot.Loot;
 import game.modele.item.special.Special;
