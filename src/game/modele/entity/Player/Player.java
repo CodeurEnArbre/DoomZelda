@@ -154,7 +154,7 @@ public class Player extends EntityLiving{
 					grabEntity((CarriableEntity)e);
 					addAction(new CountActionConsumer(30,new FunctionCantMove()));
 				}else if(e instanceof Chest) {
-					
+					e.interact();
 				}
 			}
 		}else {

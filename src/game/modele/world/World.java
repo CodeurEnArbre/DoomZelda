@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 import game.modele.entity.Entity;
 import game.modele.entity.EntityFactory;
 import game.modele.entity.Player.Player;
+import game.modele.entity.tileEntity.Chest;
+import game.modele.item.Item;
 import game.modele.item.loot.Loot;
 import game.modele.item.special.Special;
 import game.modele.item.usable.Usable;
@@ -73,7 +75,10 @@ public class World {
 		
 		isWorldLoaded.setValue(true);
 
-		currentMap.g.init();	
+		currentMap.g.init();
+		
+		Chest c = new Chest(new Coordonnees(5, 6), new Direction(0), new Item("Wooden Sworden"));
+		currentMap.entity.add(c);
 		
 		//Demarage des la gameloop
 		playGameLoop();
