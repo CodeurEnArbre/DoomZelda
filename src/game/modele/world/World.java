@@ -66,7 +66,6 @@ public class World {
 		player = new Player(coord,direction,maxPv,pv,ruby,loots,usables,weapons,specials);
 
 		loadWorld(world,null);
-
 		addEntity(player);
 	
 		GameLoop.getKeyFrames().add(new KeyFrame(Duration.seconds(0.017), e ->{
@@ -79,10 +78,9 @@ public class World {
 		
 		isWorldLoaded.setValue(true);
 
+
 		currentMap.g.init();
 		
-		//Chest c = new Chest("Gold Chest", new Coordonnees(5, 6), new Direction(0), new Item("Wooden Sworden"));
-		//addEntity(c);
 		
 		//Demarage des la gameloop
 		playGameLoop();
@@ -106,6 +104,7 @@ public class World {
 					e.dispose();
 			}
 		
+
 		
 		
 		TileFactory.load();
@@ -126,7 +125,7 @@ public class World {
 
 			tilesData.close();
 			ArrayList<Entity> entitys = loadEntity(file);
-			
+
 			if(worldName==null)
 				currentMap=new WorldData(name, width, height, outside, tileGround, tileSolid, tileTop, entitys);
 			else {

@@ -40,9 +40,11 @@ public class WorldData {
 	}
 
 	public void newWorld(String zoneName, int width, int height, boolean outside, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {
+		
 		Entity.key=0;
 		this.width=width;
 		this.height=height;
+		
 		this.outSide=outside;
 		this.tileGround=ground;
 		this.tiles=tiles;

@@ -42,7 +42,7 @@ public class FunctionIASheep extends Function {
 						,(int)e.coordonnes.getX()))!= null 
 						&& (q.getFunction() != charge.getFunction())
 						&& (q.getFunction() != att.getFunction())
-						&& e.coordonnes.distance(World.player.coordonnes) == 3)	{
+						&& e.coordonnes.distance(World.player.coordonnes) <= 3)	{
 			charge.renew();
 			att.renew();
 			q.add(charge);

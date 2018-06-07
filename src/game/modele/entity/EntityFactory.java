@@ -15,6 +15,7 @@ import game.modele.item.Item;
 import game.modele.item.ItemFactory;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
+import game.modele.world.World;
 
 public class EntityFactory {
 
