@@ -878,6 +878,7 @@ public class MenuControler implements Initializable{
 								else if(!(entity instanceof Chest))
 									entityImg.setImage(EntityLivingTexture.getEntityTexture(entity.getId(), 32, 112, 1, 0));
 							}
+							
 						}
 
 					});
@@ -1026,27 +1027,38 @@ public class MenuControler implements Initializable{
 				}});
 			if(addEntity instanceof Chest) {
 				Chest c = (Chest)addEntity;
-				c.etatAnim.addListener(new ChangeListener<Number>() {
-					String containItemName = c.itemInside.getItemName();
-					ImageView item;
+				String containItemName = c.itemInside.getItemName();
+				ImageView item = createItemView(containItemName, (int)c.coordonnes.getX()*32, (int)c.coordonnes.getY()*32, 32, 32);
+				ImageView EntityImg = getEntityImageView(c);
+				int chestType;
+				if(c.getId().equals("Wood Chest")) {
+					chestType = 1;
+				}else if(c.getId().equals("Iron Chest")) {
+					chestType = 2;
+				}else {
+					chestType = 0;
+				}
+
+				ChangeListener<Number> etatListener = new ChangeListener<Number>() {
 					@Override
 					public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+						if(!oldValue.equals(newValue)) {
 						
-						int chestType = 0;
-						if(c.getId().equals("Wood Chest"))
-							chestType=1;
-						else if(c.getId().equals("Iron Chest"))
-							chestType=2;
-						getEntityImageView(c).setImage(dicoImageAnimationEntity.get("Chest").get((observable.getValue().intValue() / 15)+3*chestType));
-						if(observable.getValue().intValue() == 1) {							
-							item = createItemView(containItemName, (int)c.coordonnes.getX()*32, (int)c.coordonnes.getY()*32, 32, 32);
+						EntityImg.setImage(dicoImageAnimationEntity.get("Chest").get((observable.getValue().intValue() / 15)+3*chestType));
+						if(observable.getValue().intValue() == 1) {						
 							ArmePane.getChildren().add(item);
 						}else {
 							item.setY(item.getY()-observable.getValue().intValue()/10);
 						}
-						//		System.out.println(EntityPane.getChildren());
+						System.out.println("Etat:"+c.etatAnim.get()+" EtatListener:"+observable.getValue().intValue()+" id:"+c.getId()+" type:"+chestType+" imageId:"+EntityImg);
+						if(observable.getValue().intValue() >= 30) {
+							ArmePane.getChildren().remove(item);
+							c.etatAnim.removeListener(this);
+						}
+						}
 					}
-				});
+				};
+				c.etatAnim.addListener(etatListener);
 			}
 
 		}

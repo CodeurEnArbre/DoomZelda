@@ -2,6 +2,7 @@ package game.modele.utils.ActionConsumer.Function;
 
 import game.modele.entity.Entity;
 import game.modele.entity.tileEntity.chest.Chest;
+import game.modele.world.World;
 
 public class FunctionItemDiscovered extends Function{
 
@@ -21,5 +22,10 @@ public class FunctionItemDiscovered extends Function{
 	public void finishAction(Entity e) {
 		Chest c = (Chest)e;
 		c.setEtat(false);
+		c.itemInside = World.player.takeItem(c.itemInside);
+		if(c.itemInside != null) {
+			c.etatAnim.set(0);
+			c.setEtat(true);
+		}
 	}
 }

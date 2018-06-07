@@ -47,7 +47,6 @@ public class Chest extends TileEntity{
 		if(etat.get()) {
 			addAction(new CountActionConsumer(30,new FunctionItemDiscovered()));
 			World.player.addAction(new CountActionConsumer(35,new FunctionCantMove()));
-			itemInside = World.player.takeItem(itemInside);
 		}
 	}
 	

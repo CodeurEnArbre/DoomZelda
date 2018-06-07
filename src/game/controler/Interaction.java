@@ -30,7 +30,7 @@ public class Interaction {
 	
 	public static void KeyInteractDown(KeyCode k) {
 		
-		if(k == INTERACT && !World.player.isMovementLock.get()) {
+		if(World.isWorldLoaded.get() && k == INTERACT && !World.player.isMovementLock.get()) {
 			if(World.player != null)
 				World.player.interact();
 		}

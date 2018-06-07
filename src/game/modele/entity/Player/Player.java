@@ -139,14 +139,6 @@ public class Player extends EntityLiving{
 		
 	}
 	
-	public boolean grabEntity(CarriableEntity entity) {
-		return entity.pickupEntity(this);
-	}
-	
-	public boolean placeEntity(CarriableEntity entity) {
-		return entity.placeEntity(this);
-	}
-	
 	public void interact() {
 		if(carriedEntity == null) {
 			
@@ -156,14 +148,15 @@ public class Player extends EntityLiving{
 			Entity e = World.currentMap.getEntity(x,y);
 			if(e != null) {
 				if(e instanceof CarriableEntity) {	
-					grabEntity((CarriableEntity)e);
+					((CarriableEntity)e).pickupEntity(this);
 					addAction(new CountActionConsumer(30,new FunctionCantMove()));
 				}else if(e instanceof Chest) {
 					e.interact();
+					System.out.println(e);
 				}
 			}
 		}else {
-			placeEntity(this.carriedEntity);
+			(this.carriedEntity).placeEntity(this);
 		}
 	}
 }
