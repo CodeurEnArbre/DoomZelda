@@ -29,10 +29,13 @@ import game.modele.world.World;
 import game.vue.EntityLivingTexture;
 import game.vue.TextureLoader;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -72,7 +75,9 @@ public class MenuControler implements Initializable{
 	public static int maxAnimationFrame = 0;
 	public static boolean animationDone = true;
 	public static String animation=null;
-
+	private ObservableList<Property> entityProperty = FXCollections.observableArrayList();
+	private ObservableList<ChangeListener> entityListener = FXCollections.observableArrayList();
+	
 	@FXML
 	private Pane paneWindow;//Main avec tout les autres pane dedans
 	@FXML
@@ -470,11 +475,14 @@ public class MenuControler implements Initializable{
 		World.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				for(int i=0;i < entityListener.size();i++) {
+					entityProperty.get(i).removeListener(entityListener.get(i));
+					
+				}
 				PaneGround.getChildren().clear();
 				PaneSolid.getChildren().clear();
 				PaneTop.getChildren().clear();
 				EntityPane.getChildren().clear();
-
 				for(ImageView entity:listEntityView.values()) {
 					if(entity.getId()!="Player")
 						listEntityView.remove(entity);
@@ -1058,6 +1066,8 @@ public class MenuControler implements Initializable{
 						}
 					}
 				};
+				entityProperty.add(c.etatAnim);
+				entityListener.add(etatListener);
 				c.etatAnim.addListener(etatListener);
 			}
 
