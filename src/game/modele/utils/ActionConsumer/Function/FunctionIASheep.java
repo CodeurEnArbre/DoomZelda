@@ -9,12 +9,28 @@ import game.modele.utils.ActionConsumer.QueueCycleActionConsumer;
 import game.modele.world.World;
 
 public class FunctionIASheep extends Function {
+	FunctionIA fIA = new FunctionIA();
+	
 	private QueueCycleActionConsumer q = new QueueCycleActionConsumer();
-	private ConsumerAction simpleIA = new InfiniteActionConsumer(new FunctionIA());
-	private CountActionConsumer charge = new CountActionConsumer(5,new FunctionCharge());
-
+	private ConsumerAction simpleIA = new InfiniteActionConsumer(fIA);
+	private CountActionConsumer charge = new CountActionConsumer(42,new FunctionCharge());
+	private CountActionConsumer att = new CountActionConsumer(20, new Function() {
+		
+		@Override
+		protected void Action(Entity e) {
+			e.slow = 0;				
+		}
+		
+		@Override
+		public void Reset(Entity e) {
+			e.slow = 1;
+		}
+		
+	});
+	
 	public FunctionIASheep() {
 		super();
+		fIA.distance = 3;
 		q.add(simpleIA);
 		ce.add(q);
 	}
@@ -24,23 +40,13 @@ public class FunctionIASheep extends Function {
 		if(World.currentMap.g.ligneDroite
 				.get(new Point((int)e.coordonnes.getY()
 						,(int)e.coordonnes.getX()))!= null 
-						&& (q.getFunction() != charge.getFunction()))
-		{
+						&& (q.getFunction() != charge.getFunction())
+						&& (q.getFunction() != att.getFunction())
+						&& e.coordonnes.distance(World.player.coordonnes) == 3)	{
 			charge.renew();
+			att.renew();
 			q.add(charge);
-			q.add(new CountActionConsumer(600, new Function() {
-				
-				@Override
-				protected void Action(Entity e) {
-					e.slow = 0;				
-				}
-				
-				@Override
-				public void Reset(Entity e) {
-					e.slow = 1;
-				}
-				
-			}));
+			q.add(att);
 			q.Next(e);
 		}
 		

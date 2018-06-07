@@ -10,7 +10,6 @@ public class SimpleListActionConsumer {
 	protected ArrayList<ConsumerAction> list = new ArrayList<>();
 	public void add(ConsumerAction ce) 
 	{
-		System.out.println(ce.getFunction());
 		list.add(ce);
 	}
 	public void del(ConsumerAction c,Entity e) {

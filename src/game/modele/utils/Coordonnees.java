@@ -58,4 +58,12 @@ public class Coordonnees {
 		}else
 			return false;
 	}
+	
+	public int distance(Coordonnees c) {
+		double dx = (c.getX() - this.getX());
+		double dy = (c.getY() - this.getY());
+		dx *= dx;
+		dy *= dy;
+		return (int)Math.sqrt(dx + dy);
+	}
 }

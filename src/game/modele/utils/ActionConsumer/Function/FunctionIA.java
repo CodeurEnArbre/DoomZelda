@@ -6,42 +6,56 @@ import game.modele.utils.graph.Graph;
 import game.modele.world.World;
 
 public class FunctionIA  extends Function{
+	public int distance = 0;
+
 	@Override
 	public void Action(Entity e) {
 		int x = (int)(e.coordonnes.getY());
 		int y = (int)(e.coordonnes.getX());
+
+		int xPlayer = (int)World.player.coordonnes.getX();
+		int yPlayer = (int)World.player.coordonnes.getY();
 		
-		if(x  == (int)World.player.coordonnes.getY()
-				&& y == (int)World.player.coordonnes.getX()) {
-			double dx = e.coordonnes.getY();
-			double dy = e.coordonnes.getX();
-			if(dx > World.player.coordonnes.getY()) {
-				dirigerNorth(e);
+		if(e.coordonnes.distance(World.player.coordonnes) > this.distance) {
+
+			if(x  == xPlayer && y == yPlayer) {
+				double dx = e.coordonnes.getY();
+				double dy = e.coordonnes.getX();
+				if(dx > World.player.coordonnes.getY()) {
+					dirigerNorth(e);
+				}else {
+					dirigerSouth(e);
+				}
+
+				if(dy > World.player.coordonnes.getX()) {
+					dirigerEast(e);
+				}else {
+					dirigerWest(e);
+				}
+
 			}else {
-				dirigerSouth(e);
+
+				if(World.currentMap.g.direction[x][y].getValue() == Graph.left) {
+					dirigerEast(e);
+				}else if(World.currentMap.g.direction[x][y].getValue() == Graph.right) {
+					dirigerWest(e);
+				}else if(World.currentMap.g.direction[x][y].getValue() == Graph.bot) {
+					dirigerNorth(e);
+				}else if(World.currentMap.g.direction[x][y].getValue() == Graph.top) {
+					dirigerSouth(e);
+				}
 			}
-
-			if(dy > World.player.coordonnes.getX()) {
-				dirigerEast(e);
-			}else {
-				dirigerWest(e);
-			}
-
-		}
-
-		if(World.currentMap.g.direction[x][y].getValue() == Graph.left) {
-			dirigerEast(e);
-		}else if(World.currentMap.g.direction[x][y].getValue() == Graph.right) {
-			dirigerWest(e);
-		}else if(World.currentMap.g.direction[x][y].getValue() == Graph.bot) {
-			dirigerNorth(e);
-		}else if(World.currentMap.g.direction[x][y].getValue() == Graph.top) {
-			dirigerSouth(e);
+		}else {
+			stop(e);
 		}
 	}
 
 	@Override
 	public void Reset(Entity e) {
+		stop(e);
+	}
+
+	public static void stop(Entity e) {
 		e.moveDown.active = false;
 		e.moveUP.active = false;
 		e.moveLeft.active = false;
