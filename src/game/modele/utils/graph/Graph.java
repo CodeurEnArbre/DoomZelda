@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import game.modele.entity.Entity;
+import game.modele.entity.tileEntity.TileEntity;
+import game.modele.utils.Coordonnees;
 import game.modele.world.World;
 
 public class Graph {
@@ -34,7 +37,7 @@ public class Graph {
 		ligneDroite = new HashMap<>();
 	}
 
-	public void init() {
+	public void initNodes() {
 		for(int x = 0; x < width; x++) {
 			for(int y = 0; y < height; y++) {
 				node[x][y] = getValue(x, y);
@@ -89,8 +92,19 @@ public class Graph {
 			queue.addLast(new Point(nx,ny));
 		}
 	}
+	
+	private boolean obstacle(int x,int y) {
+		for(Entity e : World.currentMap.entityHere(x, y)) {
+			if(e instanceof TileEntity) {
+				System.out.println(e);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private int getValue(int x,int y) {
-		if(x >= height || x < 0 || y >= width || y < 0) {
+		if(x >= height || x < 0 || y >= width || y < 0 || obstacle(y,x)) {
 			return -1;
 		}
 		else if(!World.currentMap.getTile(x, y).solid())

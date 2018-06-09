@@ -82,7 +82,7 @@ public class World {
 		isWorldLoaded.setValue(true);
 
 
-		currentMap.g.init();
+		currentMap.g.initNodes();
 		
 		
 		//Demarage des la gameloop
@@ -107,9 +107,6 @@ public class World {
 					e.dispose();
 			}
 		
-
-		
-		
 		TileFactory.load();
 		try {
 			//Chargement des tiles
@@ -127,6 +124,7 @@ public class World {
 			Tile[][] tileTop=  makeTileGrid(width, height, tilesData);
 
 			tilesData.close();
+			
 			ArrayList<Entity> entitys = loadEntity(file);
 
 			if(worldName==null)
@@ -134,7 +132,7 @@ public class World {
 			else {
 				currentMap.newWorld(worldName, width, height, outside, tileGround, tileSolid, tileTop, entitys);
 			}
-
+			World.currentMap.g.initNodes();
 		}catch(IOException e) {
 			System.out.println("Impossible de charger la map");
 			e.printStackTrace();

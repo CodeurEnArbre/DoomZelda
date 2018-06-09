@@ -44,6 +44,8 @@ public class WorldData {
 		Entity.key=0;
 		this.width=width;
 		this.height=height;
+
+		g = new Graph(width, height);
 		
 		this.outSide=outside;
 		this.tileGround=ground;
@@ -53,7 +55,8 @@ public class WorldData {
 		for(Entity e : entitys) {
 			this.entity.add(e);
 			World.addKeyGameLoop(y -> e.update());
-		}
+		}	
+		
 		this.luminosity = new SimpleIntegerProperty[width][height];
 		for(int x = 0 ; x < width ; x++)
 			for(int y = 0; y < height ; y++) 
@@ -62,7 +65,6 @@ public class WorldData {
 
 		this.zoneName.setValue(zoneName);
 		dijkstra = new HashMap<>();
-		g = new Graph(width, height);
 	}
 
 	public String getName() {
