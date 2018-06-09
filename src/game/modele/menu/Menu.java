@@ -11,12 +11,17 @@ public class Menu {
 	public static final int MainMenuID = 0;
 	public static final int InGameMenuID = 1 ;
 	public static final int OptionsMenuID = 2 ;
-	public static final int InventoryMenuID = 100 ;
+	public static final int InventoryMenuID = 10 ;
 	
 	public static IntegerProperty selectedButtonX = new SimpleIntegerProperty(0);
 	public static IntegerProperty selectedButtonY = new SimpleIntegerProperty(0);
+	
 	public static IntegerProperty currentMenu = new SimpleIntegerProperty(MainMenuID);
 	public static int lastMenu;
+	
+	public static int MainMenuHeight = 3;
+	public static int InGameMenuHeight = 3;
+	public static int OptionsMenuHeight = 5;
 	
 	public static void inventory() {
 		if(Menu.currentMenu.get() == Menu.NoMenuID) {
@@ -99,17 +104,17 @@ public class Menu {
 	}
 	
 	public static void selectDown() {
-		if(currentMenu.get() != NoMenuID && currentMenu.get() <100){
+		if(currentMenu.get() != NoMenuID && currentMenu.get() < 10){
 			int min=0;
 			switch(currentMenu.get()) {
 			case MainMenuID:
-				min=3;
+				min=MainMenuHeight;
 				break;
 			case InGameMenuID:
-				min=3;
+				min=InGameMenuHeight;
 				break;
 			case OptionsMenuID:
-				min=6;
+				min=OptionsMenuHeight;
 				break;
 			}
 			min--;
@@ -125,12 +130,35 @@ public class Menu {
 	public static void selectLeft() {
 		if(currentMenu.get() == InventoryMenuID){
 			InventoryMenu.selectLeft();
+		}else {
+			if(selectedButtonX.get()>0) {
+				selectedButtonX.set(selectedButtonX.get()-1);
+			}
 		}
 	}
 	
 	public static void selectRight() {
 		if(currentMenu.get() == InventoryMenuID){
 			InventoryMenu.selectRight();
+		}else if(currentMenu.get() == OptionsMenuID) {
+
+			int min=0;
+			switch(currentMenu.get()) {
+			case MainMenuID:
+				min=1;
+				break;
+			case InGameMenuID:
+				min=1;
+				break;
+			case OptionsMenuID:
+				min=2;
+				break;
+			}
+			min--;
+
+			if(selectedButtonX.get()<min) {
+				selectedButtonX.set(selectedButtonX.get()+1);
+			}
 		}
 	}
 }

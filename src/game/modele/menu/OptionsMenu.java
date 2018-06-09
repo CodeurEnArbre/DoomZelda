@@ -15,7 +15,7 @@ import javafx.scene.input.KeyCode;
 
 public class OptionsMenu {
 	
-	public static String[] keyFunctionName = {"Avancer","Bas","Droite","Gauche","Inventaire","Reinitializer","Interaction","Utiliser Gauche","Utiliser Droite"};
+	public static String[] keyFunctionName = {"Avancer","Bas","Droite","Gauche","Inventaire","Interaction","Utiliser Gauche","Utiliser Droite","Reinitializer"};
 	public static StringProperty[] keyName = {new SimpleStringProperty("Z"),new SimpleStringProperty("S"),new SimpleStringProperty("D"),new SimpleStringProperty("Q"),new SimpleStringProperty("E"),new SimpleStringProperty("I"),new SimpleStringProperty("O"),new SimpleStringProperty("P")};
 	
 	public static BooleanProperty enterOption=new SimpleBooleanProperty(false);
@@ -31,60 +31,63 @@ public class OptionsMenu {
 	}
 
 	public static void setBind(KeyCode k) {
+		if(Menu.selectedButtonX.get() == 0)
 		switch(Menu.selectedButtonY.get()) {
 			case 0: 
 				if(verifBind(k)) {
 					Interaction.AVANCER = k;
-					keyName[Menu.selectedButtonY.get()].setValue(k.toString());
+					keyName[Menu.selectedButtonY.get()+Menu.selectedButtonX.get()*4].setValue(k.toString());
 				}
 			break;
 			
 			case 1:
 				if(verifBind(k)) {
 					Interaction.RECULER = k;
-					keyName[Menu.selectedButtonY.get()].setValue(k.toString());
+					keyName[Menu.selectedButtonY.get()+Menu.selectedButtonX.get()*4].setValue(k.toString());
 			}
 			break;
 			
 			case 2: 
 				if(verifBind(k)) {
 					Interaction.DROITE = k;
-					keyName[Menu.selectedButtonY.get()].setValue(k.toString());
+					keyName[Menu.selectedButtonY.get()+Menu.selectedButtonX.get()*4].setValue(k.toString());
 				}
 			break;
 			
 			case 3: 
 				if(verifBind(k)) {
 					Interaction.GAUCHE = k;
-					keyName[Menu.selectedButtonY.get()].setValue(k.toString());
+					keyName[Menu.selectedButtonY.get()+Menu.selectedButtonX.get()*4].setValue(k.toString());
 				}
 			break;
-			
-			case 4: 
+		}
+		else
+		switch(Menu.selectedButtonY.get()) {
+			case 0: 
 				if(verifBind(k)) {
 					Interaction.INVENTAIRE = k;
-					keyName[Menu.selectedButtonY.get()].setValue(k.toString());
+					keyName[Menu.selectedButtonY.get()+Menu.selectedButtonX.get()*4].setValue(k.toString());
 				}
 			break;
 			
-			case 5: 
+			case 1: 
 				if(verifBind(k)) {
 					Interaction.INTERACT = k;
-					keyName[Menu.selectedButtonY.get()].setValue(k.toString());
+					keyName[Menu.selectedButtonY.get()+Menu.selectedButtonX.get()*4].setValue(k.toString());
 				}
 			break;
 			
-			case 6: 
+			case 2: 
 				if(verifBind(k)) {
 					Interaction.UseLeftItem = k;
-					keyName[Menu.selectedButtonY.get()].setValue(k.toString());
+					keyName[Menu.selectedButtonY.get()+Menu.selectedButtonX.get()*4].setValue(k.toString());
 				}
 			break;
 			
-			case 7: 
+			case 3: 
 				if(verifBind(k)) {
 					Interaction.UseRightItem = k;
-					keyName[Menu.selectedButtonY.get()].setValue(k.toString());
+					keyName[Menu.selectedButtonY.get()+Menu.selectedButtonX.get()*4].setValue(k.toString());
 				}
 			break;
 		 
@@ -147,7 +150,7 @@ public class OptionsMenu {
 	}
 
 	public static void validate() {
-		if(Menu.selectedButtonY.get() == keyFunctionName.length) {
+		if(Menu.selectedButtonY.get() >= Menu.OptionsMenuHeight-1) {
 			defaultReset();
 		}else {
 			enterOption.set(true);

@@ -75,9 +75,11 @@ public class MenuControler implements Initializable{
 	public static int maxAnimationFrame = 0;
 	public static boolean animationDone = true;
 	public static String animation=null;
+	@SuppressWarnings("rawtypes")
 	private ObservableList<Property> entityProperty = FXCollections.observableArrayList();
+	@SuppressWarnings("rawtypes")
 	private ObservableList<ChangeListener> entityListener = FXCollections.observableArrayList();
-	
+
 	@FXML
 	private Pane paneWindow;//Main avec tout les autres pane dedans
 	@FXML
@@ -228,7 +230,7 @@ public class MenuControler implements Initializable{
 			if(key<4)
 				KeyName[key].relocate(350, 170+(key*70));
 			else
-				KeyName[key].relocate(650, 170+((key-4)*70));
+				KeyName[key].relocate(600, 170+((key-4)*70));
 			KeyName[key].setMinWidth(150);
 			KeyName[key].setMinHeight(50);
 			KeyName[key].setStyle("-fx-font-weight: bold;");
@@ -254,7 +256,7 @@ public class MenuControler implements Initializable{
 				KeyFonctionName[keyName].setStyle("-fx-font-weight: bold;");
 				KeyFonctionName[keyName].setFont(Font.font("Impact",22));
 				if(keyName<4)
-					KeyFonctionName[keyName].relocate(100, 170+(keyName*70));
+					KeyFonctionName[keyName].relocate(200, 170+(keyName*70));
 				else
 					KeyFonctionName[keyName].relocate(450, 170+((keyName-4)*70));
 			}
@@ -403,10 +405,10 @@ public class MenuControler implements Initializable{
 			break;
 
 		case Menu.OptionsMenuID:
-			if(y == OptionsMenu.keyFunctionName.length-1) {
+			if(y == Menu.OptionsMenuHeight-1) {
 				selectorInOption.relocate(640, 553);
-			}else {
-				selectorInOption.relocate(200, 170+70*y);
+			}else{
+				selectorInOption.relocate(175+x*250, 170+70*y);
 			}
 			break;
 
@@ -473,11 +475,13 @@ public class MenuControler implements Initializable{
 
 		//Ajout d'un Listener si la map change
 		World.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
+
+			@SuppressWarnings("unchecked")
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				for(int i=0;i < entityListener.size();i++) {
 					entityProperty.get(i).removeListener(entityListener.get(i));
-					
+
 				}
 				PaneGround.getChildren().clear();
 				PaneSolid.getChildren().clear();
@@ -720,15 +724,15 @@ public class MenuControler implements Initializable{
 		}
 
 		if(e.getId().equals("Player")) {
-			Player player = (Player)e;
+			Player theplayer = (Player)e;
 			i.setFitWidth(32);
 			i.setFitHeight(64);
-			i.xProperty().bind(player.coordonnes.getXpro().multiply(32).subtract(16));
-			i.yProperty().bind(player.coordonnes.getYpro().multiply(32).subtract(48));
-			i.setImage(EntityLivingTexture.getEntityTexture(player.getId(), 24, 32, 0, 2));
-			paneGame.layoutXProperty().bind(player.coordonnes.getXpro().multiply(-32).add(432));
-			paneGame.layoutYProperty().bind(player.coordonnes.getYpro().multiply(-32).add(320));
-			player.etatDeplacement.addListener(
+			i.xProperty().bind(theplayer.coordonnes.getXpro().multiply(32).subtract(16));
+			i.yProperty().bind(theplayer.coordonnes.getYpro().multiply(32).subtract(48));
+			i.setImage(EntityLivingTexture.getEntityTexture(theplayer.getId(), 24, 32, 0, 2));
+			paneGame.layoutXProperty().bind(theplayer.coordonnes.getXpro().multiply(-32).add(432));
+			paneGame.layoutYProperty().bind(theplayer.coordonnes.getYpro().multiply(-32).add(320));
+			theplayer.etatDeplacement.addListener(
 					new ChangeListener<Number>() {
 
 						@Override
@@ -736,11 +740,11 @@ public class MenuControler implements Initializable{
 							switch(e.direction.getDirection()) {
 
 							case Direction.North:
-								if(player.action.get() == Actions.rien)
-									listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)));
-								else if(player.action.get() == Actions.raise){
-									if(!player.isMovementLock.get()) {
-										listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 8)+11+28*9));
+								if(theplayer.action.get() == Actions.rien)
+									player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)));
+								else if(theplayer.action.get() == Actions.raise){
+									if(!theplayer.isMovementLock.get()) {
+										player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 8)+11+28*9));
 									}
 								}
 
@@ -748,33 +752,33 @@ public class MenuControler implements Initializable{
 								break;
 
 							case Direction.East:
-								if(player.action.get() == Actions.rien)
-									listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+28));
-								else if(player.action.get() == Actions.raise){
-									if(!player.isMovementLock.get()) {
-										listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 8)+11+28*10));
+								if(theplayer.action.get() == Actions.rien)
+									player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+28));
+								else if(theplayer.action.get() == Actions.raise){
+									if(!theplayer.isMovementLock.get()) {
+										player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 8)+11+28*10));
 									}
 								}
 								changeImageViewItemDirection(new Direction(Direction.East), (EntityLiving)World.player);
 								break;
 
 							case Direction.South:
-								if(player.action.get() == Actions.rien)
-									listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+56));
-								else if(player.action.get() == Actions.raise){
-									if(!player.isMovementLock.get()) {
-										listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 8)+11+28*11));
+								if(theplayer.action.get() == Actions.rien)
+									player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+56));
+								else if(theplayer.action.get() == Actions.raise){
+									if(!theplayer.isMovementLock.get()) {
+										player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 8)+11+28*11));
 									}
 								}
 								changeImageViewItemDirection(new Direction(Direction.South), (EntityLiving)World.player);
 								break;
 
 							case Direction.West:
-								if(player.action.get() == Actions.rien)
-									listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+84));
-								else if(player.action.get() == Actions.raise){
-									if(!player.isMovementLock.get()) {
-										listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 8)+11+28*12));
+								if(theplayer.action.get() == Actions.rien)
+									player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+84));
+								else if(theplayer.action.get() == Actions.raise){
+									if(!theplayer.isMovementLock.get()) {
+										player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 8)+11+28*12));
 									}
 								}
 								changeImageViewItemDirection(new Direction(Direction.West), (EntityLiving)World.player);
@@ -854,20 +858,20 @@ public class MenuControler implements Initializable{
 
 	private void affichageEntitys() {
 		//Supprime tout les imageview d'entites inutilisee
-		for(ImageView img : listEntityView.values()) {
-			boolean found = false;
-
-			for(Entity entity : World.currentMap.getEntity()) {
-				if(img.getId().equals(entity.primaryKey)) {
-					found=true;
-					break;
-				}
-			}
-			if(!found) {	
-				listEntityView.remove(img);
-			}
-
-		}
+//		for(ImageView img : listEntityView.values()) { 			déja fait
+//			boolean found = false;
+//
+//			for(Entity entity : World.currentMap.getEntity()) {
+//				if(img.getId().equals(entity.primaryKey)) {
+//					found=true;
+//					break;
+//				}
+//			}
+//			if(!found) {	
+//				listEntityView.remove(img);
+//			}
+//
+//		}
 
 		//Cree les imageviews des entites
 		for(Entity entity:World.currentMap.getEntity()) {
@@ -879,14 +883,14 @@ public class MenuControler implements Initializable{
 
 						@Override
 						public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-							ImageView entityImg = getEntityImageView(entity);
+							ImageView entityImg = listEntityView.get(entity);
 							if(((TileEntity) entity).getEtat() && entityImg != null) {
 								if(entity instanceof CarriableEntity)
 									entityImg.setImage(dicoImageTileEntityMap.get(EntityImageValue.getEntityNum(entity.getId())));
 								else if(!(entity instanceof Chest))
 									entityImg.setImage(EntityLivingTexture.getEntityTexture(entity.getId(), 32, 112, 1, 0));
 							}
-							
+
 						}
 
 					});
@@ -900,20 +904,25 @@ public class MenuControler implements Initializable{
 				ArrayList<ImageView> toRemove = new ArrayList<>();
 
 				c.next();
-				for(Entity entity:c.getRemoved())
+				for(Entity entity:c.getRemoved()) {
+					if(entity != World.player.carriedEntity)//Pour pas avoir de probleme
+						listEntityView.remove(entity);
 					for(Node img:EntityPane.getChildren())
 						if(img instanceof ImageView)
 							if(((ImageView) img).getId().equals(""+entity.primaryKey))
 								toRemove.add((ImageView)img);			
-
+				}
 				for(ImageView img:toRemove) {
 					EntityPane.getChildren().remove(img);
 				}
 
 				toRemove.clear();
 
-				for(Entity entity:c.getAddedSubList())
-					loadAnimationEntity(new ImageView(), entity);
+				for(Entity entity:c.getAddedSubList()) {
+					ImageView img = new ImageView();
+					listEntityView.put(entity,img);
+					loadAnimationEntity(img, entity);
+				}
 
 			}
 		});
@@ -928,7 +937,7 @@ public class MenuControler implements Initializable{
 				public void changed(ObservableValue<? extends Boolean> observable,
 						Boolean oldValue, Boolean newValue) {
 					if(newValue.booleanValue()) {
-						carriableEntity.setImage( getEntityImageView(World.player.carriedEntity).getImage());
+						carriableEntity.setImage( listEntityView.get(World.player.carriedEntity).getImage());
 						carriableEntity.setOpacity(1);
 						carriableEntity.xProperty().bind(World.player.coordonnes.getXpro().multiply(32).subtract(16));
 						carriableEntity.yProperty().bind(World.player.coordonnes.getYpro().multiply(32).subtract(48));
@@ -1051,18 +1060,17 @@ public class MenuControler implements Initializable{
 					@Override
 					public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 						if(!oldValue.equals(newValue)) {
-						
-						EntityImg.setImage(dicoImageAnimationEntity.get("Chest").get((observable.getValue().intValue() / 15)+3*chestType));
-						if(observable.getValue().intValue() == 1) {						
-							ArmePane.getChildren().add(item);
-						}else {
-							item.setY(item.getY()-observable.getValue().intValue()/10);
-						}
-						System.out.println("Etat:"+c.etatAnim.get()+" EtatListener:"+observable.getValue().intValue()+" id:"+c.getId()+" type:"+chestType+" imageId:"+EntityImg);
-						if(observable.getValue().intValue() >= 30) {
-							ArmePane.getChildren().remove(item);
-							c.etatAnim.removeListener(this);
-						}
+
+							EntityImg.setImage(dicoImageAnimationEntity.get("Chest").get((observable.getValue().intValue() / 15)+3*chestType));
+							if(observable.getValue().intValue() == 1) {						
+								ArmePane.getChildren().add(item);
+							}else {
+								item.setY(item.getY()-observable.getValue().intValue()/10);
+							}
+							if(observable.getValue().intValue() >= 30) {
+								ArmePane.getChildren().remove(item);
+								c.etatAnim.removeListener(this);
+							}
 						}
 					}
 				};
