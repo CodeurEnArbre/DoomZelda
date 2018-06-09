@@ -1,11 +1,10 @@
-package game.modele.entity.Player;
+package game.modele.entity.living;
 
 import java.util.ArrayList;
 
 import game.modele.entity.Entity;
-import game.modele.entity.living.EntityLiving;
 import game.modele.entity.living.monster.EntityMonster;
-import game.modele.entity.tileEntity.CarriableEntity;
+import game.modele.entity.tileEntity.carriable.CarriableEntity;
 import game.modele.entity.tileEntity.chest.Chest;
 import game.modele.item.Item;
 import game.modele.item.loot.Loot;
@@ -25,8 +24,10 @@ import game.modele.utils.ActionConsumer.Function.FunctionMovement;
 import game.modele.world.World;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 public class Player extends EntityLiving{
 
@@ -39,8 +40,10 @@ public class Player extends EntityLiving{
 	public ArrayList<Weapon> weapons;
 	public ArrayList<Special> specials;
 	
-	private int maxRuby=100;
-	public static IntegerProperty ruby; //ARGENT!!!	
+	public static int maxRupees=100;
+	public static IntegerProperty rupees; //ARGENT!!!	
+	@SuppressWarnings("rawtypes")
+	public ObjectProperty pickupItem;
 	public CarriableEntity carriedEntity;
 	public BooleanProperty isCarriedSomething;
 	
@@ -50,8 +53,9 @@ public class Player extends EntityLiving{
 		this.slow =	1;
 		super.maxPv.set(maxPv);
 		super.PV.set(pv);
-		Player.ruby = new SimpleIntegerProperty(ruby);
+		Player.rupees = new SimpleIntegerProperty(ruby);
 		isCarriedSomething = new SimpleBooleanProperty();
+		pickupItem = new SimpleObjectProperty<>();
 		this.usables = usables;
 		this.weapons = weapons;
 		this.loots=loots;
@@ -68,26 +72,30 @@ public class Player extends EntityLiving{
 		delAction(mouvement);
 	}
 	
-	
-	public int getRuby() {
-		return Player.ruby.get();
+	public void addRuby(int quantity) {
+		if((rupees.get()+quantity)<maxRupees) {
+			Player.rupees.set(rupees.get()+quantity);
+		}else {
+			Player.rupees.set(maxRupees);
+		}
 	}
 	
-	public boolean removeRuby(int quantity) {
-		if(ruby.get()>=quantity) {
-			Player.ruby.set(Player.ruby.get()-quantity);
+	public void removeRuby(int quantity) {
+		if(rupees.get()-quantity < 0) {
+			Player.rupees.set(0);
+		}else {
+			Player.rupees.set(rupees.get()-quantity);
+		}
+	}
+	
+	public boolean canRemoveRuby(int quantity) {
+		if(rupees.get()>=quantity) {
+			Player.rupees.set(Player.rupees.get()-quantity);
 			return true;
 		}else
 			return false;
 	}
-	
-	public void addRuby(int quantity) {
-		if((ruby.get()+quantity)>maxRuby) {
-			Player.ruby.set(ruby.get()+quantity);
-		}else {
-			Player.ruby.set(maxRuby);
-		}
-	}
+
 	
 	@Override
 	public void incAnim() {
@@ -106,26 +114,58 @@ public class Player extends EntityLiving{
 	public Item takeItem(Item item) {
 		Item returnItem = null;
 		if(item instanceof Usable) {
-			usables.add((Usable)item);
-			InventoryMenu.lastItemAdded.set(1);
-			InventoryMenu.newItem.set(true);
+			if(usables.size() >= 24)
+				returnItem = item;
+			else {
+				usables.add((Usable)item);
+				InventoryMenu.lastItemAdded.set(1);
+				InventoryMenu.newItem.set(true);
+			}
 			
 		}else if(item instanceof Weapon) {
-			weapons.add((Weapon)item);
-			InventoryMenu.lastItemAdded.set(2);
-			InventoryMenu.newItem.set(true);
+			if(weapons.size() >= 24)
+				returnItem = item;
+			else {
+				weapons.add((Weapon)item);
+				InventoryMenu.lastItemAdded.set(2);
+				InventoryMenu.newItem.set(true);
+			}
 		}else if(item instanceof Loot) {
-			loots.add((Loot)item);
-			InventoryMenu.lastItemAdded.set(3);
-			InventoryMenu.newItem.set(true);
-			
-		}else if(item instanceof Special) {
+			if(loots.size() >= 24)
+				returnItem = item;
+			else {
+				loots.add((Loot)item);
+				InventoryMenu.lastItemAdded.set(3);
+				InventoryMenu.newItem.set(true);
+			}
+		}else if(item instanceof Special) {//nombre predefinit donc pas besoin de verifier
 			specials.add((Special)item);
 			InventoryMenu.lastItemAdded.set(4);
 			InventoryMenu.newItem.set(true);
 			
-		}else {
-			System.out.println("C'est quoi ca ???? : "+item);
+		}else{
+			switch(item.getItemName()) {
+			
+			case "Heart":
+				gagnerPV(); break;
+			case "GreenRupee":
+				addRuby(1); break;
+			case "BlueRupee":
+				addRuby(5); break;
+			case "RedRupee":
+				addRuby(20); break;
+			case "PurpleRupee":
+				addRuby(50); break;
+			case "SilverRupee":
+				addRuby(100); break;
+			case "GoldRupee":
+				addRuby(300); break;
+			case "Rupoor":
+				removeRuby(10); break;
+			
+			default:
+				System.out.println("C'est quoi ca ???? : "+item);
+			}
 		}
 		
 		return returnItem;

@@ -3,14 +3,15 @@ package game.modele.entity;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import game.modele.entity.Player.Player;
+import game.modele.entity.living.Player;
 import game.modele.entity.living.friendly.sheeps.WhiteSheep;
 import game.modele.entity.living.monster.Zombie;
-import game.modele.entity.tileEntity.Bush;
-import game.modele.entity.tileEntity.TikiTorchSmall;
+import game.modele.entity.tileEntity.EntityTP;
+import game.modele.entity.tileEntity.carriable.Bush;
 import game.modele.entity.tileEntity.chest.GoldChest;
 import game.modele.entity.tileEntity.chest.IronChest;
 import game.modele.entity.tileEntity.chest.WoodChest;
+import game.modele.entity.tileEntity.light.TikiTorchSmall;
 import game.modele.item.Item;
 import game.modele.item.ItemFactory;
 import game.modele.utils.Coordonnees;
@@ -58,6 +59,10 @@ public class EntityFactory {
 			case "Wood Chest":
 				e = (Entity) WoodChest.class.getConstructors()[0]
 						.newInstance(castParams(WoodChest.class.getConstructors()[0],params));
+				break;
+			case "EntityItemOnGround":
+				e = (EntityItemOnGround) EntityItemOnGround.class.getConstructors()[0]
+						.newInstance(castParams(EntityItemOnGround.class.getConstructors()[0],params));
 				break;
 			default :
 

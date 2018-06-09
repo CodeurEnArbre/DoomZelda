@@ -1,5 +1,6 @@
 package game.controler;
 
+import java.awt.GraphicsEnvironment;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -12,15 +13,18 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
+import javax.swing.text.PlainView;
 
 import game.modele.entity.Entity;
-import game.modele.entity.Player.Player;
+import game.modele.entity.EntityItemOnGround;
 import game.modele.entity.living.Actions;
 import game.modele.entity.living.EntityLiving;
-import game.modele.entity.tileEntity.CarriableEntity;
-import game.modele.entity.tileEntity.EntityLight;
+import game.modele.entity.living.Player;
 import game.modele.entity.tileEntity.TileEntity;
+import game.modele.entity.tileEntity.carriable.CarriableEntity;
 import game.modele.entity.tileEntity.chest.Chest;
+import game.modele.entity.tileEntity.light.EntityLight;
+import game.modele.item.Item;
 import game.modele.menu.InventoryMenu;
 import game.modele.menu.Menu;
 import game.modele.menu.OptionsMenu;
@@ -75,6 +79,7 @@ public class MenuControler implements Initializable{
 	public static int maxAnimationFrame = 0;
 	public static boolean animationDone = true;
 	public static String animation=null;
+	public static int pickupItemAnim = 0;
 	@SuppressWarnings("rawtypes")
 	private ObservableList<Property> entityProperty = FXCollections.observableArrayList();
 	@SuppressWarnings("rawtypes")
@@ -148,7 +153,7 @@ public class MenuControler implements Initializable{
 	private Label[] KeyName = new Label[OptionsMenu.keyName.length];
 	private Label[] KeyFonctionName = new Label[OptionsMenu.keyFunctionName.length];
 
-	private Label rubys = new Label();
+	public static Label rubys = new Label();
 	private ImageView ruby = new ImageView();
 
 	//Inventory
@@ -159,7 +164,7 @@ public class MenuControler implements Initializable{
 	private ImageView inventoryTypeSelector = new ImageView();
 	private Label selectedName = new Label();
 
-	private ImageView pickupItem = new ImageView();
+	public static ImageView pickupItem = new ImageView();
 
 	@FXML
 	private Pane PaneConsomables;
@@ -464,7 +469,7 @@ public class MenuControler implements Initializable{
 		//Affichage de toutes les couches de la map
 		printCalqueTile(PaneGround,PaneSolid,PaneTop);
 
-		//Chargement des ImageView des entites
+		//Chargement des entites
 		affichageEntitys();
 
 		//Chargement de l'HUD
@@ -500,8 +505,8 @@ public class MenuControler implements Initializable{
 
 
 	private void hudLoading() {
-		//Rubys
-		rubys.textProperty().bind(Player.ruby.asString());
+		//Rubies(argent)
+		rubys.setText(Player.rupees.get()+"");
 		rubys.setFont(Font.font("Impact",20));
 		rubys.setTextFill(Paint.valueOf("WHITE"));
 		rubys.setStyle("-fx-font-weight: bold;");
@@ -520,7 +525,18 @@ public class MenuControler implements Initializable{
 		for(ImageView coeur:coeurs){
 			PaneHUD.getChildren().add(coeur);
 		}
-
+		
+		World.player.getMaxPv().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				for(int numCoeur=(World.player.getMaxPv().intValue()-newValue.intValue())/4;numCoeur>0;numCoeur--){
+					ImageView newHeart = new ImageView(dicoImageItemTextureMap.get(2));
+					coeurs.add(newHeart);
+					PaneHUD.getChildren().add(newHeart);
+				}
+				updateHearts();
+			}
+		});
 		World.player.getPV().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -607,7 +623,20 @@ public class MenuControler implements Initializable{
 			if(clignotement.get()<=0)
 				croissant = true;
 		}
-
+		
+		//Changement de la valeur des rubies
+		if(Player.rupees.get() < Integer.parseInt(rubys.getText()))
+			rubys.setText(Integer.parseInt(rubys.getText())-1+"");
+		else if(Player.rupees.get() > Integer.parseInt(rubys.getText()))
+			rubys.setText(Integer.parseInt(rubys.getText())+1+"");
+		if(Integer.parseInt(rubys.getText()) == Player.maxRupees) {
+			rubys.setFont(new Font(Font.getFontNames().get(154),30));
+			rubys.setTextFill(Paint.valueOf("#00B200"));
+		}else {
+			rubys.setFont(Font.font("Impact",20));
+			rubys.setTextFill(Paint.valueOf("WHITE"));
+		}
+		
 		//Animation du joueur
 		if(!animationDone) {
 			playPlayerAnimation();
@@ -615,6 +644,16 @@ public class MenuControler implements Initializable{
 			if(animationFrame >= maxAnimationFrame) {
 				animationDone=true;
 				playerAnimation();
+			}
+		}
+		
+		//Animation pickupItem
+		if(pickupItem.getImage() != null) {
+			pickupItem.relocate(World.player.coordonnes.getX()*32+16, (World.player.coordonnes.getY()*32+32)-pickupItemAnim/3);
+			pickupItemAnim++;
+			if(pickupItemAnim>30) {
+				pickupItemAnim=0;
+				pickupItem.setImage(null);
 			}
 		}
 
@@ -695,6 +734,7 @@ public class MenuControler implements Initializable{
 		}
 
 	}
+	
 	private void affichageEntity(ImageView i,Entity e) {
 		i = new ImageView();
 		listEntityView.put(e,i);
@@ -724,6 +764,7 @@ public class MenuControler implements Initializable{
 		}
 
 		if(e.getId().equals("Player")) {
+			
 			Player theplayer = (Player)e;
 			i.setFitWidth(32);
 			i.setFitHeight(64);
@@ -732,6 +773,7 @@ public class MenuControler implements Initializable{
 			i.setImage(EntityLivingTexture.getEntityTexture(theplayer.getId(), 24, 32, 0, 2));
 			paneGame.layoutXProperty().bind(theplayer.coordonnes.getXpro().multiply(-32).add(432));
 			paneGame.layoutYProperty().bind(theplayer.coordonnes.getYpro().multiply(-32).add(320));
+			
 			theplayer.etatDeplacement.addListener(
 					new ChangeListener<Number>() {
 
@@ -791,25 +833,32 @@ public class MenuControler implements Initializable{
 			carriableEntity.setId("CarriableEntity");
 			PlayerPane.getChildren().add(carriableEntity);
 		}else {
-			if(e instanceof EntityLiving) {
+			if(e instanceof EntityItemOnGround) {
+				i.setFitWidth(32);
+				i.setFitHeight(32);
+				i.xProperty().bind(e.coordonnes.getXpro().multiply(32));
+				i.yProperty().bind(e.coordonnes.getYpro().multiply(32));
+				i.setImage(dicoImageItemTextureMap.get(ItemImageValue.getValue(((EntityItemOnGround)e).item.name)));
+			}else if(e instanceof EntityLiving) {
 				i.setFitWidth(32);
 				i.setFitHeight(64);
 				i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
 				i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));
 				i.setImage(dicoImageAnimationEntity.get(e.getId()).get(0));
+				
 			}else if(e instanceof EntityLight) {
 				i.setFitWidth(32);
 				i.setFitHeight(64);
 				i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
 				i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));
 				i.setImage(dicoImageAnimationEntity.get(e.getId()).get(( (TileEntity) e).getEtat()?1:0));
+				
 			}else if(e instanceof TileEntity) {
 				i.setFitWidth(32);
 				i.setFitHeight(32);
 				i.xProperty().bind(e.coordonnes.getXpro().multiply(32));
-
 				i.yProperty().bind(e.coordonnes.getYpro().multiply(32));
-				i.setImage( dicoImageTileEntityMap.get(EntityImageValue.getEntityNum(e.getId())) );
+				i.setImage(dicoImageTileEntityMap.get(EntityImageValue.getEntityNum(e.getId())) );
 			}
 			EntityPane.getChildren().add(i);
 		}
@@ -817,28 +866,28 @@ public class MenuControler implements Initializable{
 	}
 
 	public static void playerAnimation() {
-		Player player = World.player;
-		switch(player.direction.getDirection()) {
+		Player theplayer = World.player;
+		switch(theplayer.direction.getDirection()) {
 
 		case Direction.North:
-			if(player.action.get() == Actions.rien)
-				listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((player.etatDeplacement.getValue().intValue() / 3)));
+			if(theplayer.action.get() == Actions.rien)
+				player.setImage(dicoImageAnimationPlayer.get((theplayer.etatDeplacement.getValue().intValue() / 3)));
 
 			break;
 
 		case Direction.East:
-			if(player.action.get() == Actions.rien)
-				listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((player.etatDeplacement.getValue().intValue() / 3)+28));
+			if(theplayer.action.get() == Actions.rien)
+				player.setImage(dicoImageAnimationPlayer.get((theplayer.etatDeplacement.getValue().intValue() / 3)+28));
 			break;
 
 		case Direction.South:
-			if(player.action.get() == Actions.rien)
-				listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((player.etatDeplacement.getValue().intValue() / 3)+56));
+			if(theplayer.action.get() == Actions.rien)
+				player.setImage(dicoImageAnimationPlayer.get((theplayer.etatDeplacement.getValue().intValue() / 3)+56));
 			break;
 
 		case Direction.West:
-			if(player.action.get() == Actions.rien)
-				listEntityView.get(player).setImage(dicoImageAnimationPlayer.get((player.etatDeplacement.getValue().intValue() / 3)+84));
+			if(theplayer.action.get() == Actions.rien)
+				player.setImage(dicoImageAnimationPlayer.get((theplayer.etatDeplacement.getValue().intValue() / 3)+84));
 			break;
 		}
 	}
@@ -857,30 +906,15 @@ public class MenuControler implements Initializable{
 	}
 
 	private void affichageEntitys() {
-		//Supprime tout les imageview d'entites inutilisee
-//		for(ImageView img : listEntityView.values()) { 			déja fait
-//			boolean found = false;
-//
-//			for(Entity entity : World.currentMap.getEntity()) {
-//				if(img.getId().equals(entity.primaryKey)) {
-//					found=true;
-//					break;
-//				}
-//			}
-//			if(!found) {	
-//				listEntityView.remove(img);
-//			}
-//
-//		}
 
 		//Cree les imageviews des entites
 		for(Entity entity:World.currentMap.getEntity()) {
 			if(entity != null) {
-				//affichageEntity(new ImageView(), entity);
+				
 				loadAnimationEntity(new ImageView(), entity);
+				
 				if(entity instanceof TileEntity) {
 					((TileEntity) entity).getEtatProperty().addListener(new ChangeListener<Boolean>() {
-
 						@Override
 						public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 							ImageView entityImg = listEntityView.get(entity);
@@ -897,7 +931,7 @@ public class MenuControler implements Initializable{
 				}
 			}
 		}
-
+		//Supprime et ajoute les entiter qui on etais modiffier dans le monde
 		World.currentMap.entity.addListener(new ListChangeListener<Entity>(){
 			@Override
 			public void onChanged(Change<? extends Entity> c) {
@@ -928,11 +962,12 @@ public class MenuControler implements Initializable{
 		});
 	}
 
+	@SuppressWarnings("unchecked")
 	public void loadAnimationEntity(ImageView img, Entity addEntity) {
 
 		if(addEntity instanceof Player) {
-			Player addEntityLiving = (Player)addEntity;
-			addEntityLiving.isCarriedSomething.addListener(new ChangeListener<Boolean>() {
+			Player theplayer = (Player)addEntity;
+			theplayer.isCarriedSomething.addListener(new ChangeListener<Boolean>() {
 				@Override
 				public void changed(ObservableValue<? extends Boolean> observable,
 						Boolean oldValue, Boolean newValue) {
@@ -951,7 +986,7 @@ public class MenuControler implements Initializable{
 				}
 			});
 
-			addEntityLiving.action.addListener(new ChangeListener<Number>() {
+			theplayer.action.addListener(new ChangeListener<Number>() {
 				@Override
 				public void changed(ObservableValue<? extends Number> observable, Number oldValue,
 						Number newValue) {
@@ -959,12 +994,10 @@ public class MenuControler implements Initializable{
 					switch(newValue.intValue()) {
 
 					case Actions.raise:
-						if(addEntityLiving instanceof Player) {
 							animation="raise";
 							animationDone=false;
 							animationFrame=0;
 							maxAnimationFrame=12*3;
-						}
 
 						break;
 
@@ -984,12 +1017,10 @@ public class MenuControler implements Initializable{
 						switch(oldValue.intValue()) {
 
 						case Actions.raise:
-							if(addEntityLiving instanceof Player) {
 								animation="raise";
 								animationDone=false;
 								animationFrame=22*3;
 								maxAnimationFrame=28*3;
-							}
 
 							break;
 
@@ -1010,6 +1041,14 @@ public class MenuControler implements Initializable{
 						break;			
 					}
 				}});
+			
+			theplayer.pickupItem.addListener(new ChangeListener<Object>() {
+				@Override
+				public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+					Item item = (Item)newValue;
+					pickupItem.setImage(dicoImageItemTextureMap.get(ItemImageValue.getValue(item.getItemName())));
+				}
+			});
 
 		}
 
@@ -1119,14 +1158,7 @@ public class MenuControler implements Initializable{
 	public ImageView createItemView(String name, int layoutX, int layoutY, int width, int height) {
 		ImageView v = new ImageView();
 		v.setId(name);
-		switch(name) {
-		case "Wooden Sworden" :
-			v.setImage(dicoImageItemTextureMap.get(17));
-			break;
-		case "Basic Axe" :
-			v.setImage(dicoImageItemTextureMap.get(18));
-			break;
-		}
+		v.setImage(dicoImageItemTextureMap.get(ItemImageValue.getValue(name)));
 		v.relocate(layoutX, layoutY);
 		v.setFitHeight(height);
 		v.setFitWidth(width);

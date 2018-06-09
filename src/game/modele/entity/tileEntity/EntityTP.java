@@ -1,6 +1,6 @@
-package game.modele.entity;
+package game.modele.entity.tileEntity;
 
-import game.modele.entity.tileEntity.TileEntity;
+import game.modele.entity.Entity;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.world.World;

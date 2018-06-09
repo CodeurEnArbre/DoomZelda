@@ -1,6 +1,7 @@
-package game.modele.entity.tileEntity;
+package game.modele.entity.tileEntity.light;
 
 import game.modele.entity.Entity;
+import game.modele.entity.tileEntity.TileEntity;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.ConsumerAction;

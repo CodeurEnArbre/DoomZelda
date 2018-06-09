@@ -53,24 +53,34 @@ Bush
 Gold Chest
 5.0,6.0,0,Wooden Sworden
 Gold Chest
-7.0,6.0,0,Basic Axe
+7.0,6.0,0,Rupoor
 Iron Chest
-9.0,6.0,0,Wooden Sworden
+9.0,6.0,0,GreenRupee
 Gold Chest
 10.0,6.0,0,Wooden Sworden
 Wood Chest
-12.0,6.0,0,Wooden Sworden
+12.0,6.0,0,Heart
 Iron Chest
-14.0,6.0,0,Basic Axe
+14.0,6.0,0,GreenRupee
 Gold Chest
-16.0,6.0,0,Wooden Sworden
+16.0,6.0,0,GoldRupee
 Wood Chest
-18.0,6.0,0,Basic Axe
+18.0,6.0,0,Heart
 Gold Chest
 20.0,6.0,0,Wooden Sworden
 Iron Chest
-22.0,6.0,0,Basic Axe
+22.0,6.0,0,GreenRupee
 Gold Chest
-24.0,6.0,0,Wooden Sworden
+24.0,6.0,0,GoldRupee
+EntityItemOnGround
+9.0,7.0,0,GreenRupee
+EntityItemOnGround
+10.0,7.0,0,GreenRupee
+EntityItemOnGround
+9.0,9.0,0,Heart
+EntityItemOnGround
+11.0,9.0,0,Heart
+EntityItemOnGround
+13.0,9.0,0,Heart
 
 

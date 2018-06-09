@@ -1,4 +1,4 @@
-package game.modele.entity.tileEntity;
+package game.modele.entity.tileEntity.carriable;
 
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;

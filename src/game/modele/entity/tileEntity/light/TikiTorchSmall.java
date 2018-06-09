@@ -1,4 +1,4 @@
-package game.modele.entity.tileEntity;
+package game.modele.entity.tileEntity.light;
 
 import game.modele.entity.Entity;
 import game.modele.utils.Coordonnees;
