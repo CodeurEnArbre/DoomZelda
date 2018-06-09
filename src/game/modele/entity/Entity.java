@@ -71,6 +71,9 @@ public abstract class Entity {
 		ce.del(c,this);
 	}
 	
+	public void clearAction() {
+		ce.clear();
+	}
 	public void addX(double x){
 		if(this.setCoordoner( new Coordonnees(this.coordonnes.getX() + x,this.coordonnes.getY() ))) {
 			this.coordonnes.setX(this.coordonnes.getX() + x);

@@ -25,5 +25,8 @@ public class QueueCycleActionConsumer extends SimpleCycleActionConsumer implemen
 		else
 			return null;
 	}
-
+	@Override
+	public void dispose() {
+		this.clear();
+	}
 }

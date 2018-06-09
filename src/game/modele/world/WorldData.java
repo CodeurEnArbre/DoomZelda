@@ -51,7 +51,14 @@ public class WorldData {
 		this.tileGround=ground;
 		this.tiles=tiles;
 		this.tilesTop=tilesTop;
-		this.entity.clear();
+		
+		while(entity.size() > 0)
+		{
+			if(!entity.get(0).getId().equals("Player"))
+				entity.get(0).clearAction();
+			
+			entity.remove(0);
+		}
 		for(Entity e : entitys) {
 			this.entity.add(e);
 			World.addKeyGameLoop(y -> e.update());

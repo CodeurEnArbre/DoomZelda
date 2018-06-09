@@ -23,4 +23,8 @@ public class ListConsumerAction extends SimpleListActionConsumer implements Cons
 	public Function getFunction() {
 		return list.get(0).getFunction();
 	}
+	@Override
+	public void dispose() {
+		this.clear();
+	}
 }

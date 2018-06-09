@@ -21,4 +21,10 @@ public class SimpleListActionConsumer {
 			}
 		}
 	}
+	public void clear() {
+		while(list.size() > 0) {
+			list.get(0).dispose();
+			list.remove(0);
+		}
+	}
 }

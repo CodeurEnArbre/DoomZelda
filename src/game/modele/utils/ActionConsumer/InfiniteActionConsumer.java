@@ -19,4 +19,7 @@ public class InfiniteActionConsumer implements ConsumerAction{
 		ce.Start(e);
 		return true;
 	}
+
+	@Override
+	public void dispose() {}
 }

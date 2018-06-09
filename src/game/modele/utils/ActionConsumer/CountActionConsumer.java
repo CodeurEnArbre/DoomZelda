@@ -27,4 +27,9 @@ public class CountActionConsumer implements ConsumerAction {
 		count--;
 		return count > 0;
 	}
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
 }

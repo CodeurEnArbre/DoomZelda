@@ -17,5 +17,8 @@ public class CycleActionConsumer extends SimpleCycleActionConsumer implements Co
 	public Function getFunction() {
 		return list.get(currentID).getFunction();
 	}
-
+	@Override
+	public void dispose() {
+		this.clear();
+	}
 }

@@ -24,4 +24,6 @@ public class ConsumerActionDelay  implements ConsumerAction {
 			return c.act(e);
 		}
 	}
+	@Override
+	public void dispose() {}
 }
