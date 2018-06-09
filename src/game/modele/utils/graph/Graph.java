@@ -19,8 +19,10 @@ public class Graph {
 	public static final int[] right = new int[] {0,-1};
 	public static final int[] left = new int[] {0,1};
 
-	public int[][] node;//contient les valeurs de déplacement de chaque tile
-
+	/*contient les valeurs de déplacement de chaque tile
+		-1 quand la case n'est pas accessible
+	*/
+	public int[][] node;
 
 	public SimpleEntry<Integer,int[]>[][] direction;//indique la direction à prendre calculer par dijkstra
 	public LinkedList<Point> queue;
@@ -95,10 +97,8 @@ public class Graph {
 	
 	private boolean obstacle(int x,int y) {
 		for(Entity e : World.currentMap.entityHere(x, y)) {
-			if(e instanceof TileEntity) {
-				System.out.println(e);
+			if(e instanceof TileEntity)
 				return true;
-			}
 		}
 		return false;
 	}
