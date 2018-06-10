@@ -44,10 +44,14 @@ public class Player extends EntityLiving{
 	public static IntegerProperty rupees; //ARGENT!!!	
 	@SuppressWarnings("rawtypes")
 	public ObjectProperty pickupItem;
+	@SuppressWarnings("rawtypes")
+	public ObjectProperty leftItemEquip;
+	@SuppressWarnings("rawtypes")
+	public ObjectProperty rightItemEquip;
 	public CarriableEntity carriedEntity;
 	public BooleanProperty isCarriedSomething;
 	
-	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials) {
+	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials, Item leftEquip, Item rightEquip) {
 		super("Player",position,direction);
 		this.speed = baseSpeed;
 		this.slow =	1;
@@ -56,6 +60,8 @@ public class Player extends EntityLiving{
 		Player.rupees = new SimpleIntegerProperty(ruby);
 		isCarriedSomething = new SimpleBooleanProperty();
 		pickupItem = new SimpleObjectProperty<>();
+		leftItemEquip = new SimpleObjectProperty<>();
+		rightItemEquip = new SimpleObjectProperty<>();
 		this.usables = usables;
 		this.weapons = weapons;
 		this.loots=loots;
@@ -147,7 +153,7 @@ public class Player extends EntityLiving{
 			switch(item.getItemName()) {
 			
 			case "Heart":
-				gagnerPV(); break;
+				gagnerPV(4); break;
 			case "GreenRupee":
 				addRuby(1); break;
 			case "BlueRupee":
@@ -172,7 +178,15 @@ public class Player extends EntityLiving{
 	}
 	
 	public void useLeftItem() {
-	
+		if(leftItemEquip.get()!=null) {
+			if(leftItemEquip.get() instanceof Weapon) {
+				Weapon weapon = (Weapon)leftItemEquip.get();
+				
+			}else if(leftItemEquip.get() instanceof Usable) {
+				Usable usable = (Usable)leftItemEquip.get();
+				usable.use();
+			}
+		}
 	}
 	
 	public void useRightItem() {

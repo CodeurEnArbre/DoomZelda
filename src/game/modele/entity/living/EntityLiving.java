@@ -63,9 +63,11 @@ public abstract class EntityLiving extends Entity{
 		}
 	}
 	
-	public void gagnerPV() {
-		if(PV.getValue()<maxPv.getValue())
-			PV.set(PV.get()+1);
+	public void gagnerPV(int pv) {
+		if(PV.getValue()+pv < maxPv.getValue())
+			PV.set(PV.get()+pv);
+		else
+			PV.set(maxPv.getValue());
 	}
 	
 	public IntegerProperty getPV() {

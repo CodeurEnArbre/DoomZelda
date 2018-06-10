@@ -37,7 +37,7 @@ public class Save {
 			File player = new File("saves/"+name+"/player");
 			player.createNewFile();
 			BufferedWriter entitysData = new BufferedWriter(new FileWriter(player.getAbsolutePath()));
-			entitysData.write("TinyMap,14,10,2,16,13,23");
+			entitysData.write("TinyMap,14,10,2,16,13,23,null,null");
 			entitysData.close();
 		} catch (IOException e) {
 			System.out.println("No options found");
@@ -60,7 +60,9 @@ public class Save {
 					new ArrayList<Loot>(),
 					new ArrayList<Usable>(),
 					new ArrayList<Weapon>(),
-					new ArrayList<Special>());			
+					new ArrayList<Special>(),
+					null,
+					null);			
 			playerData.close();
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -1,6 +1,5 @@
 package game.controler;
 
-import java.awt.GraphicsEnvironment;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -13,7 +12,6 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
-import javax.swing.text.PlainView;
 
 import game.modele.entity.Entity;
 import game.modele.entity.EntityItemOnGround;
@@ -152,9 +150,13 @@ public class MenuControler implements Initializable{
 
 	private Label[] KeyName = new Label[OptionsMenu.keyName.length];
 	private Label[] KeyFonctionName = new Label[OptionsMenu.keyFunctionName.length];
-
+	
+	//HUD
 	public static Label rubys = new Label();
 	private ImageView ruby = new ImageView();
+	private ImageView equipSlots = new ImageView();
+	private ImageView leftItemEquip = new ImageView();
+	private ImageView rightItemEquip = new ImageView();
 
 	//Inventory
 	private ImageView inventorySelector= new ImageView();
@@ -175,7 +177,7 @@ public class MenuControler implements Initializable{
 
 	@FXML
 	private Button buttonReprendre;
-
+	
 	@FXML
 	public static ImageView player;
 
@@ -344,29 +346,26 @@ public class MenuControler implements Initializable{
 		InventoryMenu.newItem.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if(newValue)			
+				if(newValue) {	
+					int i = 0;
 					switch(InventoryMenu.lastItemAdded.get()) {
 					case 1:	
-						for(int i = 0; i < World.player.usables.size(); i++) {
-							PaneWeapons.getChildren().add(createItemView(World.player.usables.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
-							InventoryMenu.newItem.set(false);
-						}
+						i = World.player.usables.size()-1;
+						PaneWeapons.getChildren().add(createItemView(World.player.usables.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
+						InventoryMenu.newItem.set(false);
 						break;
-
 					case 2:	
-						for(int i = 0; i < World.player.weapons.size(); i++) {
-							PaneWeapons.getChildren().add(createItemView(World.player.weapons.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
-							InventoryMenu.newItem.set(false);
-						}
+						i = World.player.weapons.size()-1;
+						PaneWeapons.getChildren().add(createItemView(World.player.weapons.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
+						InventoryMenu.newItem.set(false);
 						break;
-
 					case 3:	
-						for(int i = 0; i < World.player.specials.size(); i++) {
-							PaneWeapons.getChildren().add(createItemView(World.player.specials.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
-							InventoryMenu.newItem.set(false);
-						}
+						i = World.player.specials.size()-1;
+						PaneWeapons.getChildren().add(createItemView(World.player.specials.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
+						InventoryMenu.newItem.set(false);
 						break;
-					}						
+					}
+				}					
 			}});
 
 
@@ -501,6 +500,24 @@ public class MenuControler implements Initializable{
 				affichageOmbres();
 			}
 		});
+		
+		//Affichage des items dans l'inventaire
+		for(int i = 0; i < World.player.usables.size(); i++) {
+			PaneWeapons.getChildren().add(createItemView(World.player.usables.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
+			InventoryMenu.newItem.set(false);
+		}
+
+		for(int i = 0; i < World.player.weapons.size(); i++) {
+			PaneWeapons.getChildren().add(createItemView(World.player.weapons.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
+			InventoryMenu.newItem.set(false);
+		}
+
+		for(int i = 0; i < World.player.specials.size(); i++) {
+			PaneWeapons.getChildren().add(createItemView(World.player.specials.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
+			InventoryMenu.newItem.set(false);
+		}
+
+		
 	}
 
 
@@ -514,6 +531,15 @@ public class MenuControler implements Initializable{
 		ruby.relocate(765, 600);
 		PaneHUD.getChildren().add(rubys);
 		PaneHUD.getChildren().add(ruby);
+		
+		//Slot item equiper
+		
+		equipSlots.relocate(732, 0);
+		leftItemEquip.relocate(752, 16);
+		rightItemEquip.relocate(814, 82);
+		PaneHUD.getChildren().add(equipSlots);
+		PaneHUD.getChildren().add(leftItemEquip);
+		PaneHUD.getChildren().add(rightItemEquip);
 
 		//Coeurs
 		for(int numCoeur=World.player.getMaxPv().intValue()/4;numCoeur>0;numCoeur--){
@@ -597,14 +623,13 @@ public class MenuControler implements Initializable{
 			inventorySelector1 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventory/Selector1.png").toURI().toURL()), null);
 			inventorySelector2 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventory/Selector2.png").toURI().toURL()), null);
 			inventorySelector3 = SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventory/Selector3.png").toURI().toURL()), null);
+			equipSlots.setImage(SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/equipSlots.png").toURI().toURL()), null));
 			inventoryTypeSelector.setImage(SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/gui/inventory/selectorInventoryType.png").toURI().toURL()), null));
+			
 			ruby.setImage(dicoImageItemTextureMap.get(7));
 
 			for(int i = 0; i < 16;i++)
-
-				dicoShadow.put(i,
-						EntityLivingTexture.getEntityTexture("darkness",32,32,i,0));
-
+				dicoShadow.put(i, EntityLivingTexture.getEntityTexture("darkness",32,32,i,0));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -649,9 +674,11 @@ public class MenuControler implements Initializable{
 		
 		//Animation pickupItem
 		if(pickupItem.getImage() != null) {
-			pickupItem.relocate(World.player.coordonnes.getX()*32+16, (World.player.coordonnes.getY()*32+32)-pickupItemAnim/3);
+			pickupItem.relocate(World.player.coordonnes.getX()*32-16, (World.player.coordonnes.getY()*32-56)-pickupItemAnim/3);
 			pickupItemAnim++;
-			if(pickupItemAnim>30) {
+			System.out.println(pickupItem.getImage());
+			if(pickupItemAnim > 30) {
+				System.out.println(pickupItemAnim);
 				pickupItemAnim=0;
 				pickupItem.setImage(null);
 			}
@@ -764,7 +791,6 @@ public class MenuControler implements Initializable{
 		}
 
 		if(e.getId().equals("Player")) {
-			
 			Player theplayer = (Player)e;
 			i.setFitWidth(32);
 			i.setFitHeight(64);
@@ -832,6 +858,7 @@ public class MenuControler implements Initializable{
 			PlayerPane.getChildren().add(i);
 			carriableEntity.setId("CarriableEntity");
 			PlayerPane.getChildren().add(carriableEntity);
+			PlayerPane.getChildren().add(pickupItem);
 		}else {
 			if(e instanceof EntityItemOnGround) {
 				i.setFitWidth(32);
@@ -1049,7 +1076,30 @@ public class MenuControler implements Initializable{
 					pickupItem.setImage(dicoImageItemTextureMap.get(ItemImageValue.getValue(item.getItemName())));
 				}
 			});
+			
+			theplayer.leftItemEquip.addListener(new ChangeListener<Object>() {
+				@Override
+				public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+					if(newValue != null) {
+						Item item = (Item) newValue;
+						leftItemEquip.setImage(dicoImageItemTextureMap.get(ItemImageValue.getValue(item.name)));
+					}else {
+						rightItemEquip.setImage(null);
+					}
+				}
+			});
 
+			theplayer.rightItemEquip.addListener(new ChangeListener<Object>() {
+				@Override
+				public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+					if(newValue != null) {
+						Item item = (Item) newValue;
+						rightItemEquip.setImage(dicoImageItemTextureMap.get(ItemImageValue.getValue(item.name)));
+					}else {
+						rightItemEquip.setImage(null);
+					}
+				}
+			});
 		}
 
 		affichageEntity(listEntityView.get(addEntity),addEntity);
@@ -1091,7 +1141,7 @@ public class MenuControler implements Initializable{
 					chestType = 1;
 				}else if(c.getId().equals("Iron Chest")) {
 					chestType = 2;
-				}else {
+				}else {//Gold Chest
 					chestType = 0;
 				}
 
@@ -1122,7 +1172,7 @@ public class MenuControler implements Initializable{
 
 	}
 
-	public static void playPlayerAnimation() {
+	public static void playPlayerAnimation() {//Les animations special
 		int animDivideur = 3;
 		Player thePlayer = World.player;
 		switch(thePlayer.direction.getDirection()) {

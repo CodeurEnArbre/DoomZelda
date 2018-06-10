@@ -13,4 +13,8 @@ public class Usable extends Item{
 		super(name, quantity);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public void use() {
+		
+	}
 }

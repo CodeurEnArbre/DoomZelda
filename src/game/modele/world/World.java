@@ -60,11 +60,11 @@ public class World {
 		GameLoop.play();
 	}
 
-	public static void initWorldSave(String world, Coordonnees coord, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials) {
+	public static void initWorldSave(String world, Coordonnees coord, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials, Item leftEquip, Item rightEquip) {
 
 		loadGameLoop();
 		
-		player = new Player(coord,direction,maxPv,pv,ruby,loots,usables,weapons,specials);
+		player = new Player(coord,direction,maxPv,pv,ruby,loots,usables,weapons,specials,leftEquip, rightEquip);
 		for(int i=0; i<22;i++) {
 			player.weapons.add((Weapon) ItemFactory.getItem("Wooden Sworden"));
 		}

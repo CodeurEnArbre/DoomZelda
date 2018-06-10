@@ -1,5 +1,7 @@
 package game.modele.menu;
 
+import game.modele.item.Item;
+import game.modele.world.World;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -9,10 +11,29 @@ public class InventoryMenu {
 	
 	
 	public static IntegerProperty InventoryZone = new SimpleIntegerProperty(0); //0= consomables, 1 = items, 2 = armes
-	public static BooleanProperty newItem= new SimpleBooleanProperty(false);
+	public static BooleanProperty newItem = new SimpleBooleanProperty(false);
 	public static IntegerProperty lastItemAdded = new SimpleIntegerProperty();
 
-
+	@SuppressWarnings("unchecked")
+	public static void equipItem(boolean isLeft) {
+		if(InventoryZone.getValue() == 2) {
+			if(Menu.selectedButtonX.get()<8 && Menu.selectedButtonY.get() > 1) {
+				int slot = Menu.selectedButtonX.get()+8*(Menu.selectedButtonY.get()-2);
+				
+				if(isLeft && World.player.weapons.get(slot) != null) {
+					if(World.player.rightItemEquip.get()!= null && World.player.weapons.get(slot).primaryKey != ((Item)World.player.rightItemEquip.get()).primaryKey)
+						World.player.rightItemEquip.set(null);
+					World.player.leftItemEquip.set(World.player.weapons.get(slot));
+					
+				}else if(World.player.weapons.get(slot) != null) {
+					if(World.player.rightItemEquip.get() != null && World.player.weapons.get(slot).primaryKey != ((Item)World.player.rightItemEquip.get()).primaryKey)
+						World.player.leftItemEquip.set(null);
+					World.player.rightItemEquip.set(World.player.weapons.get(slot));
+					
+				}
+			}
+		}
+	}
 	
 	public static void validate() {
 		if(Menu.selectedButtonX.get()==8) 

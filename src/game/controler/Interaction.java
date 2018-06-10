@@ -2,6 +2,7 @@ package game.controler;
 
 import game.modele.entity.living.friendly.sheeps.WhiteSheep;
 import game.modele.entity.living.monster.Zombie;
+import game.modele.menu.InventoryMenu;
 import game.modele.menu.Menu;
 import game.modele.menu.OptionsMenu;
 import game.modele.utils.Coordonnees;
@@ -35,12 +36,18 @@ public class Interaction {
 				World.player.interact();
 		}
 		
-		if(World.isWorldLoaded.get() && k == UseLeftItem && !World.player.isMovementLock.get()) {
-			World.player.useLeftItem();
+		if(World.isWorldLoaded.get() && k == UseLeftItem) {
+			if(Menu.currentMenu.get() == Menu.NoMenuID && World.player != null  && !World.player.isMovementLock.get())
+				World.player.useLeftItem();
+			else if(Menu.currentMenu.get() == Menu.InventoryMenuID)
+				InventoryMenu.equipItem(true);
 		}
 		
-		if(World.isWorldLoaded.get() && k == UseRightItem && !World.player.isMovementLock.get()) {
-			World.player.useRightItem();
+		if(World.isWorldLoaded.get() && k == UseRightItem) {
+			if(Menu.currentMenu.get() == Menu.NoMenuID && World.player != null  && !World.player.isMovementLock.get())
+				World.player.useRightItem();
+			else if(Menu.currentMenu.get() == Menu.InventoryMenuID)
+				InventoryMenu.equipItem(false);
 		}
 		
 		if(k == KeyCode.ENTER) {
