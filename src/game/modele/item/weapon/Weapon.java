@@ -1,6 +1,5 @@
 package game.modele.item.weapon;
 
-import game.modele.entity.living.Player;
 import game.modele.item.Item;
 
 public abstract class Weapon extends Item{
@@ -15,5 +14,5 @@ public abstract class Weapon extends Item{
 		return this.pa;
 	}
 	
-	public abstract void attaque(Player player);
+	public abstract void attaque();
 }

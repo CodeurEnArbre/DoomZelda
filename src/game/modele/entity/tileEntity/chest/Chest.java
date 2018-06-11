@@ -25,22 +25,13 @@ public class Chest extends TileEntity{
 	}
 
 	@Override
-	public void onHit(Entity entity) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void onHit(Entity entity) {}
 
 	@Override
-	public void active(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void active(Entity e) {}
 
 	@Override
-	public void incAnim() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void incAnim() {}
 	
 	@Override
 	public void interact() {

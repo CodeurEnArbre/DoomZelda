@@ -179,9 +179,11 @@ public class Player extends EntityLiving{
 	
 	public void useLeftItem() {
 		if(leftItemEquip.get()!=null) {
+			addAction(new CountActionConsumer(30,new FunctionCantMove()));
+			this.action.set(Actions.useLeftItem);
 			if(leftItemEquip.get() instanceof Weapon) {
 				Weapon weapon = (Weapon)leftItemEquip.get();
-				
+				weapon.attaque();
 			}else if(leftItemEquip.get() instanceof Usable) {
 				Usable usable = (Usable)leftItemEquip.get();
 				usable.use();
@@ -190,7 +192,17 @@ public class Player extends EntityLiving{
 	}
 	
 	public void useRightItem() {
-		
+		if(rightItemEquip.get()!=null) {
+			addAction(new CountActionConsumer(30,new FunctionCantMove()));
+			this.action.set(Actions.useRightItem);
+			if(rightItemEquip.get() instanceof Weapon) {
+				Weapon weapon = (Weapon)rightItemEquip.get();
+				weapon.attaque();
+			}else if(rightItemEquip.get() instanceof Usable) {
+				Usable usable = (Usable)rightItemEquip.get();
+				usable.use();
+			}
+		}
 	}
 	
 	public void interact() {
@@ -206,7 +218,6 @@ public class Player extends EntityLiving{
 					addAction(new CountActionConsumer(30,new FunctionCantMove()));
 				}else if(e instanceof Chest) {
 					e.interact();
-					System.out.println(e);
 				}
 			}
 		}else {

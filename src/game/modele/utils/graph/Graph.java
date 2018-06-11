@@ -2,14 +2,12 @@ package game.modele.utils.graph;
 
 import java.awt.Point;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
 import game.modele.entity.Entity;
 import game.modele.entity.tileEntity.TileEntity;
-import game.modele.utils.Coordonnees;
 import game.modele.world.World;
 
 public class Graph {
@@ -47,6 +45,7 @@ public class Graph {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void Dijkstra(int x,int y){
 		direction = new SimpleEntry[width][height];
 		queue = new LinkedList<Point>();

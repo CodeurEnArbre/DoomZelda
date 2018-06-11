@@ -1,7 +1,6 @@
 package game.modele.item;
 
-import game.modele.item.weapon.Axe;
-import game.modele.item.weapon.Sword;
+import game.modele.item.weapon.CuttingWeapon;
 
 public class ItemFactory {
 
@@ -11,9 +10,9 @@ public class ItemFactory {
 		case "null":
 			return null;
 		case "Wooden Sworden":
-			return new Sword("Wooden Sworden", 1);
+			return new CuttingWeapon("Wooden Sworden", 1);
 		case "Basic Axe":
-			return new Axe("Basic Axe", 3);
+			return new CuttingWeapon("Basic Axe", 3);
 		default:
 			return new Item(Itemname);
 			

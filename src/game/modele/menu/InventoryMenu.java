@@ -21,12 +21,12 @@ public class InventoryMenu {
 				int slot = Menu.selectedButtonX.get()+8*(Menu.selectedButtonY.get()-2);
 				
 				if(isLeft && World.player.weapons.get(slot) != null) {
-					if(World.player.rightItemEquip.get()!= null && World.player.weapons.get(slot).primaryKey != ((Item)World.player.rightItemEquip.get()).primaryKey)
+					if(World.player.rightItemEquip.get() != null && World.player.weapons.get(slot).primaryKey != ((Item)World.player.rightItemEquip.get()).primaryKey)
 						World.player.rightItemEquip.set(null);
 					World.player.leftItemEquip.set(World.player.weapons.get(slot));
 					
 				}else if(World.player.weapons.get(slot) != null) {
-					if(World.player.rightItemEquip.get() != null && World.player.weapons.get(slot).primaryKey != ((Item)World.player.rightItemEquip.get()).primaryKey)
+					if(World.player.rightItemEquip.get() != null && World.player.weapons.get(slot).primaryKey != ((Item)World.player.leftItemEquip.get()).primaryKey)
 						World.player.leftItemEquip.set(null);
 					World.player.rightItemEquip.set(World.player.weapons.get(slot));
 					

@@ -23,6 +23,7 @@ import game.modele.entity.tileEntity.carriable.CarriableEntity;
 import game.modele.entity.tileEntity.chest.Chest;
 import game.modele.entity.tileEntity.light.EntityLight;
 import game.modele.item.Item;
+import game.modele.item.weapon.CuttingWeapon;
 import game.modele.menu.InventoryMenu;
 import game.modele.menu.Menu;
 import game.modele.menu.OptionsMenu;
@@ -30,8 +31,10 @@ import game.modele.utils.Direction;
 import game.modele.world.World;
 import game.vue.EntityLivingTexture;
 import game.vue.TextureLoader;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -536,7 +539,7 @@ public class MenuControler implements Initializable{
 		
 		equipSlots.relocate(732, 0);
 		leftItemEquip.relocate(752, 16);
-		rightItemEquip.relocate(814, 82);
+		rightItemEquip.relocate(818, 84);
 		PaneHUD.getChildren().add(equipSlots);
 		PaneHUD.getChildren().add(leftItemEquip);
 		PaneHUD.getChildren().add(rightItemEquip);
@@ -676,9 +679,7 @@ public class MenuControler implements Initializable{
 		if(pickupItem.getImage() != null) {
 			pickupItem.relocate(World.player.coordonnes.getX()*32-16, (World.player.coordonnes.getY()*32-56)-pickupItemAnim/3);
 			pickupItemAnim++;
-			System.out.println(pickupItem.getImage());
 			if(pickupItemAnim > 30) {
-				System.out.println(pickupItemAnim);
 				pickupItemAnim=0;
 				pickupItem.setImage(null);
 			}
@@ -1029,18 +1030,23 @@ public class MenuControler implements Initializable{
 						break;
 
 					case Actions.push:
-						//do animation to imageview ->	getEntityImageView(addEntityLiving);
+						//do animation to imageview
 						break;
 
 					case Actions.useLeftItem:
-						//do animation to imageview ->	getEntityImageView(addEntityLiving);
+						if(theplayer.leftItemEquip.get() instanceof CuttingWeapon) {
+							//do animation to imageview
+						}
 						break;
 
 					case Actions.useRightItem:
-						//do animation to imageview ->	getEntityImageView(addEntityLiving);
+						if(theplayer.leftItemEquip.get() instanceof CuttingWeapon) {
+							//do animation to imageview
+						}
 						break;
 
 					case Actions.rien:
+						
 						switch(oldValue.intValue()) {
 
 						case Actions.raise:
@@ -1052,15 +1058,15 @@ public class MenuControler implements Initializable{
 							break;
 
 						case Actions.push:
-							//do animation to imageview ->	getEntityImageView(addEntityLiving);
+							//do animation to imageview
 							break;
 
 						case Actions.useLeftItem:
-							//do animation to imageview ->	getEntityImageView(addEntityLiving);
+							//do animation to imageview
 							break;
 
 						case Actions.useRightItem:
-							//do animation to imageview ->	getEntityImageView(addEntityLiving);
+							//do animation to imageview
 							break;
 
 
@@ -1134,7 +1140,8 @@ public class MenuControler implements Initializable{
 			if(addEntity instanceof Chest) {
 				Chest c = (Chest)addEntity;
 				String containItemName = c.itemInside.getItemName();
-				ImageView item = createItemView(containItemName, (int)c.coordonnes.getX()*32, (int)c.coordonnes.getY()*32, 32, 32);
+				ImageView ivItem = createItemView(containItemName, (int)c.coordonnes.getX()*32, (int)c.coordonnes.getY()*32, 32, 32);
+				DoubleProperty coordY = new SimpleDoubleProperty( ((int)c.coordonnes.getY()*32));
 				ImageView EntityImg = getEntityImageView(c);
 				int chestType;
 				if(c.getId().equals("Wood Chest")) {
@@ -1144,21 +1151,24 @@ public class MenuControler implements Initializable{
 				}else {//Gold Chest
 					chestType = 0;
 				}
-
+				
 				ChangeListener<Number> etatListener = new ChangeListener<Number>() {
 					@Override
 					public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+						ImageView item = ivItem;
+						
 						if(!oldValue.equals(newValue)) {
 
 							EntityImg.setImage(dicoImageAnimationEntity.get("Chest").get((observable.getValue().intValue() / 15)+3*chestType));
 							if(observable.getValue().intValue() == 1) {						
 								ArmePane.getChildren().add(item);
 							}else {
-								item.setY(item.getY()-observable.getValue().intValue()/10);
+								coordY.set(coordY.get()-observable.getValue().intValue()/10);
+								item.setLayoutY(coordY.get());
 							}
 							if(observable.getValue().intValue() >= 30) {
 								ArmePane.getChildren().remove(item);
-								c.etatAnim.removeListener(this);
+								coordY.set((int)c.coordonnes.getY()*32);
 							}
 						}
 					}
