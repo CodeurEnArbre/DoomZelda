@@ -2,6 +2,7 @@ package game.modele.utils.ActionConsumer.Function;
 
 
 import game.modele.entity.Entity;
+import game.modele.entity.living.EntityLiving;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.CountActionConsumer;
 import game.modele.utils.graph.Graph;
@@ -12,7 +13,7 @@ public class FunctionRigidbody extends Function{
 	protected void Action(Entity e) {
 		for(Entity i : World.currentMap.entityHere(e.coordonnes.getX(),e.coordonnes.getY()))
 		{
-			if(i != e) {
+			if(i != e && i instanceof EntityLiving) {
 				if(e.direction.getDirection() ==(Direction.North))
 					i.addAction(new CountActionConsumer(1, new FunctionKnockBack(Graph.top)));
 				else if(e.direction.getDirection() ==(Direction.South))

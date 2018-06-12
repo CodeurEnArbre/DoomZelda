@@ -39,6 +39,10 @@ public class EntityFactory {
 				e = (Bush) Bush.class.getConstructors()[0]
 						.newInstance(castParams(Bush.class.getConstructors()[0],params));
 				break;
+			
+				
+				
+				
 			case "Zombie":
 				e = (Entity) Zombie.class.getConstructors()[0]
 						.newInstance(castParams(Zombie.class.getConstructors()[0],params));
