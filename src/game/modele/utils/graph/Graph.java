@@ -124,7 +124,7 @@ public class Graph {
 	private void ligneDroite(int x,int y,int[] direction) {
 		x += direction[0];
 		y += direction[1];
-		while(x >= 0 && y >= 0 && x < width && y < height && !World.currentMap.getTile(x, y).solid()) {
+		while(x >= 0 && y >= 0 && x < height && y < width && !World.currentMap.getTile(x, y).solid()) {
 			ligneDroite.put(new Point(x,y), direction);
 			x += direction[0];
 			y += direction[1];
