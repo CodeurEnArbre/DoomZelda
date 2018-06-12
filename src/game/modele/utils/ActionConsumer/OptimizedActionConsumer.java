@@ -1,7 +1,7 @@
-package game.modele.utils.ActionConsumer.Function;
+package game.modele.utils.ActionConsumer;
 
 import game.modele.entity.Entity;
-import game.modele.utils.ActionConsumer.ConsumerAction;
+import game.modele.utils.ActionConsumer.Function.Function;
 
 public class OptimizedActionConsumer implements ConsumerAction{
 
