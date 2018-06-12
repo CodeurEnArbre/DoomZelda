@@ -10,6 +10,9 @@ public class FunctionLampe extends Function{
 		super();
 	}
 	
+	
+	
+	
 	//Work for EntityLight ONLY
 	@Override
 	protected void Action(Entity e) {		

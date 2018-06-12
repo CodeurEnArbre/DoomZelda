@@ -240,7 +240,7 @@ public class MenuControler implements Initializable{
 			if(key<4)
 				KeyName[key].relocate(350, 170+(key*70));
 			else
-				KeyName[key].relocate(600, 170+((key-4)*70));
+				KeyName[key].relocate(650, 170+((key-4)*70));
 			KeyName[key].setMinWidth(150);
 			KeyName[key].setMinHeight(50);
 			KeyName[key].setStyle("-fx-font-weight: bold;");
@@ -412,6 +412,12 @@ public class MenuControler implements Initializable{
 			break;
 
 		case Menu.OptionsMenuID:
+			
+			if(Menu.selectedButtonX.get() > 0 && Menu.selectedButtonY.get() < 4)
+				selectorInOption.setFitWidth(255);
+			else
+				selectorInOption.setFitWidth(220);
+			
 			if(y == Menu.OptionsMenuHeight-1) {
 				selectorInOption.relocate(640, 553);
 			}else{
@@ -611,7 +617,6 @@ public class MenuControler implements Initializable{
 			dicoImageTileEntityMap = new HashMap<>();
 			dicoImageAnimationPlayer = new HashMap<>();
 			dicoImageAnimationEntity = new HashMap<>();
-			dicoImageAnimationEntity = new HashMap<>();
 			dicoShadow = new HashMap<>();
 
 			LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
@@ -710,7 +715,7 @@ public class MenuControler implements Initializable{
 	private void loadEntityAnimation() {
 		dicoImageAnimationEntity.put("TikiTorchSmall", LoadDicoMapAnimation(32,112,5,1,"TikiTorchSmall"));
 		dicoImageAnimationEntity.put("Zombie", LoadDicoMapAnimation(32,48,4,4,"Zombie"));
-		dicoImageAnimationEntity.put("White Sheep", LoadDicoMapAnimation(48,48,3,4,"White Sheep"));
+		dicoImageAnimationEntity.put("White Sheep", LoadDicoMapAnimation(48,48,4,4,"White Sheep"));
 		dicoImageAnimationEntity.put("Chest", LoadDicoMapAnimation(32, 32, 3, 3, "coffres"));
 	}
 

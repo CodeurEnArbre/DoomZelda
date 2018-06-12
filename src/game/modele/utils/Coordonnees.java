@@ -45,7 +45,10 @@ public class Coordonnees {
 		return (int)this.x.get() == (int)x && 
 				(int)this.y.get() == (int)y;
 	}
-
+	
+	public String toString() {
+		return ("x:"+this.x.doubleValue()+", y:"+this.y.doubleValue());
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Coordonnees) {
@@ -62,10 +65,5 @@ public class Coordonnees {
 		dx *= dx;
 		dy *= dy;
 		return (int)Math.sqrt(dx + dy);
-	}
-	
-	
-	public String toString() {
-		return ("x:"+this.x.doubleValue()+", y:"+this.y.doubleValue());
 	}
 }

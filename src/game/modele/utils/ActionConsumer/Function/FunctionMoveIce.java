@@ -12,43 +12,43 @@ public class FunctionMoveIce extends Function {
 
 		if(e.moveDown.active) {
 			if(e.moveLeft.active ^ e.moveRight.active) {
-				listActionConsumer.add(new CountActionConsumer(60, new MoveIceDownAND()));
+				ce.add(new CountActionConsumer(60, new MoveIceDownAND()));
 			}
 			else {
-				listActionConsumer.add(new CountActionConsumer(60,new MoveIceDown()));
+				ce.add(new CountActionConsumer(60,new MoveIceDown()));
 			}
 		}
 		else if(e.moveUP.active) {
 			if(e.moveLeft.active ^ e.moveRight.active)
 			{	
-				listActionConsumer.add(new CountActionConsumer(60,new MoveIceUpAND()));
+				ce.add(new CountActionConsumer(60,new MoveIceUpAND()));
 			}else
 			{
-				listActionConsumer.add(new CountActionConsumer(60,new MoveIceUp()));
+				ce.add(new CountActionConsumer(60,new MoveIceUp()));
 			}
 		}
 		else if(e.moveLeft.active) {
 			if(e.moveUP.active ^ e.moveDown.active)
 			{
-				listActionConsumer.add(new CountActionConsumer(60,new MoveIceLeftAND()));
+				ce.add(new CountActionConsumer(60,new MoveIceLeftAND()));
 			}		else
 			{	
-				listActionConsumer.add(new CountActionConsumer(60,new MoveIceLeft()));
+				ce.add(new CountActionConsumer(60,new MoveIceLeft()));
 			}
 		}
 		else if(e.moveRight.active) {
 			if(e.moveUP.active ^ e.moveDown.active)
 			{
-				listActionConsumer.add(new CountActionConsumer(60,new MoveIceRightAND()));
+				ce.add(new CountActionConsumer(60,new MoveIceRightAND()));
 			}else
 			{
-				listActionConsumer.add(new CountActionConsumer(60,new MoveIceRight()));
+				ce.add(new CountActionConsumer(60,new MoveIceRight()));
 			}
 		}
 	}
 
 	public void Reset(Entity e) {
-		listActionConsumer.reset();
+		ce.reset();
 	}
 	
 	private class MoveIceDownAND extends Function{

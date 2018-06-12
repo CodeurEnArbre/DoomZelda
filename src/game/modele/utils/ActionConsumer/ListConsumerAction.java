@@ -10,7 +10,6 @@ public class ListConsumerAction extends SimpleListActionConsumer implements Cons
 			if(!list.get(i).act(e))
 			{
 				list.get(i).getFunction().finishAction(e);
-				list.get(i).dispose();
 				list.remove(i);
 			}
 		}

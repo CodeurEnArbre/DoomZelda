@@ -32,6 +32,6 @@ public class OptimizedActionConsumer implements ConsumerAction{
 
 	@Override
 	public void dispose() {
-		c.dispose();
+		
 	}
 }

@@ -7,10 +7,6 @@ import game.modele.utils.ActionConsumer.CountActionConsumer;
 import game.modele.utils.graph.Graph;
 import game.modele.world.World;
 
-/* Cette classe représente le comportement d'une entité qui éffectue une charge
- *
- *
- */
 public class FunctionCharge extends Function{
 	int[] d = null;
 	boolean atteint = false;
@@ -29,7 +25,7 @@ public class FunctionCharge extends Function{
 
 		if(atteint)
 			return;
-
+		
 		e.slow = 4;
 
 		if(d.equals(Graph.right)) {
@@ -41,7 +37,7 @@ public class FunctionCharge extends Function{
 		}else if(d.equals(Graph.bot)) {
 			FunctionIA.dirigerNorth(e);		
 		}
-
+		
 		if(e.coordonnes.equals(World.player.coordonnes)) {
 			e.slow = 0;
 			World.player.addAction(

@@ -32,7 +32,7 @@ public class FunctionIASheep extends Function {
 		super();
 		fIA.distance = 3;
 		q.add(simpleIA);
-		listActionConsumer.add(q);
+		ce.add(q);
 	}
 
 	@Override

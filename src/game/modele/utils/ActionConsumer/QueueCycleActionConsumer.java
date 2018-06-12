@@ -3,10 +3,6 @@ package game.modele.utils.ActionConsumer;
 import game.modele.entity.Entity;
 import game.modele.utils.ActionConsumer.Function.Function;
 
-/* Cette classe représente une liste d'actionConsumer
- * Les actionsConsumers sont éxécuté a la suite
- * On attend la fin de l'un pour commencer l'autre
- */
 public class QueueCycleActionConsumer extends SimpleCycleActionConsumer implements ConsumerAction{
 
 	@Override

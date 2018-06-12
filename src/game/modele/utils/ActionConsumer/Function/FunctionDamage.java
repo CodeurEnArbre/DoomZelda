@@ -12,7 +12,7 @@ public class FunctionDamage extends Function{
 		EntityLiving entity = (EntityLiving)e;
 		if(!entity.isDamaged.get())
 			entity.isDamaged.set(true);
-		listActionConsumer.act(e);
+		ce.act(e);
 	}
 
 	@Override
