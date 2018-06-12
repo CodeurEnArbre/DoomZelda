@@ -16,9 +16,11 @@ import game.modele.menu.InventoryMenu;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.ConsumerAction;
+import game.modele.utils.ActionConsumer.ConsumerActionDelay;
 import game.modele.utils.ActionConsumer.CountActionConsumer;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
-import game.modele.utils.ActionConsumer.Function.FunctionCantMove;
+import game.modele.utils.ActionConsumer.OptimizedActionConsumer;
+import game.modele.utils.ActionConsumer.Function.FunctionRaise;
 import game.modele.utils.ActionConsumer.Function.FunctionLampe;
 import game.modele.utils.ActionConsumer.Function.FunctionMove;
 import game.modele.utils.ActionConsumer.Function.FunctionMovement;
@@ -34,6 +36,10 @@ public class Player extends EntityLiving{
 
 	ConsumerAction deplacement = new InfiniteActionConsumer(new FunctionMove());
 	ConsumerAction mouvement = new InfiniteActionConsumer(new FunctionMovement());
+	
+	CountActionConsumer soulever = new CountActionConsumer(30,new FunctionRaise());
+//	ConsumerAction reposer = new OptimizedActionConsumer(2,new CountActionConsumer(30,new FunctionRaise()));
+	
 	ConsumerAction lampe = new InfiniteActionConsumer(new FunctionLampe());
 	
 	public ArrayList<Loot> loots;
@@ -177,6 +183,7 @@ public class Player extends EntityLiving{
 				removeRuby(10); break;
 			
 			default:
+				//FAUDRAI PEUT ETRE UTILISER UN THROW
 				System.out.println("C'est quoi ca ???? : "+item);
 			}
 		}
@@ -186,7 +193,7 @@ public class Player extends EntityLiving{
 	
 	public void useLeftItem() {
 		if(leftItemEquip.get()!=null) {
-			addAction(new CountActionConsumer(30,new FunctionCantMove()));
+			addAction(new CountActionConsumer(30,new FunctionRaise()));
 			this.action.set(Actions.useLeftItem.get());
 			if(leftItemEquip.get() instanceof Weapon) {
 				Weapon weapon = (Weapon)leftItemEquip.get();
@@ -200,7 +207,7 @@ public class Player extends EntityLiving{
 	
 	public void useRightItem() {
 		if(rightItemEquip.get()!=null) {
-			addAction(new CountActionConsumer(30,new FunctionCantMove()));
+			addAction(new CountActionConsumer(30,new FunctionRaise()));
 			this.action.set(Actions.useRightItem.get());
 			if(rightItemEquip.get() instanceof Weapon) {
 				Weapon weapon = (Weapon)rightItemEquip.get();
@@ -208,27 +215,39 @@ public class Player extends EntityLiving{
 			}else if(rightItemEquip.get() instanceof Usable) {
 				Usable usable = (Usable)rightItemEquip.get();
 				usable.use();
-			}
+			}//OUI
 		}
 	}
 	
 	public void interact() {
 		if(carriedEntity == null) {
 			int dir = super.direction.getDirection();
-			int x = (dir==Direction.West?(int)super.coordonnes.getX()-1:dir==Direction.East?(int)super.coordonnes.getX()+1:(int)super.coordonnes.getX());
-			int y = (dir==Direction.South?(int)super.coordonnes.getY()+1:dir==Direction.North?(int)super.coordonnes.getY()-1:(int)super.coordonnes.getY());
+			int current_x = (int)super.coordonnes.getX();
+			int current_y = (int)super.coordonnes.getY();
+			
+			int x = (dir==Direction.West?current_x-1:dir==Direction.East?current_x+1:current_x);
+			int y = (dir==Direction.South?current_y+1:dir==Direction.North?current_y-1:current_y);
 			Entity e = World.currentMap.getEntity(x,y);
 			if(e != null) {
 				if(e instanceof CarriableEntity) {	
 					((CarriableEntity)e).pickupEntity(this);
 					this.action.set(Actions.raise.get());
-					addAction(new CountActionConsumer(30,new FunctionCantMove()));
+					soulever.renew();
+					addAction(soulever);
+					delAction(mouvement);
+					this.action.set(Actions.walkAndRaise.get());
+					this.addAction(new ConsumerActionDelay(60, mouvement));
 				}else if(e instanceof Chest) {
 					e.interact();
 				}
 			}
 		}else {
 			this.carriedEntity.placeEntity(this);
+			
+			
+			
+			
+			
 		}
 	}
 }

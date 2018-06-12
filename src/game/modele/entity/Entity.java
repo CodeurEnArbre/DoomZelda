@@ -101,7 +101,6 @@ public abstract class Entity {
 
 	public boolean setCoordoner(Coordonnees coordonnees) {
 		for(Entity e : World.currentMap.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
-
 			if(e != this && currentE != e) {
 				currentE = e;
 				e.active(this);
@@ -110,6 +109,9 @@ public abstract class Entity {
 			}
 		}
 
+	
+		
+		
 		try {
 			Tile tile = World.currentMap.getTileTerrain((int)coordonnees.getY(), (int)coordonnees.getX());
 			Tile terrain = World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX());

@@ -2,9 +2,9 @@ package game.modele.utils.ActionConsumer.Function;
 
 import game.modele.entity.Entity;
 
-public class FunctionCantMove extends Function{
+public class FunctionRaise extends Function{
 
-	public FunctionCantMove() {
+	public FunctionRaise() {
 		super();
 	}
 	
@@ -12,6 +12,7 @@ public class FunctionCantMove extends Function{
 	public void Action(Entity e) {
 		e.slow = 0;
 		e.incAnim();
+		System.out.println(e.etatDeplacement);
 		ce.act(e);
 	}
 	

@@ -47,7 +47,7 @@ public class Interaction {
 		
 		
 		if(World.isWorldLoaded.get() && k == UseLeftItem) {
-			if(Menu.currentMenu.get() == Menu.NoMenuID && World.player != null  )
+			if(Menu.currentMenu.get() == Menu.NoMenuID && World.player != null)
 				World.player.useLeftItem();
 			else if(Menu.currentMenu.get() == Menu.InventoryMenuID)
 				InventoryMenu.equipItem(true);
