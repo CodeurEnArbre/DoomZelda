@@ -22,7 +22,7 @@ public class Sheep extends EntityFriendly{
 		this.acce = 0.0;
 		addAction(move);
 		addAction(IA);
-//		addAction(mouvement);
+		addAction(mouvement);
 
 	}
 
@@ -30,7 +30,12 @@ public class Sheep extends EntityFriendly{
 	public void active(Entity e) {
 
 	}
-	
+	@Override
+	public void incAnim() {
+		this.etatDeplacement.set(
+				this.etatDeplacement.get()
+				+ (this.etatDeplacement.get() < 83 ? 1 : -83));
+	}
 	
 	
 
