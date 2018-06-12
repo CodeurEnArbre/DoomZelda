@@ -25,5 +25,7 @@ public class ConsumerActionDelay  implements ConsumerAction {
 		}
 	}
 	@Override
-	public void dispose() {}
+	public void dispose() {
+		c.dispose();
+	}
 }

@@ -3,6 +3,9 @@ package game.modele.utils.ActionConsumer;
 import game.modele.entity.Entity;
 import game.modele.utils.ActionConsumer.Function.Function;
 
+/* Cette classe représente un consumerAction 
+ * qui répette une fonction un nombre de fois déterminé
+ */
 public class CountActionConsumer implements ConsumerAction {
 	private int value;
 	private int count;
@@ -29,7 +32,5 @@ public class CountActionConsumer implements ConsumerAction {
 	}
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
 	}
 }

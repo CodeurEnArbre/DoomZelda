@@ -3,8 +3,9 @@ package game.modele.utils.ActionConsumer;
 import java.util.ArrayList;
 
 import game.modele.entity.Entity;
+import game.modele.utils.ActionConsumer.Function.Function;
 
-public class SimpleListActionConsumer {
+public class SimpleListActionConsumer{
 
 	protected ArrayList<ConsumerAction> list = new ArrayList<>();
 	public void add(ConsumerAction ce) 

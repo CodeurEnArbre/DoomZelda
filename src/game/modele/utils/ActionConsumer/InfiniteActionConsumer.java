@@ -4,19 +4,19 @@ import game.modele.entity.Entity;
 import game.modele.utils.ActionConsumer.Function.Function;
 
 public class InfiniteActionConsumer implements ConsumerAction{
-	private Function ce;
+	private Function function;
 	public InfiniteActionConsumer(Function c) 
 	{	
-		ce = c;
+		function = c;
 	}
 	
 	public Function getFunction() {
-		return ce;
+		return function;
 	}
 	
 	@Override
 	public boolean act(Entity e) {
-		ce.Start(e);
+		function.Start(e);
 		return true;
 	}
 

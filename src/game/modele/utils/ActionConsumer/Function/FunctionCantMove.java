@@ -15,7 +15,7 @@ public class FunctionCantMove extends Function{
 			EntityLiving entity = (EntityLiving)e;
 			entity.isMovementLock.set(true);
 		}
-		ce.act(e);
+		listActionConsumer.act(e);
 	}
 	
 	@Override

@@ -4,21 +4,21 @@ import game.modele.entity.Entity;
 import game.modele.utils.ActionConsumer.ListConsumerAction;
 
 public abstract class Function {
-	ListConsumerAction ce;
+	ListConsumerAction listActionConsumer;
 	
 	public Function() {
-		ce = new ListConsumerAction();
+		listActionConsumer = new ListConsumerAction();
 	}
 	
 	public void Start(Entity e) {
-		ce.act(e);
+		listActionConsumer.act(e);
 		Action(e);
 	}
 	
 	protected abstract void Action(Entity e);
 	
 	public void Reset(Entity e) {
-		ce.reset();
+		listActionConsumer.reset();
 	}
 	public void finishAction(Entity e) {}
 }

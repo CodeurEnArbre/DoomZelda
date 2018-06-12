@@ -13,20 +13,20 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class Entity {
-	
-	ListConsumerAction ce = new ListConsumerAction();
+
+	ListConsumerAction ActionQueueEntity = new ListConsumerAction();
 	public static int key = 0;
 	public int primaryKey;
-	
+
 	public double baseSpeed = 0.11f;
 	public double maxSpeed = 0.16f;
 	public double acce = 0.00025f;
 	public double slow = 1;
 	public double speed;
-	
+
 	public double hitBoxX=0;//W.I.P16
 	public double hitBoxY=0;//W.I.P
-	
+
 	public boolean isSolidEntity = false;
 	//represente l'etat d'une direction
 	public class infoDeplacement{
@@ -39,18 +39,18 @@ public abstract class Entity {
 	public infoDeplacement moveDown;
 	public infoDeplacement moveRight;
 	public infoDeplacement moveLeft;
-	
+
 	protected String id;
 	public Direction direction;
-	
+
 	protected Tile currentTile = new tileVoid();
 	protected Tile currentTerrain = new tileVoid();
 	protected Tile currentTop = new tileVoid();
 	protected Entity currentE = null;
-	
+
 	public Coordonnees coordonnes;
 	public IntegerProperty etatDeplacement = new SimpleIntegerProperty(0);
-	
+
 	public Entity(String id,Coordonnees coordonnees,Direction direction) {
 		primaryKey = key++; 
 		this.direction=direction;
@@ -62,24 +62,24 @@ public abstract class Entity {
 		moveLeft = new infoDeplacement();
 		moveRight = new infoDeplacement();		
 	}
-	
+
 	public void addAction(ConsumerAction c) {
-		ce.add(c);
+		ActionQueueEntity.add(c);
 	}
-	
+
 	public void delAction(ConsumerAction c) {
-		ce.del(c,this);
+		ActionQueueEntity.del(c,this);
 	}
-	
+
 	public void clearAction() {
-		ce.clear();
+		ActionQueueEntity.clear();
 	}
 	public void addX(double x){
 		if(this.setCoordoner( new Coordonnees(this.coordonnes.getX() + x,this.coordonnes.getY() ))) {
 			this.coordonnes.setX(this.coordonnes.getX() + x);
 		}
 	}
-	
+
 	public void addY(double y) {
 		if(this.setCoordoner(
 				new Coordonnees(
@@ -88,20 +88,20 @@ public abstract class Entity {
 			this.coordonnes.setY(this.coordonnes.getY() + y);
 		}
 	}
-	
+
 	//Teleporte l'entity meme si il y a une tile qui bloque
 	public void forceTp(Coordonnees coordonnees) {
 		this.coordonnes.setX(coordonnees.getX());
 		this.coordonnes.setY(coordonnees.getY());
 	}
-	
+
 	public boolean isOnTileCoord(Coordonnees coordonnees) {
 		return((int)this.coordonnes.getX()==(int)coordonnees.getX() && (int)this.coordonnes.getY()==(int)coordonnees.getY());
 	}
-	
+
 	public boolean setCoordoner(Coordonnees coordonnees) {
 		for(Entity e : World.currentMap.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
-			
+
 			if(e != this && currentE != e) {
 				currentE = e;
 				e.active(this);
@@ -109,42 +109,42 @@ public abstract class Entity {
 				currentE = e;
 			}
 		}
-		
+
 		try {
 			Tile tile = World.currentMap.getTileTerrain((int)coordonnees.getY(), (int)coordonnees.getX());
 			Tile terrain = World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX());
 			Tile top =  World.currentMap.getTileTop((int)coordonnees.getY(), (int)coordonnees.getX());
-			
+
 			if(currentTerrain != terrain) {
 				if(currentTerrain != null)
 					currentTerrain.distant(this);
 				terrain.Action(this);
 				currentTerrain = terrain;
 			}
-			
+
 			if(currentTop != top) {
 				if(currentTop != null)
 					currentTop.EntityLeaveUnder(this);
 				top.EntityUnder(this);
 				currentTop = top;
 			}
-			
+
 			Entity entity = World.currentMap.getEntity((int)coordonnees.getX(), (int)coordonnees.getY());
-			
+
 			if(entity!=null && entity.isSolidEntity && entity != this)
 				return false;
-			
+
 			Player thisPlayer = null;
-			
+
 			if(this.getId().equals("Player"))
 				thisPlayer = (Player)this;
-			
+
 			if(!World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).solid() &&
 					!World.currentMap.getTile((int)(coordonnees.getY()+ hitBoxY), (int)(coordonnees.getX()+ hitBoxX)).solid() &&
 					coordonnees.getX() >= 0 && coordonnees.getY() >= 0 &&
 					(coordonnees.getX() + speed + hitBoxX) < World.currentMap.getWidth() &&
 					(coordonnees.getY() + speed + hitBoxY) < World.currentMap.getHeight() &&
-			!(this.getId().equals("Player") && thisPlayer.isMovementLock.get()))
+					!(this.getId().equals("Player") && thisPlayer.isMovementLock.get()))
 			{
 				if(this.currentTile != tile) {
 					if(currentTile != null)
@@ -165,7 +165,7 @@ public abstract class Entity {
 		return this.id;
 	}
 	public final void update() {
-		ce.act(this);
+		ActionQueueEntity.act(this);
 
 		for(Entity e : World.currentMap.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
 
@@ -180,16 +180,18 @@ public abstract class Entity {
 	public void resetAnim() {
 		this.etatDeplacement.set(0);
 	}
-	public void dispose() {
-		
-	}
-	
-	public void interact() {
-		
-	}
-	
+
 	public String toString() {
 		return id;
 	}
-	
+
+	public void interact() {
+
+	}
+	// TODO Auto-generated method stub
+
+	public void dispose() { 
+		ActionQueueEntity.dispose();
+
+	}
 }

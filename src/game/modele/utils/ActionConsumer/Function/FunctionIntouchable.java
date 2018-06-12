@@ -7,11 +7,10 @@ public class FunctionIntouchable extends Function{
 
 	@Override
 	protected void Action(Entity e) {
-		
 		if(e instanceof EntityLiving) {
 			((EntityLiving) e).isInvulnerable.set(true);
 		}
-		ce.act(e);
+		listActionConsumer.act(e);
 	}
 	
 	@Override
