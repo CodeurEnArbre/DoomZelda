@@ -124,11 +124,12 @@ public class World {
 
 			tilesData.close();
 			
+			Entity.key=0;
 			ArrayList<Entity> entitys = loadEntity(file);
 
-			if(worldName==null)
+			if(worldName==null) {
 				currentMap=new WorldData(name, width, height, outside, tileGround, tileSolid, tileTop, entitys);
-			else {
+			}else {
 				currentMap.newWorld(worldName, width, height, outside, tileGround, tileSolid, tileTop, entitys);
 			}
 			World.currentMap.g.initNodes();
