@@ -194,4 +194,8 @@ public abstract class Entity {
 		ActionQueueEntity.dispose();
 
 	}
+	
+	public void delete() {
+		World.currentMap.deleteEntity(primaryKey);
+	}
 }
