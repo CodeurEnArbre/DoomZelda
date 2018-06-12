@@ -188,6 +188,10 @@ public abstract class Entity {
 		
 	}
 	
+	public void delete() {
+		World.currentMap.deleteEntity(primaryKey);
+	}
+	
 	public String toString() {
 		return id;
 	}
