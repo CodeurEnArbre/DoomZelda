@@ -30,20 +30,20 @@ public class Interaction {
 	
 	public static void KeyInteractDown(KeyCode k) {
 		
-		if(World.isWorldLoaded.get() && k == INTERACT && !World.player.isMovementLock.get()) {
+		if(World.isWorldLoaded.get() && k == INTERACT) {
 			if(World.player != null)
 				World.player.interact();
 		}
 		
 		if(World.isWorldLoaded.get() && k == UseLeftItem) {
-			if(Menu.currentMenu.get() == Menu.NoMenuID && World.player != null  && !World.player.isMovementLock.get())
+			if(Menu.currentMenu.get() == Menu.NoMenuID && World.player != null  )
 				World.player.useLeftItem();
 			else if(Menu.currentMenu.get() == Menu.InventoryMenuID)
 				InventoryMenu.equipItem(true);
 		}
 		
 		if(World.isWorldLoaded.get() && k == UseRightItem) {
-			if(Menu.currentMenu.get() == Menu.NoMenuID && World.player != null  && !World.player.isMovementLock.get())
+			if(Menu.currentMenu.get() == Menu.NoMenuID && World.player != null )
 				World.player.useRightItem();
 			else if(Menu.currentMenu.get() == Menu.InventoryMenuID)
 				InventoryMenu.equipItem(false);
@@ -64,7 +64,7 @@ public class Interaction {
 
 		if(k == AVANCER) {
 			Menu.selectUp();
-			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock.get()) {
+			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID ) {
 					World.player.moveUP.attente = false;
 					World.player.moveUP.active = true;
 					if(World.player.moveDown.active) {
@@ -77,7 +77,7 @@ public class Interaction {
 
 		}else if(k == RECULER){
 			Menu.selectDown();
-			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock.get()) {
+			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID ) {
 					World.player.moveDown.attente = false;
 					World.player.moveDown.active = true;
 					if(World.player.moveUP.active)
@@ -89,7 +89,7 @@ public class Interaction {
 		}
 		if(k == GAUCHE) {
 			Menu.selectLeft();
-			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock.get()) {
+			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID ) {
 				World.player.moveLeft.attente = false;
 				World.player.moveLeft.active = true;
 				if(World.player.moveRight.active)
@@ -101,7 +101,7 @@ public class Interaction {
 			}
 		}else if(k == DROITE ) {
 			Menu.selectRight();
-			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID && !World.player.isMovementLock.get()) {
+			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID ) {
 				World.player.moveRight.attente = false;
 				World.player.moveRight.active = true;
 				if(World.player.moveLeft.active)
@@ -117,20 +117,6 @@ public class Interaction {
 				OptionsMenu.enterOption.set(false);
 			}
 		}
-		
-		if(World.isWorldLoaded.get() && World.player.isMovementLock.get()) {
-			
-			World.player.moveRight.active = false;
-			World.player.moveLeft.active = false;
-			World.player.moveUP.active = false;
-			World.player.moveDown.active = false;
-			
-			World.player.moveRight.attente = false;
-			World.player.moveLeft.attente = false;
-			World.player.moveUP.attente = false;
-			World.player.moveDown.attente = false;
-		}
-		
 	}
 
 

@@ -817,7 +817,7 @@ public class MenuControler implements Initializable{
 								if(theplayer.action.get() == Actions.rien)
 									player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)));
 								else if(theplayer.action.get() == Actions.raise){
-									if(!theplayer.isMovementLock.get()) {
+									if(!theplayer.isRaising.get()) {
 										player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 8)+11+28*9));
 									}
 								}
@@ -829,7 +829,7 @@ public class MenuControler implements Initializable{
 								if(theplayer.action.get() == Actions.rien)
 									player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+28));
 								else if(theplayer.action.get() == Actions.raise){
-									if(!theplayer.isMovementLock.get()) {
+									if(!theplayer.isRaising.get()) {
 										player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 8)+11+28*10));
 									}
 								}
@@ -840,7 +840,7 @@ public class MenuControler implements Initializable{
 								if(theplayer.action.get() == Actions.rien)
 									player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+56));
 								else if(theplayer.action.get() == Actions.raise){
-									if(!theplayer.isMovementLock.get()) {
+									if(!theplayer.isRaising.get()) {
 										player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 8)+11+28*11));
 									}
 								}
@@ -851,7 +851,7 @@ public class MenuControler implements Initializable{
 								if(theplayer.action.get() == Actions.rien)
 									player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 3)+84));
 								else if(theplayer.action.get() == Actions.raise){
-									if(!theplayer.isMovementLock.get()) {
+									if(!theplayer.isRaising.get()) {
 										player.setImage(dicoImageAnimationPlayer.get((observable.getValue().intValue() / 8)+11+28*12));
 									}
 								}

@@ -27,7 +27,7 @@ public abstract class EntityLiving extends Entity{
 	public short nbFrameAnimation;
 	public int textureWidth, textureHeight;
 	public IntegerProperty action;
-	public BooleanProperty isMovementLock = new SimpleBooleanProperty(false);
+	public BooleanProperty isRaising = new SimpleBooleanProperty(false);
 	public BooleanProperty isInvulnerable = new SimpleBooleanProperty(false);
 	public BooleanProperty isDamaged = new SimpleBooleanProperty(false);
 	
