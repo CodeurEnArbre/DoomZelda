@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,6 +63,7 @@ public class MenuControler implements Initializable{
 	Map<Integer,Image> dicoImageTileTextureMap;
 	Map<Integer,Image> dicoImageItemTextureMap;
 	Map<Integer,Image> dicoImageTileEntityMap;
+	Map<Integer,Image> dicoImageProjectileMap;
 	static Map<Integer,Image> dicoImageAnimationPlayer;
 	Map<String,Map<Integer,Image>> dicoImageAnimationEntity;
 	static Map<Entity,ImageView> listEntityView = new HashMap<>();
@@ -617,6 +619,7 @@ public class MenuControler implements Initializable{
 			dicoImageTileEntityMap = new HashMap<>();
 			dicoImageAnimationPlayer = new HashMap<>();
 			dicoImageAnimationEntity = new HashMap<>();
+			dicoImageProjectileMap = new HashMap<>();
 			dicoShadow = new HashMap<>();
 
 			LoadDicoMap(dicoImageTileTextureMap,32,32,16,16,"TileTextureMap");
@@ -624,6 +627,7 @@ public class MenuControler implements Initializable{
 			LoadDicoMap(dicoImageTileEntityMap,32,32,16,16,"TileEntityTextureMap");
 
 			loadEntityAnimation();
+			loadProjectileTexture();
 			loadAnimationPlayer(dicoImageAnimationPlayer, 28, 13);
 
 			coeurs = new ArrayList<>();
@@ -642,6 +646,15 @@ public class MenuControler implements Initializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void loadProjectileTexture() {
+		try {
+			dicoImageProjectileMap.put(0, SwingFXUtils.toFXImage( ImageIO.read(new File("ressources/textures/Arrow.png").toURI().toURL()), null));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void GraphiqueLoop() {

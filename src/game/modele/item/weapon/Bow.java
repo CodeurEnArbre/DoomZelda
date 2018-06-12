@@ -20,8 +20,9 @@ public class Bow extends RangedWeapon{
 			theProjectile = new Arrow(World.player.coordonnes, World.player.direction, World.player);
 			break;
 		}
+		World.addEntity(theProjectile);
 		theProjectile.addAction(new InfiniteActionConsumer(new FunctionMove()));
-		World.currentMap.entity.add(theProjectile);
+		
 	}
 	
 }
