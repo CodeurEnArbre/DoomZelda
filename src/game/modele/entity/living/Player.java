@@ -51,7 +51,6 @@ public class Player extends EntityLiving{
 	
 	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials, Item leftEquip, Item rightEquip) {
 		super("Player",position,direction);
-		this.action.set(0);
 		this.speed = baseSpeed;
 		this.slow =	1;
 		super.maxPv.set(maxPv);
@@ -214,9 +213,7 @@ public class Player extends EntityLiving{
 	}
 	
 	public void interact() {
-	
 		if(carriedEntity == null) {
-			this.action.set(Actions.raise.get());
 			int dir = super.direction.getDirection();
 			int x = (dir==Direction.West?(int)super.coordonnes.getX()-1:dir==Direction.East?(int)super.coordonnes.getX()+1:(int)super.coordonnes.getX());
 			int y = (dir==Direction.South?(int)super.coordonnes.getY()+1:dir==Direction.North?(int)super.coordonnes.getY()-1:(int)super.coordonnes.getY());
@@ -224,6 +221,7 @@ public class Player extends EntityLiving{
 			if(e != null) {
 				if(e instanceof CarriableEntity) {	
 					((CarriableEntity)e).pickupEntity(this);
+					this.action.set(Actions.raise.get());
 					addAction(new CountActionConsumer(30,new FunctionCantMove()));
 				}else if(e instanceof Chest) {
 					e.interact();

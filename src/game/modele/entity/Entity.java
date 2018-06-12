@@ -61,7 +61,6 @@ public abstract class Entity {
 		moveDown = new infoDeplacement();
 		moveLeft = new infoDeplacement();
 		moveRight = new infoDeplacement();	
-		System.out.println(this+" "+primaryKey);
 	}
 
 	public void addAction(ConsumerAction c) {

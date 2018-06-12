@@ -971,14 +971,13 @@ public class MenuControler implements Initializable{
 					}
 				}
 			});
-		System.out.println(theplayer);
+	
 			theplayer.action.addListener(new ChangeListener<Number>() {
 				@Override
 				public void changed(ObservableValue<? extends Number> observable, Number oldValue,
 						Number newValue) {
-					
 					theplayer.etatDeplacement.unbind();
-				
+				System.out.println(newValue.intValue());
 					if(Actions.walk.get() == newValue.intValue())
 						theplayer.etatDeplacement.addListener(new ChangeListener<Number>() {
 							@Override
@@ -1012,7 +1011,7 @@ public class MenuControler implements Initializable{
 					}
 				}
 			});
-			
+			theplayer.action.set(0);
 
 			theplayer.pickupItem.addListener(new ChangeListener<Item>() {
 				@Override

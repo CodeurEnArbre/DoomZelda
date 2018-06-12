@@ -12,7 +12,7 @@ public enum Actions {
 	
 	private int value;
 	Actions(int i){
-		int value = i;
+		value = i;
 	}
 	public int get(){
 		return this.value;

@@ -13,27 +13,38 @@ public class Interaction {
 	/*
 	 * Assignation des booleans de direction � l'enfoncement de la touche
 	 * */
-	
+
 	//Direction
 	public static KeyCode AVANCER = KeyCode.Z;
 	public static KeyCode RECULER = KeyCode.S;
 	public static KeyCode GAUCHE = KeyCode.Q;
 	public static KeyCode DROITE = KeyCode.D;
-	
+
 	//Inventaire
 	public static KeyCode INVENTAIRE = KeyCode.E;
-	
+
 	//Action
 	public static KeyCode INTERACT = KeyCode.I;
 	public static KeyCode UseLeftItem = KeyCode.O;
 	public static KeyCode UseRightItem = KeyCode.P;
-	
+
 	public static void KeyInteractDown(KeyCode k) {
+		
+		
+		
+		
 		
 		if(World.isWorldLoaded.get() && k == INTERACT) {
 			if(World.player != null)
+			{	
 				World.player.interact();
+			}
 		}
+
+		
+		
+		
+		
 		
 		if(World.isWorldLoaded.get() && k == UseLeftItem) {
 			if(Menu.currentMenu.get() == Menu.NoMenuID && World.player != null  )
@@ -41,14 +52,14 @@ public class Interaction {
 			else if(Menu.currentMenu.get() == Menu.InventoryMenuID)
 				InventoryMenu.equipItem(true);
 		}
-		
+
 		if(World.isWorldLoaded.get() && k == UseRightItem) {
 			if(Menu.currentMenu.get() == Menu.NoMenuID && World.player != null )
 				World.player.useRightItem();
 			else if(Menu.currentMenu.get() == Menu.InventoryMenuID)
 				InventoryMenu.equipItem(false);
 		}
-		
+
 		if(k == KeyCode.ENTER) {
 			Menu.validate();
 		}
@@ -56,7 +67,7 @@ public class Interaction {
 		if(k == KeyCode.ESCAPE) {
 			Menu.escape();
 		}
-		
+
 		if(k == INVENTAIRE) {
 			World.addEntity(new WhiteSheep(new Coordonnees(6, 3), new Direction()));
 			Menu.inventory();
@@ -65,24 +76,24 @@ public class Interaction {
 		if(k == AVANCER) {
 			Menu.selectUp();
 			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID ) {
-					World.player.moveUP.attente = false;
-					World.player.moveUP.active = true;
-					if(World.player.moveDown.active) {
-						World.player.moveDown.attente = true;
-						World.player.moveDown.active = false;
+				World.player.moveUP.attente = false;
+				World.player.moveUP.active = true;
+				if(World.player.moveDown.active) {
+					World.player.moveDown.attente = true;
+					World.player.moveDown.active = false;
 				}
-				
+
 				setDirection(Direction.North);	
 			}
 
 		}else if(k == RECULER){
 			Menu.selectDown();
 			if(World.isWorldLoaded.get() && Menu.currentMenu.get() == Menu.NoMenuID ) {
-					World.player.moveDown.attente = false;
-					World.player.moveDown.active = true;
-					if(World.player.moveUP.active)
-						World.player.moveUP.attente = true;
-					World.player.moveUP.active = false;
+				World.player.moveDown.attente = false;
+				World.player.moveDown.active = true;
+				if(World.player.moveUP.active)
+					World.player.moveUP.attente = true;
+				World.player.moveUP.active = false;
 
 				setDirection(Direction.South);
 			}
