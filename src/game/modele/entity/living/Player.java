@@ -10,6 +10,7 @@ import game.modele.item.Item;
 import game.modele.item.loot.Loot;
 import game.modele.item.special.Special;
 import game.modele.item.usable.Usable;
+import game.modele.item.weapon.Bow;
 import game.modele.item.weapon.Weapon;
 import game.modele.menu.InventoryMenu;
 import game.modele.utils.Coordonnees;
@@ -129,6 +130,15 @@ public class Player extends EntityLiving{
 			}
 			
 		}else if(item instanceof Weapon) {
+			if(weapons.size() >= 24)
+				returnItem = item;
+			else {
+				weapons.add((Weapon)item);
+				InventoryMenu.lastItemAdded.set(2);
+				InventoryMenu.newItem.set(true);
+			}
+		}else if(item instanceof Bow) {
+			System.out.println("Truc");
 			if(weapons.size() >= 24)
 				returnItem = item;
 			else {
