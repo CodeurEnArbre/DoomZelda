@@ -143,8 +143,7 @@ public abstract class Entity {
 					!World.currentMap.getTile((int)(coordonnees.getY()+ hitBoxY), (int)(coordonnees.getX()+ hitBoxX)).solid() &&
 					coordonnees.getX() >= 0 && coordonnees.getY() >= 0 &&
 					(coordonnees.getX() + speed + hitBoxX) < World.currentMap.getWidth() &&
-					(coordonnees.getY() + speed + hitBoxY) < World.currentMap.getHeight() &&
-					!(this.getId().equals("Player") && thisPlayer.isMovementLock.get()))
+					(coordonnees.getY() + speed + hitBoxY) < World.currentMap.getHeight())
 			{
 				if(this.currentTile != tile) {
 					if(currentTile != null)
