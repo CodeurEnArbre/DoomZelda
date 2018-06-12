@@ -15,7 +15,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public abstract class Entity {
 
 	ListConsumerAction ActionQueueEntity = new ListConsumerAction();
-	public static int key = 0;
+	public static int key=0;
 	public int primaryKey;
 
 	public double baseSpeed = 0.11f;
@@ -60,7 +60,8 @@ public abstract class Entity {
 		moveUP = new infoDeplacement();
 		moveDown = new infoDeplacement();
 		moveLeft = new infoDeplacement();
-		moveRight = new infoDeplacement();		
+		moveRight = new infoDeplacement();	
+		System.out.println(this+" "+primaryKey);
 	}
 
 	public void addAction(ConsumerAction c) {
@@ -196,5 +197,6 @@ public abstract class Entity {
 	
 	public void delete() {
 		World.currentMap.deleteEntity(primaryKey);
+		System.out.println(this+" "+primaryKey);
 	}
 }
