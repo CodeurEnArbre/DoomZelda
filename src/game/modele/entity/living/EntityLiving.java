@@ -32,13 +32,15 @@ public abstract class EntityLiving extends Entity{
 	public BooleanProperty isInvulnerable = new SimpleBooleanProperty(false);
 	public BooleanProperty isDamaged = new SimpleBooleanProperty(false);
 	
+	
+	
 	public EntityLiving(String id,Coordonnees position, Direction direction) {
 		super(id,position,direction);
 		addAction(new InfiniteActionConsumer(new FunctionRigidbody()));
 		PV = new SimpleIntegerProperty(12);
 		maxPv = new SimpleIntegerProperty(12);
 		itemsEnMain = FXCollections.observableArrayList();
-		action = new SimpleIntegerProperty(Actions.rien);
+		action = new SimpleIntegerProperty(Actions.walk.get());
 	}
 	
 	public EntityLiving(String id,Coordonnees position, Direction direction, int pv) {

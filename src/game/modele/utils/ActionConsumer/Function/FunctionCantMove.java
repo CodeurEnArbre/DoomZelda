@@ -12,6 +12,7 @@ public class FunctionCantMove extends Function{
 	@Override
 	public void Action(Entity e) {
 		e.slow = 0;
+		e.incAnim();
 		ce.act(e);
 	}
 	

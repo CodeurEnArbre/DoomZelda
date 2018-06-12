@@ -43,17 +43,15 @@ public class Player extends EntityLiving{
 	
 	public static int maxRupees=100;
 	public static IntegerProperty rupees; //ARGENT!!!	
-	@SuppressWarnings("rawtypes")
 	public ObjectProperty pickupItem;
-	@SuppressWarnings("rawtypes")
 	public ObjectProperty leftItemEquip;
-	@SuppressWarnings("rawtypes")
 	public ObjectProperty rightItemEquip;
 	public CarriableEntity carriedEntity;
 	public BooleanProperty isCarriedSomething;
 	
 	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials, Item leftEquip, Item rightEquip) {
 		super("Player",position,direction);
+		this.action.set(0);
 		this.speed = baseSpeed;
 		this.slow =	1;
 		super.maxPv.set(maxPv);
@@ -190,7 +188,7 @@ public class Player extends EntityLiving{
 	public void useLeftItem() {
 		if(leftItemEquip.get()!=null) {
 			addAction(new CountActionConsumer(30,new FunctionCantMove()));
-			this.action.set(Actions.useLeftItem);
+			this.action.set(Actions.useLeftItem.get());
 			if(leftItemEquip.get() instanceof Weapon) {
 				Weapon weapon = (Weapon)leftItemEquip.get();
 				weapon.attaque();
@@ -204,7 +202,7 @@ public class Player extends EntityLiving{
 	public void useRightItem() {
 		if(rightItemEquip.get()!=null) {
 			addAction(new CountActionConsumer(30,new FunctionCantMove()));
-			this.action.set(Actions.useRightItem);
+			this.action.set(Actions.useRightItem.get());
 			if(rightItemEquip.get() instanceof Weapon) {
 				Weapon weapon = (Weapon)rightItemEquip.get();
 				weapon.attaque();
@@ -216,8 +214,9 @@ public class Player extends EntityLiving{
 	}
 	
 	public void interact() {
+	
 		if(carriedEntity == null) {
-			
+			this.action.set(Actions.raise.get());
 			int dir = super.direction.getDirection();
 			int x = (dir==Direction.West?(int)super.coordonnes.getX()-1:dir==Direction.East?(int)super.coordonnes.getX()+1:(int)super.coordonnes.getX());
 			int y = (dir==Direction.South?(int)super.coordonnes.getY()+1:dir==Direction.North?(int)super.coordonnes.getY()-1:(int)super.coordonnes.getY());
@@ -231,7 +230,7 @@ public class Player extends EntityLiving{
 				}
 			}
 		}else {
-			(this.carriedEntity).placeEntity(this);
+			this.carriedEntity.placeEntity(this);
 		}
 	}
 }
