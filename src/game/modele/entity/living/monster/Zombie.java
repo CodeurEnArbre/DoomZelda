@@ -25,7 +25,6 @@ public class Zombie extends EntityMonster{
 		addAction(deplacement);
 		addAction(mouvement);
 		addAction(ia);
-		nbFrameAnimation = 4;
 	}
 
 	@Override
