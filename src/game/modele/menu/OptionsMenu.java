@@ -145,7 +145,7 @@ public class OptionsMenu {
 					);
 			optionsFile.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Creation du dossier save et du fichier options");
 		}
 	}
 
