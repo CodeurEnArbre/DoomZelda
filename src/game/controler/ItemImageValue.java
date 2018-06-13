@@ -26,6 +26,8 @@ public class ItemImageValue {
 			return 17;
 		case "Basic Axe":
 			return 18;
+		case "Bow":
+			return 19;
 		}
 		return 0;
 	}

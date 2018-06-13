@@ -26,6 +26,7 @@ public class WorldData {
 	private Tile[][] tilesTop;
 	private IntegerProperty[][] luminosity;
 
+	@SuppressWarnings("unused")
 	private Map<SimpleEntry<Integer,Integer>, Stack<SimpleEntry<Integer,Integer>>> dijkstra;
 
 	public ObservableList<Entity> entity ;
@@ -41,7 +42,6 @@ public class WorldData {
 
 	public void newWorld(String zoneName, int width, int height, boolean outside, Tile ground[][], Tile tiles[][], Tile tilesTop[][], ArrayList<Entity> entitys) {
 		
-		Entity.key=0;
 		this.width=width;
 		this.height=height;
 
@@ -51,7 +51,6 @@ public class WorldData {
 		this.tileGround=ground;
 		this.tiles=tiles;
 		this.tilesTop=tilesTop;
-		
 		while(entity.size() > 0)
 		{
 			if(!entity.get(0).getId().equals("Player"))
@@ -132,6 +131,15 @@ public class WorldData {
 
 	public Entity[] entityHere(double x,double y) {
 		return this.entity.stream().filter(a -> a.coordonnes.isSameTile(x, y)).toArray(Entity[]::new);
+	}
+	public ArrayList<Entity> entityOnTileHere(int y, int x) {
+		ArrayList<Entity> entityFound = new ArrayList<Entity>();
+		for(Entity entity:this.entity) {
+			if(entity.coordonnes.getX() >= x && entity.coordonnes.getX() < x+1 && entity.coordonnes.getY() >= y && entity.coordonnes.getY() <= y+1){
+				entityFound.add(entity);
+			}
+		}
+		return entityFound;
 	}
 
 	public boolean canDifuseHere(double x,double y) {

@@ -1,7 +1,6 @@
 package game.modele.utils.ActionConsumer;
 import game.modele.entity.Entity;
 import game.modele.utils.ActionConsumer.Function.Function;
-import game.modele.utils.ActionConsumer.Function.SimpleListActionConsumer;
 
 public class ListConsumerAction extends SimpleListActionConsumer implements ConsumerAction{
 
@@ -20,6 +19,9 @@ public class ListConsumerAction extends SimpleListActionConsumer implements Cons
 		list.clear();
 	}
 
+	
+	
+	
 	public Function getFunction() {
 		return list.get(0).getFunction();
 	}

@@ -6,7 +6,7 @@ import game.modele.item.Item;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.CountActionConsumer;
-import game.modele.utils.ActionConsumer.Function.FunctionCantMove;
+import game.modele.utils.ActionConsumer.Function.FunctionRaise;
 import game.modele.utils.ActionConsumer.Function.FunctionItemDiscovered;
 import game.modele.world.World;
 import javafx.beans.property.IntegerProperty;
@@ -18,35 +18,26 @@ public class Chest extends TileEntity{
 	public IntegerProperty etatAnim;
 	
 	public Chest(String id, Coordonnees coordoner, Direction direction, Item insideItem) {
-		super(id, coordoner, direction, true);
+		super(id, coordoner, direction, insideItem != null);
 		this.itemInside = insideItem;
 		super.isSolidEntity = true;
-		etatAnim = new SimpleIntegerProperty(0);
+		etatAnim = new SimpleIntegerProperty(etat.get()?0:30);
 	}
 
 	@Override
-	public void onHit(Entity entity) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void onHit(Entity entity) {}
 
 	@Override
-	public void active(Entity e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void active(Entity e) {}
 
 	@Override
-	public void incAnim() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void incAnim() {}
 	
 	@Override
 	public void interact() {
 		if(etat.get()) {
 			addAction(new CountActionConsumer(30,new FunctionItemDiscovered()));
-			World.player.addAction(new CountActionConsumer(35,new FunctionCantMove()));
+			World.player.addAction(new CountActionConsumer(35,new FunctionRaise()));
 		}
 	}
 	

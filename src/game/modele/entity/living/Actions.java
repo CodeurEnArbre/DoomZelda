@@ -1,11 +1,19 @@
 package game.modele.entity.living;
 
-public class Actions {
+public enum Actions {
 	
-	public static final int rien = 0;
-	public static final int useLeftItem = 1;
-	public static final int useRightItem = 2;
-	public static final int raise = 3;
-	public static final int push = 4;
+	walk(0),
+	useWeapon(1),
+	raise(2),
+	walkAndRaise(3),
+	place(4),
+	push(5);
 	
+	private int value;
+	Actions(int i){
+		value = i;
+	}
+	public int get(){
+		return this.value;
+	}
 }

@@ -7,12 +7,17 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import game.modele.item.loot.Loot;
-import game.modele.item.special.Special;
-import game.modele.item.usable.Usable;
+import game.modele.entity.Entity;
+import game.modele.entity.EntityItemOnGround;
+import game.modele.entity.living.Player;
+import game.modele.entity.tileEntity.EntityTP;
+import game.modele.entity.tileEntity.chest.Chest;
+import game.modele.entity.tileEntity.chest.GoldChest;
+import game.modele.entity.tileEntity.chest.IronChest;
+import game.modele.entity.tileEntity.chest.WoodChest;
+import game.modele.entity.tileEntity.light.TikiTorchSmall;
 import game.modele.item.weapon.Weapon;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
@@ -37,10 +42,10 @@ public class Save {
 			File player = new File("saves/"+name+"/player");
 			player.createNewFile();
 			BufferedWriter entitysData = new BufferedWriter(new FileWriter(player.getAbsolutePath()));
-			entitysData.write("TinyMap,14,10,2,16,13,23");
+			entitysData.write("TinyMap,14,10,2,16,13,10,,,");
 			entitysData.close();
 		} catch (IOException e) {
-			System.out.println("No options found");
+			e.printStackTrace();
 		}
 		return true;
 	}
@@ -51,16 +56,15 @@ public class Save {
 			BufferedReader playerData = new BufferedReader(new FileReader(new File("saves/"+name+"/player")));
 			Pattern pat = Pattern.compile(",");
 			String[] valueData = pat.split(playerData.readLine());
-			World.initWorldSave(valueData[0],
+			World.initWorldSave(valueData[0],															//Map
 					new Coordonnees(Double.parseDouble(valueData[1]),Double.parseDouble(valueData[2])), //Coordonnees
 					new Direction(Integer.parseInt(valueData[3])), 										//Direction
 					Integer.parseInt(valueData[4]),														//maxPv
 					Integer.parseInt(valueData[5]), 													//PV
-					Integer.parseInt(valueData[6]), 													//Ruby
-					new ArrayList<Loot>(),
-					new ArrayList<Usable>(),
-					new ArrayList<Weapon>(),
-					new ArrayList<Special>());			
+					Integer.parseInt(valueData[6]), 													//Rubies
+					new Weapon[24],
+					null,
+					null);
 			playerData.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -68,7 +72,81 @@ public class Save {
 	}
 	
 	public static void saveSave() {
-		//TODO un jour
+		try {
+			BufferedWriter entitysData = new BufferedWriter(new FileWriter(new File("saves/"+saveName+"/data/"+World.currentMap.getName()+".entity")));
+			BufferedWriter playerData = new BufferedWriter(new FileWriter(new File("saves/"+saveName+"/player")));
+			
+			for(Entity entity:World.currentMap.getEntity()) {
+				if(!entity.getId().equals("Player")) {
+					entitysData.write(entity.getId());entitysData.newLine();
+					entitysData.write(""+entity.coordonnes.getX());
+					entitysData.write(","+entity.coordonnes.getY());
+					entitysData.write(","+entity.direction.getDirection());
+
+					switch(entity.getId()) {
+
+					case "EntityTP":
+						EntityTP entityTP = (EntityTP)entity;
+						entitysData.write(","+entityTP.getEtat());
+						entitysData.write(","+entityTP.getTPmapName());
+						entitysData.write(","+entityTP.getTPCoordonnees().getX());
+						entitysData.write(","+entityTP.getTPCoordonnees().getY());
+						break;
+
+					case "Gold Chest":
+						GoldChest goldChest = (GoldChest)entity;
+						entitysData.write(","+itemInsideChest(goldChest));
+						break;
+
+					case "Iron Chest":
+						IronChest ironChest = (IronChest)entity;
+						entitysData.write(","+itemInsideChest(ironChest));
+						break;
+
+					case "Wood Chest":
+						WoodChest woodChest = (WoodChest)entity;
+						entitysData.write(","+itemInsideChest(woodChest));
+						break;
+
+					case "ItemOnGround":
+						EntityItemOnGround entityItemOnGround = (EntityItemOnGround)entity;
+						entitysData.write(","+entityItemOnGround.item.name);
+						break;
+						
+					case "TikiTorchSmall":
+						TikiTorchSmall tikiTorchSmall = (TikiTorchSmall)entity;
+						entitysData.write(","+tikiTorchSmall.getEtat()+
+								","+tikiTorchSmall.lightLvl);
+						break;
+					}
+					entitysData.newLine();
+				}
+			}
+			
+			playerData.write(World.currentMap.getName()+
+					","+World.player.coordonnes.getX()+
+					","+World.player.coordonnes.getY()+
+					","+World.player.direction.getDirection()+
+					","+World.player.getMaxPv().get()+
+					","+World.player.getPV().get()+
+					","+Player.rupees.get()+
+					","+
+					","+
+					","
+					);
+			
+			entitysData.close();
+			playerData.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static String itemInsideChest(Chest chest) {
+		if(chest.itemInside != null)
+			return chest.itemInside.name;
+		else
+			return null;
 	}
 	
 	public static void deleteSave(String name) {

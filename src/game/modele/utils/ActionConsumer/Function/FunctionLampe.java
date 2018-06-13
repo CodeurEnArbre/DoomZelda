@@ -2,7 +2,6 @@ package game.modele.utils.ActionConsumer.Function;
 
 import game.modele.entity.Entity;
 import game.modele.entity.tileEntity.light.EntityLight;
-import game.modele.utils.ActionConsumer.ListConsumerAction;
 import game.modele.world.World;
 
 public class FunctionLampe extends Function{

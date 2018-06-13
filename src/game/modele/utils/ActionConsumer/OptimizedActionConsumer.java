@@ -1,7 +1,7 @@
-package game.modele.utils.ActionConsumer.Function;
+package game.modele.utils.ActionConsumer;
 
 import game.modele.entity.Entity;
-import game.modele.utils.ActionConsumer.ConsumerAction;
+import game.modele.utils.ActionConsumer.Function.Function;
 
 public class OptimizedActionConsumer implements ConsumerAction{
 
@@ -9,7 +9,7 @@ public class OptimizedActionConsumer implements ConsumerAction{
 	private int current;
 	private ConsumerAction c;
 	
-	public OptimizedActionConsumer(ConsumerAction c,int reduction) {
+	public OptimizedActionConsumer(int reduction,ConsumerAction c) {
 		this.reduction = reduction;
 		this.current = reduction;
 		this.c = c;

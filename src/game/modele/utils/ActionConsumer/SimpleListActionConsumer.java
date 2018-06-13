@@ -1,9 +1,8 @@
-package game.modele.utils.ActionConsumer.Function;
+package game.modele.utils.ActionConsumer;
 
 import java.util.ArrayList;
 
 import game.modele.entity.Entity;
-import game.modele.utils.ActionConsumer.ConsumerAction;
 
 public class SimpleListActionConsumer {
 

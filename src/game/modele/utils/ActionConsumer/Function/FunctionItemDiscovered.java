@@ -22,11 +22,8 @@ public class FunctionItemDiscovered extends Function{
 	public void finishAction(Entity e) {
 		Chest c = (Chest)e;
 		c.setEtat(false);
-		System.out.println(c.itemInside);
 		c.itemInside = World.player.takeItem(c.itemInside);
-		System.out.println(c.itemInside);
 		if(c.itemInside != null) {
-			System.out.println("refermage");
 			c.etatAnim.set(0);
 			c.setEtat(true);
 		}

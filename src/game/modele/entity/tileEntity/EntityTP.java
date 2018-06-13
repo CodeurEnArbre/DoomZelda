@@ -3,6 +3,7 @@ package game.modele.entity.tileEntity;
 import game.modele.entity.Entity;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
+import game.modele.world.Save;
 import game.modele.world.World;
 
 public class EntityTP extends TileEntity{
@@ -31,6 +32,7 @@ public class EntityTP extends TileEntity{
 	@Override
 	public void active(Entity e) {
 		if(e.equals(World.player)) {
+			Save.saveSave();
 			World.loadWorld(this.mapNameTp,this.mapNameTp);
 			World.player.forceTp(this.getTPCoordonnees());
 		}

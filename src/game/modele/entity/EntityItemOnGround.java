@@ -14,11 +14,10 @@ public class EntityItemOnGround extends Entity{
 		this.item=item;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void active(Entity e) {
 		if(e.getId().equals("Player")) {
-			World.player.pickupItem.set(item);
+			World.player.pickupItem =  item;
 			World.player.takeItem(item);
 			World.currentMap.entity.remove(this);
 		}

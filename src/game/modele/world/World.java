@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 import game.modele.entity.Entity;
 import game.modele.entity.EntityFactory;
 import game.modele.entity.living.Player;
-import game.modele.entity.tileEntity.chest.Chest;
 import game.modele.item.Item;
 import game.modele.item.ItemFactory;
 import game.modele.item.loot.Loot;
@@ -60,14 +59,12 @@ public class World {
 		GameLoop.play();
 	}
 
-	public static void initWorldSave(String world, Coordonnees coord, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials) {
+	public static void initWorldSave(String world, Coordonnees coord, Direction direction, int maxPv, int pv, int ruby,  Weapon[] weapons,Item leftEquip, Item rightEquip) {
 
 		loadGameLoop();
 		
-		player = new Player(coord,direction,maxPv,pv,ruby,loots,usables,weapons,specials);
-		for(int i=0; i<22;i++) {
-			player.weapons.add((Weapon) ItemFactory.getItem("Wooden Sworden"));
-		}
+		player = new Player(coord,direction,maxPv,pv,ruby,weapons,leftEquip, rightEquip);
+		
 		loadWorld(world,null);
 		addEntity(player);
 	
@@ -125,11 +122,12 @@ public class World {
 
 			tilesData.close();
 			
+			Entity.key=0;
 			ArrayList<Entity> entitys = loadEntity(file);
 
-			if(worldName==null)
+			if(worldName==null) {
 				currentMap=new WorldData(name, width, height, outside, tileGround, tileSolid, tileTop, entitys);
-			else {
+			}else {
 				currentMap.newWorld(worldName, width, height, outside, tileGround, tileSolid, tileTop, entitys);
 			}
 			World.currentMap.g.initNodes();

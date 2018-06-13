@@ -2,7 +2,6 @@ package game.modele.utils.ActionConsumer.Function;
 
 import game.modele.entity.Entity;
 import game.modele.utils.ActionConsumer.CountActionConsumer;
-import game.modele.utils.ActionConsumer.ListConsumerAction;
 
 public class FunctionMoveIce extends Function {
 	public FunctionMoveIce() {

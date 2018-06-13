@@ -16,7 +16,6 @@ import game.modele.item.Item;
 import game.modele.item.ItemFactory;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
-import game.modele.world.World;
 
 public class EntityFactory {
 
@@ -28,7 +27,7 @@ public class EntityFactory {
 				e = (Player) Player.class.getConstructors()[0]
 						.newInstance(castParams(Player.class.getConstructors()[0],params));
 				break;
-			case "TileEntityTP":
+			case "EntityTP":
 				e = (EntityTP) EntityTP.class.getConstructors()[0]
 						.newInstance(castParams(EntityTP.class.getConstructors()[0],params));
 				break;
@@ -40,6 +39,10 @@ public class EntityFactory {
 				e = (Bush) Bush.class.getConstructors()[0]
 						.newInstance(castParams(Bush.class.getConstructors()[0],params));
 				break;
+			
+				
+				
+				
 			case "Zombie":
 				e = (Entity) Zombie.class.getConstructors()[0]
 						.newInstance(castParams(Zombie.class.getConstructors()[0],params));
@@ -60,7 +63,7 @@ public class EntityFactory {
 				e = (Entity) WoodChest.class.getConstructors()[0]
 						.newInstance(castParams(WoodChest.class.getConstructors()[0],params));
 				break;
-			case "EntityItemOnGround":
+			case "ItemOnGround":
 				e = (EntityItemOnGround) EntityItemOnGround.class.getConstructors()[0]
 						.newInstance(castParams(EntityItemOnGround.class.getConstructors()[0],params));
 				break;

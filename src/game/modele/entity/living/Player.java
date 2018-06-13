@@ -3,6 +3,7 @@ package game.modele.entity.living;
 import java.util.ArrayList;
 
 import game.modele.entity.Entity;
+import game.modele.entity.EntityItemOnGround;
 import game.modele.entity.living.monster.EntityMonster;
 import game.modele.entity.tileEntity.carriable.CarriableEntity;
 import game.modele.entity.tileEntity.chest.Chest;
@@ -10,14 +11,19 @@ import game.modele.item.Item;
 import game.modele.item.loot.Loot;
 import game.modele.item.special.Special;
 import game.modele.item.usable.Usable;
+import game.modele.item.weapon.Bow;
 import game.modele.item.weapon.Weapon;
 import game.modele.menu.InventoryMenu;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.ConsumerAction;
+import game.modele.utils.ActionConsumer.ConsumerActionDelay;
 import game.modele.utils.ActionConsumer.CountActionConsumer;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
-import game.modele.utils.ActionConsumer.Function.FunctionCantMove;
+import game.modele.utils.ActionConsumer.OptimizedActionConsumer;
+import game.modele.utils.ActionConsumer.SimpleActionConsumer;
+import game.modele.utils.ActionConsumer.Function.FunctionRaise;
+import game.modele.utils.ActionConsumer.Function.FunctionDeclanche;
 import game.modele.utils.ActionConsumer.Function.FunctionLampe;
 import game.modele.utils.ActionConsumer.Function.FunctionMove;
 import game.modele.utils.ActionConsumer.Function.FunctionMovement;
@@ -33,21 +39,32 @@ public class Player extends EntityLiving{
 
 	ConsumerAction deplacement = new InfiniteActionConsumer(new FunctionMove());
 	ConsumerAction mouvement = new InfiniteActionConsumer(new FunctionMovement());
+	
+	CountActionConsumer soulever = new CountActionConsumer(60,new FunctionRaise());
+	ConsumerAction remarche = new ConsumerActionDelay(60,new SimpleActionConsumer(new FunctionDeclanche(mouvement)));
+	
+	//	ConsumerAction reposer = new OptimizedActionConsumer(2,new CountActionConsumer(30,new FunctionRaise()));
+	
 	ConsumerAction lampe = new InfiniteActionConsumer(new FunctionLampe());
 	
-	public ArrayList<Loot> loots;
-	public ArrayList<Usable> usables;
-	public ArrayList<Weapon> weapons;
-	public ArrayList<Special> specials;
+	public int nbWeapon = 0;
+	public Weapon[] weapons = new Weapon[24];
 	
 	public static int maxRupees=100;
 	public static IntegerProperty rupees; //ARGENT!!!	
-	@SuppressWarnings("rawtypes")
-	public ObjectProperty pickupItem;
+	public BooleanProperty havePickupItem;
+	public Item pickupItem;
+	
+	public BooleanProperty haveLeftItemEquip;
+	public Weapon LeftItemEquip;
+	
+	public BooleanProperty haveRightItemEquip;
+	public Weapon RightItemEquip;
+	
 	public CarriableEntity carriedEntity;
 	public BooleanProperty isCarriedSomething;
 	
-	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials) {
+	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, Weapon[] weapons, Item leftEquip, Item rightEquip) {
 		super("Player",position,direction);
 		this.speed = baseSpeed;
 		this.slow =	1;
@@ -55,11 +72,10 @@ public class Player extends EntityLiving{
 		super.PV.set(pv);
 		Player.rupees = new SimpleIntegerProperty(ruby);
 		isCarriedSomething = new SimpleBooleanProperty();
-		pickupItem = new SimpleObjectProperty<>();
-		this.usables = usables;
+		havePickupItem = new SimpleBooleanProperty(false);
+		haveLeftItemEquip = new SimpleBooleanProperty(false);
+		haveRightItemEquip = new SimpleBooleanProperty(false);
 		this.weapons = weapons;
-		this.loots=loots;
-		this.specials = specials;
 		this.carriedEntity=null;
 		
 		addAction(deplacement);
@@ -112,42 +128,20 @@ public class Player extends EntityLiving{
 	}
 	
 	public Item takeItem(Item item) {
-		Item returnItem = null;
-		if(item instanceof Usable) {
-			if(usables.size() >= 24)
-				returnItem = item;
+		if(item instanceof Weapon) {
+			if(nbWeapon >= weapons.length)
+				return item;
 			else {
-				usables.add((Usable)item);
-				InventoryMenu.lastItemAdded.set(1);
-				InventoryMenu.newItem.set(true);
-			}
-			
-		}else if(item instanceof Weapon) {
-			if(weapons.size() >= 24)
-				returnItem = item;
-			else {
-				weapons.add((Weapon)item);
+				weapons[nbWeapon] = (Weapon)item;
 				InventoryMenu.lastItemAdded.set(2);
 				InventoryMenu.newItem.set(true);
+				nbWeapon++;
 			}
-		}else if(item instanceof Loot) {
-			if(loots.size() >= 24)
-				returnItem = item;
-			else {
-				loots.add((Loot)item);
-				InventoryMenu.lastItemAdded.set(3);
-				InventoryMenu.newItem.set(true);
-			}
-		}else if(item instanceof Special) {//nombre predefinit donc pas besoin de verifier
-			specials.add((Special)item);
-			InventoryMenu.lastItemAdded.set(4);
-			InventoryMenu.newItem.set(true);
-			
 		}else{
 			switch(item.getItemName()) {
 			
 			case "Heart":
-				gagnerPV(); break;
+				gagnerPV(4); break;
 			case "GreenRupee":
 				addRuby(1); break;
 			case "BlueRupee":
@@ -164,39 +158,59 @@ public class Player extends EntityLiving{
 				removeRuby(10); break;
 			
 			default:
+				//FAUDRAI PEUT ETRE UTILISER UN THROW
 				System.out.println("C'est quoi ca ???? : "+item);
 			}
 		}
 		
-		return returnItem;
+		return null;
 	}
 	
-	public void useLeftItem() {
+	public void useWeapon(boolean have,Weapon weapon) {
+		if(have) {
+			this.action.set(Actions.useWeapon.get());
+				weapon.attaque();	
+		}
+	}
 	
+	
+	public void useLeftItem() {
+		useWeapon(haveLeftItemEquip.get(), LeftItemEquip);
 	}
 	
 	public void useRightItem() {
-		
+		useWeapon(haveRightItemEquip.get(), RightItemEquip);
 	}
 	
 	public void interact() {
 		if(carriedEntity == null) {
-			
 			int dir = super.direction.getDirection();
-			int x = (dir==Direction.West?(int)super.coordonnes.getX()-1:dir==Direction.East?(int)super.coordonnes.getX()+1:(int)super.coordonnes.getX());
-			int y = (dir==Direction.South?(int)super.coordonnes.getY()+1:dir==Direction.North?(int)super.coordonnes.getY()-1:(int)super.coordonnes.getY());
+			int current_x = (int)super.coordonnes.getX();
+			int current_y = (int)super.coordonnes.getY();
+			
+			int x = (dir==Direction.West?current_x-1:dir==Direction.East?current_x+1:current_x);
+			int y = (dir==Direction.South?current_y+1:dir==Direction.North?current_y-1:current_y);
 			Entity e = World.currentMap.getEntity(x,y);
 			if(e != null) {
 				if(e instanceof CarriableEntity) {	
 					((CarriableEntity)e).pickupEntity(this);
-					addAction(new CountActionConsumer(30,new FunctionCantMove()));
+					this.action.set(Actions.raise.get());
+					soulever.renew();
+					delAction(mouvement);
+					addAction(soulever);
+					this.action.set(Actions.walkAndRaise.get());
+					this.addAction(remarche);
 				}else if(e instanceof Chest) {
 					e.interact();
-					System.out.println(e);
 				}
 			}
 		}else {
-			(this.carriedEntity).placeEntity(this);
+			this.carriedEntity.placeEntity(this);
+			
+			
+			
+			
+			
 		}
 	}
 }
