@@ -3,6 +3,7 @@ package game.modele.entity.living;
 import java.util.ArrayList;
 
 import game.modele.entity.Entity;
+import game.modele.entity.EntityItemOnGround;
 import game.modele.entity.living.monster.EntityMonster;
 import game.modele.entity.tileEntity.carriable.CarriableEntity;
 import game.modele.entity.tileEntity.chest.Chest;
@@ -20,7 +21,9 @@ import game.modele.utils.ActionConsumer.ConsumerActionDelay;
 import game.modele.utils.ActionConsumer.CountActionConsumer;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
 import game.modele.utils.ActionConsumer.OptimizedActionConsumer;
+import game.modele.utils.ActionConsumer.SimpleActionConsumer;
 import game.modele.utils.ActionConsumer.Function.FunctionRaise;
+import game.modele.utils.ActionConsumer.Function.FunctionDeclanche;
 import game.modele.utils.ActionConsumer.Function.FunctionLampe;
 import game.modele.utils.ActionConsumer.Function.FunctionMove;
 import game.modele.utils.ActionConsumer.Function.FunctionMovement;
@@ -37,25 +40,31 @@ public class Player extends EntityLiving{
 	ConsumerAction deplacement = new InfiniteActionConsumer(new FunctionMove());
 	ConsumerAction mouvement = new InfiniteActionConsumer(new FunctionMovement());
 	
-	CountActionConsumer soulever = new CountActionConsumer(30,new FunctionRaise());
-//	ConsumerAction reposer = new OptimizedActionConsumer(2,new CountActionConsumer(30,new FunctionRaise()));
+	CountActionConsumer soulever = new CountActionConsumer(60,new FunctionRaise());
+	ConsumerAction remarche = new ConsumerActionDelay(60,new SimpleActionConsumer(new FunctionDeclanche(mouvement)));
+	
+	//	ConsumerAction reposer = new OptimizedActionConsumer(2,new CountActionConsumer(30,new FunctionRaise()));
 	
 	ConsumerAction lampe = new InfiniteActionConsumer(new FunctionLampe());
 	
-	public ArrayList<Loot> loots;
-	public ArrayList<Usable> usables;
-	public ArrayList<Weapon> weapons;
-	public ArrayList<Special> specials;
+	private int nbWeapon = 0;
+	public Weapon[] weapons = new Weapon[24];
 	
 	public static int maxRupees=100;
 	public static IntegerProperty rupees; //ARGENT!!!	
-	public ObjectProperty pickupItem;
-	public ObjectProperty leftItemEquip;
-	public ObjectProperty rightItemEquip;
+	public BooleanProperty havePickupItem;
+	public EntityItemOnGround pickupItem;
+	
+	public BooleanProperty haveLeftItemEquip;
+	public Weapon LeftItemEquip;
+	
+	public BooleanProperty haveRightItemEquip;
+	public Weapon RightItemEquip;
+	
 	public CarriableEntity carriedEntity;
 	public BooleanProperty isCarriedSomething;
 	
-	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, ArrayList<Loot> loots, ArrayList<Usable> usables, ArrayList<Weapon> weapons, ArrayList<Special> specials, Item leftEquip, Item rightEquip) {
+	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, Weapon[] weapons, Item leftEquip, Item rightEquip) {
 		super("Player",position,direction);
 		this.speed = baseSpeed;
 		this.slow =	1;
@@ -63,13 +72,10 @@ public class Player extends EntityLiving{
 		super.PV.set(pv);
 		Player.rupees = new SimpleIntegerProperty(ruby);
 		isCarriedSomething = new SimpleBooleanProperty();
-		pickupItem = new SimpleObjectProperty<>();
-		leftItemEquip = new SimpleObjectProperty<>();
-		rightItemEquip = new SimpleObjectProperty<>();
-		this.usables = usables;
+		havePickupItem = new SimpleBooleanProperty(false);
+		haveLeftItemEquip = new SimpleBooleanProperty(false);
+		haveRightItemEquip = new SimpleBooleanProperty(false);
 		this.weapons = weapons;
-		this.loots=loots;
-		this.specials = specials;
 		this.carriedEntity=null;
 		
 		addAction(deplacement);
@@ -122,46 +128,14 @@ public class Player extends EntityLiving{
 	}
 	
 	public Item takeItem(Item item) {
-		Item returnItem = null;
-		if(item instanceof Usable) {
-			if(usables.size() >= 24)
-				returnItem = item;
+		if(item instanceof Weapon) {
+			if(nbWeapon >= weapons.length)
+				return item;
 			else {
-				usables.add((Usable)item);
-				InventoryMenu.lastItemAdded.set(1);
-				InventoryMenu.newItem.set(true);
-			}
-			
-		}else if(item instanceof Weapon) {
-			if(weapons.size() >= 24)
-				returnItem = item;
-			else {
-				weapons.add((Weapon)item);
+				weapons[nbWeapon] = (Weapon)item;
 				InventoryMenu.lastItemAdded.set(2);
 				InventoryMenu.newItem.set(true);
 			}
-		}else if(item instanceof Bow) {
-			System.out.println("Truc");
-			if(weapons.size() >= 24)
-				returnItem = item;
-			else {
-				weapons.add((Weapon)item);
-				InventoryMenu.lastItemAdded.set(2);
-				InventoryMenu.newItem.set(true);
-			}
-		}else if(item instanceof Loot) {
-			if(loots.size() >= 24)
-				returnItem = item;
-			else {
-				loots.add((Loot)item);
-				InventoryMenu.lastItemAdded.set(3);
-				InventoryMenu.newItem.set(true);
-			}
-		}else if(item instanceof Special) {//nombre predefinit donc pas besoin de verifier
-			specials.add((Special)item);
-			InventoryMenu.lastItemAdded.set(4);
-			InventoryMenu.newItem.set(true);
-			
 		}else{
 			switch(item.getItemName()) {
 			
@@ -188,35 +162,23 @@ public class Player extends EntityLiving{
 			}
 		}
 		
-		return returnItem;
+		return null;
 	}
 	
-	public void useLeftItem() {
-		if(leftItemEquip.get()!=null) {
-			addAction(new CountActionConsumer(30,new FunctionRaise()));
-			this.action.set(Actions.useLeftItem.get());
-			if(leftItemEquip.get() instanceof Weapon) {
-				Weapon weapon = (Weapon)leftItemEquip.get();
-				weapon.attaque();
-			}else if(leftItemEquip.get() instanceof Usable) {
-				Usable usable = (Usable)leftItemEquip.get();
-				usable.use();
-			}
+	public void useWeapon(boolean have,Weapon weapon) {
+		if(have) {
+			this.action.set(Actions.useWeapon.get());
+				weapon.attaque();	
 		}
+	}
+	
+	
+	public void useLeftItem() {
+		useWeapon(haveLeftItemEquip.get(), LeftItemEquip);
 	}
 	
 	public void useRightItem() {
-		if(rightItemEquip.get()!=null) {
-			addAction(new CountActionConsumer(30,new FunctionRaise()));
-			this.action.set(Actions.useRightItem.get());
-			if(rightItemEquip.get() instanceof Weapon) {
-				Weapon weapon = (Weapon)rightItemEquip.get();
-				weapon.attaque();
-			}else if(rightItemEquip.get() instanceof Usable) {
-				Usable usable = (Usable)rightItemEquip.get();
-				usable.use();
-			}//OUI
-		}
+		useWeapon(haveRightItemEquip.get(), RightItemEquip);
 	}
 	
 	public void interact() {
@@ -233,10 +195,10 @@ public class Player extends EntityLiving{
 					((CarriableEntity)e).pickupEntity(this);
 					this.action.set(Actions.raise.get());
 					soulever.renew();
-					addAction(soulever);
 					delAction(mouvement);
+					addAction(soulever);
 					this.action.set(Actions.walkAndRaise.get());
-					this.addAction(new ConsumerActionDelay(60, mouvement));
+					this.addAction(remarche);
 				}else if(e instanceof Chest) {
 					e.interact();
 				}

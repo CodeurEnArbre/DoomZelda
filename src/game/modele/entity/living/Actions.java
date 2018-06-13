@@ -3,12 +3,11 @@ package game.modele.entity.living;
 public enum Actions {
 	
 	walk(0),
-	useLeftItem(1),
-	useRightItem(2),
-	raise(3),
-	walkAndRaise(4),
-	place(5),
-	push(6);
+	useWeapon(1),
+	raise(2),
+	walkAndRaise(3),
+	place(4),
+	push(5);
 	
 	private int value;
 	Actions(int i){

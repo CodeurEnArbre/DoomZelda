@@ -29,22 +29,12 @@ public class Interaction {
 	public static KeyCode UseRightItem = KeyCode.P;
 
 	public static void KeyInteractDown(KeyCode k) {
-		
-		
-		
-		
-		
 		if(World.isWorldLoaded.get() && k == INTERACT) {
 			if(World.player != null)
 			{	
 				World.player.interact();
 			}
 		}
-
-		
-		
-		
-		
 		
 		if(World.isWorldLoaded.get() && k == UseLeftItem) {
 			if(Menu.currentMenu.get() == Menu.NoMenuID && World.player != null)

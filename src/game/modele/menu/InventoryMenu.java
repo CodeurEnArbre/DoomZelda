@@ -20,15 +20,15 @@ public class InventoryMenu {
 			if(Menu.selectedButtonX.get()<8 && Menu.selectedButtonY.get() > 1) {
 				int slot = Menu.selectedButtonX.get()+8*(Menu.selectedButtonY.get()-2);
 				
-				if(isLeft && World.player.weapons.get(slot) != null) {
-					if(World.player.rightItemEquip.get() != null && World.player.weapons.get(slot).primaryKey != ((Item)World.player.rightItemEquip.get()).primaryKey)
-						World.player.rightItemEquip.set(null);
-					World.player.leftItemEquip.set(World.player.weapons.get(slot));
+				if(isLeft && World.player.weapons[slot] != null) {
+					if(World.player.haveLeftItemEquip.get() && World.player.weapons[slot].primaryKey != ((Item)World.player.RightItemEquip).primaryKey)
+						World.player.haveRightItemEquip.set(false);
+					World.player.LeftItemEquip = (World.player.weapons[slot]);
 					
-				}else if(World.player.weapons.get(slot) != null) {
-					if(World.player.rightItemEquip.get() != null && World.player.weapons.get(slot).primaryKey != ((Item)World.player.leftItemEquip.get()).primaryKey)
-						World.player.leftItemEquip.set(null);
-					World.player.rightItemEquip.set(World.player.weapons.get(slot));
+				}else if(World.player.weapons[slot] != null) {
+					if(World.player.haveRightItemEquip.get() && World.player.weapons[slot].primaryKey != ((Item)World.player.LeftItemEquip).primaryKey)
+						World.player.haveLeftItemEquip.set(false);
+					World.player.RightItemEquip = (World.player.weapons [slot]);
 					
 				}
 			}

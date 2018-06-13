@@ -19,6 +19,9 @@ public class ListConsumerAction extends SimpleListActionConsumer implements Cons
 		list.clear();
 	}
 
+	
+	
+	
 	public Function getFunction() {
 		return list.get(0).getFunction();
 	}

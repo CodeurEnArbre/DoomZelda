@@ -16,8 +16,6 @@ public class PushableEntity extends TileEntity {
 
 	@Override
 	public void active(Entity e) {
-
-		System.out.println("ee");
 	}
 
 	@Override

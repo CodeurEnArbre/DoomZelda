@@ -16,6 +16,7 @@ public class CountActionConsumer implements ConsumerAction {
 	}
 	public void renew() {
 		count = value;
+		System.out.println(count);
 	}
 	public Function getFunction() 
 	{
