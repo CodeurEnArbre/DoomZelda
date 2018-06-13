@@ -1,11 +1,12 @@
 package game.modele.menu;
 
+import game.modele.world.Save;
 import game.modele.world.World;
 
 public class InGameMenu {
 
 	public static void Save(String name) {
-		//TODO
+		Save.saveSave();
 	}
 
 

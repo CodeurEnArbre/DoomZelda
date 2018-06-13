@@ -18,10 +18,10 @@ public class Chest extends TileEntity{
 	public IntegerProperty etatAnim;
 	
 	public Chest(String id, Coordonnees coordoner, Direction direction, Item insideItem) {
-		super(id, coordoner, direction, true);
+		super(id, coordoner, direction, insideItem != null);
 		this.itemInside = insideItem;
 		super.isSolidEntity = true;
-		etatAnim = new SimpleIntegerProperty(0);
+		etatAnim = new SimpleIntegerProperty(etat.get()?0:30);
 	}
 
 	@Override

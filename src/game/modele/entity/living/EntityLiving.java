@@ -2,15 +2,11 @@ package game.modele.entity.living;
 
 import game.modele.entity.Entity;
 import game.modele.item.Item;
-import game.modele.item.loot.Loot;
-import game.modele.item.special.Special;
-import game.modele.item.usable.Usable;
 import game.modele.item.weapon.Weapon;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.CountActionConsumer;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
-import game.modele.utils.ActionConsumer.ListConsumerAction;
 import game.modele.utils.ActionConsumer.Function.FunctionDamage;
 import game.modele.utils.ActionConsumer.Function.FunctionRigidbody;
 import game.modele.world.World;

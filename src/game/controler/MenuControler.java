@@ -57,7 +57,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
-@SuppressWarnings("unlikely-arg-type")
 public class MenuControler implements Initializable{
 
 	//Les map de toute les textures
@@ -471,7 +470,6 @@ public class MenuControler implements Initializable{
 		//Ajout d'un Listener si la map change
 		World.currentMap.getNameProperty().addListener(new ChangeListener<String>(){
 
-			@SuppressWarnings("unchecked")
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				for(int i=0;i < entityListener.size();i++) {
@@ -787,12 +785,34 @@ public class MenuControler implements Initializable{
 			PlayerPane.getChildren().add(carriableEntity);
 			PlayerPane.getChildren().add(pickupItem);
 		}else {
-			if(e instanceof EntityItemOnGround) {
+			if(e instanceof Chest) {
+				Chest chest = (Chest)e;
+				i.setFitWidth(32);
+				i.setFitHeight(32);
+				i.xProperty().bind(e.coordonnes.getXpro().multiply(32));
+				i.yProperty().bind(e.coordonnes.getYpro().multiply(32));
+				if(chest.getEtat()) {
+					i.setImage(dicoImageTileEntityMap.get( EntityImageValue.getEntityNum(e.getId()) ) );
+				}else {
+					switch(chest.getId()) {
+					case "Gold Chest":
+						i.setImage(dicoImageAnimationEntity.get("Chest").get(2));
+						break;
+					case "Iron Chest":
+						i.setImage(dicoImageAnimationEntity.get("Chest").get(8));
+						break;
+					case "Wood Chest":
+						i.setImage(dicoImageAnimationEntity.get("Chest").get(5));
+						break;
+					}
+				}
+			}else if(e instanceof EntityItemOnGround) {
 				i.setFitWidth(32);
 				i.setFitHeight(32);
 				i.xProperty().bind(e.coordonnes.getXpro().multiply(32));
 				i.yProperty().bind(e.coordonnes.getYpro().multiply(32));
 				i.setImage(dicoImageItemTextureMap.get(ItemImageValue.getValue(((EntityItemOnGround)e).item.name)));
+				
 			}else if(e instanceof EntityLiving) {
 				i.setFitWidth(32);
 				i.setFitHeight(64);
@@ -874,19 +894,20 @@ public class MenuControler implements Initializable{
 		//Cree les imageviews des entites
 		for(Entity entity:World.currentMap.getEntity()) {
 			if(entity != null) {
-
 				loadAnimationEntity(new ImageView(), entity);
 
 				if(entity instanceof TileEntity) {
-					((TileEntity) entity).getEtatProperty().addListener(new ChangeListener<Boolean>() {
+					TileEntity tileEntity = (TileEntity) entity;
+					tileEntity.getEtatProperty().addListener(new ChangeListener<Boolean>() {
 						@Override
 						public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-							ImageView entityImg = listEntityView.get(entity);
-							if(((TileEntity) entity).getEtat() && entityImg != null) {
-								if(entity instanceof CarriableEntity)
-									entityImg.setImage(dicoImageTileEntityMap.get(EntityImageValue.getEntityNum(entity.getId())));
-								else if(!(entity instanceof Chest))
-									entityImg.setImage(EntityLivingTexture.getEntityTexture(entity.getId(), 32, 112, 1, 0));
+							ImageView entityImg = listEntityView.get(tileEntity);
+							if(tileEntity.getEtat() && entityImg != null) {
+								if(tileEntity instanceof CarriableEntity)
+									entityImg.setImage(dicoImageTileEntityMap.get(EntityImageValue.getEntityNum(tileEntity.getId())));
+								else if(!(tileEntity instanceof Chest)) {
+									entityImg.setImage(EntityLivingTexture.getEntityTexture(tileEntity.getId(), 32, 112, 1, 0));
+								}
 							}
 
 						}
@@ -985,7 +1006,7 @@ public class MenuControler implements Initializable{
 
 					}else if(Actions.useWeapon.get() == newValue.intValue()) 
 					{
-						//TODO ATTAQUE
+						//
 					}
 				}
 			});
@@ -1058,8 +1079,13 @@ public class MenuControler implements Initializable{
 				}});
 			if(addEntity instanceof Chest) {
 				Chest c = (Chest)addEntity;
-				String containItemName = c.itemInside.getItemName();
-				ImageView ivItem = createItemView(containItemName, (int)c.coordonnes.getX()*32, (int)c.coordonnes.getY()*32, 32, 32);
+				ImageView ivItem;
+				if(c.itemInside != null) {
+					String containItemName = c.itemInside.getItemName();
+					ivItem = createItemView(containItemName, (int)c.coordonnes.getX()*32, (int)c.coordonnes.getY()*32, 32, 32);
+				}else {
+					ivItem = new ImageView();
+				}
 				DoubleProperty coordY = new SimpleDoubleProperty( ((int)c.coordonnes.getY()*32));
 				ImageView EntityImg = getEntityImageView(c);
 				int chestType;

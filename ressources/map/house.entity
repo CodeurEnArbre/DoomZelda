@@ -1,4 +1,4 @@
-TileEntityTP
+EntityTP
 5.0,9.0,0,false,TinyMap,17.0,12.0
 TikiTorchSmall
 8.0,4.0,1,true,8
@@ -11,4 +11,4 @@ Gold Chest
 Gold Chest
 4.0,3.0,0,Basic Axe
 Iron Chest
-6.0,3.0,0,Wooden Sworden
+6.0,3.0,0,null
