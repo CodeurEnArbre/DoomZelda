@@ -25,6 +25,7 @@ import game.modele.entity.tileEntity.chest.Chest;
 import game.modele.entity.tileEntity.light.EntityLight;
 import game.modele.item.Item;
 import game.modele.item.weapon.CuttingWeapon;
+import game.modele.item.weapon.Weapon;
 import game.modele.menu.InventoryMenu;
 import game.modele.menu.Menu;
 import game.modele.menu.OptionsMenu;
@@ -348,26 +349,14 @@ public class MenuControler implements Initializable{
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if(newValue) {	
-					int i = 0;
-					switch(InventoryMenu.lastItemAdded.get()) {
-					case 1:	
-						i = World.player.usables.size()-1;
-						PaneWeapons.getChildren().add(createItemView(World.player.usables.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
-						InventoryMenu.newItem.set(false);
-						break;
-					case 2:	
-						i = World.player.weapons.size()-1;
-						PaneWeapons.getChildren().add(createItemView(World.player.weapons.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
-						InventoryMenu.newItem.set(false);
-						break;
-					case 3:	
-						i = World.player.specials.size()-1;
-						PaneWeapons.getChildren().add(createItemView(World.player.specials.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
-						InventoryMenu.newItem.set(false);
-						break;
-					}
-				}					
-			}});
+					int i = World.player.nbWeapon;
+					PaneWeapons.getChildren().add(createItemView(World.player.weapons[i].getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
+					InventoryMenu.newItem.set(false);
+
+				}			
+			}
+		}
+				);
 
 
 		//Listener changement de pane dans le menu item
@@ -436,16 +425,11 @@ public class MenuControler implements Initializable{
 				inventorySelector.relocate(349+76*(x-4), 130+76*y);
 			}else if(x<8) {
 				inventorySelector.setImage(inventorySelector1);
-				inventorySelector.relocate(60+73*(x), 365+73*(y-2));
+				inventorySelector.relocate(60+73*x, 365+73*(y-2));
 
-				if(y>=2) {
-					if(InventoryMenu.InventoryZone.get() == 0)
-						selectedName.setText(World.player.usables.size()>(x)+8*(y-2)?World.player.usables.get((x)+8*(y-2)).getItemName():"");
-					else if(InventoryMenu.InventoryZone.get() == 1)
-						selectedName.setText(World.player.loots.size()>(x)+8*(y-2)?World.player.loots.get((x)+8*(y-2)).getItemName():"");
-					else
-						selectedName.setText(World.player.weapons.size()>(x)+8*(y-2)?World.player.weapons.get((x)+8*(y-2)).getItemName():"");
-				}
+				selectedName.setText(World.player.nbWeapon>x+8*(y-2)?
+						World.player.weapons[x+8*(y-2)].getItemName():"");
+
 			}
 
 			break;
@@ -509,20 +493,13 @@ public class MenuControler implements Initializable{
 		});
 
 		//Affichage des items dans l'inventaire
-		for(int i = 0; i < World.player.usables.size(); i++) {
-			PaneWeapons.getChildren().add(createItemView(World.player.usables.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
+
+
+		for(int i = 0; i < World.player.nbWeapon; i++) {
+			PaneWeapons.getChildren().add(createItemView(World.player.weapons[i].getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
 			InventoryMenu.newItem.set(false);
 		}
 
-		for(int i = 0; i < World.player.weapons.size(); i++) {
-			PaneWeapons.getChildren().add(createItemView(World.player.weapons.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
-			InventoryMenu.newItem.set(false);
-		}
-
-		for(int i = 0; i < World.player.specials.size(); i++) {
-			PaneWeapons.getChildren().add(createItemView(World.player.specials.get(i).getItemName(), 10 + 73 * (i%8) , 14 + 70 * Math.abs(i/8), 50, 50));
-			InventoryMenu.newItem.set(false);
-		}
 
 
 	}
@@ -1006,47 +983,47 @@ public class MenuControler implements Initializable{
 					else if(Actions.push.get() == newValue.intValue()) 
 					{
 
-					}else if(Actions.useLeftItem.get() == newValue.intValue()) 
+					}else if(Actions.useWeapon.get() == newValue.intValue()) 
 					{
-
-					}
-					else if(Actions.useRightItem.get() == newValue.intValue()) 
-					{
-
+						//TODO ATTAQUE
 					}
 				}
 			});
 			theplayer.action.set(0);
 
-			theplayer.pickupItem.addListener(new ChangeListener<Item>() {
+			theplayer.havePickupItem.addListener(new ChangeListener<Boolean>() {
+
 				@Override
-				public void changed(ObservableValue<? extends Item> observable, Item oldValue, Item newValue) {
-					pickupItem.setImage(dicoImageItemTextureMap.get(ItemImageValue.getValue(newValue.getItemName())));
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					pickupItem.setImage(dicoImageItemTextureMap.get(ItemImageValue.getValue(World.player.pickupItem.getItemName())));
 				}
+			
 			});
 
-			theplayer.leftItemEquip.addListener(new ChangeListener<Object>() {
+			theplayer.haveLeftItemEquip.addListener(new ChangeListener<Boolean>() {
+
 				@Override
-				public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
-					if(newValue != null) {
-						Item item = (Item) newValue;
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					if(newValue) {
+						Weapon item = (Weapon)World.player.LeftItemEquip;
 						leftItemEquip.setImage(dicoImageItemTextureMap.get(ItemImageValue.getValue(item.name)));
 					}else {
-						rightItemEquip.setImage(null);
+						leftItemEquip.setImage(null);
 					}
-				}
+				}				
 			});
 
-			theplayer.rightItemEquip.addListener(new ChangeListener<Object>() {
+			theplayer.haveRightItemEquip.addListener(new ChangeListener<Boolean>() {
+
 				@Override
-				public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
-					if(newValue != null) {
-						Item item = (Item) newValue;
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					if(newValue) {
+						Item item = (Weapon)World.player.RightItemEquip;
 						rightItemEquip.setImage(dicoImageItemTextureMap.get(ItemImageValue.getValue(item.name)));
 					}else {
 						rightItemEquip.setImage(null);
 					}
-				}
+				}	
 			});
 		}
 

@@ -22,7 +22,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public abstract class EntityLiving extends Entity{
-	
+
 	//La direction du regard
 	protected IntegerProperty PV;
 	protected IntegerProperty maxPv;
@@ -31,9 +31,9 @@ public abstract class EntityLiving extends Entity{
 	public BooleanProperty isRaising = new SimpleBooleanProperty(false);
 	public BooleanProperty isInvulnerable = new SimpleBooleanProperty(false);
 	public BooleanProperty isDamaged = new SimpleBooleanProperty(false);
-	
-	
-	
+
+
+
 	public EntityLiving(String id,Coordonnees position, Direction direction) {
 		super(id,position,direction);
 		addAction(new InfiniteActionConsumer(new FunctionRigidbody()));
@@ -41,17 +41,17 @@ public abstract class EntityLiving extends Entity{
 		maxPv = new SimpleIntegerProperty(12);
 		itemsEnMain = FXCollections.observableArrayList();
 	}
-	
+
 	public EntityLiving(String id,Coordonnees position, Direction direction, int pv) {
 		super(id,position,direction);
 		this.direction=direction;
 		PV.set(pv);
 	}
-	
+
 	public void setDirection(Direction direction) {
 		this.direction=direction;
 	}
-	
+
 	public void perdrePV(int degats) {
 		if(!isInvulnerable.get() && !isDamaged.get()) {
 			addAction(new CountActionConsumer(20,new FunctionDamage()));
@@ -63,58 +63,32 @@ public abstract class EntityLiving extends Entity{
 				isDamaged.set(true);
 		}
 	}
-	
+
 	public void gagnerPV(int pv) {
 		if(PV.getValue()+pv < maxPv.getValue())
 			PV.set(PV.get()+pv);
 		else
 			PV.set(maxPv.getValue());
 	}
-	
+
 	public IntegerProperty getPV() {
 		return PV;
 	}
-	
+
 	public void addPermanentHeart() {
 		this.maxPv.add(4);
 	}
-	
+
 	public IntegerProperty getMaxPv() {
 		return this.maxPv;
 	}
-	
+
 	public void setWeaponEnMain(Weapon w) {
-		int i = 0;
-		while(World.player.weapons.get(i).getPrimaryKey() != w.getPrimaryKey()){
-			i++;
-		}
+		for(int i = 0; World.player.weapons[i].getPrimaryKey() != w.getPrimaryKey();i++);
+	
 		this.itemsEnMain.add(w);
 	}
-	
-	public void setUsableEnMain(Usable u) {
-		int i = 0;
-		while(World.player.usables.get(i).getPrimaryKey() != u.getPrimaryKey()) {
-			i++;
-		}
-		itemsEnMain.add(u);
-	}
-	
-	public void setLootEnMain(Loot l) {
-		int i = 0;
-		while(World.player.loots.get(i).getPrimaryKey() != l.getPrimaryKey()){
-			i++;
-		}
-		itemsEnMain.add(l);
-	}
-	
-	public void setSpecialnEnMain(Special s) {
-		int i = 0;
-		while(World.player.specials.get(i).getPrimaryKey() != s.getPrimaryKey()){
-			i++;
-		}
-		itemsEnMain.add(s);
-	}
-	
+
 	public void setAucunItemEnMain() {
 		itemsEnMain.clear();
 	}

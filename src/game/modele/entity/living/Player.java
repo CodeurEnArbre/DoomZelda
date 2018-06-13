@@ -47,13 +47,13 @@ public class Player extends EntityLiving{
 	
 	ConsumerAction lampe = new InfiniteActionConsumer(new FunctionLampe());
 	
-	private int nbWeapon = 0;
+	public int nbWeapon = 0;
 	public Weapon[] weapons = new Weapon[24];
 	
 	public static int maxRupees=100;
 	public static IntegerProperty rupees; //ARGENT!!!	
 	public BooleanProperty havePickupItem;
-	public EntityItemOnGround pickupItem;
+	public Item pickupItem;
 	
 	public BooleanProperty haveLeftItemEquip;
 	public Weapon LeftItemEquip;
@@ -135,6 +135,7 @@ public class Player extends EntityLiving{
 				weapons[nbWeapon] = (Weapon)item;
 				InventoryMenu.lastItemAdded.set(2);
 				InventoryMenu.newItem.set(true);
+				nbWeapon++;
 			}
 		}else{
 			switch(item.getItemName()) {

@@ -8,33 +8,41 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class InventoryMenu {
-	
-	
+
+
 	public static IntegerProperty InventoryZone = new SimpleIntegerProperty(0); //0= consomables, 1 = items, 2 = armes
 	public static BooleanProperty newItem = new SimpleBooleanProperty(false);
 	public static IntegerProperty lastItemAdded = new SimpleIntegerProperty();
 
-	@SuppressWarnings("unchecked")
 	public static void equipItem(boolean isLeft) {
 		if(InventoryZone.getValue() == 2) {
 			if(Menu.selectedButtonX.get()<8 && Menu.selectedButtonY.get() > 1) {
 				int slot = Menu.selectedButtonX.get()+8*(Menu.selectedButtonY.get()-2);
-				
-				if(isLeft && World.player.weapons[slot] != null) {
-					if(World.player.haveLeftItemEquip.get() && World.player.weapons[slot].primaryKey != ((Item)World.player.RightItemEquip).primaryKey)
-						World.player.haveRightItemEquip.set(false);
+				if(World.player.weapons[slot] != null) {
+					if(isLeft) {
+						if(World.player.haveLeftItemEquip.get() && World.player.RightItemEquip != null
+								&& World.player.weapons[slot].primaryKey != ((Item)World.player.RightItemEquip).primaryKey)
+						{
+							World.player.haveRightItemEquip.set(false);
+						}
+					}
 					World.player.LeftItemEquip = (World.player.weapons[slot]);
-					
-				}else if(World.player.weapons[slot] != null) {
-					if(World.player.haveRightItemEquip.get() && World.player.weapons[slot].primaryKey != ((Item)World.player.LeftItemEquip).primaryKey)
+					World.player.haveLeftItemEquip.set(true);
+				}else{
+					if(World.player.haveRightItemEquip.get() && World.player.LeftItemEquip != null
+							&& World.player.weapons[slot].primaryKey != ((Item)World.player.LeftItemEquip).primaryKey)
+					{
 						World.player.haveLeftItemEquip.set(false);
+					}
 					World.player.RightItemEquip = (World.player.weapons [slot]);
-					
+					World.player.haveRightItemEquip.set(true);
+
 				}
 			}
 		}
 	}
-	
+
+
 	public static void validate() {
 		if(Menu.selectedButtonX.get()==8) 
 			InventoryZone.set(Menu.selectedButtonY.get()-2);	
@@ -42,7 +50,7 @@ public class InventoryMenu {
 			//Use Consomable
 		}
 	}
-	
+
 	//X
 	public static void selectLeft() {
 		if(Menu.selectedButtonX.get()>0) {
@@ -88,7 +96,7 @@ public class InventoryMenu {
 
 		}
 	}
-	
+
 	public static void selectDown() {
 		if(Menu.selectedButtonY.get()<4) {
 			if(Menu.selectedButtonY.get() <= 1 && Menu.selectedButtonX.get() <= 3) {
@@ -99,5 +107,5 @@ public class InventoryMenu {
 			}
 		}
 	}
-	
+
 }

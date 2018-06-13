@@ -35,19 +35,27 @@ public class Interaction {
 				World.player.interact();
 			}
 		}
-		
+
 		if(World.isWorldLoaded.get() && k == UseLeftItem) {
 			if(Menu.currentMenu.get() == Menu.NoMenuID && World.player != null)
+			{
 				World.player.useLeftItem();
+			}
 			else if(Menu.currentMenu.get() == Menu.InventoryMenuID)
+			{
 				InventoryMenu.equipItem(true);
+			}
 		}
 
 		if(World.isWorldLoaded.get() && k == UseRightItem) {
 			if(Menu.currentMenu.get() == Menu.NoMenuID && World.player != null )
+			{
 				World.player.useRightItem();
+			}
 			else if(Menu.currentMenu.get() == Menu.InventoryMenuID)
+			{
 				InventoryMenu.equipItem(false);
+			}
 		}
 
 		if(k == KeyCode.ENTER) {

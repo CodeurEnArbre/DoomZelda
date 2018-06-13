@@ -56,11 +56,8 @@ public class Save {
 					new Direction(Integer.parseInt(valueData[3])), 										//Direction
 					Integer.parseInt(valueData[4]),														//maxPv
 					Integer.parseInt(valueData[5]), 													//PV
-					Integer.parseInt(valueData[6]), 													//Ruby
-					new ArrayList<Loot>(),
-					new ArrayList<Usable>(),
-					new ArrayList<Weapon>(),
-					new ArrayList<Special>(),
+					Integer.parseInt(valueData[6]),
+					new Weapon[24],
 					null,
 					null);			
 			playerData.close();
