@@ -42,7 +42,7 @@ public class Save {
 			File player = new File("saves/"+name+"/player");
 			player.createNewFile();
 			BufferedWriter entitysData = new BufferedWriter(new FileWriter(player.getAbsolutePath()));
-			entitysData.write("TinyMap,14,10,2,16,13,10,,,");
+			entitysData.write("Map1,18.5,55,0,16,13,10,,,");
 			entitysData.close();
 		} catch (IOException e) {
 			e.printStackTrace();
