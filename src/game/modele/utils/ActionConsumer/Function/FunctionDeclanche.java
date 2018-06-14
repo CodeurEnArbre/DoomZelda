@@ -6,14 +6,15 @@ import game.modele.utils.ActionConsumer.ConsumerAction;
 public class FunctionDeclanche extends Function{
 
 	
-	private ConsumerAction action;
-	public FunctionDeclanche(ConsumerAction action) {
+	private ConsumerAction[] action;
+	public FunctionDeclanche(ConsumerAction... action) {
 		this.action = action;
 	}
 
 	@Override
 	protected void Action(Entity e) {
-		e.addAction(action);
+		for(ConsumerAction c : action)
+			e.addAction(c);
 	}
-
+	
 }

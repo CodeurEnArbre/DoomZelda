@@ -45,10 +45,6 @@ public class CarriableEntity extends TileEntity{
 		}
 		super.coordonnes.setCoordoner(y,x);
 		this.primaryKey=key++;
-		World.currentMap.entity.add(this);
-		World.player.isCarriedSomething.set(false);
-		World.player.carriedEntity=null;
-		World.player.action.set(Actions.walk.get());
 		return true;
 	}
 

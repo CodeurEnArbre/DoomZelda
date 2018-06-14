@@ -876,6 +876,27 @@ public class MenuControler implements Initializable{
 			break;
 		}
 	}
+	
+	public static void playerPlaceAnimation() {
+		switch(World.player.direction.getDirection()) {
+		case Direction.North:
+			player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+22+28*9));
+			break;
+
+		case Direction.East:
+			player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+22+28*10));
+			break;
+
+		case Direction.South:
+			player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+22+28*11));
+			break;
+
+		case Direction.West:
+			player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+22+28*12));
+			break;
+		}
+	}
+	
 	private ImageView getEntityImageView(Entity e) {
 		ImageView img = null;
 
@@ -999,6 +1020,14 @@ public class MenuControler implements Initializable{
 							public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue)
 							{
 								playerRaiseWalkAnimation();
+							}});
+					}else if(Actions.place.get() == newValue.intValue())
+					{
+						theplayer.etatDeplacement.addListener(new ChangeListener<Number>() {
+							@Override
+							public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue)
+							{
+								playerPlaceAnimation();
 							}});
 					}
 					else if(Actions.push.get() == newValue.intValue()) 

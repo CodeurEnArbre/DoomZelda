@@ -12,7 +12,6 @@ public class FunctionRaise extends Function{
 	public void Action(Entity e) {
 		e.slow = 0;
 		e.incAnim();
-		System.out.println(e.etatDeplacement);
 		ce.act(e);
 	}
 	
@@ -20,5 +19,4 @@ public class FunctionRaise extends Function{
 	public void finishAction(Entity e) {
 		e.slow = 1;
 	}
-
 }
