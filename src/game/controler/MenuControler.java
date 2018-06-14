@@ -1026,7 +1026,7 @@ public class MenuControler implements Initializable{
 				@Override
 				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 					if(newValue) {
-						Weapon item = World.player.LeftItemEquip;
+						Weapon item = (Weapon)World.player.LeftItemEquip;
 						leftItemEquip.setImage(dicoImageItemTextureMap.get(ItemImageValue.getValue(item.name)));
 					}else {
 						leftItemEquip.setImage(null);

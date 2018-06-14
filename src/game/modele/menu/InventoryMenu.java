@@ -1,7 +1,6 @@
 package game.modele.menu;
 
 import game.modele.item.Item;
-import game.modele.item.weapon.Weapon;
 import game.modele.world.World;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -15,36 +14,33 @@ public class InventoryMenu {
 	public static BooleanProperty newItem = new SimpleBooleanProperty(false);
 	public static IntegerProperty lastItemAdded = new SimpleIntegerProperty();
 
-	public static void equipItem(boolean isRight) {
+	public static void equipItem(boolean isLeft) {
 		if(InventoryZone.getValue() == 2) {
 			if(Menu.selectedButtonX.get()<8 && Menu.selectedButtonY.get() > 1) {
 				int slot = Menu.selectedButtonX.get()+8*(Menu.selectedButtonY.get()-2);
 				if(World.player.weapons[slot] != null) {
-					if(isRight) {
-						porteItem(World.player.weapons[slot], World.player.LeftItemEquip
-								, World.player.haveLeftItemEquip, World.player.haveRightItemEquip, World.player.RightItemEquip);
-						System.out.println(World.player.LeftItemEquip);
+					if(isLeft) {
+						if(World.player.haveLeftItemEquip.get() && World.player.RightItemEquip != null
+								&& World.player.weapons[slot].primaryKey != ((Item)World.player.RightItemEquip).primaryKey)
+						{
+							World.player.haveRightItemEquip.set(false);
+						}
+
+						World.player.LeftItemEquip = (World.player.weapons[slot]);
+						World.player.haveLeftItemEquip.set(true);
 					}else{
-						porteItem(World.player.weapons[slot], World.player.RightItemEquip
-								, World.player.haveRightItemEquip, World.player.haveLeftItemEquip, World.player.LeftItemEquip);
+						if(World.player.haveRightItemEquip.get() && World.player.LeftItemEquip != null
+								&& World.player.weapons[slot].primaryKey != ((Item)World.player.LeftItemEquip).primaryKey)
+						{
+							World.player.haveLeftItemEquip.set(false);
+						}
+						World.player.RightItemEquip = (World.player.weapons [slot]);
+						World.player.haveRightItemEquip.set(true);
 					}
 				}
 			}
 		}
 	}
-
-
-	private static void porteItem(Weapon arme,Weapon newArme,BooleanProperty newhaveArme,BooleanProperty alreadyHave,Weapon alreadyArme) {
-		if(alreadyHave.get() && arme.primaryKey != alreadyArme.primaryKey)
-		{
-			alreadyArme = null;
-			alreadyHave.set(false);
-		}
-		newArme = (arme);
-		newhaveArme.set(true);
-	}
-
-
 
 
 	public static void validate() {
