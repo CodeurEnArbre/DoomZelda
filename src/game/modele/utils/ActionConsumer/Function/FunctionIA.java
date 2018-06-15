@@ -1,5 +1,7 @@
 package game.modele.utils.ActionConsumer.Function;
 
+import java.util.AbstractMap.SimpleEntry;
+
 import game.modele.entity.Entity;
 import game.modele.utils.Direction;
 import game.modele.utils.graph.Graph;
@@ -34,14 +36,17 @@ public class FunctionIA  extends Function{
 				}
 
 			}else {
-
-				if(World.currentMap.g.direction[x][y].getValue() == Graph.left) {
+				SimpleEntry<Integer, int[]> d = World.currentMap.g.direction[x][y];
+				if(d == null)
+					return;
+				
+				if(d.getValue() == Graph.left) {
 					dirigerEast(e);
-				}else if(World.currentMap.g.direction[x][y].getValue() == Graph.right) {
+				}else if(d.getValue() == Graph.right) {
 					dirigerWest(e);
-				}else if(World.currentMap.g.direction[x][y].getValue() == Graph.bot) {
+				}else if(d.getValue() == Graph.bot) {
 					dirigerNorth(e);
-				}else if(World.currentMap.g.direction[x][y].getValue() == Graph.top) {
+				}else if(d.getValue() == Graph.top) {
 					dirigerSouth(e);
 				}
 			}
