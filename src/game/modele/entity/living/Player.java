@@ -74,7 +74,7 @@ public class Player extends EntityLiving{
 	public PushableEntity pushableEntity;
 	public BooleanProperty isPushingSomething;
 	private Direction orientation; //true : axe X / false : axe Y
-
+	private double[] v; // relative postion of PushableItem
 
 	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, Weapon[] weapons, Item leftEquip, Item rightEquip) {
 		super("Player",position,direction);
@@ -209,18 +209,16 @@ public class Player extends EntityLiving{
 			{
 				double x = (orientation.getDirection()==Direction.West?coordonnees.getX()-1:orientation.getDirection()==Direction.East?coordonnees.getX()+1:coordonnees.getX());
 				double y = (orientation.getDirection()==Direction.South?coordonnees.getY()+1:orientation.getDirection()==Direction.North?coordonnees.getY()-1:coordonnees.getY());
-
+				
 				Coordonnees pushCoord = new Coordonnees(x, y);
-
-				if(!pushableEntity.setCoordoner(pushCoord)) {
+				
+				
+				if(!pushableEntity.setCoordoner(pushCoord) && super.setCoordoner(coordonnees)) {
 					return false;
 				}else {
-					if(super.setCoordoner(coordonnees)) {
-						pushableEntity.coordonnes.setX(x);
-						pushableEntity.coordonnes.setY(y);
+						pushableEntity.coordonnes.setX(this.coordonnes.getX() + v[0]);
+						pushableEntity.coordonnes.setY(this.coordonnes.getY() + v[1]);
 						return true;
-					}else
-						return false;
 				}
 			}
 			else
@@ -257,6 +255,7 @@ public class Player extends EntityLiving{
 
 
 					}else if(e instanceof PushableEntity) {
+						v = this.coordonnes.vector(e.coordonnes);
 						this.orientation = new Direction(direction.getDirection());
 						this.pushableEntity = ((PushableEntity)e);
 						this.isPushingSomething.set(true);
