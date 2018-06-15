@@ -11,7 +11,7 @@ import game.modele.utils.ActionConsumer.Function.FunctionLampe;
 public abstract class EntityLight extends TileEntity{
 
 	ConsumerAction cl = new InfiniteActionConsumer(new FunctionLampe());
-	ConsumerAction opti = new OptimizedActionConsumer(10, cl);
+	ConsumerAction opti = new OptimizedActionConsumer(16, cl);
 	public int lightLvl;
 	public EntityLight(String id, Coordonnees coordoner, boolean etat, int lightLvl) {
 		super(id, coordoner, etat);
