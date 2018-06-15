@@ -51,9 +51,8 @@ public abstract class Entity {
 	public Coordonnees coordonnes;
 	public IntegerProperty etatDeplacement = new SimpleIntegerProperty(0);
 
-	public Entity(String id,Coordonnees coordonnees,Direction direction) {
+	public Entity(String id,Coordonnees coordonnees) {
 		primaryKey = key++; 
-		this.direction=direction;
 		this.id = id;
 		this.coordonnes=coordonnees;
 		//deplacement
@@ -61,6 +60,11 @@ public abstract class Entity {
 		moveDown = new infoDeplacement();
 		moveLeft = new infoDeplacement();
 		moveRight = new infoDeplacement();	
+	}
+	
+	public Entity(String id,Coordonnees coordonnees,Direction direction) {
+		this(id,coordonnees);
+		this.direction=direction;
 	}
 
 	public void addAction(ConsumerAction c) {

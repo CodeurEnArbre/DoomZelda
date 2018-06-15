@@ -5,6 +5,7 @@ import game.modele.entity.Entity;
 import game.modele.entity.living.monster.EntityMonster;
 import game.modele.entity.tileEntity.carriable.CarriableEntity;
 import game.modele.entity.tileEntity.chest.Chest;
+import game.modele.entity.tileEntity.pushable.PushableEntity;
 import game.modele.item.Item;
 import game.modele.item.weapon.Weapon;
 import game.modele.menu.InventoryMenu;
@@ -15,14 +16,17 @@ import game.modele.utils.ActionConsumer.ConsumerActionDelay;
 import game.modele.utils.ActionConsumer.CountActionConsumer;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
 import game.modele.utils.ActionConsumer.SimpleActionConsumer;
-import game.modele.utils.ActionConsumer.Function.FunctionRaise;
 import game.modele.utils.ActionConsumer.Function.Function;
 import game.modele.utils.ActionConsumer.Function.FunctionDeclanche;
 import game.modele.utils.ActionConsumer.Function.FunctionLampe;
 import game.modele.utils.ActionConsumer.Function.FunctionMove;
 import game.modele.utils.ActionConsumer.Function.FunctionMovement;
+import game.modele.utils.ActionConsumer.Function.FunctionRaise;
 import game.modele.world.World;
-import javafx.beans.property.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class Player extends EntityLiving{
 
@@ -42,12 +46,12 @@ public class Player extends EntityLiving{
 			((Player)e).action.set(Actions.walkAndRaise.get());
 		}
 	});
-	
-	
-	
+
+
+
 	ConsumerActionDelay Walk = new ConsumerActionDelay(30,new SimpleActionConsumer(new FunctionDeclanche(mouvement,reactiveWalk)));
 	ConsumerActionDelay WalkAndRaise = new ConsumerActionDelay(30,new SimpleActionConsumer(new FunctionDeclanche(mouvement,reactiveWalkAndRaise)));
-	
+
 	ConsumerAction lampe = new InfiniteActionConsumer(new FunctionLampe());
 
 	public int nbWeapon = 0;
@@ -67,6 +71,11 @@ public class Player extends EntityLiving{
 	public CarriableEntity carriedEntity;
 	public BooleanProperty isCarriedSomething;
 
+	public PushableEntity pushableEntity;
+	public BooleanProperty isPushingSomething;
+	private Direction orientation; //true : axe X / false : axe Y
+
+
 	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, Weapon[] weapons, Item leftEquip, Item rightEquip) {
 		super("Player",position,direction);
 		this.speed = baseSpeed;
@@ -78,13 +87,14 @@ public class Player extends EntityLiving{
 		havePickupItem = new SimpleBooleanProperty(false);
 		haveLeftItemEquip = new SimpleBooleanProperty(false);
 		haveRightItemEquip = new SimpleBooleanProperty(false);
+		isPushingSomething = new SimpleBooleanProperty(false);
 		this.weapons = weapons;
 		this.carriedEntity=null;
 
 		addAction(deplacement);
 		addAction(mouvement);
-		
-		
+
+
 	}
 
 	@Override
@@ -163,7 +173,7 @@ public class Player extends EntityLiving{
 				removeRuby(10); break;
 
 			default:
-				//FAUDRAI PEUT ETRE UTILISER UN THROW
+				//FAUDRAI PEUT ETRE UTILISER UN THROW     NAN JE VEUS PAS!!!
 				System.out.println("C'est quoi ca ???? : "+item);
 			}
 		}
@@ -187,51 +197,88 @@ public class Player extends EntityLiving{
 		useWeapon(haveRightItemEquip.get(), RightItemEquip);
 	}
 
-	public void interact() {
-		if(carriedEntity == null) {
-			int dir = super.direction.getDirection();
-			int current_x = (int)super.coordonnes.getX();
-			int current_y = (int)super.coordonnes.getY();
+	@Override
+	public boolean setCoordoner(Coordonnees coordonnees) {
+		if(isPushingSomething.get()) {
+			if((orientation.getDirection() == (Direction.East) || (orientation.getDirection() == (Direction.West)) && (coordonnees.getY() == this.coordonnes.getY()) 
+					||(orientation.getDirection() == (Direction.North) || (orientation.getDirection() == (Direction.South)) && (coordonnees.getX() == this.coordonnes.getX()))))
+			{
+				double x = (orientation.getDirection()==Direction.West?coordonnees.getX()-1:orientation.getDirection()==Direction.East?coordonnees.getX()+1:coordonnees.getX());
+				double y = (orientation.getDirection()==Direction.South?coordonnees.getY()+1:orientation.getDirection()==Direction.North?coordonnees.getY()-1:coordonnees.getY());
+				
+				Coordonnees pushCoord = new Coordonnees(x, y);
 
-			int x = (dir==Direction.West?current_x-1:dir==Direction.East?current_x+1:current_x);
-			int y = (dir==Direction.South?current_y+1:dir==Direction.North?current_y-1:current_y);
-			Entity e = World.currentMap.getEntity(x,y);
-			
-			if(e != null) {
-				if(e instanceof CarriableEntity) {	
-					((CarriableEntity)e).pickupEntity(this);
-					soulever.renew();
-					WalkAndRaise.renew();
-					delAction(mouvement);
-					addAction(soulever);
-					this.action.set(Actions.raise.get());
-					this.addAction(WalkAndRaise);					
-					
-					
-				}else if(e instanceof Chest) {
-					e.interact();
+				if(!pushableEntity.setCoordoner(coordonnees)) {
+					return false;
+				}else {
+
+					return super.setCoordoner(coordonnees);
 				}
 			}
-		}else {
-			if(this.carriedEntity.placeEntity(this)) {
-				soulever.renew();
-				Walk.renew();
-				delAction(mouvement);
-				addAction(soulever);
-				this.action.set(Actions.place.get());
-				this.addAction(Walk);	
-				this.addAction(new ConsumerActionDelay(30,new SimpleActionConsumer(new Function() {
-					
-					@Override
-					protected void Action(Entity e) {
-						World.currentMap.entity.add(carriedEntity);
-						World.player.isCarriedSomething.set(false);
-						World.player.carriedEntity=null;
-					}
-				})));	
-				
-				
-			}
+			else
+				return false;
 		}
+		return super.setCoordoner(coordonnees);
+	}
+
+	public void interact() {
+		if(this.isPushingSomething.get()) {
+			this.pushableEntity = null;
+			this.isPushingSomething.set(false);
+			this.action.set(Actions.walk.get());
+		}else
+			if(carriedEntity == null) {
+				int dir = super.direction.getDirection();
+				int current_x = (int)super.coordonnes.getX();
+				int current_y = (int)super.coordonnes.getY();
+
+				int x = (dir==Direction.West?current_x-1:dir==Direction.East?current_x+1:current_x);
+				int y = (dir==Direction.South?current_y+1:dir==Direction.North?current_y-1:current_y);
+				Entity e = World.currentMap.getEntity(x,y);
+
+				if(e != null) {
+
+					if(e instanceof CarriableEntity) {	
+						((CarriableEntity)e).pickupEntity(this);
+						soulever.renew();
+						WalkAndRaise.renew();
+						delAction(mouvement);
+						addAction(soulever);
+						this.action.set(Actions.raise.get());
+						this.addAction(WalkAndRaise);					
+
+
+					}else if(e instanceof PushableEntity) {
+						this.orientation = new Direction(direction.getDirection());
+						this.pushableEntity = ((PushableEntity)e);
+						this.isPushingSomething.set(true);
+						this.action.set(Actions.push.get());
+
+					}else if(e instanceof Chest) {
+						e.interact();
+					}
+				}
+			}else {
+				if(this.carriedEntity.placeEntity(this)) {
+					soulever.renew();
+					Walk.renew();
+					delAction(mouvement);
+					addAction(soulever);
+					this.action.set(Actions.place.get());
+					this.addAction(Walk);	
+					this.addAction(new ConsumerActionDelay(30,new SimpleActionConsumer(new Function() {
+
+						@Override
+						protected void Action(Entity e) {
+							World.currentMap.entity.add(carriedEntity);
+							World.player.isCarriedSomething.set(false);
+							World.player.carriedEntity=null;
+						}
+					})));	
+
+
+				}
+			}
+
 	}
 }

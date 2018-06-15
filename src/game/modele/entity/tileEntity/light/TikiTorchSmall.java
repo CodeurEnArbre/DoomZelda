@@ -6,8 +6,8 @@ import game.modele.utils.Direction;
 
 public class TikiTorchSmall extends EntityLight {
 
-	public TikiTorchSmall(Coordonnees coordoner, Direction direction, boolean etat, int lightLvl) {
-		super("TikiTorchSmall", coordoner, direction, etat, lightLvl);
+	public TikiTorchSmall(Coordonnees coordoner, boolean etat, int lightLvl) {
+		super("TikiTorchSmall", coordoner, etat, lightLvl);
 	}
 
 	@Override

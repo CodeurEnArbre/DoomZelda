@@ -6,7 +6,7 @@ public class EntityImageValue {
 		switch(entityID) {
 		case "Bush":
 			return 2;
-		case "StoneBlock":
+		case "Rock":
 			return 3;
 		case "Gold Chest":
 			return 4;

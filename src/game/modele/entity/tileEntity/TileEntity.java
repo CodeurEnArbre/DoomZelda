@@ -9,8 +9,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 public abstract class TileEntity extends Entity {
 	protected BooleanProperty etat;
 	
-	public TileEntity(String id, Coordonnees coordoner,Direction direction, boolean etat) {
-		super(id,coordoner,direction);
+	public TileEntity(String id, Coordonnees coordoner, boolean etat) {
+		super(id,coordoner);
 		this.etat=new SimpleBooleanProperty(etat);
 	}	
 	

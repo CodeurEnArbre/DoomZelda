@@ -11,8 +11,8 @@ public abstract class EntityLight extends TileEntity{
 
 	ConsumerAction cl = new InfiniteActionConsumer(new FunctionLampe());
 	public int lightLvl;
-	public EntityLight(String id, Coordonnees coordoner, Direction direction, boolean etat, int lightLvl) {
-		super(id, coordoner, direction, etat);
+	public EntityLight(String id, Coordonnees coordoner, boolean etat, int lightLvl) {
+		super(id, coordoner, etat);
 		this.lightLvl = lightLvl;
 		addAction(cl);
 	}

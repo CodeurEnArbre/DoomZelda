@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 import game.modele.entity.Entity;
 import game.modele.entity.EntityItemOnGround;
+import game.modele.entity.living.EntityLiving;
 import game.modele.entity.living.Player;
 import game.modele.entity.tileEntity.EntityTP;
 import game.modele.entity.tileEntity.chest.Chest;
@@ -42,7 +43,7 @@ public class Save {
 			File player = new File("saves/"+name+"/player");
 			player.createNewFile();
 			BufferedWriter entitysData = new BufferedWriter(new FileWriter(player.getAbsolutePath()));
-			entitysData.write("Map1,54.0,56.0,0,16,13,10,,,");
+			entitysData.write("Map1,18.5,55,0,16,13,10,,,");
 			entitysData.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -78,11 +79,14 @@ public class Save {
 			
 			for(Entity entity:World.currentMap.getEntity()) {
 				if(!entity.getId().equals("Player")) {
+					
 					entitysData.write(entity.getId());entitysData.newLine();
 					entitysData.write(""+entity.coordonnes.getX());
 					entitysData.write(","+entity.coordonnes.getY());
-					entitysData.write(","+entity.direction.getDirection());
-
+					
+					if(entity instanceof EntityLiving)
+						entitysData.write(","+entity.direction.getDirection());
+					else
 					switch(entity.getId()) {
 
 					case "EntityTP":

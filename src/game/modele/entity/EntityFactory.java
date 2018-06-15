@@ -12,6 +12,7 @@ import game.modele.entity.tileEntity.chest.GoldChest;
 import game.modele.entity.tileEntity.chest.IronChest;
 import game.modele.entity.tileEntity.chest.WoodChest;
 import game.modele.entity.tileEntity.light.TikiTorchSmall;
+import game.modele.entity.tileEntity.pushable.Rock;
 import game.modele.item.Item;
 import game.modele.item.ItemFactory;
 import game.modele.utils.Coordonnees;
@@ -39,7 +40,10 @@ public class EntityFactory {
 				e = (Bush) Bush.class.getConstructors()[0]
 						.newInstance(castParams(Bush.class.getConstructors()[0],params));
 				break;
-			
+			case "Rock":
+				e = (Rock) Rock.class.getConstructors()[0]
+						.newInstance(castParams(Rock.class.getConstructors()[0],params));
+				break;	
 				
 				
 				
@@ -67,6 +71,7 @@ public class EntityFactory {
 				e = (EntityItemOnGround) EntityItemOnGround.class.getConstructors()[0]
 						.newInstance(castParams(EntityItemOnGround.class.getConstructors()[0],params));
 				break;
+			
 			default :
 
 

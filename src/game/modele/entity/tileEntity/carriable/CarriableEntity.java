@@ -10,8 +10,8 @@ import game.modele.world.World;
 public class CarriableEntity extends TileEntity{
 
 
-	public CarriableEntity(String id, Coordonnees coordoner, Direction direction) {
-		super(id, coordoner, direction, false);
+	public CarriableEntity(String id, Coordonnees coordoner) {
+		super(id, coordoner, false);
 	}
 
 	@Override

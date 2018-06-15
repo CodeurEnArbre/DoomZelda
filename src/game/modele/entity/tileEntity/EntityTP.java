@@ -2,7 +2,6 @@ package game.modele.entity.tileEntity;
 
 import game.modele.entity.Entity;
 import game.modele.utils.Coordonnees;
-import game.modele.utils.Direction;
 import game.modele.world.Save;
 import game.modele.world.World;
 
@@ -10,8 +9,8 @@ public class EntityTP extends TileEntity{
 	private Coordonnees tpCoordonnees;
 	private String mapNameTp;
 
-	public EntityTP(Coordonnees coordonerPosition,Direction direction, boolean etat, String mapNameTp, Coordonnees tpCoordonnees) {
-		super("EntityTP", coordonerPosition,direction, etat);
+	public EntityTP(Coordonnees coordonerPosition, boolean etat, String mapNameTp, Coordonnees tpCoordonnees) {
+		super("EntityTP", coordonerPosition, etat);
 		this.tpCoordonnees=tpCoordonnees;
 		this.mapNameTp=mapNameTp;
 	}

@@ -451,7 +451,18 @@ public class MenuControler implements Initializable{
 		} catch (IOException e) {
 			OptionsMenu.SaveKeyBinding();
 		}
-
+		
+		//Affichage des touches dans la console
+		System.out.println("Avancer / Haut : "+Interaction.AVANCER);
+		System.out.println("Reculer / Bas : "+Interaction.RECULER);
+		System.out.println("Gauche : "+Interaction.GAUCHE);
+		System.out.println("Droite : "+Interaction.DROITE);
+		System.out.println("Valider dans les menus : Enter");
+		System.out.println("Sortir menu/ouvrire menu en jeu : Echap");
+		System.out.println("Interagire :"+Interaction.INTERACT);
+		System.out.println("Ouvrire l'inventaire :"+Interaction.INVENTAIRE);
+		System.out.println("Utiliser/equiper Item Gauche:"+Interaction.UseLeftItem);
+		System.out.println("Utiliser/equiper Item Droite:"+Interaction.UseRightItem);
 	}
 
 	public void loadMapTexture() {				
@@ -1032,7 +1043,47 @@ public class MenuControler implements Initializable{
 					}
 					else if(Actions.push.get() == newValue.intValue()) 
 					{
-
+						switch(theplayer.direction.getDirection()) {
+						
+						case Direction.North:
+							theplayer.etatDeplacement.addListener(new ChangeListener<Number>() {
+								@Override
+								public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue)
+								{
+									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+28*5));
+								}});
+							break;
+						
+						case Direction.South:
+							theplayer.etatDeplacement.addListener(new ChangeListener<Number>() {
+								@Override
+								public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue)
+								{
+									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+28*6));
+								}});
+							break;
+							
+						case Direction.East:
+							theplayer.etatDeplacement.addListener(new ChangeListener<Number>() {
+								@Override
+								public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue)
+								{
+									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+28*7));
+								}});
+							break;
+							
+						case Direction.West:
+							theplayer.etatDeplacement.addListener(new ChangeListener<Number>() {
+								@Override
+								public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue)
+								{
+									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+28*8));
+								}});
+							break;
+						}
+						
+						
+						
 					}else if(Actions.useWeapon.get() == newValue.intValue()) 
 					{
 						//
@@ -1181,7 +1232,7 @@ public class MenuControler implements Initializable{
 			break;
 		}
 	}
-
+	
 	public ImageView createItemView(String name, int layoutX, int layoutY, int width, int height) {
 		ImageView v = new ImageView();
 		v.setId(name);
