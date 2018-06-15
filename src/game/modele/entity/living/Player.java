@@ -200,19 +200,27 @@ public class Player extends EntityLiving{
 	@Override
 	public boolean setCoordoner(Coordonnees coordonnees) {
 		if(isPushingSomething.get()) {
-			if((orientation.getDirection() == (Direction.East) || (orientation.getDirection() == (Direction.West)) && (coordonnees.getY() == this.coordonnes.getY()) 
-					||(orientation.getDirection() == (Direction.North) || (orientation.getDirection() == (Direction.South)) && (coordonnees.getX() == this.coordonnes.getX()))))
+			if(((orientation.getDirection() == Direction.East 
+					|| orientation.getDirection() == Direction.West) 
+					&& coordonnees.getY() == this.coordonnes.getY()) 
+					||((orientation.getDirection() == Direction.North
+					|| orientation.getDirection() == Direction.South) 
+							&& coordonnees.getX() == this.coordonnes.getX()))
 			{
 				double x = (orientation.getDirection()==Direction.West?coordonnees.getX()-1:orientation.getDirection()==Direction.East?coordonnees.getX()+1:coordonnees.getX());
 				double y = (orientation.getDirection()==Direction.South?coordonnees.getY()+1:orientation.getDirection()==Direction.North?coordonnees.getY()-1:coordonnees.getY());
-				
+
 				Coordonnees pushCoord = new Coordonnees(x, y);
 
-				if(!pushableEntity.setCoordoner(coordonnees)) {
+				if(!pushableEntity.setCoordoner(pushCoord)) {
 					return false;
 				}else {
-
-					return super.setCoordoner(coordonnees);
+					if(super.setCoordoner(coordonnees)) {
+						pushableEntity.coordonnes.setX(x);
+						pushableEntity.coordonnes.setY(y);
+						return true;
+					}else
+						return false;
 				}
 			}
 			else
