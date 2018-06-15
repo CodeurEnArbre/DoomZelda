@@ -16,8 +16,8 @@ public class Zombie extends EntityMonster{
 	ConsumerAction ia = new InfiniteActionConsumer(new FunctionIA());
 	
 	
-	public Zombie(Coordonnees c,Direction d) {
-		super("Zombie",c,d);
+	public Zombie(Coordonnees c,Direction d, int pv) {
+		super("Zombie",c,d, pv);
 		this.speed = 0.02;
 		this.acce = 0;
 		this.baseSpeed = 0.05;

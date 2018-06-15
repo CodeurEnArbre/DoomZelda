@@ -39,8 +39,7 @@ public abstract class EntityLiving extends Entity{
 	}
 
 	public EntityLiving(String id,Coordonnees position, Direction direction, int pv) {
-		super(id,position,direction);
-		this.direction=direction;
+		this(id, position, direction);
 		PV.set(pv);
 	}
 
