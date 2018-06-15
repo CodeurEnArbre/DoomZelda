@@ -6,15 +6,17 @@ import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.ConsumerAction;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
+import game.modele.utils.ActionConsumer.OptimizedActionConsumer;
 import game.modele.utils.ActionConsumer.Function.FunctionLampe;
 public abstract class EntityLight extends TileEntity{
 
 	ConsumerAction cl = new InfiniteActionConsumer(new FunctionLampe());
+	ConsumerAction opti = new OptimizedActionConsumer(10, cl);
 	public int lightLvl;
 	public EntityLight(String id, Coordonnees coordoner, boolean etat, int lightLvl) {
 		super(id, coordoner, etat);
 		this.lightLvl = lightLvl;
-		addAction(cl);
+		addAction(opti);
 	}
 	
 	
