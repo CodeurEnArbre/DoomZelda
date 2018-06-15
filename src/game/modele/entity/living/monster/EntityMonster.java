@@ -8,8 +8,8 @@ import game.modele.utils.Direction;
 
 public abstract class EntityMonster extends EntityLiving {
 
-	public EntityMonster(String id,Coordonnees position, Direction direction) {
-		super(id,position, direction);
+	public EntityMonster(String id,Coordonnees position, Direction direction, int pv) {
+		super(id,position, direction, pv);
 	}
 
 	@Override

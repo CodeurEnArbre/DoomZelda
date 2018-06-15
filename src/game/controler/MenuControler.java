@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,13 +17,14 @@ import game.modele.entity.Entity;
 import game.modele.entity.EntityItemOnGround;
 import game.modele.entity.living.Actions;
 import game.modele.entity.living.EntityLiving;
+import game.modele.entity.living.MemberPart;
 import game.modele.entity.living.Player;
+import game.modele.entity.living.monster.boss.Boss;
 import game.modele.entity.tileEntity.TileEntity;
 import game.modele.entity.tileEntity.carriable.CarriableEntity;
 import game.modele.entity.tileEntity.chest.Chest;
 import game.modele.entity.tileEntity.light.EntityLight;
 import game.modele.item.Item;
-import game.modele.item.weapon.CuttingWeapon;
 import game.modele.item.weapon.Weapon;
 import game.modele.menu.InventoryMenu;
 import game.modele.menu.Menu;
@@ -453,16 +453,16 @@ public class MenuControler implements Initializable{
 		}
 		
 		//Affichage des touches dans la console
-		System.out.println("Avancer / Haut : "+Interaction.AVANCER);
-		System.out.println("Reculer / Bas : "+Interaction.RECULER);
+		System.out.println("Avancer : "+Interaction.AVANCER);
+		System.out.println("Reculer : "+Interaction.RECULER);
 		System.out.println("Gauche : "+Interaction.GAUCHE);
 		System.out.println("Droite : "+Interaction.DROITE);
 		System.out.println("Valider dans les menus : Enter");
 		System.out.println("Sortir menu/ouvrire menu en jeu : Echap");
-		System.out.println("Interagire :"+Interaction.INTERACT);
-		System.out.println("Ouvrire l'inventaire :"+Interaction.INVENTAIRE);
-		System.out.println("Utiliser/equiper Item Gauche:"+Interaction.UseLeftItem);
-		System.out.println("Utiliser/equiper Item Droite:"+Interaction.UseRightItem);
+		System.out.println("Interagire : "+Interaction.INTERACT);
+		System.out.println("Ouvrire l'inventaire : "+Interaction.INVENTAIRE);
+		System.out.println("Utiliser/equiper Item Gauche : "+Interaction.UseLeftItem);
+		System.out.println("Utiliser/equiper Item Droite : "+Interaction.UseRightItem);
 	}
 
 	public void loadMapTexture() {				
@@ -702,6 +702,11 @@ public class MenuControler implements Initializable{
 		dicoImageAnimationEntity.put("Zombie", LoadDicoMapAnimation(32,48,4,4,"Zombie"));
 		dicoImageAnimationEntity.put("White Sheep", LoadDicoMapAnimation(48,48,4,4,"White Sheep"));
 		dicoImageAnimationEntity.put("Chest", LoadDicoMapAnimation(32, 32, 3, 3, "coffres"));
+		
+		//Boss
+		dicoImageAnimationEntity.put("FinManBody",LoadDicoMapAnimation(256, 180, 1, 1,"mobs/boss/FinManBody"));
+		dicoImageAnimationEntity.put("FinManHead",LoadDicoMapAnimation(96, 110, 5, 1,"mobs/boss/FinManHead"));
+		dicoImageAnimationEntity.put("FinManArm",LoadDicoMapAnimation(105, 144, 6, 1,"mobs/boss/FinManArm"));
 	}
 
 
@@ -796,6 +801,33 @@ public class MenuControler implements Initializable{
 			PlayerPane.getChildren().add(carriableEntity);
 			PlayerPane.getChildren().add(pickupItem);
 		}else {
+			if(e instanceof Boss){
+				Boss theBoss = (Boss)e;
+				
+				i.xProperty().bind(e.coordonnes.getXpro().multiply(32));
+				i.yProperty().bind(e.coordonnes.getYpro().multiply(32));
+				
+				if(theBoss.getId().equals("FinMan"))
+					//i.setImage(dicoImageAnimationEntity.get("FinManArm").get(0));
+					i.setImage(dicoImageAnimationEntity.get(theBoss.getId()+"Body").get(0));
+				
+				EntityPane.getChildren().add(i);
+
+				for(int x=0; x<theBoss.bodyPart.length;x++) {
+					MemberPart part = theBoss.bodyPart[x];
+					ImageView bodyPart = new ImageView();
+					bodyPart.setId(theBoss.primaryKey+"");
+					String id = part.getId().equals(theBoss.getId()+"LeftArm")
+							||part.getId().equals(theBoss.getId()+"RightArm")?theBoss.getId()+"Arm":part.getId();
+					//bodyPart.setImage(dicoImageAnimationEntity.get(id).get(0));
+					bodyPart.setImage(dicoImageAnimationEntity.get("FinManArm").get(0));
+					bodyPart.xProperty().bind(part.coordonnes.getXpro().multiply(32));
+					bodyPart.xProperty().bind(part.coordonnes.getXpro().multiply(32));
+					EntityPane.getChildren().add(bodyPart);
+					listEntityView.put(theBoss,bodyPart);
+				}
+				
+			}else {
 			if(e instanceof Chest) {
 				Chest chest = (Chest)e;
 				i.setFitWidth(32);
@@ -817,7 +849,7 @@ public class MenuControler implements Initializable{
 						break;
 					}
 				}
-			}else if(e instanceof EntityItemOnGround) {
+			}else if(e.getId().equals("ItemOnGround")) {
 				i.setFitWidth(32);
 				i.setFitHeight(32);
 				i.xProperty().bind(e.coordonnes.getXpro().multiply(32));
@@ -834,7 +866,7 @@ public class MenuControler implements Initializable{
 			}else if(e instanceof EntityLight) {
 				i.setFitWidth(32);
 				i.setFitHeight(64);
-				i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(16));
+				i.xProperty().bind(e.coordonnes.getXpro().multiply(32));
 				i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(48));
 				i.setImage(dicoImageAnimationEntity.get(e.getId()).get(( (TileEntity) e).getEtat()?1:0));
 
@@ -846,6 +878,7 @@ public class MenuControler implements Initializable{
 				i.setImage(dicoImageTileEntityMap.get(EntityImageValue.getEntityNum(e.getId())) );
 			}
 			EntityPane.getChildren().add(i);
+			}
 		}
 
 	}

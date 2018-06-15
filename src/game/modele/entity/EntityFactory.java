@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import game.modele.entity.living.Player;
 import game.modele.entity.living.friendly.sheeps.WhiteSheep;
 import game.modele.entity.living.monster.Zombie;
+import game.modele.entity.living.monster.boss.FinMan.FinMan;
 import game.modele.entity.tileEntity.EntityTP;
 import game.modele.entity.tileEntity.carriable.Bush;
 import game.modele.entity.tileEntity.chest.GoldChest;
@@ -70,6 +71,10 @@ public class EntityFactory {
 			case "ItemOnGround":
 				e = (EntityItemOnGround) EntityItemOnGround.class.getConstructors()[0]
 						.newInstance(castParams(EntityItemOnGround.class.getConstructors()[0],params));
+				break;
+			case "FinMan":
+				e = (FinMan) FinMan.class.getConstructors()[0]
+						.newInstance(castParams(FinMan.class.getConstructors()[0],params));
 				break;
 			
 			default :
