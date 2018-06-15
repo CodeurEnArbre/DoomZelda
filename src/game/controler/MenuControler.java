@@ -706,7 +706,7 @@ public class MenuControler implements Initializable{
 		//Boss
 		dicoImageAnimationEntity.put("FinManBody",LoadDicoMapAnimation(256, 180, 1, 1,"mobs/boss/FinManBody"));
 		dicoImageAnimationEntity.put("FinManHead",LoadDicoMapAnimation(96, 110, 5, 1,"mobs/boss/FinManHead"));
-		dicoImageAnimationEntity.put("FinManArm",LoadDicoMapAnimation(105, 144, 6, 1,"mobs/boss/FinManArm"));
+		dicoImageAnimationEntity.put("FinManArm",LoadDicoMapAnimation(105, 152, 6, 2,"mobs/boss/FinManArm"));
 	}
 
 
@@ -804,12 +804,14 @@ public class MenuControler implements Initializable{
 			if(e instanceof Boss){
 				Boss theBoss = (Boss)e;
 				
-				i.xProperty().bind(e.coordonnes.getXpro().multiply(32));
-				i.yProperty().bind(e.coordonnes.getYpro().multiply(32));
 				
-				if(theBoss.getId().equals("FinMan"))
+				if(theBoss.getId().equals("FinMan")) {
 					//i.setImage(dicoImageAnimationEntity.get("FinManArm").get(0));
 					i.setImage(dicoImageAnimationEntity.get(theBoss.getId()+"Body").get(0));
+					i.xProperty().bind(e.coordonnes.getXpro().multiply(32).subtract(i.getImage().getWidth()/2));
+					i.yProperty().bind(e.coordonnes.getYpro().multiply(32).subtract(i.getImage().getHeight()/2));
+					
+					}
 				
 				EntityPane.getChildren().add(i);
 
@@ -819,10 +821,10 @@ public class MenuControler implements Initializable{
 					bodyPart.setId(theBoss.primaryKey+"");
 					String id = part.getId().equals(theBoss.getId()+"LeftArm")
 							||part.getId().equals(theBoss.getId()+"RightArm")?theBoss.getId()+"Arm":part.getId();
-					//bodyPart.setImage(dicoImageAnimationEntity.get(id).get(0));
-					bodyPart.setImage(dicoImageAnimationEntity.get("FinManArm").get(0));
-					bodyPart.xProperty().bind(part.coordonnes.getXpro().multiply(32));
-					bodyPart.xProperty().bind(part.coordonnes.getXpro().multiply(32));
+					bodyPart.setImage(dicoImageAnimationEntity.get(id).get(part.getId().equals(theBoss.getId()+"RightArm")?6:0));
+					//bodyPart.setImage(dicoImageAnimationEntity.get("FinManArm").get(0));
+					bodyPart.xProperty().bind(part.coordonnes.getXpro().multiply(32).subtract(i.getImage().getWidth()/2));
+					bodyPart.yProperty().bind(part.coordonnes.getYpro().multiply(32).subtract(i.getImage().getHeight()/2));
 					EntityPane.getChildren().add(bodyPart);
 					listEntityView.put(theBoss,bodyPart);
 				}
