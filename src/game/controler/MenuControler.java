@@ -611,7 +611,7 @@ public class MenuControler implements Initializable{
 
 			loadEntityAnimation();
 			loadProjectileTexture();
-			loadAnimationPlayer(dicoImageAnimationPlayer, 28, 13);
+			loadAnimationPlayer(dicoImageAnimationPlayer, 28, 17);
 
 			coeurs = new ArrayList<>();
 
@@ -1108,7 +1108,7 @@ public class MenuControler implements Initializable{
 								@Override
 								public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue)
 								{
-									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+28*5));
+									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 14)+28*13+3));
 								}});
 							break;
 						
@@ -1117,7 +1117,7 @@ public class MenuControler implements Initializable{
 								@Override
 								public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue)
 								{
-									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+28*7));
+									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 14)+28*15+3));
 								}});
 							break;
 							
@@ -1126,7 +1126,7 @@ public class MenuControler implements Initializable{
 								@Override
 								public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue)
 								{
-									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+28*6));
+									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 14)+28*14+3));
 								}});
 							break;
 							
@@ -1135,7 +1135,7 @@ public class MenuControler implements Initializable{
 								@Override
 								public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue)
 								{
-									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+28*8));
+									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 14)+28*16+3));
 								}});
 							break;
 						}
