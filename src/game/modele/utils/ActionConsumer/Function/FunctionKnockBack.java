@@ -13,13 +13,13 @@ public class FunctionKnockBack extends Function{
 	@Override
 	protected void Action(Entity e) {
 		if(direction.equals(Graph.top)) {
-			e.addY(0.1);
+			e.addY(0.1f);
 		}else if(direction.equals(Graph.bot)) {
-			e.addY(-0.1);
+			e.addY(-0.1f);
 		}else if (direction.equals(Graph.left)) {
-			e.addX(-0.1);
+			e.addX(-0.1f);
 		}else if(direction.equals(Graph.right)) {
-			e.addX(0.1);
+			e.addX(0.1f);
 		}
 	}
 

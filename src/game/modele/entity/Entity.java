@@ -1,6 +1,5 @@
 package game.modele.entity;
 
-import game.modele.entity.living.Player;
 import game.modele.entity.living.monster.EntityMonster;
 import game.modele.tile.Tile;
 import game.modele.tile.tileGround.tileVoid;
@@ -18,14 +17,14 @@ public abstract class Entity {
 	public static int key=0;
 	public int primaryKey;
 
-	public double baseSpeed = 0.11f;
-	public double maxSpeed = 0.16f;
-	public double acce = 0.00025f;
-	public double slow = 1;
-	public double speed;
+	public float baseSpeed = 0.11f;
+	public float maxSpeed = 0.16f;
+	public float acce = 0.00025f;
+	public float slow = 1f;
+	public float speed;
 
-	public double hitBoxX=0;//W.I.P16
-	public double hitBoxY=0;//W.I.P
+	public float hitBoxX=0;//W.I.P16
+	public float hitBoxY=0;//W.I.P
 
 	public boolean isSolidEntity = false;
 	//represente l'etat d'une direction
@@ -78,19 +77,27 @@ public abstract class Entity {
 	public void clearAction() {
 		ActionQueueEntity.clear();
 	}
-	public void addX(double x){
-		if(this.setCoordoner( new Coordonnees(this.coordonnes.getX() + x,this.coordonnes.getY() ))) {
+	public void addX(float x){
+		if(this.canSetCoordinateHere( new Coordonnees(this.coordonnes.getX() + x,this.coordonnes.getY() )))
 			this.coordonnes.setX(this.coordonnes.getX() + x);
-		}
 	}
 
-	public void addY(double y) {
-		if(this.setCoordoner(
-				new Coordonnees(
-						this.coordonnes.getX(),
-						this.coordonnes.getY() + y))) {
+	public void addY(float y) {
+		if(this.canSetCoordinateHere( new Coordonnees(this.coordonnes.getX(), this.coordonnes.getY() + y)))
 			this.coordonnes.setY(this.coordonnes.getY() + y);
-		}
+	}
+	
+	public void forceAddX(float x){
+			this.coordonnes.setX(this.coordonnes.getX() + x);
+	}
+
+	public void forceAddY(float y) {
+			this.coordonnes.setY(this.coordonnes.getY() + y);
+	}
+	
+	public void setCoordinate(Coordonnees coordonnees) {
+		if(canSetCoordinateHere(coordonnees))
+			this.coordonnes.setCoordoner(coordonnees.getX(), coordonnees.getY());
 	}
 
 	//Teleporte l'entity meme si il y a une tile qui bloque
@@ -103,7 +110,7 @@ public abstract class Entity {
 		return((int)this.coordonnes.getX()==(int)coordonnees.getX() && (int)this.coordonnes.getY()==(int)coordonnees.getY());
 	}
 
-	public boolean setCoordoner(Coordonnees coordonnees) {
+	public boolean canSetCoordinateHere(Coordonnees coordonnees) {
 		for(Entity e : World.currentMap.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
 			if(e != this && currentE != e) {
 				currentE = e;
@@ -139,11 +146,6 @@ public abstract class Entity {
 
 			if(entity!=null && entity.isSolidEntity && entity != this)
 				return false;
-
-			Player thisPlayer = null;
-
-			if(this.getId().equals("Player"))
-				thisPlayer = (Player)this;
 
 			if(!World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX()).solid() &&
 					!World.currentMap.getTile((int)(coordonnees.getY()+ hitBoxY), (int)(coordonnees.getX()+ hitBoxX)).solid() &&
@@ -193,7 +195,6 @@ public abstract class Entity {
 	public void interact() {
 
 	}
-	// TODO Auto-generated method stub
 
 	public void dispose() { 
 		ActionQueueEntity.dispose();

@@ -20,6 +20,7 @@ import game.modele.utils.ActionConsumer.Function.Function;
 import game.modele.utils.ActionConsumer.Function.FunctionDeclanche;
 import game.modele.utils.ActionConsumer.Function.FunctionLampe;
 import game.modele.utils.ActionConsumer.Function.FunctionMove;
+import game.modele.utils.ActionConsumer.Function.FunctionMoveOneTile;
 import game.modele.utils.ActionConsumer.Function.FunctionMovement;
 import game.modele.utils.ActionConsumer.Function.FunctionRaise;
 import game.modele.world.World;
@@ -73,8 +74,9 @@ public class Player extends EntityLiving{
 
 	public PushableEntity pushableEntity;
 	public BooleanProperty isPushingSomething;
-	private Direction orientation; //true : axe X / false : axe Y
-	private double[] v; // relative postion of PushableItem
+	public boolean isTruePushingSomething = false;
+	private Direction orientation; //Orientation of the pushing direction
+	private float[] v; // relative postion of PushableItem
 
 	public Player(Coordonnees position, Direction direction, int maxPv, int pv, int ruby, Weapon[] weapons, Item leftEquip, Item rightEquip) {
 		super("Player",position,direction);
@@ -198,8 +200,8 @@ public class Player extends EntityLiving{
 	}
 
 	@Override
-	public boolean setCoordoner(Coordonnees coordonnees) {
-		if(isPushingSomething.get()) {
+	public boolean canSetCoordinateHere(Coordonnees coordonnees) {
+		if(isPushingSomething.get() && !isTruePushingSomething) {
 			if(((orientation.getDirection() == Direction.East 
 					|| orientation.getDirection() == Direction.West) 
 					&& coordonnees.getY() == this.coordonnes.getY()) 
@@ -207,24 +209,27 @@ public class Player extends EntityLiving{
 					|| orientation.getDirection() == Direction.South) 
 							&& coordonnees.getX() == this.coordonnes.getX()))
 			{
-				double x = (orientation.getDirection()==Direction.West?coordonnees.getX()-1:orientation.getDirection()==Direction.East?coordonnees.getX()+1:coordonnees.getX());
-				double y = (orientation.getDirection()==Direction.South?coordonnees.getY()+1:orientation.getDirection()==Direction.North?coordonnees.getY()-1:coordonnees.getY());
+				
+				float x = (orientation.getDirection()==Direction.West?coordonnees.getX()-1:orientation.getDirection()==Direction.East?coordonnees.getX()+1:coordonnees.getX());
+				float y = (orientation.getDirection()==Direction.South?coordonnees.getY()+1:orientation.getDirection()==Direction.North?coordonnees.getY()-1:coordonnees.getY());
 				
 				Coordonnees pushCoord = new Coordonnees(x, y);
 				
 				
-				if(!pushableEntity.setCoordoner(pushCoord) && super.setCoordoner(coordonnees)) {
+				if(!pushableEntity.canSetCoordinateHere(pushCoord) && super.canSetCoordinateHere(coordonnees)) {
 					return false;
 				}else {
-						pushableEntity.coordonnes.setX(this.coordonnes.getX() + v[0]);
-						pushableEntity.coordonnes.setY(this.coordonnes.getY() + v[1]);
-						return true;
+//					pushableEntity.coordonnes.setX(this.coordonnes.getX() + v[0]);
+//					pushableEntity.coordonnes.setY(this.coordonnes.getY() + v[1]);
+					isTruePushingSomething=true;
+					pushableEntity.addAction(new InfiniteActionConsumer(new FunctionMoveOneTile(pushableEntity,orientation, 0.025f, direction)));
+					return false;
 				}
 			}
 			else
 				return false;
 		}
-		return super.setCoordoner(coordonnees);
+		return super.canSetCoordinateHere(coordonnees);
 	}
 
 	public void interact() {
@@ -232,6 +237,7 @@ public class Player extends EntityLiving{
 			this.pushableEntity = null;
 			this.isPushingSomething.set(false);
 			this.action.set(Actions.walk.get());
+			this.speed = this.baseSpeed;
 		}else
 			if(carriedEntity == null) {
 				int dir = super.direction.getDirection();
@@ -255,11 +261,13 @@ public class Player extends EntityLiving{
 
 
 					}else if(e instanceof PushableEntity) {
+						this.coordonnes.setCoordoner(((int)this.coordonnes.getX())+0.5f, ((int)this.coordonnes.getY())+0.5f);
 						v = this.coordonnes.vector(e.coordonnes);
 						this.orientation = new Direction(direction.getDirection());
 						this.pushableEntity = ((PushableEntity)e);
 						this.isPushingSomething.set(true);
 						this.action.set(Actions.push.get());
+						this.speed = 0;
 
 					}else if(e instanceof Chest) {
 						e.interact();

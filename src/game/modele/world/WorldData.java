@@ -129,7 +129,7 @@ public class WorldData {
 		}
 	}
 
-	public Entity[] entityHere(double x,double y) {
+	public Entity[] entityHere(float x,float y) {
 		return this.entity.stream().filter(a -> a.coordonnes.isSameTile(x, y)).toArray(Entity[]::new);
 	}
 	public ArrayList<Entity> entityOnTileHere(int y, int x) {
@@ -142,7 +142,7 @@ public class WorldData {
 		return entityFound;
 	}
 
-	public boolean canDifuseHere(double x,double y) {
+	public boolean canDifuseHere(float x,float y) {
 		for(Entity e : entityHere(x, y)) {
 			if(e.isSolidEntity) {
 				return false;

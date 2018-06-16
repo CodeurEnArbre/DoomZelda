@@ -15,7 +15,7 @@ public class tileIce extends TileGround{
 	}
 	@Override
 	public void onEntityOver(Entity e) {
-		e.slow = 0.4;
+		e.slow = 0.4f;
 		if(!actionCreer.containsKey(e)) {
 			actionCreer.put(e, new InfiniteActionConsumer(new FunctionMoveIce()));
 			e.addAction(actionCreer.get(e));

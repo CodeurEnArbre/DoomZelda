@@ -102,7 +102,7 @@ public class EntityFactory {
 			Class<?> o = c.getParameterTypes()[i];
 			if(o.getName().equals(Coordonnees.class.getName())) {
 				os[i] = new Coordonnees(
-						Double.parseDouble(params[nb++]), Double.parseDouble(params[nb++]));
+						Float.parseFloat(params[nb++]), Float.parseFloat(params[nb++]));
 			}else if(o.getName().equals(Direction.class.getName())) {
 				os[i] = new Direction(
 						Integer.parseInt(params[nb++]));

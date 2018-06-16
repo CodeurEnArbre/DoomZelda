@@ -59,7 +59,7 @@ public class Save {
 			Pattern pat = Pattern.compile(",");
 			String[] valueData = pat.split(playerData.readLine());
 			World.initWorldSave(valueData[0],															//Map
-					new Coordonnees(Double.parseDouble(valueData[1]),Double.parseDouble(valueData[2])), //Coordonnees
+					new Coordonnees(Float.parseFloat(valueData[1]),Float.parseFloat(valueData[2])), //Coordonnees
 					new Direction(Integer.parseInt(valueData[3])), 										//Direction
 					Integer.parseInt(valueData[4]),														//maxPv
 					Integer.parseInt(valueData[5]), 													//PV
@@ -93,9 +93,9 @@ public class Save {
 					case "EntityTP":
 						EntityTP entityTP = (EntityTP)entity;
 						entitysData.write(","+entityTP.getEtat());
-						entitysData.write(","+entityTP.getTPmapName());
-						entitysData.write(","+entityTP.getTPCoordonnees().getX());
-						entitysData.write(","+entityTP.getTPCoordonnees().getY());
+						entitysData.write(","+entityTP.mapNameTp);
+						entitysData.write(","+entityTP.tpCoordonnees.getX());
+						entitysData.write(","+entityTP.tpCoordonnees.getY());
 						break;
 
 					case "Gold Chest":

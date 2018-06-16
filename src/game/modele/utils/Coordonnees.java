@@ -1,60 +1,61 @@
 package game.modele.utils;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleFloatProperty;
 
 public class Coordonnees {
-	private DoubleProperty x,y;
+	private FloatProperty x,y;
 
-	public Coordonnees(double x, double y) {
-		this.x = new SimpleDoubleProperty(x);
-		this.y = new SimpleDoubleProperty(y);
+	public Coordonnees(float x, float y) {
+		this.x = new SimpleFloatProperty(x);
+		this.y = new SimpleFloatProperty(y);
 	}
 
-	public DoubleProperty getXpro() {
+	public FloatProperty getXpro() {
 		return this.x;
 	}
 
-	public double getX() {
-		return this.x.doubleValue();
+	public float getX() {
+		return this.x.floatValue();
 	}
-	public Coordonnees setX(double x) {
+	public Coordonnees setX(float x) {
 		this.x.set(x);
 		return this;
 	}
 
-	public DoubleProperty getYpro() {
+	public FloatProperty getYpro() {
 		return this.y;
 	}
 
-	public double getY() {
-		return this.y.doubleValue();
+	public float getY() {
+		return this.y.floatValue();
 	}
 
-	public Coordonnees setY(double y) {
+	public Coordonnees setY(float y) {
 		this.y.set(y);
 		return this;
 	}
 
-	public void setCoordoner(double x, double y) {
+	public void setCoordoner(float x, float y) {
 		this.x.set(x);
 		this.y.set(y);
 	}
 
-	public boolean isSameTile(double x,double y) {
+	public boolean isSameTile(float x,float y) {
 		return (int)this.x.get() == (int)x && 
 				(int)this.y.get() == (int)y;
 	}
 
-	public double[] vector(Coordonnees c) {
+	public float[] vector(Coordonnees c) {
 		return this.vector(c.getX(),c.getY());
 	}
-	public double[] vector(double x,double y){
-		return new double[] {x - this.getX(),this.getY() - y};
+	public float[] vector(float x,float y){
+		return new float[] {x - this.getX(),this.getY() - y};
 	}
 
 	public String toString() {
-		return ("x:"+this.x.doubleValue()+", y:"+this.y.doubleValue());
+		return ("x:"+this.x.floatValue()+", y:"+this.y.floatValue());
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -67,8 +68,8 @@ public class Coordonnees {
 	}
 
 	public int distance(Coordonnees c) {
-		double dx = (c.getX() - this.getX());
-		double dy = (c.getY() - this.getY());
+		float dx = (c.getX() - this.getX());
+		float dy = (c.getY() - this.getY());
 		dx *= dx;
 		dy *= dy;
 		return (int)Math.sqrt(dx + dy);

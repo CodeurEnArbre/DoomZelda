@@ -68,10 +68,10 @@ public class FunctionMove extends Function {
 			e.speed += e.acce;
 		}
 	}
-	public static double currentSpeed(Entity e) {
+	public static float currentSpeed(Entity e) {
 		return e.speed * e.slow;
 	}
-	public static double currentDiagonalSpeed(Entity e) {
+	public static float currentDiagonalSpeed(Entity e) {
 		return e.speed * 2/3 * e.slow;
 	}
 	

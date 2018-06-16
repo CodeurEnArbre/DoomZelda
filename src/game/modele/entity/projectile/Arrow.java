@@ -10,8 +10,8 @@ public class Arrow extends Projectile{
 
 	public Arrow(Coordonnees coordonnees, Direction direction, Entity shooter) {
 		super("Arrow", coordonnees, direction, shooter, 1);
-		super.speed = 0.6;
-		super.maxSpeed = 0.6;
+		super.speed = 0.6f;
+		super.maxSpeed = 0.6f;
 	}
 
 	@Override

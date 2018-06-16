@@ -18,10 +18,10 @@ public class Zombie extends EntityMonster{
 	
 	public Zombie(Coordonnees c,Direction d, int pv) {
 		super("Zombie",c,d, pv);
-		this.speed = 0.02;
+		this.speed = 0.02f;
 		this.acce = 0;
-		this.baseSpeed = 0.05;
-		this.maxSpeed = 0.05;		
+		this.baseSpeed = 0.05f;
+		this.maxSpeed = 0.05f;		
 		addAction(deplacement);
 		addAction(mouvement);
 		addAction(ia);

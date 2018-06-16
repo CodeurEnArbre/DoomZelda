@@ -17,9 +17,9 @@ public class Sheep extends EntityFriendly{
 	public ConsumerAction mouvement = new InfiniteActionConsumer(new FunctionMovement());
 	public Sheep(String id, Coordonnees position, Direction direction) {
 		super(id, position, direction);
-		this.speed = 0.04;
-		this.baseSpeed = 0.04;
-		this.acce = 0.0;
+		this.speed = 0.04f;
+		this.baseSpeed = 0.04f;
+		this.acce = 0.0f;
 		addAction(move);
 		addAction(IA);
 		addAction(mouvement);

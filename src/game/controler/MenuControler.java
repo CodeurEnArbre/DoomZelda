@@ -20,6 +20,7 @@ import game.modele.entity.living.EntityLiving;
 import game.modele.entity.living.MemberPart;
 import game.modele.entity.living.Player;
 import game.modele.entity.living.monster.boss.Boss;
+import game.modele.entity.projectile.Projectile;
 import game.modele.entity.tileEntity.TileEntity;
 import game.modele.entity.tileEntity.carriable.CarriableEntity;
 import game.modele.entity.tileEntity.chest.Chest;
@@ -858,6 +859,28 @@ public class MenuControler implements Initializable{
 				i.yProperty().bind(e.coordonnes.getYpro().multiply(32));
 				i.setImage(dicoImageItemTextureMap.get(ItemImageValue.getValue(((EntityItemOnGround)e).item.name)));
 				
+			}else if(e instanceof Projectile) {
+				if(e.getId().equals("Arrow")) {
+					i.setFitWidth(32);
+					i.setFitHeight(32);
+					i.xProperty().bind(e.coordonnes.getXpro().multiply(32));
+					i.yProperty().bind(e.coordonnes.getYpro().multiply(32));
+					i.setImage(dicoImageProjectileMap.get(0));
+					switch (e.direction.getDirection()) {
+					case Direction.South:
+						i.setRotate(180);
+						break;
+					case Direction.East:
+						i.setRotate(90);
+						break;
+					case Direction.West:
+						i.setRotate(270);
+						break;
+
+					}
+				}else
+					System.out.println("MISSING TEXTURE !!! "+e.getId());
+				
 			}else if(e instanceof EntityLiving) {
 				i.setFitWidth(32);
 				i.setFitHeight(64);
@@ -1094,7 +1117,7 @@ public class MenuControler implements Initializable{
 								@Override
 								public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue)
 								{
-									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+28*6));
+									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+28*7));
 								}});
 							break;
 							
@@ -1103,7 +1126,7 @@ public class MenuControler implements Initializable{
 								@Override
 								public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue)
 								{
-									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+28*7));
+									player.setImage(dicoImageAnimationPlayer.get((World.player.etatDeplacement.getValue().intValue() / 10)+28*6));
 								}});
 							break;
 							
