@@ -21,7 +21,7 @@ public class Bow extends RangedWeapon{
 		Projectile theProjectile;
 		switch(projectile) {
 		default :
-			theProjectile = new Arrow(new Coordonnees(World.player.coordonnes.getX(),World.player.coordonnes.getY()), World.player.direction, World.player);
+			theProjectile = new Arrow(new Coordonnees(World.player.coordonnes.getX()-0.5f,World.player.coordonnes.getY()-0.5f), World.player.direction, World.player);
 			break;
 		}
 		World.addEntity(theProjectile);
