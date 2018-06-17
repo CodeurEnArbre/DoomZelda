@@ -7,8 +7,10 @@ import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.CountActionConsumer;
 import game.modele.utils.ActionConsumer.InfiniteActionConsumer;
+import game.modele.utils.ActionConsumer.Function.Function;
 import game.modele.utils.ActionConsumer.Function.FunctionDamage;
 import game.modele.utils.ActionConsumer.Function.FunctionRigidbody;
+import game.modele.world.Save;
 import game.modele.world.World;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -57,6 +59,38 @@ public abstract class EntityLiving extends Entity{
 			if(!isDamaged.get())
 				isDamaged.set(true);
 		}
+		
+		if(PV.get()<=0) {
+			action.set(Actions.die.get());
+			if(id.equals("Player")) {
+				this.clearAction();
+				this.isDamaged.set(false);
+				this.addAction(new CountActionConsumer(120,new Function() {
+					int animDeath = 0;
+					
+					@Override
+					public void Action(Entity e) {
+						System.out.println("act :"+etatDeplacement.get());
+						if(animDeath<80 && animDeath>20) {
+							etatDeplacement.set(animDeath+1-20);
+						}
+						animDeath++;
+						
+					}
+					
+					@Override
+					public void finishAction(Entity e) {
+						System.out.println("Loading save");
+						
+						Save.loadSave(Save.saveName);
+						
+					}
+					
+				}));
+				
+			}
+		}
+		
 	}
 
 	public void gagnerPV(int pv) {

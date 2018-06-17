@@ -1142,7 +1142,18 @@ public class MenuControler implements Initializable{
 						
 						
 						
+					}else if(Actions.die.get() == newValue.intValue()){						
+						
+						theplayer.etatDeplacement.addListener(new ChangeListener<Number>() {
+							@Override
+							public void changed(ObservableValue<? extends Number> observable, Number oldValue,Number newValue)
+							{
+								player.setImage(dicoImageAnimationPlayer.get((int)(World.player.etatDeplacement.getValue().intValue() / 16.6)+28*4+2));
+								System.out.println((int)(World.player.etatDeplacement.getValue().intValue() / 17)+28*4+2);
+							}});
+					
 					}else if(Actions.useWeapon.get() == newValue.intValue()) 
+					
 					{
 						//
 					}

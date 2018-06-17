@@ -7,7 +7,8 @@ public enum Actions {
 	raise(2),
 	walkAndRaise(3),
 	place(4),
-	push(5);
+	push(5),
+	die(6);
 	
 	private int value;
 	Actions(int i){

@@ -58,6 +58,11 @@ public class Save {
 			BufferedReader playerData = new BufferedReader(new FileReader(new File("saves/"+name+"/player")));
 			Pattern pat = Pattern.compile(",");
 			String[] valueData = pat.split(playerData.readLine());
+			
+			if(World.isWorldLoaded.get()) {
+				World.pauseGameLoop();
+			}
+			
 			World.initWorldSave(valueData[0],															//Map
 					new Coordonnees(Float.parseFloat(valueData[1]),Float.parseFloat(valueData[2])), //Coordonnees
 					new Direction(Integer.parseInt(valueData[3])), 										//Direction
