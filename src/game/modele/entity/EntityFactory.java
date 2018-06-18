@@ -21,7 +21,7 @@ import game.modele.utils.Direction;
 
 public class EntityFactory {
 
-	public static Entity create(String id, String params) {
+	public static Entity create(String id, String params) throws Exception {
 		Entity e = null;
 		try {
 			switch(id) {
@@ -78,7 +78,7 @@ public class EntityFactory {
 				break;
 			
 			default :
-
+				throw new Exception("Entite non reconnu");
 
 			}
 		}catch(IllegalAccessException 

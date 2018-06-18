@@ -32,8 +32,11 @@ import game.modele.tile.tileInteract.tileSign.Sign;
 public class TileFactory {	
 	private static Map<Integer,Tile> dicoTile = new HashMap<Integer, Tile>();
 
-	public static Tile get(int id) {
-		return dicoTile.get(id);
+	public static Tile get(int id) throws Exception {
+		if( dicoTile.containsValue(dicoTile.get(id)))
+			return dicoTile.get(id);
+		else
+			throw new Exception("Tile non reconnu");
 	}
 	
 	public static void load() {

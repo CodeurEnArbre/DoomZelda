@@ -130,20 +130,24 @@ public class World {
 				currentMap.newWorld(worldName, width, height, outside, tileGround, tileSolid, tileTop, entitys);
 			}
 			World.currentMap.g.initNodes();
-		}catch(IOException e) {
+		}catch(Exception e) {
 			System.out.println("Impossible de charger la map");
 			e.printStackTrace();
 		}
 
 	}
 
-	public static ArrayList<Entity> loadEntity(String world) throws IOException{
+	public static ArrayList<Entity> loadEntity(String world) throws Exception{
 		ArrayList<Entity> entity= new ArrayList<Entity>();
 		BufferedReader entityData = new BufferedReader(new FileReader(new File("saves/"+Save.saveName+"/data/"+world+".entity")));
 
 		String nextLine = entityData.readLine();
-		while(nextLine != null && nextLine.length()> 1) {
-			Entity newEntity = EntityFactory.create(nextLine, entityData.readLine());
+		while(nextLine != null && nextLine.length()> 1)
+		{
+			Entity newEntity;
+
+			newEntity = EntityFactory.create(nextLine, entityData.readLine());
+
 			if(newEntity != null)
 				entity.add(newEntity);
 			nextLine = entityData.readLine();
@@ -155,8 +159,8 @@ public class World {
 	/*
 	 * Chargement d'un Tableau de Tile utilise par la fonction loadWorld();
 	 * */
-	private static Tile[][] makeTileGrid(int width,int height,BufferedReader br){
-		try {
+	private static Tile[][] makeTileGrid(int width,int height,BufferedReader br) throws NumberFormatException, Exception{
+
 			Tile[][] tile = new Tile[height][width];
 			Pattern pat = Pattern.compile(",");
 			for(int i = 0; i < height;i++) {
@@ -165,10 +169,7 @@ public class World {
 					tile[i][x] = TileFactory.get(Integer.parseInt(tabGround[x]));
 			}
 			return tile;
-		}catch(IOException e) {
-			e.printStackTrace();
-			return null;
-		}
+
 	}
 
 }

@@ -43,8 +43,8 @@ public class Save {
 			File player = new File("saves/"+name+"/player");
 			player.createNewFile();
 			BufferedWriter entitysData = new BufferedWriter(new FileWriter(player.getAbsolutePath()));
-			//entitysData.write("Map1,54,56,0,16,13,10,,,");
-			entitysData.write("Boss,20,17,0,16,13,10,,,");
+			entitysData.write("Map1,54,56,0,16,13,10,,,");
+			//entitysData.write("Boss,20,17,0,16,13,10,,,");
 			entitysData.close();
 		} catch (IOException e) {
 			e.printStackTrace();
