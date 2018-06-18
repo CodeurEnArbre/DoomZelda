@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="2018.05.24" orientation="orthogonal" renderorder="right-down" width="8" height="8" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="1">
+ <tileset firstgid="1" source="TileTextureMap.tsx"/>
+ <layer id="4" name="Ground" width="8" height="8">
+  <data encoding="csv">
+108,108,108,108,108,108,108,108,
+108,109,109,109,109,109,109,108,
+108,109,108,108,108,108,109,108,
+108,109,108,109,109,108,109,108,
+108,109,108,109,109,108,109,108,
+108,109,108,108,108,108,109,108,
+108,109,109,109,109,109,109,108,
+108,108,108,108,108,108,108,108
+</data>
+ </layer>
+ <layer id="5" name="Solid" width="8" height="8">
+  <data encoding="csv">
+6,7,7,7,7,7,7,8,
+22,106,0,0,0,0,0,24,
+22,122,0,0,0,0,0,24,
+22,0,0,0,0,0,0,24,
+22,0,0,0,0,0,0,24,
+22,0,0,0,0,0,0,24,
+22,0,0,0,0,0,0,24,
+38,39,39,39,39,39,39,40
+</data>
+ </layer>
+ <layer id="6" name="Top" width="8" height="8">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>
