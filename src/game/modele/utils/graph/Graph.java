@@ -69,7 +69,7 @@ public class Graph {
 		int nx = x + t[0];
 		int ny = y + t[1];
 
-		if(nx >= width || ny >= height || nx < 0 || ny < 0 || node[nx][ny] == -1) return;
+		if(x >= width || y >= height|| nx >= width || ny >= height || nx < 0 || ny < 0 || node[nx][ny] == -1) return;
 
 		if(x == nx && y == ny) { 
 			direction[nx][ny] = new SimpleEntry<Integer, int[]>(0, t);			

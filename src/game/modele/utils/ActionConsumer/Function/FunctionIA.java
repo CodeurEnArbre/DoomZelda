@@ -36,7 +36,13 @@ public class FunctionIA  extends Function{
 				}
 
 			}else {
-				SimpleEntry<Integer, int[]> d = World.currentMap.g.direction[x][y];
+				if(World.currentMap.g.direction == null)return;
+				SimpleEntry<Integer, int[]> d;
+				try {
+				d = World.currentMap.g.direction[x][y];
+				}catch(IndexOutOfBoundsException p) {
+					return;
+				}
 				if(d == null)
 					return;
 				

@@ -8,6 +8,7 @@ public class ListConsumerAction extends SimpleListActionConsumer implements Cons
 		for(int i = 0; i < list.size(); i++)
 		{
 			ConsumerAction c = list.get(i);
+		
 			if(!c.act(e))
 			{
 				c.getFunction().finishAction(e);
