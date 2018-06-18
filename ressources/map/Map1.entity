@@ -1,6 +1,22 @@
 Bush
-54,58
+54,52
 Rock
 54,53
 EntityTP
 69.0,39.0,true,House1,3.0,6.0
+EntityTP
+25.0,29.0,true,Boss,19.0,16.0
+ItemOnGround
+56.0,44.0,0,GreenRupee
+ItemOnGround
+57.0,44.0,0,GreenRupee
+ItemOnGround
+56.0,45.0,0,GoldRupee
+Gold Chest
+70.0,23.0,Rupoor
+Iron Chest
+26.0,22.0,Wooden Sworden
+White Sheep
+32.0,29.0,2,10
+Zombie
+32.0,27.0,2,10
