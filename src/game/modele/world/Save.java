@@ -90,9 +90,11 @@ public class Save {
 					entitysData.write(""+entity.coordonnes.getX());
 					entitysData.write(","+entity.coordonnes.getY());
 					
-					if(entity instanceof EntityLiving)
-						entitysData.write(","+entity.direction.getDirection());
-					else
+					if(entity instanceof EntityLiving) {
+						EntityLiving entityLiving = (EntityLiving)entity;
+						entitysData.write(","+entityLiving.direction.getDirection());
+						entitysData.write(","+entityLiving.getPV());
+					}else
 					switch(entity.getId()) {
 
 					case "EntityTP":
