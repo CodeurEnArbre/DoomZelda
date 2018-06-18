@@ -7,9 +7,10 @@ public class ListConsumerAction extends SimpleListActionConsumer implements Cons
 	public boolean act(Entity e) {
 		for(int i = 0; i < list.size(); i++)
 		{
-			if(!list.get(i).act(e))
+			ConsumerAction c = list.get(i);
+			if(!c.act(e))
 			{
-				list.get(i).getFunction().finishAction(e);
+				c.getFunction().finishAction(e);
 				list.remove(i);
 			}
 		}

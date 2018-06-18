@@ -120,9 +120,6 @@ public abstract class Entity {
 			}
 		}
 
-	
-		
-		
 		try {
 			Tile tile = World.currentMap.getTileTerrain((int)coordonnees.getY(), (int)coordonnees.getX());
 			Tile terrain = World.currentMap.getTile((int)coordonnees.getY(), (int)coordonnees.getX());
@@ -173,14 +170,6 @@ public abstract class Entity {
 	}
 	public final void update() {
 		ActionQueueEntity.act(this);
-
-		for(Entity e : World.currentMap.entityHere(this.coordonnes.getX(), this.coordonnes.getY())){
-
-			if(e != this && e instanceof EntityMonster && this.id.equals("Player")) {
-				this.active(e);
-			}
-		}
-
 	}
 	public abstract void active(Entity e);
 	public abstract void incAnim();
@@ -198,7 +187,6 @@ public abstract class Entity {
 
 	public void dispose() { 
 		ActionQueueEntity.dispose();
-
 	}
 	
 	public void delete() {
