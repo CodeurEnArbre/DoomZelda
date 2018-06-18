@@ -22,7 +22,11 @@ public class FunctionItemDiscovered extends Function{
 	public void finishAction(Entity e) {
 		Chest c = (Chest)e;
 		c.setEtat(false);
-		c.itemInside = World.player.takeItem(c.itemInside);
+		try {
+			c.itemInside = World.player.takeItem(c.itemInside);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		if(c.itemInside != null) {
 			c.etatAnim.set(0);
 			c.setEtat(true);
