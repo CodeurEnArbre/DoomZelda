@@ -144,7 +144,7 @@ public class Player extends EntityLiving{
 		}
 	}
 
-	public Item takeItem(Item item) {
+	public Item takeItem(Item item) throws Exception {
 		if(item instanceof Weapon) {
 			if(nbWeapon >= weapons.length)
 				return item;
@@ -175,8 +175,7 @@ public class Player extends EntityLiving{
 				removeRuby(10); break;
 
 			default:
-				//FAUDRAI PEUT ETRE UTILISER UN THROW     NAN JE VEUS PAS!!!
-				System.out.println("C'est quoi ca ???? : "+item);
+				throw new Exception(item.getItemName());
 			}
 		}
 

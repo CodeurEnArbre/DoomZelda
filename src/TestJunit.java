@@ -49,10 +49,12 @@ public class TestJunit {
 			World.player.update();
 		
 		testCoordonneeX = playerCoord.getX();
-		testCoordonneeY = playerCoord.getY();
+		float testCoordonneeY2 = playerCoord.getY();
 		World.player.update();
 		
-		assertTrue("Cas impossible de ce deplacer car une tile bloque (colision)", testCoordonneeX==playerCoord.getX() && testCoordonneeY==playerCoord.getY());
+		assertTrue("Cas impossible de ce deplacer car une tile bloque (colision)", testCoordonneeX==playerCoord.getX() && 
+																					testCoordonneeY2==playerCoord.getY() && 
+																					testCoordonneeY2 != testCoordonneeY);
 		
 	}
 

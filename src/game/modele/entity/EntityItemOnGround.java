@@ -18,7 +18,11 @@ public class EntityItemOnGround extends Entity{
 	public void active(Entity e) {
 		if(e.getId().equals("Player")) {
 			World.player.pickupItem =  item;
-			World.player.takeItem(item);
+			try {
+				World.player.takeItem(item);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			World.currentMap.entity.remove(this);
 		}
 	}
