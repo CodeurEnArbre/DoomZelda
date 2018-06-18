@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Menu {
 	
 	//Menus id
+	public static final int DeathMenuID = -2;
 	public static final int NoMenuID = -1;
 	public static final int MainMenuID = 0;
 	public static final int InGameMenuID = 1 ;

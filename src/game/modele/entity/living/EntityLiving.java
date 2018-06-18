@@ -3,6 +3,7 @@ package game.modele.entity.living;
 import game.modele.entity.Entity;
 import game.modele.item.Item;
 import game.modele.item.weapon.Weapon;
+import game.modele.menu.Menu;
 import game.modele.utils.Coordonnees;
 import game.modele.utils.Direction;
 import game.modele.utils.ActionConsumer.CountActionConsumer;
@@ -61,6 +62,7 @@ public abstract class EntityLiving extends Entity{
 		}
 		
 		if(PV.get()<=0) {
+			Menu.currentMenu.set(Menu.DeathMenuID);
 			action.set(Actions.die.get());
 			if(id.equals("Player")) {
 				this.clearAction();
@@ -83,7 +85,7 @@ public abstract class EntityLiving extends Entity{
 						System.out.println("Loading save");
 						
 						Save.loadSave(Save.saveName);
-						
+						Menu.currentMenu.set(Menu.NoMenuID);
 					}
 					
 				}));

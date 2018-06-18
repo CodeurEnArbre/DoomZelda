@@ -56,7 +56,10 @@ public class World {
 	}
 
 	public static void initWorldSave(String world, Coordonnees coord, Direction direction, int maxPv, int pv, int ruby,  Weapon[] weapons,Item leftEquip, Item rightEquip) {
-
+		
+		World.isWorldLoaded.set(false);
+		World.onPause.set(true);
+		
 		loadGameLoop();
 		
 		player = new Player(coord,direction,maxPv,pv,ruby,weapons,leftEquip, rightEquip);
