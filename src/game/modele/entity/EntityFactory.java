@@ -86,7 +86,7 @@ public class EntityFactory {
 				|IllegalArgumentException 
 				|InvocationTargetException 
 				|SecurityException e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 		return e;
 	}
