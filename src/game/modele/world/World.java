@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import game.modele.entity.Entity;
 import game.modele.entity.EntityFactory;
 import game.modele.entity.living.Player;
+import game.modele.entity.living.monster.Zombie;
 import game.modele.item.Item;
 import game.modele.item.weapon.Weapon;
 import game.modele.tile.Tile;
